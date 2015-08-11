@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:tab id="confirm" title="Confirmation">
+		<p:panel header="Confirmation">
+			<h:panelGrid id="confirmation" columns="3"
+				columnClasses="grid,grid,grid" style="width:100%">
+				<h:panelGrid columns="2" columnClasses="label, value">
+
+					<h:outputText value="Employee Name:" />
+					<h:outputText value="#{employeeBean.selectedEmployee.employeeName}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Federal Identity Code:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.federalIdentityCode}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="State Identity Code:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.stateIdentityCode}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+
+					<h:outputText value="Date of Birth:" />
+					<h:outputText value="#{employeeBean.selectedEmployee.birthDate}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Gender: " />
+					<h:outputText
+						value="#{employeeBean.extractFromBundle(employeeBean.selectedEmployee.gender.key)}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Marital Status: " />
+					<h:outputText
+						value="#{employeeBean.extractFromBundle(employeeBean.selectedEmployee.maritalStatus.key)}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Country: " />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.country.countryName}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Telephone Number:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.telephoneNumber}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="DDI Telephone Number:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.ddiTelephoneNumber}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="DDD Telephone Number:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.dddTelephoneNumber}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Mobile Number:" />
+					<h:outputText value="#{employeeBean.selectedEmployee.mobileNumber}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="DDD Mobile Number:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.ddiMobileNumber}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="DDD Mobile Number:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.dddMobileNumber}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Email1:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.email1Description}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Email2:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.email2Description}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Department: " />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.departmentSection.department.departmentName}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Department Section: " />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.departmentSection.sectionName}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Establishment: " />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.establishment.establishmentName}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Job Title Type: " />
+					<h:outputText
+						value="#{employeeBean.extractFromBundle(employeeBean.selectedEmployee.jobTitleType)}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Admission Date:" />
+					<h:outputText value="#{employeeBean.selectedEmployee.admissionDate}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Observation Description:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.observationDescription}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Active: " />
+					<h:outputText
+						value="#{employeeBean.extractFromBundle(employeeBean.selectedEmployee.active.key)}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Inactivity Begin Date:" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.inactivityBeginDate}"
+						styleClass="outputLabel" />
+
+					<h:outputText value="Employee Type: " />
+					<h:outputText
+						value="#{employeeBean.extractFromBundle(employeeBean.selectedEmployee.employeeType.key)}"
+						styleClass="outputLabel" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Document Type: " />
+					<h:outputText
+						value="#{employeeBean.extractFromBundle(employeeBean.selectedEmployee.indTypeDocument.key)}"
+						styleClass="outputLabel" />
+
+					<h:outputText />
+					<h:outputText />
+
+					<h:outputText />
+					<h:outputText />
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<p:commandButton value="Submit" validateClient="true"
+				actionListener="#{employeeBean.saveOrUpdate(employeeBean.selectedEmployee)}" update=":growl :employeeListForm"
+				process="@this" />
+		</p:panel>
+	</p:tab>
+</ui:composition>
+</html>

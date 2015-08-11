@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="createQuotataionDlg" widgetVar="createQuotationDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateOamQuotationTitle}">
+
+		<h:form id="QuotataionCreateForm">
+
+			
+
+			<h:panelGroup id="quotationDisplay">
+				<p:panelGrid columns="2"
+					rendered="#{quotationManagementBean.selected != null}">
+					<p:outputLabel value="#{loc.EditOamQuotationTitle_department}" />
+					<p:selectOneMenu id="department" styleClass="fullWith"
+						value="#{quotationManagementBean.selected.department}"
+						title="#{loc.EditOamQuotationTitle_department}" required="true"
+						converter="#{departmentConverter}"
+						requiredMessage="#{loc.EditOamQuotationRequiredMessage_department}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{quotationManagementBean.departments}"
+							var="departmentItem" itemValue="#{departmentItem}"
+							itemLabel="#{departmentItem.departmentName}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel
+						value="#{loc.CreateOamQuotationTitle_indTypeQuotation}" />
+					<p:selectOneMenu id="indQoutationType" styleClass="fullWith"
+						value="#{quotationManagementBean.selected.indTypeQuotation}"
+						required="true"
+						requiredMessage="#{loc.EditOamQuotationRequiredMessage_indQuotationType}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems
+							value="#{applicationScopeStore.getQuotationTypeList()}"
+							var="quotationType" itemValue="#{quotationType.key}"
+							itemLabel="#{quotationType.value}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.EditOamQuotationTitle_demand}" />
+
+					<p:selectOneMenu id="demand" styleClass="fullWith"
+						value="#{quotationManagementBean.selected.demand}" required="true"
+						converter="#{wokDemandConverter}"
+						requiredMessage="#{loc.EditOamQuotationRequiredMessage_demand}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{quotationManagementBean.wokDemands}"
+							var="demandItem" itemValue="#{demandItem}"
+							itemLabel="#{demandItem.demandSummaryDescription}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel
+						value="#{loc.CreateOamQuotationTitle_quotationDescription}" />
+
+					<p:inputTextarea id="quotationDescription"
+						value="#{quotationManagementBean.selected.quotationDescription}"
+						required="true"
+						requiredMessage="#{loc.CreateOamQuotationRequiredMessage_quotationDescription}" />
+
+
+
+
+				</p:panelGrid>
+				<p:commandButton actionListener="#{quotationManagementBean.saveNew}"
+					value="#{loc.Save}"
+					update="quotationDisplay,:growl,:quotationListForm:datalist"
+					oncomplete="if(!args.validationFailed){PF('createQuotationDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('createQuotationDialog').hide()" immediate="true" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

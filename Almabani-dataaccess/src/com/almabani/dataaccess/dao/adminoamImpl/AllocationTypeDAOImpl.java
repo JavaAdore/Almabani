@@ -1,0 +1,27 @@
+package com.almabani.dataaccess.dao.adminoamImpl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.almabani.common.entity.schema.adminoam.AllocationType;
+import com.almabani.dataaccess.dao.adminoam.AllocationTypeDAO;
+import com.almabani.dataaccess.daoimpl.AbstractDAO;
+
+@Repository
+public class AllocationTypeDAOImpl extends AbstractDAO implements AllocationTypeDAO {
+	
+	private static final long serialVersionUID = -1639272880814635175L;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AllocationType> getAllAllocationTypes() {
+		return super.getAllEntities(AllocationType.class);
+	}
+
+	@Override
+	public AllocationType getAllocationType(Long id) {
+		return (AllocationType) super.getEntity(AllocationType.class, id);
+	}
+	
+}

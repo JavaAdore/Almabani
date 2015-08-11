@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+<ui:composition>
+	<p:dialog id="empViewDialog" widgetVar="viewDialog" modal="true"
+		closable="false" closeOnEscape="true" resizable="false"
+		appendToBody="true" header="#{loc.ViewOamItemQuotationTitle}">
+
+		<h:form id="viewForm">
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{employeeBean.selectedEmployee != null}">
+
+					<f:facet name="header">
+						<itiGeeks:ByteImageViewer
+							objectImplementsByteArrayHolder="#{employeeBean.selectedEmployee}" />
+					</f:facet>
+
+					<h:outputText value="Employee Name" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.employeeName}" />
+
+					<h:outputText value="Job Title" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.jobTitleType.jobTitle}" />
+
+					<h:outputText value="Department Section Name" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.departmentSection.sectionName}" />
+
+					<h:outputText value="State Identity Code" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.stateIdentityCode}" />
+
+					<h:outputText value="Begining Activity Date" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.inactivityBeginDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+					<h:outputText value="Birth Date" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.birthDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+					<h:outputText value="Last Modification Date" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.lastModificationDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+					<h:outputText value="Registration Date" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.registrationDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+					<h:outputText value="Email1" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.email1Description}" />
+
+					<h:outputText value="Email2" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.email2Description}" />
+
+					<h:outputText value="Observation" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.observationDescription}" />
+
+					<h:outputText value="#{loc.ListComEmployeeTitle_gender}" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.gender}" />
+
+					<h:outputText value="Marital Status" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.maritalStatus}" />
+
+					<h:outputText value="Modifier Name" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.modificationMakerName}" />
+
+					<h:outputText value="Ddd Mobile Number" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.dddMobileNumber}" />
+
+					<h:outputText value="Ddd Telephone" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.telephoneNumber}" />
+
+					<h:outputText value="Ddi Mobile Number" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.ddiMobileNumber}" />
+
+					<h:outputText value="Ddi Telephone" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.ddiTelephoneNumber}" />
+
+					<h:outputText value="Mobile" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.mobileNumber}" />
+
+					<h:outputText value="Telephone NUmber" />
+					<h:outputText
+						value="#{employeeBean.selectedEmployee.telephoneNumber}" />
+
+				</p:panelGrid>
+			</h:panelGroup>
+		</h:form>
+	</p:dialog>
+</ui:composition>
+
+</html>

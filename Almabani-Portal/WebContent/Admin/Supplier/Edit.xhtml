@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="editDlg" widgetVar="editDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.EditOamSupplierTitle}" dynamic="true">
+
+            <h:form id="editForm">
+
+               
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4"
+					rendered="#{supplierManagementBean.selected != null}">
+					<h:outputText value="#{loc.ListOamSupplierTitle_supplierName}" />
+					<p:inputText
+						value="#{supplierManagementBean.selected.supplierName}"
+						required="true"
+						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_supplierName}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_company}" />
+
+					<p:selectOneMenu converter="#{companyConverter}"
+						value="#{supplierManagementBean.selected.company}" required="true"
+						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_company}">
+						<f:selectItem itemValue=""
+							itemLabel="#{loc.ALMABANI_SUPPLIER_CREATE_SUPPLIER_SELECT_COMPANY}" />
+						<f:selectItems value="#{supplierManagementBean.companies}"
+							var="company" itemLabel="#{company.companyName} "
+							itemValue="#{company}" />
+					</p:selectOneMenu>
+
+
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_addComplementName}" />
+
+					<p:inputText
+						value="#{supplierManagementBean.selected.addComplementName}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_responsibleNumber}" />
+
+					<p:inputText
+						value="#{supplierManagementBean.selected.responsibleNumber}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_telephoneNumber}" />
+
+					<p:inputText
+						value="#{supplierManagementBean.selected.telephoneNumber}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_mobileNumber}" />
+					<p:inputText
+						value="#{supplierManagementBean.selected.mobileNumber}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_faxNumber}" />
+					<p:inputText value="#{supplierManagementBean.selected.faxNumber}" />
+					<h:outputText value="#{loc.ListOamSupplierTitle_indActive}" />
+					<p:selectOneMenu
+						value="#{supplierManagementBean.selected.indActive}"
+						required="true"
+						requiredMessage="#{loc.ALMABANI_GENERAL_STATAUS_REQUIRED}">
+						<f:selectItem itemValue=""
+							itemLabel="#{loc.ALMABANI_GENERAL_SELECT_STATUS}" />
+						<f:selectItem itemValue="Y"
+							itemLabel="#{loc.ALMABANI_GENERAL_YES}" />
+						<f:selectItem itemValue="N" itemLabel="#{loc.ALMABANI_GENERAL_NO}" />
+
+					</p:selectOneMenu>
+					<h:outputText
+						value="#{loc.ListOamSupplierTitle_observationDescription}" />
+					<p:inputTextarea
+						value="#{supplierManagementBean.selected.observationDescription}" />
+
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_address}" />
+
+					<p:inputTextarea value="#{supplierManagementBean.selected.address}"
+						required="true"
+						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_address}" />
+				</p:panelGrid>
+                    <p:commandButton actionListener="#{supplierManagementBean.saveNew}" value="#{loc.Save}" update="display,:growl,:listForm:datalist" oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}"/>
+                    <p:commandButton value="#{loc.Cancel}" immediate="true" onclick="PF('editDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

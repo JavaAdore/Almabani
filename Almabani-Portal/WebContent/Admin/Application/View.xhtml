@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="viewDlg" widgetVar="viewDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.ViewSecApplicationTitle}">
+
+            <h:form id="viewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{applicationManagementBean.selected != null}">
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_codApplication}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.codApplication}" title="#{loc.ViewSecApplicationTitle_codApplication}"/>
+                        
+                         <h:outputText value="#{loc.ViewSecApplicationLabel_SecModule}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.secSubModule.module.moduleCode}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_secSubModule}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.secSubModule.subModuleDescription}"/>
+
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_typesApplication}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.typesApplication.applicationTypedescription}"/>
+                       
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_applicationDescription}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.applicationDescription}" title="#{loc.ViewSecApplicationTitle_applicationDescription}"/>
+                       
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_orderMenuNumber}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.orderMenuNumber}" title="#{loc.ViewSecApplicationTitle_orderMenuNumber}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_portugueseLabel}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.portugueseLabel}" title="#{loc.ViewSecApplicationTitle_portugueseLabel}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_englishLabelDescription}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.englishLabelDescription}" title="#{loc.ViewSecApplicationTitle_englishLabelDescription}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_spanishLabelDescription}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.spanishLabelDescription}" title="#{loc.ViewSecApplicationTitle_spanishLabelDescription}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_indActive}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.indActive}" title="#{loc.ViewSecApplicationTitle_indActive}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_modificationMakerName}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.modificationMakerName}" title="#{loc.ViewSecApplicationTitle_modificationMakerName}"/>
+                        
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_lastModificationDate}"/>
+                        <h:outputText value="#{applicationManagementBean.selected.lastModificationDate}" title="#{loc.ViewSecApplicationTitle_lastModificationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{loc.ViewSecApplicationLabel_linkCodeDescription}"/>
+					<h:outputText
+						value="#{applicationManagementBean.selected.linkCodeDescription}"
+						title="#{loc.ViewSecApplicationTitle_linkCodeDescription}" />
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()" />
+			</h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

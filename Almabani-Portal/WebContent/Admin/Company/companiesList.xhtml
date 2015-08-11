@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:customComponents="http://java.sun.com/jsf/composite/components"
+	template="/WEB-INF/template/master.xhtml">
+
+	<ui:define name="title">
+		<title><h:outputText value="#{loc.ALMABANI_COMPANIES}" /></title>
+	</ui:define>
+	<ui:define name="content">
+		<center>
+			<h:form id="companiesListForm">
+				<br />
+				<p:panel header="#{loc.ListComCompanyTitle}"
+					style="margin-left:auto; margin-right:auto ; width:88%">
+					<p:dataTable var="company" value="#{companyBean.companiesList}"
+						selectionMode="single" selection="#{companyBean.selectedCompany}"
+						rowKey="#{company.id}" paginator="true" rows="10"
+						rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect" update="viewButton editButton" />
+						<p:ajax event="rowUnselect" update="viewButton editButton" />
+						<br />
+
+						<p:column headerText="#{loc.ListComCompanyTitle_id}"
+							style="width:50px;" filterBy="#{company.id}"
+							sortBy="#{company.id}" filterStyle="width:30px">
+							<h:outputText value="#{company.id}" />
+						</p:column>
+
+						<p:column headerText="#{loc.ListComCompanyTitle_name}"
+							filterBy="#{company.companyName}" sortBy="#{company.companyName}">
+
+							<h:outputText value="#{company.companyName}" />
+						</p:column>
+
+						<p:column
+							headerText="#{loc.ListComCompanyTitle_fedralIdentityCode}"
+							sortBy="#{company.federalIdentityCode}" style="width:160px;"
+							filterBy="#{company.federalIdentityCode}">
+
+							<h:outputText value="#{company.federalIdentityCode}" />
+						</p:column>
+
+						<p:column filterBy="#{company.lastModificationDate}"
+							sortBy="#{company.lastModificationDate}" style="width:160px;"
+							headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
+							<f:facet name="filter">
+								<p:calendar onclick="PF('datalist').filter()"
+									onblur="PF('datalist').filter()" pattern="dd/MM/yyyy"
+									onchange="PF('datalist').filter()" />
+							</f:facet>
+							<h:outputText value="#{company.lastModificationDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" />
+							</h:outputText>
+						</p:column>
+
+						<p:column
+							headerText="#{loc.ListComCompanyTitle_companyNameAlternative}"
+							filterBy="#{company.alternativeCompanyName}" style="width:200px;"
+							sortBy="#{company.alternativeCompanyName}">
+
+							<h:outputText value="#{company.alternativeCompanyName}" />
+						</p:column>
+
+						<p:column
+							headerText="#{loc.ListComCompanyTitle_modifiedByUserName}"
+							filterBy="#{company.modificationMakerName}"
+							sortBy="#{company.modificationMakerName}">
+
+							<h:outputText value="#{item.modificationMakerName}" />
+						</p:column>
+
+						<p:column headerText="#{loc.ListComCompanyTitle_comState}"
+							filterBy="#{company.state.stateName}"
+							sortBy="#{item.state.stateName}">
+							<h:outputText value="#{item.state.stateName}" />
+
+						</p:column>
+
+						<p:column headerText="#{loc.ListComCompanyTitle_comCountry}"
+							filterBy="#{company.state.stateId.country.countryName}"
+							sortBy="#{company.state.stateId.country.countryName}">
+							<h:outputText
+								value="#{company.state.stateId.country.countryName}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+			<h:form id="departmentListForm"
+				rendered="#{companyBean.selectedCompany.id gt 0}">
+				<br />
+				<p:panel header="#{loc.ListComDepartmentTitle}" style="width:88%">
+
+					<p:dataTable var="department" value="#{companyBean.departmentList}"
+						scrollable="true" scrollWidth="2000" scrollHeight="200"
+						scrollRows="10" liveScroll="true" resizableColumns="true"
+						selectionMode="single"
+						selection="#{companyBean.selectedDepartment}"
+						rowKey="#{department.id}" paginator="true" rows="10"
+						rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect"
+							listener="#{companyBean.onDepartmentSelect()}" update="@all" />
+						<br />
+						<p:column sortBy="#{department.id}" style="width:65px;"
+							filterBy="#{department.id}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Dept ID" />
+							</f:facet>
+							<h:outputText value="#{department.id}" />
+						</p:column>
+
+						<p:column sortBy="#{department.departmentCode}"
+							style="width:95px;" filterBy="#{department.departmentCode}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Department Code" />
+							</f:facet>
+							<h:outputText value="#{department.departmentCode}" />
+						</p:column>
+
+						<p:column sortBy="#{department.responsibleUserCode}"
+							style="width:125px;" filterBy="#{department.responsibleUserCode}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Responsible User Code" />
+							</f:facet>
+							<h:outputText value="#{department.responsibleUserCode}" />
+						</p:column>
+
+						<p:column sortBy="#{department.lastModificationDate}"
+							style="width:120px;"
+							filterBy="#{department.lastModificationDate}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Last Modification Date" />
+							</f:facet>
+							<h:outputText value="#{department.lastModificationDate}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{department.active}" style="width:60px;"
+							filterBy="#{department.active}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="#{loc.ListComDepartmentTitle_indActive}" />
+							</f:facet>
+							<h:outputText value="#{department.active}" />
+						</p:column>
+
+						<p:column sortBy="#{department.departmentName}"
+							filterBy="#{department.departmentName}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Department Name" />
+							</f:facet>
+							<h:outputText value="#{department.departmentName}" />
+						</p:column>
+
+						<p:column sortBy="#{department.modificationMakerName}"
+							filterBy="#{department.modificationMakerName}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Modified By Username" />
+							</f:facet>
+							<h:outputText value="#{department.modificationMakerName}" />
+						</p:column>
+
+						<p:column sortBy="#{department.company}" style="width:120px;"
+							filterBy="#{department.company}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="#{loc.ListComDepartmentTitle_company}" />
+							</f:facet>
+							<h:outputText value="#{department.company.companyName}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+			<h:form id="deptSecListForm"
+				rendered="#{companyBean.selectedDepartment.id gt 0}">
+				<br />
+				<p:panel header="#{loc.ListComDepartmentSectionTitle}"
+					style="width:88%">
+
+					<p:dataTable var="departmentSection"
+						value="#{companyBean.departmentSections}" scrollable="true"
+						scrollWidth="2000" scrollHeight="200" scrollRows="10"
+						liveScroll="true" resizableColumns="true" selectionMode="single"
+						rows="10" selection="#{companyBean.selectedDepartmentSection}"
+						rowKey="#{departmentSection.id}" paginator="true"
+						rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect"
+							listener="#{companyBean.onDepartmentSectionSelect}" update="@all" />
+
+						<p:column sortBy="#{departmentSection.id}">
+							<f:facet name="header">
+								<h:outputText value="Sec ID" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.id}" />
+						</p:column>
+						<p:column sortBy="#{departmentSection.sectionCode}">
+							<f:facet name="header">
+								<h:outputText value="Section Code" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.sectionCode}" />
+						</p:column>
+						<p:column sortBy="#{departmentSection.responsibleUserCode}">
+							<f:facet name="header">
+								<h:outputText value="Responsible User Code" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.responsibleUserCode}" />
+						</p:column>
+						<p:column sortBy="#{departmentSectionitem.lastModificationDate}">
+							<f:facet name="header">
+								<h:outputText value="Last Modification Date" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.lastModificationDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column sortBy="#{departmentSection.indActive}">
+							<f:facet name="header">
+								<h:outputText
+									value="#{loc.ListComDepartmentSectionTitle_indActive}" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.indActive}" />
+						</p:column>
+						<p:column sortBy="#{departmentSection.sectionName}">
+							<f:facet name="header">
+								<h:outputText value="Section Name" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.sectionName}" />
+						</p:column>
+						<p:column sortBy="#{departmentSection.modificationMakerName}">
+							<f:facet name="header">
+								<h:outputText value="Modifier Name" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.modificationMakerName}" />
+						</p:column>
+						<p:column sortBy="#{departmentSection.department.departmentName}">
+							<f:facet name="header">
+								<h:outputText value="Department" />
+							</f:facet>
+							<h:outputText
+								value="#{departmentSection.department.departmentName}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+			<h:form id="employeeListForm"
+				rendered="#{companyBean.selectedDepartmentSection.id gt 0}">
+				<br />
+				<p:panel header="#{loc.ListComEmployeeTitle}" style="width:88%">
+
+					<p:dataTable var="employee" value="#{companyBean.employeesList}"
+						scrollable="true" scrollWidth="4000" scrollHeight="200"
+						scrollRows="10" liveScroll="true" resizableColumns="true"
+						selectionMode="single" rows="10" rowKey="#{employee.id}"
+						paginator="true" rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect" update="" />
+
+						<p:column sortBy="#{employee.id}">
+							<f:facet name="header">
+								<h:outputText value="Emp ID" />
+							</f:facet>
+							<h:outputText value="#{employee.id}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.federalIdentityCode}">
+							<f:facet name="header">
+								<h:outputText value="Fedral Identity Code" />
+							</f:facet>
+							<h:outputText value="#{employee.federalIdentityCode}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.stateIdentityCode}">
+							<f:facet name="header">
+								<h:outputText value="State Identity Code" />
+							</f:facet>
+							<h:outputText value="#{employee.stateIdentityCode}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.admissionDate}">
+							<f:facet name="header">
+								<h:outputText value="Admission Date" />
+							</f:facet>
+							<h:outputText value="#{employee.admissionDate}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{employee.inactivityBeginDate}">
+							<f:facet name="header">
+								<h:outputText value="Begining Activity Date" />
+							</f:facet>
+							<h:outputText value="#{employee.inactivityBeginDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{employee.birthDate}">
+							<f:facet name="header">
+								<h:outputText value="Birth Date" />
+							</f:facet>
+							<h:outputText value="#{employee.birthDate}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{employee.lastModificationDate}">
+							<f:facet name="header">
+								<h:outputText value="Last Modification Date" />
+							</f:facet>
+							<h:outputText value="#{employee.lastModificationDate}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{employee.registrationDate}">
+							<f:facet name="header">
+								<h:outputText value="Registration Date" />
+							</f:facet>
+							<h:outputText value="#{employee.registrationDate}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{employee.email1Description}">
+							<f:facet name="header">
+								<h:outputText value="Email1" />
+							</f:facet>
+							<h:outputText value="#{employee.email1Description}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.email2Description}">
+							<f:facet name="header">
+								<h:outputText value="Email2" />
+							</f:facet>
+							<h:outputText value="#{employee.email2Description}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.observationDescription}">
+							<f:facet name="header">
+								<h:outputText value="Observation" />
+							</f:facet>
+							<h:outputText value="#{employee.observationDescription}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.active}">
+							<f:facet name="header">
+								<h:outputText value="#{loc.ListComEmployeeTitle_indActive}" />
+							</f:facet>
+							<h:outputText value="#{employee.active}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.gender}">
+							<f:facet name="header">
+								<h:outputText value="#{loc.ListComEmployeeTitle_gender}" />
+							</f:facet>
+							<h:outputText value="#{employee.gender}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.maritalStatus}">
+							<f:facet name="header">
+								<h:outputText value="Marital Status" />
+							</f:facet>
+							<h:outputText value="#{employee.maritalStatus}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.employeeType}">
+							<f:facet name="header">
+								<h:outputText value="EmployeeType" />
+							</f:facet>
+							<h:outputText value="#{employee.employeeType}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.employeeName}">
+							<f:facet name="header">
+								<h:outputText value="Employee Name" />
+							</f:facet>
+							<h:outputText value="#{employee.employeeName}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.modificationMakerName}">
+							<f:facet name="header">
+								<h:outputText value="Modifier Name" />
+							</f:facet>
+							<h:outputText value="#{employee.modificationMakerName}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.dddMobileNumber}">
+							<f:facet name="header">
+								<h:outputText value="Ddd Mobile Number" />
+							</f:facet>
+							<h:outputText value="#{employee.dddMobileNumber}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.telephoneNumber}">
+							<f:facet name="header">
+								<h:outputText value="Ddd Telephone" />
+							</f:facet>
+							<h:outputText value="#{employee.telephoneNumber}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.ddiMobileNumber}">
+							<f:facet name="header">
+								<h:outputText value="Ddi Mobile Number" />
+							</f:facet>
+							<h:outputText value="#{employee.ddiMobileNumber}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.ddiTelephoneNumber}">
+							<f:facet name="header">
+								<h:outputText value="Ddi Telephone" />
+							</f:facet>
+							<h:outputText value="#{employee.ddiTelephoneNumber}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.mobileNumber}">
+							<f:facet name="header">
+								<h:outputText value="Mobile" />
+							</f:facet>
+							<h:outputText value="#{employee.mobileNumber}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.telephoneNumber}">
+							<f:facet name="header">
+								<h:outputText value="Telephone NUmber" />
+							</f:facet>
+							<h:outputText value="#{employee.telephoneNumber}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.jobTitleType.jobTitle}">
+							<f:facet name="header">
+								<h:outputText value="Job Title" />
+							</f:facet>
+							<h:outputText value="#{employee.jobTitleType.jobTitle}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.departmentSection.sectionName}">
+							<f:facet name="header">
+								<h:outputText value="Department Section Name" />
+							</f:facet>
+							<h:outputText value="#{employee.departmentSection.sectionName}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</center>
+	</ui:define>
+
+</ui:composition>

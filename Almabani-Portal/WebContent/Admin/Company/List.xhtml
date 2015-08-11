@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListComCompanyTitle}"
+			style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" value="#{companyManagementBean.items}" resizableColumns="true"
+				filterEvent="blur" var="item" paginator="true" rows="10" draggableColumns="true" draggableRows="true"
+				widgetVar="datalist" selectionMode="single"
+				selection="#{companyManagementBean.selected}" rowKey="#{item.id}"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" lazy="true">
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+				<p:ajax event="rowSelect"
+					update=" listForm:viewButton listForm:editButton" />
+				<p:ajax event="rowUnselect"
+					update="listForm:viewButton  listForm:editButton" />
+
+				<p:column headerText="#{loc.ListComCompanyTitle_id}"
+					filterBy="#{item.id}" sortBy="#{item.id}">
+
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column headerText="#{loc.ListComCompanyTitle_fedralIdentityCode}"
+					sortBy="#{item.federalIdentityCode}"
+					filterBy="#{item.federalIdentityCode}">
+
+					<h:outputText value="#{item.federalIdentityCode}" />
+				</p:column>
+				<p:column filterBy="#{item.lastModificationDate}"
+					sortBy="#{item.lastModificationDate}"
+					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
+					<f:facet name="filter">
+						<p:calendar onclick="PF('datalist').filter()"
+							onblur="PF('datalist').filter()"
+							onchange="PF('datalist').filter()" />
+					</f:facet>
+					<h:outputText value="#{item.lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" timeZone="GMT+2	" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="#{loc.ListComCompanyTitle_name}"
+					filterBy="#{item.companyName}" sortBy="#{item.companyName}">
+
+					<h:outputText value="#{item.companyName}" />
+				</p:column>
+				<p:column
+					headerText="#{loc.ListComCompanyTitle_companyNameAlternative}"
+					filterBy="#{item.alternativeCompanyName}"
+					sortBy="#{item.alternativeCompanyName}">
+
+					<h:outputText value="#{item.alternativeCompanyName}" />
+				</p:column>
+				<p:column headerText="#{loc.ListComCompanyTitle_modifiedByUserName}"
+					filterBy="#{item.modificationMakerName}"
+					sortBy="#{item.modificationMakerName}">
+
+					<h:outputText value="#{item.modificationMakerName}" />
+				</p:column>
+				<p:column headerText="#{loc.ListComCompanyTitle_comState}"
+					filterBy="#{item.state.stateName}" sortBy="#{item.state.stateName}">
+					<h:outputText value="#{item.state.stateName}" />
+
+				</p:column>
+				<p:column headerText="#{loc.ListComCompanyTitle_comCountry}"
+					filterBy="#{item.state.stateId.country.countryName}"
+					sortBy="#{item.state.stateId.country.countryName}">
+					<h:outputText value="#{item.state.stateId.country.countryName}" />
+				</p:column>
+
+
+			</p:dataTable>
+			<f:facet name="footer">
+				<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+					value="#{loc.Create}"
+					actionListener="#{companyManagementBean.prepareCreate}" 
+					oncomplete="PF('createDialog').show()" update=":growl :createForm" />
+				<p:commandButton id="viewButton" icon="ui-icon-search"
+					value="#{loc.View}" update=":growl :viewForm" 
+					actionListener="#{companyManagementBean.view()}"
+					disabled=" #{empty companyManagementBean.selected.id}" />
+				<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil" 
+					value="#{loc.Edit}" update=":growl :editForm"
+					actionListener="#{companyManagementBean.edit()}"
+					disabled=" #{companyManagementBean.selected.id ==null}" />
+
+
+			</f:facet>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

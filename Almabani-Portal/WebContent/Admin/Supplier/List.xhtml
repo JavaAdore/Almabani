@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListOamSupplierTitle}"
+			style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" value="#{supplierManagementBean.items}"
+				resizableColumns="true" var="item" selectionMode="single" widgetVar="datalist"
+				draggableColumns="true" draggableRows="true"
+				selection="#{supplierManagementBean.selected}" rowKey="#{item.id}"
+				paginator="true" lazy="true" rows="10"
+				rowsPerPageTemplate="10,20,30">
+
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
+				<p:column headerText="#{loc.ListOamSupplierTitle_id}"
+					sortBy="#{item.id}" filterBy="#{item.id}">
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamSupplierTitle_supplierName}"
+					sortBy="#{item.supplierName}" filterBy="#{item.supplierName}">
+					<h:outputText value="#{item.supplierName}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamSupplierTitle_company}" rendered="#{applicationScopeStore.isAdminUser()}"
+					sortBy="#{item.company.companyName}"
+					filterBy="#{item.company.companyName}">
+					<p:outputLabel value="#{item.company.companyName}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamSupplierTitle_address}"
+					sortBy="#{item.address}" filterBy="#{item.address}">
+					<h:outputText value="#{item.address}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamSupplierTitle_addComplementName}"
+					sortBy="#{item.addComplementName}"
+					filterBy="#{item.addComplementName}">
+					<h:outputText value="#{item.addComplementName}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamSupplierTitle_responsibleNumber}"
+					sortBy="#{item.responsibleNumber}"
+					filterBy="#{item.responsibleNumber}">
+					<h:outputText value="#{item.responsibleNumber}" />
+				</p:column>
+
+				<p:column
+					headerText="#{loc.ListOamSupplierTitle_observationDescription}"
+					sortBy="#{item.observationDescription}"
+					filterBy="#{item.observationDescription}">
+
+					<h:outputText value="#{item.observationDescription}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamSupplierTitle_indActive}"
+					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+				</p:column>
+
+
+				<f:facet name="footer">
+					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+						value="#{loc.Create}"
+						actionListener="#{supplierManagementBean.prepareCreate}"
+						update=":createForm:display"
+						oncomplete="PF('createDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="PF('viewDialog').show()"
+						disabled="#{empty supplierManagementBean.selected}" />
+					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
+						value="#{loc.Edit}" update=":editForm:display"
+						oncomplete="PF('editDialog').show()"
+						disabled="#{empty supplierManagementBean.selected}" />
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

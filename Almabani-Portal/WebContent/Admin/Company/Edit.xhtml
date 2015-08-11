@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true" 
+		resizable="false" appendToBody="true"
+		header="#{loc.EditComCompanyTitle}">
+
+		<h:form id="editForm">
+
+			
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="4"
+					rendered="#{companyManagementBean.selected != null}">
+					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_NAME}" />
+					<p:inputText id="name"
+						value="#{companyManagementBean.selected.companyName}"
+						title="#{loc.CreateComCompanyTitle_name}" required="true"
+						requiredMessage="#{loc.CreateComCompanyRequiredMessage_name}" />
+
+					<p:outputLabel
+						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_FEDRAL_IDENTITY_CODE}" />
+
+					<p:inputText id="fedralIdentityCode"
+						value="#{companyManagementBean.selected.federalIdentityCode}"
+						title="#{loc.CreateComCompanyTitle_fedralIdentityCode}"
+						required="true"
+						requiredMessage="#{loc.CreateComCompanyRequiredMessage_fedralIdentityCode}" />
+					<p:outputLabel
+						value="#{loc.ALMABANI_COMPANY_CREATE_ALTERNATIVE_COMPANY_NAME}" />
+					<p:inputText id="companyNameAlternative"
+						value="#{companyManagementBean.selected.alternativeCompanyName}"
+						title="#{loc.CreateComCompanyTitle_companyNameAlternative}" />
+
+
+					<p:outputLabel
+						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_COUNTRY}" />
+					<p:selectOneMenu
+						
+						converter="#{countryConverter}">
+						<p:ajax listener="#{companyManagementBean.countryChanged}"
+							update="states" />
+
+						<f:selectItem itemValue=""
+							itemLabel="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_SELECT_COUNTRY}"
+							itemDisabled="#{applicationScopeStore.countries.size()>0}" />
+						<f:selectItems value="#{applicationScopeStore.countries}"
+							var="country" itemLabel="#{country.countryName} "
+							itemValue="#{country}" />
+					</p:selectOneMenu>
+
+
+
+					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_STATE}" />
+					<p:selectOneMenu id="states"
+						value="#{companyManagementBean.selected.state}"
+						converter="#{stateConverter}">
+						<f:selectItem itemValue=""
+							itemLabel="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_SELECT_STATE}"
+							itemDisabled="#{companyManagementBean.states.size()>0}" />
+						<f:selectItems value="#{companyManagementBean.states}" var="state"
+							itemLabel="#{state.stateName} " itemValue="#{state}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.ALMABANI_COMPANY_SYSTEM_LANGUAGE_IND}" />
+
+					<p:selectOneMenu
+						value="#{companyManagementBean.selected.indSystemLanguage}">
+						<f:selectItem itemValue="E" itemLabel="English" />
+						<f:selectItem itemValue="P" itemLabel="Portoges" />
+						<f:selectItem itemValue="S" itemLabel="Spanish" />
+					</p:selectOneMenu>
+
+
+
+				</p:panelGrid>
+			</h:panelGroup>
+	<p:commandButton actionListener="#{companyManagementBean.saveNew}"
+					value="#{loc.Save}" update=":growl :listForm"
+					oncomplete="if(!args.validationFailed and #{companyManagementBean.operationSuccess} ){PF('editDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('editDialog').hide()" />
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

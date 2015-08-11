@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateSecModuleTitle}">
+
+		<h:form id="createForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{moduleManagementBean.selected != null}">
+
+					<p:outputLabel value="#{loc.CreateSecModuleLabel_orderMenuNumber}" />
+					<p:spinner value="#{moduleManagementBean.selected.orderMenuNumber}"
+						max="1000" min="0" /> 
+					<p:outputLabel value="#{loc.CreateSecModuleLabel_system}" />
+					<p:selectOneMenu id="item"
+						value="#{moduleManagementBean.selected.system}" required="true"
+						converter="#{systemConverter}" styleClass="fullWith"
+						requiredMessage="#{loc.EditSecModuleRequiredMessage_system}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{moduleManagementBean.sytems}" var="system"
+							itemValue="#{system}" itemLabel="#{system.systemCode}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="#{loc.CreateSecModuleLabel_indActive}" />
+					<p:selectOneMenu value="#{moduleManagementBean.selected.indActive}"
+						required="true" styleClass="fullWith"
+						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="#{loc.CreateSecModuleLabel_moduleCode}" />
+					<p:inputText value="#{moduleManagementBean.selected.moduleCode}"
+						required="true" style="width:175px"
+						requiredMessage="#{loc.CreateSecModuleRequiredMessage_moduleCode}" />
+
+					<p:outputLabel
+						value="#{loc.CreateSecModuleLabel_moduleDescription}" />
+					<p:inputTextarea
+						value="#{moduleManagementBean.selected.moduleDescription}"
+						required="true"
+						requiredMessage="#{loc.CreateSecModuleRequiredMessage_moduleDescription}" />
+
+
+					<p:outputLabel
+						value="#{loc.CreateSecModuleLabel_englishLabelDescription}" />
+					<p:inputTextarea
+						value="#{moduleManagementBean.selected.englishLabelDescription}" />
+
+					<p:outputLabel
+						value="#{loc.CreateSecModuleLabel_portugueseLabelDescription}" />
+					<p:inputTextarea
+						value="#{moduleManagementBean.selected.portugueseLabelDescription}" />
+
+					<p:outputLabel
+						value="#{loc.CreateSecModuleLabel_spanishLabelDescription}" />
+					<p:inputTextarea
+						value="#{moduleManagementBean.selected.spanishLabelDescription}" />
+
+
+
+
+				</p:panelGrid>
+				<p:commandButton actionListener="#{moduleManagementBean.saveNew}"
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('createDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+
+</html>

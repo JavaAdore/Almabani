@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.EditSecUserTitle}">
+
+		<h:form id="editForm">
+
+			<h:panelGroup id="messagePanel">
+				<p:messages id="editMessages" />
+			</h:panelGroup>
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{userManagementBean.selected != null}">
+					
+					<h:outputText id="userLoginCode"
+						value="#{userManagementBean.selected.userLoginCode}" />
+					
+					<p:inputText id="indActive"
+						value="#{userManagementBean.selected.indActive}"
+						title="#{loc.EditSecUserTitle_indActive}" />
+					<p:calendar id="beginInactivityDate" pattern="MM/dd/yyyy"
+						value="#{userManagementBean.selected.beginInactivityDate}"
+						title="#{loc.EditSecUserTitle_beginInactivityDate}"
+						showOn="button" />
+					
+					<p:inputText id="indAdminSystem"
+						value="#{userManagementBean.selected.indAdminSystem}"
+						title="#{loc.EditSecUserTitle_indAdminSystem}" />
+					
+					<p:inputText id="password"
+						value="#{userManagementBean.selected.password}"
+						title="#{loc.EditSecUserTitle_password}" />
+				</p:panelGrid>
+				<p:commandButton actionListener="#{userManagementBean.saveNew}"
+					value="#{loc.Save}"
+					update="display,messagePanel,:listForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('editDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

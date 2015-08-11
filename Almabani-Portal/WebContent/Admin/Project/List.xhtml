@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	<h:form id="ProjectsListForm">
+
+		<p:panel header="Projects"
+			style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable var="project" value="#{projectBean.projectsList}"
+				lazy="true" scrollable="true" scrollRows="10" liveScroll="true"
+				resizableColumns="true" selectionMode="single" rows="10"
+				selection="#{projectBean.selectedProject}" rowKey="#{project.id}"
+				paginator="true" rowsPerPageTemplate="10,20,30">
+
+				<p:ajax event="rowSelect" 	listener="#{projectBean.onRowSelect}"
+				
+					update="editButton viewButton" />
+				<p:ajax event="rowUnselect"
+					update="viewButton  editButton" />
+
+				<p:column headerText="ID" filterBy="#{project.id}"
+					sortBy="#{project.id}">
+
+					<h:outputText value="#{project.id}" />
+				</p:column>
+
+				<p:column headerText="Project Code" sortBy="#{project.projectCode}"
+					filterBy="#{project.projectCode}">
+
+					<h:outputText value="#{project.projectCode}" />
+				</p:column>
+
+				<p:column headerText="Company"
+					sortBy="#{project.company.companyName}"
+					filterBy="#{project.company.companyName}">
+
+					<h:outputText value="#{project.company.companyName}" />
+				</p:column>
+
+				<p:column headerText="Contractor"
+					sortBy="#{project.contractor.contractorDescription}"
+					filterBy="#{project.contractor.contractorDescription}">
+
+					<h:outputText value="#{project.contractor.contractorDescription}" />
+				</p:column>
+
+				<p:column sortBy="#{project.validityBeginDate}" style="width:110px;">
+					<f:facet name="header">
+						<h:outputText value="Validity Begin Date" />
+					</f:facet>
+					<h:outputText value="#{project.validityBeginDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{project.validityEndDate}" style="width:110px;">
+					<f:facet name="header">
+						<h:outputText value="Validity End Date" />
+					</f:facet>
+					<h:outputText value="#{project.validityEndDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{project.lastModificationDate}"
+					style="width:110px;">
+					<f:facet name="header">
+						<h:outputText value="Last Modification Date" />
+					</f:facet>
+					<h:outputText value="#{project.lastModificationDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Modifier Name"
+					sortBy="#{project.modificationMakerName}"
+					filterBy="#{project.modificationMakerName}">
+
+					<h:outputText value="#{project.modificationMakerName}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<center>
+						<p:commandButton id="createButton" icon="ui-icon-plus"
+							value="#{loc.Create}"
+							actionListener="#{projectBean.prepareCreateProject()}"
+							oncomplete="PF('createProjectDialog').show()"
+							update=":growl :createForm" />
+
+						<p:commandButton id="viewButton" icon="ui-icon-search"
+							value="#{loc.View}" update=":growl :viewForm"
+							onclick="PF('viewDialog').show()"
+							disabled=" #{empty projectJobTitleBean.selectedProjectJobTitle}" />
+
+						<p:commandButton id="editButton" icon="ui-icon-pencil"
+							value="#{loc.Edit}" update=":growl :editForm"
+							onclick="PF('editPJTDialog').show()"
+							disabled=" #{empty projectJobTitleBean.selectedProjectJobTitle}" />
+					</center>
+				</f:facet>
+			</p:dataTable>
+
+
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

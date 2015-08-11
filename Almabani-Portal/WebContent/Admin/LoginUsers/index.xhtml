@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/master.xhtml">
+
+	<ui:define name="title">
+		<h:outputText
+			value="#{loc.ALMABANI_GENERAL_LOGIN_USERS_MANAGEMENT_PAGE}"></h:outputText>
+	</ui:define>
+
+
+	<ui:define name="content">
+		<h:form>
+			<p:remoteCommand name="refreshForm" update=":listForm"></p:remoteCommand>
+		</h:form>
+		<h:form id="listForm">
+
+			<p:panel header="#{loc.ListOamItemTitle}"
+				style="margin-left:auto; margin-right:auto ; width:85%">
+				<p:dataTable id="datalist"
+					value="#{httpSessionManagementBean.sessionMap.entrySet()}"
+					draggableColumns="true" draggableRows="true" rowIndexVar="index"
+					resizableColumns="true" widgetVar="datalist" var="item"
+					paginator="true" rows="10" rowsPerPageTemplate="10,20,30">
+
+					<f:facet name="header">
+						<p:commandButton id="toggler" type="button"
+							value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+							icon="ui-icon-calculator" />
+						<p:columnToggler datasource="datalist" trigger="toggler" />
+
+						<p:commandButton value="#{loc.ALMABANI_GEENRAL_REFRESH}"
+							style="float:right" update="@form" />
+
+					</f:facet>
+
+					<p:column headerText="#{loc.ALMABANI_GENERAL_SELECT_USER}"
+						width="70">
+						<f:facet name="hader">
+							<p:selectOneMenu style="margin-left:auto ; margin-right:auto;">
+								<p:ajax  update="cick"
+									listener="#{httpSessionManagementBean.selectDeSelectAll}" />
+							</p:selectOneMenu>
+						</f:facet>
+						<center>
+							<p:selectBooleanCheckbox converter="#{userConverter}">
+								<p:ajax event="change" update="cick"
+									listener="#{httpSessionManagementBean.checkChanged}" />
+								<f:attribute name="user" value="#{item.key}" />
+							</p:selectBooleanCheckbox>
+						</center>
+					</p:column>
+
+					<p:column headerText="#{loc.ALMABANI_GENERAL_USER}"
+						filterBy="#{item.key.userLoginCode}">
+
+						<h:outputText value="#{item.key.userLoginCode}" />
+					</p:column>
+
+
+					<p:column headerText="#{loc.ALMABANI_GENERAL_USER_LOGIN_DATE}">
+
+						<h:outputText value="#{item.value.loginDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"
+								timeZone="GMT+2" />
+						</h:outputText>
+					</p:column>
+
+
+					<p:column headerText="#{loc.ALMABANI_GENERAL_IP}">
+						<h:outputText value="#{item.value.ipAddress}" />
+					</p:column>
+
+					<p:column headerText="#{loc.ALMABANI_GENERAL_DEVICE_TYPE}">
+						<h:outputText value="#{item.value.deviceType}" />
+					</p:column>
+
+					<p:column headerText="#{loc.ALMABANI_GENERAL_LOGIN_SINCE}">
+						<h:outputText
+							value="#{ applicationScopeStore.getLoginDurationSince( item.value.loginDate)}" />
+					</p:column>
+
+
+
+					<f:facet name="footer">
+
+						<p:commandButton id="cick"
+							actionListener="#{httpSessionManagementBean.kickSelected()}" disabled="#{empty httpSessionManagementBean.usersToCick}"
+							value="#{loc.ALMABANI_GENERAL_KICK_SELECTED}" update="@form"></p:commandButton>
+					</f:facet>
+				</p:dataTable>
+
+			</p:panel>
+
+		</h:form>
+
+		<script> 
+	
+	</script>
+
+	</ui:define>
+
+</ui:composition>

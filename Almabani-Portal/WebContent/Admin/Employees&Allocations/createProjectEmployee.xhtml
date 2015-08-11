@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+	<p:dialog id="createProjectEmpDialog" 
+		widgetVar="createProjectEmployeeDialog" modal="true" dynamic="true"
+		resizable="false"  
+		header="Create New Employee Project" width="90%">
+		<p:ajax event="close" update=":employeeListForm:growl4Employees" />
+		<h:form id="createProjectEmployeeForm">
+			<h:panelGroup id="display">
+				<center>
+					<p:panelGrid columns="2" columnClasses="label, value"
+						style="width:100%"
+						>
+
+						<p:outputLabel for="allocationTypes" value="Allocation Type: " />
+						<p:selectOneMenu id="allocationTypes"
+							converter="#{allocationTypeConverter}" required="true" requiredMessage="required allocation type" converterMessage="error convertion"
+							value="#{projectEmployeeBean.projectEmployee4Create.allocationType}"
+							style="width:250px">
+							<f:selectItem itemLabel="Select Allocation Type" itemValue=""
+								 />
+							<f:selectItems value="#{projectEmployeeBean.allocationTypes}"
+								var="allocationType"
+								itemValue="#{allocationType}"
+								itemLabel="#{allocationType.allocationTypeDescription}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="projectJobTitles" value="Project Job Title: " />
+						<p:selectOneMenu id="projectJobTitles" converterMessage="error convertion projectTitle"
+							converter="#{projectJobTitleConverter}" required="true"
+							value="#{projectEmployeeBean.projectEmployee4Create.projectJobTitle}"
+							style="width:250px">
+							<f:selectItem itemLabel="Select Project Job Title" itemValue=""
+								 />
+							<f:selectItems value="#{projectEmployeeBean.projectJobTitles}"
+								var="projectJobTitle"
+								itemValue="#{projectJobTitle}"
+								itemLabel="#{projectJobTitle.projectJobTitleDescription}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="projects" value="Project: " />
+						<p:selectOneMenu id="projects" converter="#{projectConverter}" converterMessage="error convertion project"
+							required="true"
+							value="#{projectEmployeeBean.projectEmployee4Create.project}"
+							style="width:250px">
+							<f:selectItem itemLabel="Select Project" itemValue=""
+								 />
+							<f:selectItems value="#{projectEmployeeBean.projects}"
+								var="project" 
+								itemValue="#{project}"
+								itemLabel="#{project.projectCode}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="employeeContractTypes"
+							value="Employee Contract Type: " />
+						<p:selectOneMenu id="employeeContractTypes" required="true"
+							value="#{projectEmployeeBean.projectEmployee4Create.employeeContractType}"
+							style="width:250px">
+							<f:selectItem itemLabel="Select Employee Contract Type"
+								itemValue=""  />
+							<f:selectItems
+								value="#{projectEmployeeBean.employeeContractTypes}"
+								var="employeeContractType"
+								itemLabel="#{employeeBean.extractFromBundle(employeeContractType.key)}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="validityBeginDate"
+							value="Validity Begin Date:" />
+						<p:calendar id="validityBeginDate" style="width:250px" pattern="dd/MM/yyyy"
+							value="#{projectEmployeeBean.projectEmployee4Create.validityBeginDate}" />
+							
+						<p:outputLabel for="validityEndDate"
+							value="Validity End Date:" />
+						<p:calendar id="validityEndDate" style="width:250px" pattern="dd/MM/yyyy"
+							value="#{projectEmployeeBean.projectEmployee4Create.validityEndDate}" />
+
+					</p:panelGrid>
+					<p:commandButton value="Submit" update=":growl :employeeListForm:projectsEmployeeCurrentList" validateClient="true"
+					actionListener="#{projectEmployeeBean.saveOrUpdate(projectEmployeeBean.projectEmployee4Create)}"  oncomplete="PF('createProjectEmployeeDialog').hide()"/>
+				</center>
+			</h:panelGroup>
+		</h:form>
+	</p:dialog>
+</ui:composition>

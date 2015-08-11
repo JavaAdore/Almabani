@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="viewQuotataionDlg" widgetVar="viewQuotationDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ViewOamQuotationTitle}">
+
+		<h:form id="quotationquotationViewForm">
+
+			<h:panelGroup id="quotationDisplay">
+				<p:panelGrid columns="2"
+					rendered="#{quotationManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewOamQuotationLabel_id}" />
+					<h:outputText value="#{quotationManagementBean.selected.id}"
+						title="#{loc.ViewOamQuotationTitle_id}" />
+					<h:outputText value="#{loc.ViewOamQuotationLabel_department}" />
+					<h:outputText value="#{quotationManagementBean.selected.department.departmentName}"
+						title="#{loc.ViewOamQuotationTitle_id}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_indTypeQuotation}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.indTypeQuotation}"
+						title="#{loc.ViewOamQuotationTitle_indTypeQuotation}" />
+					<h:outputText
+						value="#{loc.ViewOamQuotationLabel_quotationDescription}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.quotationDescription}"
+						title="#{loc.ViewOamQuotationTitle_quotationDescription}" />
+					<h:outputText value="#{loc.ViewOamQuotationLabel_demand}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.demand.demandSummaryDescription}"
+						title="#{loc.ViewOamQuotationTitle_quotationDescription}" />
+					<h:outputText value="#{loc.ViewOamQuotationLabel_insertLoginCode}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.insertLoginCode}"
+						title="#{loc.ViewOamQuotationTitle_insertLoginCode}" />
+					<h:outputText value="#{loc.ViewOamQuotationLabel_insertRowDate}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.insertRowDate}"
+						title="#{loc.ViewOamQuotationTitle_insertRowDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText
+						value="#{loc.ViewOamQuotationLabel_modificationLoginCode}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.modificationLoginCode}"
+						title="#{loc.ViewOamQuotationTitle_modificationLoginCode}" />
+					<h:outputText
+						value="#{loc.ViewOamQuotationLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewOamQuotationTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText value="#{loc.ViewOamQuotationLabel_creationDate}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.creationDate}"
+						title="#{loc.ViewOamQuotationTitle_creationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}"
+					onclick="PF('viewQuotationDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

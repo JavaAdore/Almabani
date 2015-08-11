@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/master.xhtml">
+
+
+	<ui:define name="title">
+		<h:outputText value="#{loc.SecApplicationGrantsTitle}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="companyUserForm">
+
+			<p:panelGrid columns="5"
+				style="margin-left:auto; margin-right:auto ; width:85%">
+
+
+				<h:outputText value="#{loc.ListOamSupplierTitle_company}" />
+
+				<p:selectOneMenu converter="#{companyConverter}"
+					value="#{companyGrantsManagementBean.company}" required="true"
+					requiredMessage="#{loc.CreateOamSupplierRequiredMessage_company}">
+					<f:selectItem itemValue=""
+						itemLabel="#{loc.ALMABANI_SUPPLIER_CREATE_SUPPLIER_SELECT_COMPANY}" />
+					<f:selectItems value="#{companyGrantsManagementBean.companies}"
+						var="company" itemLabel="#{company.companyName} "
+						itemValue="#{company}" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="#{loc.ALMABANI_GRANTS_DISPLAY_GRANTS}"
+					actionListener="#{companyGrantsManagementBean.loadGrantableApplications()}"
+					update=":growl grantForm:grantsTable" />
+			</p:panelGrid>
+
+
+		</h:form>
+		<h:form id="grantForm">
+			<p:dataTable widgetVar="grantsTable" id="grantsTable"
+				style="margin-left:auto; margin-right:auto ; width:85%"
+				value="#{companyGrantsManagementBean.grantableApplications}"
+				var="app" draggableColumns="true" draggableRows="true"
+				paginator="true" lazy="true" rows="10"
+				rowsPerPageTemplate="10,20,30">
+				<f:facet name="header">
+				</f:facet>
+				<p:column headerText="#{loc.ALMABANI_GRANT_ACCESS_GRANTED}">
+					<p:selectBooleanCheckbox value="#{app.granted}" />
+				</p:column>
+				<p:column headerText="#{loc.ALMABANI_GENERAL_STATUS}">
+
+					<p:selectOneMenu value="#{app.indActive}" required="true"
+						styleClass="fullWith"
+						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+				</p:column>
+
+				<p:column headerText="#{loc.ALMABANI_GRANT_APPLICATION}">
+					<p:outputLabel value="#{app.application.codApplication}" />
+				</p:column>
+
+				<p:column headerText="#{loc.ALMABANI_GRANT_APPLICATION_DESCRIPTION}">
+					<p:outputLabel value="#{app.application.applicationDescription}" />
+				</p:column>
+				
+				
+				<p:column headerText="#{loc.ALMABANI_GRANT_APPLICATION_URL}">
+					<p:outputLabel value="#{app.application.linkCodeDescription}" />
+				</p:column>
+				
+				<f:facet name="footer">
+					<p:commandButton value="#{loc.ALMABANI_GRANT_GRANT_ACCESS}"
+						actionListener="#{companyGrantsManagementBean.updateAccess()}"
+						update=":growl" />  
+				</f:facet>
+			</p:dataTable>
+
+			<br />
+
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>

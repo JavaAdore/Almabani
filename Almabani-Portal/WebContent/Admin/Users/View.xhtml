@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		resizable="false" appendToBody="true" header="#{loc.ViewSecUserTitle}">
+
+		<h:form id="viewForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{userManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewSecUserLabel_userLoginCode}" />
+					<h:outputText value="#{userManagementBean.selected.userLoginCode}"
+						title="#{loc.ViewSecUserTitle_userLoginCode}" />
+					<h:outputText value="#{loc.ViewSecUserLabel_registrationDate}" />
+					<h:outputText
+						value="#{userManagementBean.selected.registrationDate}"
+						title="#{loc.ViewSecUserTitle_registrationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText value="#{loc.ViewSecUserLabel_indActive}" />
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(userManagementBean.selected.indActive)}"
+						title="#{loc.ViewSecUserTitle_indActive}" />
+					<h:outputText value="#{loc.ViewSecUserLabel_beginInactivityDate}" />
+					<h:outputText
+						value="#{userManagementBean.selected.beginInactivityDate}"
+						title="#{loc.ViewSecUserTitle_beginInactivityDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText value="#{loc.ViewSecUserLabel_motiveInactivityDate}" />
+					<h:outputText
+						value="#{userManagementBean.selected.motiveInactivityDate}"
+						title="#{loc.ViewSecUserTitle_motiveInactivityDate}" />
+					<h:outputText value="#{loc.ViewSecUserLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{userManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewSecUserTitle_modificationMakerName}" />
+					<h:outputText value="#{loc.ViewSecUserLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{userManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewSecUserTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText value="#{loc.ViewSecUserLabel_indAdminSystem}" />
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(userManagementBean.selected.indAdminSystem)}"
+						title="#{loc.ViewSecUserTitle_indAdminSystem}" />
+					<h:outputText value="#{loc.ViewSecUserLabel_password}" />
+					
+					<p:inplace id="event" effectSpeed="fast" event="click"
+						label="#{loc.ALMABANO_GENERAL_CLICK_HERE_TO_DISPLAY_PASSWORD} " >
+						<p:ajax event="save" update=":growl" />
+						<h:outputText value="#{userManagementBean.selected.password}" 
+							 />
+					</p:inplace>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" immediate="true"
+					onclick="PF('viewDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

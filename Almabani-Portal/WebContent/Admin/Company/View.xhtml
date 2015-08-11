@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="viewDlg" widgetVar="viewDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.ViewComCompanyTitle}">
+
+            <h:form id="viewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{companyManagementBean.selected != null}">
+                        <h:outputText value="#{loc.ViewComCompanyLabel_id}"/>
+                        <h:outputText value="#{companyManagementBean.selected.id}" title="#{loc.ViewComCompanyTitle_id}"/>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_fedralIdentityCode}"/>
+                        <h:outputText value="#{companyManagementBean.selected.federalIdentityCode}" title="#{loc.ViewComCompanyTitle_fedralIdentityCode}"/>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_lastModifyingDate}"/>
+                        <h:outputText value="#{companyManagementBean.selected.lastModificationDate}" title="#{loc.ViewComCompanyTitle_lastModifyingDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_systemLanguageInd}"/>
+                        <h:outputText value="#{companyManagementBean.selected.indSystemLanguage}" title="#{loc.ViewComCompanyTitle_systemLanguageInd}"/>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_name}"/>
+                        <h:outputText value="#{companyManagementBean.selected.companyName}" title="#{loc.ViewComCompanyTitle_name}"/>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_companyNameAlternative}"/>
+                        <h:outputText value="#{companyManagementBean.selected.alternativeCompanyName}" title="#{loc.ViewComCompanyTitle_companyNameAlternative}"/>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_modifiedByUserName}"/>
+                        <h:outputText value="#{companyManagementBean.selected.modificationMakerName}" title="#{loc.ViewComCompanyTitle_modifiedByUserName}"/>
+                        <h:outputText value="#{loc.ViewComCompanyLabel_comState}"/>
+                        <h:outputText value="#{companyManagementBean.selected.state.stateName}" />
+                        <h:outputText value="#{loc.ViewComCompanyLabel_comCountry}"/>
+                        <h:outputText value="#{companyManagementBean.selected.state.stateId.country.countryName}" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ViewSecSubModuleTitle}">
+
+		<h:form id="viewForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{subModuleManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewSecSubModuleLabel_id}" />
+					<h:outputText value="#{subModuleManagementBean.selected.id}"
+						title="#{loc.ViewSecSubModuleTitle_id}" />
+					<h:outputText value="#{loc.ViewSecSubModuleLabel_module}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.module.moduleCode}" />
+
+					<h:outputText
+						value="#{loc.ViewSecSubModuleLabel_subModuleDescription}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.subModuleDescription}"
+						title="#{loc.ViewSecSubModuleTitle_subModuleDescription}" />
+					<h:outputText value="#{loc.ViewSecSubModuleLabel_orderMenuNumber}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.orderMenuNumber}"
+						title="#{loc.ViewSecSubModuleTitle_orderMenuNumber}" />
+					<h:outputText
+						value="#{loc.ViewSecSubModuleLabel_portugueseLabelDescription}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.portugueseLabelDescription}"
+						title="#{loc.ViewSecSubModuleTitle_portugueseLabelDescription}" />
+					<h:outputText
+						value="#{loc.ViewSecSubModuleLabel_englishLabelDescription}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.englishLabelDescription}"
+						title="#{loc.ViewSecSubModuleTitle_englishLabelDescription}" />
+					<h:outputText
+						value="#{loc.ViewSecSubModuleLabel_spanishLabelDescription}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.spanishLabelDescription}"
+						title="#{loc.ViewSecSubModuleTitle_spanishLabelDescription}" />
+					<h:outputText value="#{loc.ViewSecSubModuleLabel_indActive}" />
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(subModuleManagementBean.selected.indActive)}" />
+					
+					<h:outputText
+						value="#{loc.ViewSecSubModuleLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewSecSubModuleTitle_modificationMakerName}" />
+					<h:outputText
+						value="#{loc.ViewSecSubModuleLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{subModuleManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewSecSubModuleTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}"
+					onclick="PF('viewDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

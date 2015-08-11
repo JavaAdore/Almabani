@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListOamItemsQuotSupplierTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" draggableColumns="true" draggableRows="true" resizableColumns="true"
+				value="#{oamItemsQuotSupplierManagementBean.items}" var="item"
+				selectionMode="single"
+				selection="#{oamItemsQuotSupplierManagementBean.selected}"
+				rowKey="#{item.id}" paginator="true" lazy="true" rows="10"
+				rowsPerPageTemplate="10,20,30">
+				
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" /> 
+				
+				<p:column headerText="#{loc.ListOamItemsQuotSupplierTitle_id}"
+					sortBy="#{item.id}" filterBy="#{item.id}">
+
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamItemsQuotSupplierTitle_supplier}"
+					sortBy="#{item.supplier.supplierName}"
+					filterBy="#{item.supplier.supplierName}">
+					<h:outputText value="#{item.supplier.supplierName}" />
+
+				</p:column>
+
+
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_itemValue}"
+					sortBy="#{item.itemValue}" filterBy="#{item.itemValue}">
+
+					<h:outputText value="#{item.itemValue}" />
+				</p:column>
+
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_warrantyMonthsQutation}"
+					sortBy="#{item.warrantyMonthsQutation}"
+					filterBy="#{item.warrantyMonthsQutation}">
+
+					<h:outputText value="#{item.warrantyMonthsQutation}" />
+				</p:column>
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_deliveryDaysQuotation}"
+					sortBy="#{item.deliveryDaysQuotation}"
+					filterBy="#{item.deliveryDaysQuotation}">
+
+					<h:outputText value="#{item.deliveryDaysQuotation}" />
+				</p:column>
+
+
+
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_perPaymentPo}"
+					sortBy="#{item.perPaymentPo}" filterBy="#{item.perPaymentPo}">
+
+					<h:outputText value="#{item.perPaymentPo}" />
+				</p:column>
+
+
+
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_indSelected}"
+					sortBy="#{item.indSelected}" filterBy="#{item.indSelected}">
+					<h:outputText value="#{item.indSelected}" />
+				</p:column>
+
+
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_itemQuotation}"
+					sortBy="#{item.itemQuotation.observationDescription}"
+					filterBy="#{item.itemQuotation.observationDescription}">
+					<h:outputText value="#{item.itemQuotation.observationDescription}" />
+				</p:column>
+
+
+				<p:column
+					headerText="#{loc.ListOamItemsQuotSupplierTitle_desObservation}"
+					sortBy="#{item.observationDescription}"
+					filterBy="#{item.observationDescription}">
+
+					<h:outputText value="#{item.observationDescription}" />
+				</p:column>
+
+
+				<f:facet name="footer">
+					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+						value="#{loc.Create}"
+						actionListener="#{oamItemsQuotSupplierManagementBean.prepareCreate}"
+						update=":createForm:display"
+						oncomplete="PF('createDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="PF('viewDialog').show()"
+						disabled="#{empty oamItemsQuotSupplierManagementBean.selected}" />
+					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
+						value="#{loc.Edit}" update=":editForm:display"
+						oncomplete="PF('editDialog').show()"
+						disabled="#{empty oamItemsQuotSupplierManagementBean.selected}" />
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

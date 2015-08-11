@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="deptSecListForm"
+				rendered="#{employeesAndAllocationsBean.selectedDepartment.id gt 0}">
+				<br />
+				<p:panel header="#{loc.ListComDepartmentSectionTitle}"
+					style="width:88%">
+
+					<p:dataTable var="departmentSection"
+						value="#{employeesAndAllocationsBean.departmentSections}"
+						scrollable="true" scrollRows="10" liveScroll="true"
+						resizableColumns="true" selectionMode="single" rows="10"
+						selection="#{employeesAndAllocationsBean.selectedDepartmentSection}"
+						rowKey="#{departmentSection.id}" paginator="true"
+						rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect"
+							listener="#{employeesAndAllocationsBean.onDepartmentSectionSelect}"
+							update="@all" />
+
+						<p:column
+							sortBy="#{employeesAndAllocationsBean.selectedCompany.id}">
+							<f:facet name="header">
+								<h:outputText value="Company Number" />
+							</f:facet>
+							<h:outputText
+								value="#{employeesAndAllocationsBean.selectedCompany.id}" />
+						</p:column>
+
+						<p:column
+							sortBy="#{employeesAndAllocationsBean.selectedCompany.companyName}">
+							<f:facet name="header">
+								<h:outputText value="Company Name" />
+							</f:facet>
+							<h:outputText
+								value="#{employeesAndAllocationsBean.selectedCompany.companyName}" />
+						</p:column>
+
+						<p:column
+							sortBy="#{employeesAndAllocationsBean.selectedDepartment.departmentName}">
+							<f:facet name="header">
+								<h:outputText value="Department Name" />
+							</f:facet>
+							<h:outputText
+								value="#{employeesAndAllocationsBean.selectedDepartment.departmentName}" />
+						</p:column>
+
+						<p:column sortBy="#{departmentSection.sectionName}"
+							filterBy="#{departmentSection.sectionName}">
+							<f:facet name="header">
+								<h:outputText value="Department Section Name" />
+							</f:facet>
+							<h:outputText value="#{departmentSection.sectionName}" />
+						</p:column>
+
+						<p:column styleClass="singleLine"
+							sortBy="#{employeesAndAllocationsBean.selectedDepartmentSection.responsibleUserCode}">
+							<f:facet name="header">
+								<h:outputText value="Responsible User Code" />
+							</f:facet>
+							<h:outputText
+								value="#{employeesAndAllocationsBean.selectedDepartmentSection.responsibleUserCode}" />
+						</p:column>
+						
+						<p:column style="width:100px;text-align: center">
+							<f:facet name="header">
+								<h:outputText value="Statistics" />
+							</f:facet>
+             				<p:commandButton update="deptSecListForm:empStatisticsDetails" oncomplete="PF('empStatisticsOP').show('#{component.clientId}')"
+             					 icon="ui-icon-search" title="View Statistics" 
+             					 actionListener="#{employeesAndAllocationsBean.departmentSectionDetails(departmentSection)}">
+             					 
+            				</p:commandButton>
+        				</p:column>
+						
+					</p:dataTable>
+				</p:panel>
+
+				<p:overlayPanel widgetVar="empStatisticsOP" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+					<p:outputPanel id="empStatisticsDetails" style="text-align:center;">
+						<p:panelGrid columns="2"
+							rendered="#{not empty employeesAndAllocationsBean.departmentSection4Details}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+								<h:outputText
+									value="#{employeesAndAllocationsBean.departmentSection4Details.sectionName}" />
+							</f:facet>
+
+							<h:outputText value="Number of Contract Employees" />
+							<h:outputText
+								value="#{employeesAndAllocationsBean.numberOfContractEmployees(employeesAndAllocationsBean.departmentSection4Details)}" />
+
+							<h:outputText value="Number of Support Employees" />
+							<h:outputText
+								value="#{employeesAndAllocationsBean.numberOfSupportEmployees(employeesAndAllocationsBean.departmentSection4Details)}" />
+
+							<h:outputText value="Total Employees" />
+							<h:outputText
+								value="#{employeesAndAllocationsBean.totalEmployees(employeesAndAllocationsBean.departmentSection4Details)}" />
+
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:overlayPanel>
+			</h:form>
+    </ui:composition>
+</html>

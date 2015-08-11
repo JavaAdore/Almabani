@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition
+	xmlns:customComponents="http://java.sun.com/jsf/composite/components">
+
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		closable="false" closeOnEscape="true" resizable="false"
+		appendToBody="true" header="#{loc.ViewOamItemQuotationTitle}">
+
+		<h:form id="viewForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{quotationItemManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewOamItemQuotationLabel_id}" />
+					<h:outputText value="#{quotationItemManagementBean.selected.id}"
+						title="#{loc.ViewOamItemQuotationTitle_id}" />
+					<h:outputText value="#{loc.ViewOamItemQuotationLabel_quotation}" />
+					<p:panelGrid>
+						<h:outputText
+							value="#{quotationItemManagementBean.selected.quotation.quotationDescription}  " />
+						<customComponents:BundledObjectViewer
+							bundledObjectToDisplay="#{quotationItemManagementBean.selected.quotation}" />
+					</p:panelGrid>
+					<h:outputText value="#{loc.ViewOamItemQuotationLabel_project}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.projectItem.project.projectCode}" />
+					<h:outputText
+						value="#{loc.ViewOamItemQuotationLabel_projectItemCode}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.projectItem.item.itemCode}" />
+					<h:outputText value="#{loc.ViewOamItemQuotationLabel_projectItem}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.projectItem.item.itemDescription}" />
+					<h:outputText value="#{loc.ViewOamItemQuotationLabel_qutItem}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.qutItem}"
+						title="#{loc.ViewOamItemQuotationTitle_qutItem}" />
+					<h:outputText
+						value="#{loc.ViewOamItemQuotationLabel_observationDescription}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.observationDescription}"
+						title="#{loc.ViewOamItemQuotationTitle_observationDescription}" />
+					<h:outputText
+						value="#{loc.ViewOamItemQuotationLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewOamItemQuotationTitle_modificationMakerName}" />
+					<h:outputText
+						value="#{loc.ViewOamItemQuotationLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewOamItemQuotationTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

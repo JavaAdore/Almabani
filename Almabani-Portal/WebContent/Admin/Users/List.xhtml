@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:form>
+		<p:remoteCommand name="updateForm" update=":listForm"></p:remoteCommand>
+	</h:form>
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListSecUserTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" value="#{userManagementBean.items}" 
+				var="item" widgetVar="datalist" selectionMode="single"
+				selection="#{userManagementBean.selected}" editable="true"
+				rowKey="#{item.userLoginCode}" paginator="true" rows="10"
+				lazy="true" rowsPerPageTemplate="10,20,30">
+
+				<p:ajax event="rowSelect" update="viewButton " />
+				<p:ajax event="rowUnselect" update="viewButton " />
+				<p:ajax event="rowEdit" listener="#{userManagementBean.onRowEdit}"
+					update=":growl  " oncomplete="updateForm()" />
+				<p:ajax event="rowEditCancel"
+					listener="#{userManagementBean.onRowCancel}" update=":growl" />
+				<p:ajax event="rowEditCancel"
+					listener="#{userManagementBean.onRowCancel}" update=":growl" />
+
+				<p:column headerText="#{loc.ListSecUserTitle_userLoginCode}"
+					sortBy="#{item.userLoginCode}" filterBy="#{item.userLoginCode}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.userLoginCode}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="modelInput" value="#{item.userLoginCode}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="#{loc.ListSecUserTitle_employee}"
+					sortBy="#{item.employee.employeeName}"
+					filterBy="#{item.employee.employeeName}">
+
+
+					<p:cellEditor>
+						<f:facet name="output"  >
+							<h:outputText
+								value="#{item.employee.employeeName}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{item.employee}"
+								styleClass="fullWith" required="true"
+								converter="#{employeeConverter}"
+								requiredMessage="#{loc.EditSecUserRequiredMessage_employee}">
+								<f:selectItem itemLabel="" itemValue=""/>
+								<f:selectItems value="#{userManagementBean.employees}" itemValue="#{employee}"
+									var="employee" itemLabel="#{employee.employeeName}" />
+
+								<f:selectItem />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+
+				</p:column>
+				<p:column headerText="#{loc.ListSecUserTitle_indActive}"
+					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText
+								value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{item.indActive}" styleClass="fullWith">
+								<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+									var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+
+				</p:column>
+
+
+				<p:column headerText="#{loc.ListSecUserTitle_indAdminSystem}"
+					sortBy="#{item.indAdminSystem}" filterBy="#{item.indAdminSystem}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText
+								value="#{applicationScopeStore.getYesNoValue(item.indAdminSystem)}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{item.indAdminSystem}"
+								styleClass="fullWith">
+								<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+									var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column sortBy="#{item.password}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListSecUserTitle_password}" />
+					</f:facet>
+
+					<p:inplace id="event" effectSpeed="fast" event="click"
+						label="#{loc.ALMABANO_GENERAL_CLICK_HERE_TO_DISPLAY_PASSWORD}" editor="true">
+						<p:ajax event="save" update=":growl" />
+						<h:inputText value="#{item.password}" required="true"
+							requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}" />
+					</p:inplace>
+				</p:column>
+				<p:column style="width:32px">
+					<p:rowEditor  >
+					</p:rowEditor> 
+
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+						value="#{loc.Create}"
+						actionListener="#{userManagementBean.prepareCreate}"
+						update=":createForm:display"
+						oncomplete="PF('createDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="PF('viewDialog').show()"
+						disabled="#{empty userManagementBean.selected}" />
+
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

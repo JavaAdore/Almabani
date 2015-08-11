@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="createDialog" widgetVar="createPJTDialog" modal="true"
+		style="z-indez:100" resizable="false" appendToBody="true"
+		header="Create Project Job Title">
+
+		<h:form id="createForm">
+
+
+			<h:panelGroup id="display">
+
+				<p:panelGrid columns="2"
+					rendered="#{projectJobTitleBean.selectedProjectJobTitle != null}">
+
+					<p:outputLabel for="titleDescription" value="Title Description: " />
+					<p:inputTextarea id="titleDescription" rows="5" cols="33"
+						value="#{projectJobTitleBean.selectedProjectJobTitle.projectJobTitleDescription}"
+						style="width:250px; resize: none;" />
+
+					<p:outputLabel for="projects" value="Project: " />
+					<p:selectOneMenu id="projects" converter="#{projectConverter}"
+						required="true"
+						value="#{projectJobTitleBean.selectedProjectJobTitle.project}"
+						style="width:250px">
+						<f:selectItem itemLabel="Select Project" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{projectJobTitleBean.projects}"
+							var="project" itemValue="#{project}"
+							itemLabel="#{project.projectCode}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="active" value="Active: " />
+					<p:selectOneMenu id="active"
+						value="#{projectJobTitleBean.selectedProjectJobTitle.active}" required="true"
+						requiredMessage="Activation is required" style="width:250px">
+						<f:selectItems value="#{projectJobTitleBean.active}" var="active"
+							itemLabel="#{projectJobTitleBean.extractFromBundle(active.key)}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Contractor Value:" for="contractorValue" />
+					<p:inputText id="contractorValue" converter="shortConverter"
+						value="#{projectJobTitleBean.selectedProjectJobTitle.contractorValue}" />
+						
+					<p:outputLabel value="Contractor Agreement Value:" for="contractorAgreementValue" />
+					<p:inputText id="contractorAgreementValue" converter="shortConverter"
+						value="#{projectJobTitleBean.selectedProjectJobTitle.contractorAgreementValue}" />
+					
+				</p:panelGrid>
+
+				<p:commandButton actionListener="#{projectJobTitleBean.saveOrUpdate(projectJobTitleBean.selectedProjectJobTitle)}"
+					value="#{loc.Save}" update=":growl :listForm"
+					oncomplete="if(!args.validationFailed ){PF('createPJTDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('createPJTDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+

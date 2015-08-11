@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun./jsf/facelets"
+      xmlns:h="http://java.sun./jsf/html"
+      xmlns:f="http://java.sun./jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:position>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{loc.Home}" url="/Admin/Company/index.xhtml" icon="ui-icon-home"/>
+                <p:submenu label="#{loc.Maintenance}">
+                    <p:menuitem value="pany" url="/Admin/Company/Company/" />
+                    <p:menuitem value="Country" url="/Admin/Company/Country/" />
+                    <p:menuitem value="Department" url="/Admin/Company/Department/" />
+                    <p:menuitem value="DepartmentSection" url="/Admin/Company/DepartmentSection/" />
+                     <p:menuitem value="Employee" url="/Admin/Company/Employee/" />
+                    <p:menuitem value="State" url="/Admin/Company/State/" />
+                    <p:menuitem value="TypesJobTitle" url="/Admin/Company/TypesJobTitle/" />
+                    <p:menuitem value="OamQuotation" url="/Admin/Company/oamQuotation/" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+    </ui:position>
+
+</html>

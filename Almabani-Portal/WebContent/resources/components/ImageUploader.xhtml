@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+
+
+
+	<composite:interface>
+		<composite:attribute name="objectImplementsByteArrayHolder"
+			required="false"
+			type="com.almabani.common.interfaces.ByteArrayHolder" />
+		<composite:attribute name="defaultImageStyleClass"
+			default="uploadedImageStyleClass" required="false" />
+		<composite:attribute name="imageWidth" default="100" required="false" />
+		<composite:attribute name="ImageHeight" default="100" required="false" />
+
+	</composite:interface>
+
+	<composite:implementation>
+
+		<h:form enctype="multipart/form-data">
+
+
+			<p:fileUpload styleClass="none"
+				fileUploadListener="#{imageUploaderHandlerBean.handleFileUpload}"
+				mode="advanced" update="viewer" auto="true"
+				allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+				<f:attribute
+					name="#{imageUploaderHandlerBean.getByteArrayHolderAttributeName()}"
+					value="#{cc.attrs.objectImplementsByteArrayHolder}" />
+				<p:panelGrid id="viewer" columns="2">
+					<itiGeeks:ByteImageViewer
+						objectImplementsByteArrayHolder="#{cc.attrs.objectImplementsByteArrayHolder}"/>
+					<p:commandLink
+						actionListener="#{imageUploaderHandlerBean.deleteOldImage(cc.attrs.objectImplementsByteArrayHolder)}"
+						rendered="#{cc.attrs.objectImplementsByteArrayHolder.holdedImage !=null}"
+						update="@form">
+						<p:graphicImage name="images/icons/delete.png" />
+
+					</p:commandLink>
+				</p:panelGrid>
+			</p:fileUpload>
+		</h:form>
+
+	</composite:implementation>
+
+</ui:component>

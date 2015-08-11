@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition xmlns:customComponents="http://java.sun.com/jsf/composite/components">
+
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true" dynamic="true"
+		header="#{loc.EditOamItemsQuotSupplierTitle}">
+		<p:panelGrid columns="2">
+				<h:form id="editForm">
+
+					<h:panelGroup id="display">
+						<p:panelGrid columns="4"
+							rendered="#{oamItemsQuotSupplierManagementBean.selected != null}">
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME}" />
+
+							<p:selectOneMenu
+								value="#{oamItemsQuotSupplierManagementBean.selected.itemQuotation}"
+								converter="#{itemQuotataionConverter}" required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME_IS_REQUIRED}">
+
+
+								<f:selectItem itemValue=""
+									itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_OAM_ITEM_QUOTATION}" />
+								<f:selectItems
+									value="#{oamItemsQuotSupplierManagementBean.quotataionItems}"
+									var="quotataionItem"
+									itemLabel="#{quotataionItem.observationDescription} "
+									itemValue="#{quotataionItem}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SUPPLIER}" />
+							<p:selectOneMenu
+								value="#{oamItemsQuotSupplierManagementBean.selected.supplier}"
+								converter="#{supplierConverter}" required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SUPPLIER_REQUIRED}">
+								<f:selectItem itemValue=""
+									itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_SUPPLIER}" />
+								<f:selectItems
+									value="#{oamItemsQuotSupplierManagementBean.suppliers}"
+									var="supplier" itemLabel="#{supplier.supplierName} "
+									itemValue="#{supplier}" />
+							</p:selectOneMenu>
+
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_ITEM_VALUE}" />
+							<p:spinner
+								value="#{oamItemsQuotSupplierManagementBean.selected.itemValue}"
+								min="1" required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_ITEM_VALUE_IS_REQUIRED}" />
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_ITEM_QUANTITY}" />
+							<p:spinner
+								value="#{oamItemsQuotSupplierManagementBean.selected.qutItem}"
+								min="1" required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_ITEM_QUANTITY_IS_REQUIRED}" />
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_NUMBER_OF_WARRENY_MONTHS}" />
+							<p:spinner
+								value="#{oamItemsQuotSupplierManagementBean.selected.warrantyMonthsQutation}"
+								min="1" required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_NUMBER_OF_WARRENY_MONTHS_IS_REQUIRED}" />
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_NUMBER_OF_DELIVERY_DAYS}" />
+							<p:spinner
+								value="#{oamItemsQuotSupplierManagementBean.selected.warrantyMonthsQutation}"
+								min="1" required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_NUMBER_OF_WDELIVERY_DAYS_IS_REQUIRED}" />
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SELECTION_DATE}" />
+							<p:calendar
+								value="#{oamItemsQuotSupplierManagementBean.selected.selectionDate}" />
+
+							<p:outputLabel
+								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OBSERVATION_DESCRIPTION}" />
+							<p:inputTextarea
+								value="#{oamItemsQuotSupplierManagementBean.selected.observationDescription}"
+								required="true"
+								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OBSERVATION_DESCRIPTION_IS_REQUIRED}" />
+
+						</p:panelGrid>
+						<p:commandButton
+							actionListener="#{oamItemsQuotSupplierManagementBean.saveNew}"
+							value="#{loc.Save}" update="display,:growl,:listForm:datalist"
+							oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
+						<p:commandButton value="#{loc.Cancel}"
+							onclick="PF('editDialog').hide()" />
+					</h:panelGroup>
+
+				</h:form>
+							<customComponents:ImageUploader objectImplementsByteArrayHolder="#{oamItemsQuotSupplierManagementBean.selected}" />
+			
+		</p:panelGrid>
+
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

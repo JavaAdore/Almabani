@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ViewOamProjectItemTitle}">
+
+		<h:form id="viewForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{projectItemManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewOamProjectItemLabel_id}" />
+					<h:outputText value="#{projectItemManagementBean.selected.id}"
+						title="#{loc.ViewOamProjectItemTitle_id}" />
+					<h:outputText value="#{loc.ViewOamProjectItemLabel_item}" />
+					<h:outputText
+						value="#{projectItemManagementBean.selected.item.itemCode}"
+						title="#{loc.ViewOamProjectItemTitle_id}" />
+
+					<h:outputText value="#{loc.ViewOamProjectItemLabel_project}" />
+					<h:outputText
+						value="#{projectItemManagementBean.selected.project.projectCode}" />
+
+					<h:outputText value="#{loc.ViewOamProjectItemLabel_indActive}" />
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(projectItemManagementBean.selected.indActive	)}"
+						 />
+					<h:outputText
+						value="#{loc.ViewOamProjectItemLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{projectItemManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewOamProjectItemTitle_modificationMakerName}" />
+					<h:outputText
+						value="#{loc.ViewOamProjectItemLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{projectItemManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewOamProjectItemTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" onclick="viewDialog.hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

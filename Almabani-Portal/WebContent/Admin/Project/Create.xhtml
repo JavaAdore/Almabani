@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="createDialog" widgetVar="createProjectDialog" modal="true"
+		style="z-indez:100" resizable="false" appendToBody="true"
+		header="Create Project">
+
+		<h:form id="createForm">
+			<h:messages id="createProjectMessages" style="color:red;"/>
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2" rendered="#{projectBean.selectedProject != null}">
+					
+					<p:outputLabel for="projectCode" value="Project Code: " />
+					<p:inputText id="projectCode" style="width: 250px;"
+						value="#{projectBean.selectedProject.projectCode}" title="Project Code"
+						required="true" requiredMessage="Project Code field is required" />
+					
+					<p:outputLabel for="company" value="Company: " />
+					<p:selectOneMenu id="company" style="width: 250px;" converter="#{companyConverter}"
+						value="#{projectBean.selectedProject.company}" title="Company" required="true" >
+						<f:selectItem itemValue="" itemLabel="Select Company" />
+						<f:selectItems value="#{projectBean.companies}" var="company"
+							itemValue="#{company}" itemLabel="#{company.companyName}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="contractor" value="Contractor: " />
+					<p:selectOneMenu id="contractor" converter="#{contractorConverter}" 
+						style="width: 250px;" required="true"
+						value="#{projectBean.selectedProject.contractor}" title="Contractor">
+						<f:selectItem itemValue="" itemLabel="Select Contractor" />
+						<f:selectItems value="#{projectBean.contractors}" var="contractor"
+							itemValue="#{contractor}" itemLabel="#{contractor.contractorDescription}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="validateBeginingDate" value="Validate Begining Date: " />
+					<p:calendar id="validateBeginingDate" pattern="dd/MM/yyyy" style="width: 250px;"
+						value="#{projectBean.selectedProject.validityBeginDate}" required="true"
+						title="Validate Begining Date"
+						requiredMessage="Validate Begining Date field is required" />
+
+					<p:outputLabel for="validateEndDate" value="Validate End Date: " />
+					<p:calendar id="validateEndDate" pattern="dd/MM/yyyy" style="width: 250px;"
+						value="#{projectBean.selectedProject.validityEndDate}"
+						title="Validate End Date" />
+
+				</p:panelGrid>
+				<br />
+				<center>
+				<p:commandButton value="Submit" update="createForm:createProjectMessages :growl :ProjectsListForm" validateClient="true"
+					actionListener="#{projectBean.saveOrUpdate()}" />
+				</center>
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+

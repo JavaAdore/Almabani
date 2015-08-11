@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="editDlg" widgetVar="editDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditOamProjectItemTitle}">
+
+            <h:form id="editForm">
+
+                <h:panelGroup id="messagePanel">
+                    <p:messages id="editMessages"/>
+                </h:panelGroup>
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{oamProjectItemController.selected != null}">
+                        Expression primeFacesVersion is undefined on line 61, column 15 in unknown.                        <h:outputText id="id" value="#{oamProjectItemController.selected.id}" />
+                        Expression primeFacesVersion is undefined on line 61, column 15 in unknown.                        <p:selectOneMenu id="item" value="#{oamProjectItemController.selected.item}" title="#{bundle.EditOamProjectItemTitle_item}" required="true" requiredMessage="#{bundle.EditOamProjectItemRequiredMessage_item}">
+                            <f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{oamItemController.items}"
+                                           var="itemItem"
+                                           itemValue="#{itemItem}"
+                                           />
+                        </p:selectOneMenu>
+                        Expression primeFacesVersion is undefined on line 61, column 15 in unknown.                        <p:selectOneMenu id="project" value="#{oamProjectItemController.selected.project}" title="#{bundle.EditOamProjectItemTitle_project}" required="true" requiredMessage="#{bundle.EditOamProjectItemRequiredMessage_project}">
+                            <f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{projectController.items}"
+                                           var="projectItem"
+                                           itemValue="#{projectItem}"
+                                           />
+                        </p:selectOneMenu>
+                        Expression primeFacesVersion is undefined on line 61, column 15 in unknown.                        <p:inputText id="indActive" value="#{oamProjectItemController.selected.indActive}" title="#{bundle.EditOamProjectItemTitle_indActive}" required="true" requiredMessage="#{bundle.EditOamProjectItemRequiredMessage_indActive}"/>
+                        Expression primeFacesVersion is undefined on line 61, column 15 in unknown.                        <p:inputText id="modificationMakerName" value="#{oamProjectItemController.selected.modificationMakerName}" title="#{bundle.EditOamProjectItemTitle_modificationMakerName}" required="true" requiredMessage="#{bundle.EditOamProjectItemRequiredMessage_modificationMakerName}"/>
+                        Expression primeFacesVersion is undefined on line 61, column 15 in unknown.                        <p:calendar id="lastModificationDate" pattern="MM/dd/yyyy" value="#{oamProjectItemController.selected.lastModificationDate}" title="#{bundle.EditOamProjectItemTitle_lastModificationDate}" required="true" requiredMessage="#{bundle.EditOamProjectItemRequiredMessage_lastModificationDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{oamProjectItemController.save}" value="#{bundle.Save}" update="display,messagePanel,:listForm:datalist" oncomplete="if(!args.validationFailed) {editDialog.hide();}"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="editDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

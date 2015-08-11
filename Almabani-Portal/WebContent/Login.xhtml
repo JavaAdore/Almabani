@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="shortcut icon" type="image/png"
+		href="#{request.contextPath}/resources/images/favicon.ico" />
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+
+</h:head>
+
+<h:body>
+	<f:view contentType="text/html">
+
+		<div style="height: 15%; background-color: #232323;">
+			<ui:include src="WEB-INF/template/header4Login.xhtml" />
+		</div>
+		<div style="height: 80%;">
+			<br /> <br /> <br /> <br /> <br /> <br /> <br />
+			<center>
+				<div style="font-family: fantasy; top: 50%;">
+
+					<h:form id="loginForm">
+
+						<p:panel header="Login" style="width: 470px;  text-align: left;">
+
+							<h:panelGrid id="loginPanel" columns="1">
+
+								<p:growl />
+
+
+								<h:outputText value="Username" style="font-size: 18px;" />
+
+								<p:inputText id="username" value="#{loginHandlerBean.userName}" required="true" requiredMessage="#{loc.ALMABANI_LOGIN_USER_NAME_IS_REQUIRED}"
+									style="width: 420px;"></p:inputText>
+
+								<br />
+
+								<h:outputText value="Password" style="font-size: 18px;" />
+
+								<p:password id="password" value="#{loginHandlerBean.password}" required="true"  requiredMessage="#{loc.ALMABANI_PASSWORD_IS_REQUIRED}"
+									feedback="false" style="width: 420px;"></p:password>
+
+								<br />
+								<f:facet name="footer">
+									<p:panelGrid columns="2" styleClass="loginPasswordGrid">
+										<p:commandButton id="login" value="Login" ajax="true"
+											update="@form" action="#{loginHandlerBean.login()}" />
+										<p:commandLink id="user" actionListener="#"
+											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;">
+											<h:outputText value="Forget Password" style="color: #098DB1;" />
+										</p:commandLink>
+									</p:panelGrid>
+
+								</f:facet>
+							</h:panelGrid>
+
+						</p:panel>
+
+					</h:form>
+				</div>
+			</center>
+		</div>
+		<div
+			style="height: 5%; text-align: center; color: white; padding-bottom: 5px;">
+			<ui:include src="WEB-INF/template/footer.xhtml" />
+		</div>
+	</f:view>
+
+<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loader.gif" />
+		</p:dialog> 
+
+	
+</h:body>
+<ui:debug rendered="true" />
+
+</html>

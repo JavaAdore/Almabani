@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.EditOamItemTitle}">
+
+		<h:form id="editForm">
+
+
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{itemManagementBean.selected != null}">
+					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCode}" />
+					<p:inputText value="#{itemManagementBean.selected.itemCode}"
+						style="width:177px" required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
+
+					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
+					<p:selectOneMenu converter="#{manufacturerConverter}"
+						styleClass="fullWith"
+						value="#{itemManagementBean.selected.manufacturer}"
+						required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{itemManagementBean.manufacturers}"
+							var="manufacturerItem" itemValue="#{manufacturerItem}"
+							itemLabel="#{manufacturerItem.manufacturerName}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
+					<p:selectOneMenu
+						value="#{itemManagementBean.selected.itemCategory}"
+						styleClass="fullWith" required="true"
+						converter="#{itemCategoryConverter}"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCategory}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{itemManagementBean.itemCategories}"
+							var="itemCategory" itemValue="#{itemCategory}"
+							itemLabel="#{itemCategory.categoryItemName}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.CreateOamItemLabel_materialType}" />
+					<p:selectOneMenu
+						value="#{itemManagementBean.selected.materialType}"
+						styleClass="fullWith" required="true"
+						converter="#{materialTypeConverter}"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_materialType}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{itemManagementBean.materialTypes}"
+							var="materialType" itemValue="#{materialType}"
+							itemLabel="#{materialType.materialTypeDescription}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="#{loc.CreateOamItemLabel_indUnitType}" />
+					<p:selectOneMenu value="#{itemManagementBean.selected.indUnitType}"
+						styleClass="fullWith" required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_indUnitType}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{applicationScopeStore.getUnitTypesList()}"
+							var="unitType" itemValue="#{unitType.key}"
+							itemLabel="#{unitType.value}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.CreateOamItemLabel_indActive}" />
+					<p:selectOneMenu value="#{itemManagementBean.selected.indActive}"
+						styleClass="fullWith" required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_indActive}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="yesNoItem" itemValue="#{yesNoItem.key}"
+							itemLabel="#{yesNoItem.value}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="#{loc.CreateOamItemLabel_itemDescription}" />
+
+					<p:inputTextarea
+						value="#{itemManagementBean.selected.itemDescription}"
+						required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}"
+						maxlength="50" />
+
+
+
+				</p:panelGrid>
+				<p:commandButton actionListener="#{itemManagementBean.saveNew}"
+					value="#{loc.Save}"
+					update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF'(editDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="editDialog.hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

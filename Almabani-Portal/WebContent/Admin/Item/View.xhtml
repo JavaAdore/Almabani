@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="viewDlg" widgetVar="viewDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.ViewOamItemTitle}">
+
+            <h:form id="viewForm">
+
+                <h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{itemManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewOamItemLabel_id}" />
+					<h:outputText value="#{itemManagementBean.selected.id}"
+						title="#{loc.ViewOamItemTitle_id}" />
+					<h:outputText value="#{loc.ViewOamItemLabel_manufacturer}" />
+					<h:outputText
+						value="#{itemManagementBean.selected.manufacturer.manufacturerName}" />
+
+					<h:outputText value="#{loc.ViewOamItemLabel_materialType}" />
+					<h:outputText
+						value="#{itemManagementBean.selected.materialType.materialTypeDescription}" />
+						
+					<h:outputText value="#{loc.ViewOamItemLabel_itemCategory}" />
+					<h:outputText
+						value="#{itemManagementBean.selected.itemCategory.categoryItemName}" />
+					
+					<h:outputText value="#{loc.ViewOamItemLabel_itemDescription}" />
+					<h:outputText
+						value="#{itemManagementBean.selected.itemDescription}"
+						title="#{loc.ViewOamItemTitle_itemDescription}" />
+						
+						
+					<h:outputText value="#{loc.ViewOamItemLabel_itemCode}" />
+					<h:outputText value="#{itemManagementBean.selected.itemCode}"
+						title="#{loc.ViewOamItemTitle_itemCode}" />
+						
+					<h:outputText value="#{loc.ViewOamItemLabel_indActive}" />
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(itemManagementBean.selected.indActive)}"
+					 />
+					 
+					<h:outputText value="#{loc.ViewOamItemLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{itemManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewOamItemTitle_modificationMakerName}" />
+						
+					<h:outputText value="#{loc.ViewOamItemLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{itemManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewOamItemTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					
+					<h:outputText value="#{loc.ViewOamItemLabel_indUnitType}" />
+					<h:outputText value="#{applicationScopeStore.getUnitType(itemManagementBean.selected.indUnitType)}"
+						title="#{loc.ViewOamItemTitle_indUnitType}" />
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

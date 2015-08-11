@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateOamProjectItemTitle}">
+
+		<h:form id="createForm">
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{projectItemManagementBean.selected != null}">
+					<p:outputLabel value="#{loc.EditOamProjectItemTitle_item}" />
+					<p:selectOneMenu id="item" 
+						value="#{projectItemManagementBean.selected.item}"
+						required="true"  converter="#{itemConverter}"
+						requiredMessage="#{loc.EditOamProjectItemRequiredMessage_item}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{projectItemManagementBean.oamItems}" var="item"
+							itemValue="#{item}" itemLabel="#{item.itemDescription}" />
+					</p:selectOneMenu>
+				
+					<p:outputLabel value="#{loc.EditOamProjectItemTitle_project}" />
+					<p:selectOneMenu id="project" styleClass="fullWith"
+						value="#{projectItemManagementBean.selected.project}"
+						 required="true" converter="#{projectConverter}"
+						requiredMessage="#{loc.EditOamProjectItemRequiredMessage_project}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{projectItemManagementBean.projects}"
+							var="project" itemValue="#{project}" itemLabel="#{project.projectCode}"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="#{loc.CreateOamProjectItemTitle_indActive}" />
+					<p:selectOneMenu value="#{projectItemManagementBean.selected.indActive}" required="true" styleClass="fullWith"
+						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+						
+					
+				
+				</p:panelGrid>
+				<p:commandButton
+					actionListener="#{projectItemManagementBean.saveNew}"
+					value="#{loc.Save}"
+					update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('createDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

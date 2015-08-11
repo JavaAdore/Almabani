@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.almabani.dataaccess.dao.admincor.MenuDAO'>
+ 
+	<select id='getUserModules' parameterType='String'  resultMap="module" >
+  SELECT t5.des_label_english moduleName,
+         t4.des_label_english subModuleName,
+         t2.cod_application applicationCode,
+         t3.des_label_english applicationName,
+         t1.COD_PERFIL perfilCode,
+         DES_LINK_CODE url   
+    FROM adminsec.sec_applications_grants t1,
+         adminsec.sec_applications_companies t2,
+         adminsec.sec_applications t3,
+         adminsec.sec_sub_modules t4,
+         adminsec.sec_modules t5
+   WHERE     t1.NUM_APPLICATION_COMPANY = t2.NUM_APPLICATION_COMPANY
+         AND t2.cod_application = t3.cod_application
+         AND t3.num_sub_module = t4.num_sub_module
+         AND t4.num_module = t5.num_module
+         AND t3.NUM_TYPE_APPLICATION = 2
+         and T1.COD_USER_LOGIN = #{userLoginCode}
+ORDER BY 1, 2, 3
+   
+
+
+
+	</select>
+
+	<resultMap type='module' id='module'>
+		
+		<result column="moduleName" property="moduleName" />
+		<collection property="subModules" javaType="ArrayList" ofType="subModule" resultMap="subModule" ></collection>
+		
+	</resultMap> 
+
+    
+	<resultMap type='subModule' id='subModule'>
+		<result property='subModuleName' column='subModuleName' />
+		<collection property="applications" 
+			javaType="ArrayList" ofType="application" resultMap="application" />
+	</resultMap>
+
+	<resultMap type='application' id='application'>
+		<result property='applicationCode' column='applicationCode' />
+		<result property='applicationName' column='applicationName' />
+		<result property="perfilCode" column="perfilCode"/>
+		<result property='url' column='url' /> 
+	</resultMap>
+
+
+
+
+
+</mapper>

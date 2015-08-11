@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+
+
+
+	<composite:interface>
+
+		<composite:attribute name="bundledObjectToDisplay" required="true" />
+		<composite:attribute name="imageIcon" required="false"
+			default="images/icons/rightArrow.png" />
+		<composite:attribute name="showEffect" required="false" default="fade" />
+		<composite:attribute name="hideEffect" required="false" default="fade" />
+		<composite:attribute name="showCloseIcon" required="false"
+			default="true" />
+		<composite:attribute name="dismissable" required="false"
+			default="false" />
+		<composite:attribute name="width" required="false" default="16" />
+		<composite:attribute name="height" required="false" default="16" />
+
+	</composite:interface>
+
+	<composite:implementation>
+
+		<p:graphicImage onmouseover="PF('detailsPanel').show()"
+			onmouseout="PF('detailsPanel').hide()" id="image"
+			name="#{cc.attrs.imageIcon}" width="#{cc.attrs.width}"
+			height="#{cc.attrs.height}" />
+	
+		<p:overlayPanel for="image" dynamic="true" widgetVar="detailsPanel" id="detailsPanel"
+			 showEffect="#{cc.attrs.showEffect}"
+			hideEffect="#{cc.attrs.hideEffect}"
+			showCloseIcon="#{cc.attrs.showCloseIcon}">
+			<p:outputPanel style="text-align:center;">
+					<p:dataTable var="element"
+						value="#{bundledObjectViewerBean.bundledObjectToMap(cc.attrs.bundledObjectToDisplay).entrySet()}"
+						columnClasses="label,value">
+						<p:column headerText="#{loc.ALMABANI_GENERAL_FIELD}">
+							<h:outputText value="#{element.key}" />
+						</p:column>
+						<p:column headerText="#{loc.ALMABANI_GENERAL_VALUE}">
+							<h:outputText value="#{element.value}" />
+						</p:column>
+					</p:dataTable>
+			</p:outputPanel>
+		</p:overlayPanel>
+
+	</composite:implementation>
+
+</ui:component>

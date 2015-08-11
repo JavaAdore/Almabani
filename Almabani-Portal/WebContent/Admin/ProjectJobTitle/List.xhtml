@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListComCompanyTitle}"
+			style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable var="projectJobTitle"
+				value="#{projectJobTitleBean.projectJobTitles}" lazy="true"
+				scrollable="true" scrollRows="10" liveScroll="true"
+				resizableColumns="true" selectionMode="single" rows="10"
+				selection="#{projectJobTitleBean.selectedProjectJobTitle}"
+				rowKey="#{projectJobTitle.id}" paginator="true"
+				rowsPerPageTemplate="10,20,30">
+				
+				<p:ajax event="rowSelect"
+					update=" listForm:viewButton listForm:editButton" />
+				<p:ajax event="rowUnselect"
+					update="listForm:viewButton  listForm:editButton" />
+
+				<p:column headerText="ID"
+					filterBy="#{projectJobTitle.id}" sortBy="#{projectJobTitle.id}">
+
+					<h:outputText value="#{projectJobTitle.id}" />
+				</p:column>
+				
+				<p:column headerText="Title Description"
+					sortBy="#{projectJobTitle.projectJobTitleDescription}"
+					filterBy="#{projectJobTitle.projectJobTitleDescription}">
+					
+					<h:outputText value="#{projectJobTitle.projectJobTitleDescription}" />
+				</p:column>
+				
+				<p:column headerText="Project Code"
+					sortBy="#{projectJobTitle.project.projectCode}"
+					filterBy="#{projectJobTitle.project.projectCode}">
+					
+					<h:outputText value="#{projectJobTitle.project.projectCode}" />
+				</p:column>
+				
+				<p:column headerText="Active"
+					sortBy="#{projectJobTitle.active}"
+					filterBy="#{projectJobTitle.active}">
+					
+					<h:outputText value="#{projectJobTitleBean.extractFromBundle(projectJobTitle.active.key)}" />
+				</p:column>
+				
+				
+				
+				<p:column headerText="Contractor Value"
+					sortBy="#{projectJobTitle.contractorValue}"
+					filterBy="#{projectJobTitle.contractorValue}">
+					
+					<h:outputText value="#{projectJobTitle.contractorValue}" />
+				</p:column>
+				
+				<p:column headerText="Contractor Agreement Value"
+					sortBy="#{projectJobTitle.contractorAgreementValue}"
+					filterBy="#{projectJobTitle.contractorAgreementValue}">
+					
+					<h:outputText value="#{projectJobTitle.contractorAgreementValue}" />
+				</p:column>
+
+			</p:dataTable> 
+			<f:facet name="footer">
+				<p:commandButton id="createButton" icon="ui-icon-plus"
+					value="#{loc.Create}"
+					actionListener="#{projectJobTitleBean.prepareCreateProjectJobTitle()}" 
+					oncomplete="PF('createPJTDialog').show()" update=":growl :createForm" />
+				
+				<p:commandButton id="viewButton" icon="ui-icon-search"
+					value="#{loc.View}" update=":growl :viewForm"  onclick="PF('viewDialog').show()"
+					disabled=" #{empty projectJobTitleBean.selectedProjectJobTitle}" />
+				
+				<p:commandButton id="editButton" icon="ui-icon-pencil" 
+					value="#{loc.Edit}" update=":growl :editForm" onclick="PF('editPJTDialog').show()"
+					disabled=" #{empty projectJobTitleBean.selectedProjectJobTitle}" />
+				
+			</f:facet>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

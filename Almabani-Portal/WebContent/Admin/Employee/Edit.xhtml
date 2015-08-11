@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components"
+	template="/WEB-INF/template/master.xhtml">
+
+	<ui:define name="title">
+		<title>Edit Employee</title>
+	</ui:define>
+	<ui:define name="content">
+		<center>
+		<br /> <br />
+			<h:form id="editEmployeeForm">
+				<p:growl id="growl" sticky="true" showDetail="true" />
+				
+				<p:wizard flowListener="#{employeeBean.onFlowProcess}" style="width:90%">
+					<p:tab id="personal" title="Personal">
+						<p:panel header="Personal Details">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<p:outputLabel value="Employee Name:" for="empName" />
+								<p:inputText id="empName" value="#{employeeBean.selectedEmployee.employeeName}" required="true" 
+									requiredMessage="Employee Name is required" style="width:250px"/>
+
+								<p:outputLabel value="Federal Identity Code:" for="federalIdentityCode" />
+								<p:inputText id="federalIdentityCode" value="#{employeeBean.selectedEmployee.federalIdentityCode}" required="true"
+									requiredMessage="Federal Identity Code is required" style="width:250px"/>
+					
+								<p:outputLabel value="State Identity Code:" for="stateIdentityCode" />
+								<p:inputText id="stateIdentityCode" value="#{employeeBean.selectedEmployee.stateIdentityCode}" style="width:250px"/>
+					
+								<p:outputLabel value="Date of Birth:" for="birthDate" />
+        						<p:calendar id="birthDate" value="#{employeeBean.employee.birthDate}" />
+        			        			
+								<p:outputLabel for="genders" value="Gender: " />
+								<p:selectOneMenu id="genders" value="#{employeeBean.selectedEmployee.gender}" style="width:250px">
+									<f:selectItem itemLabel="Select Gender" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.genders}" var="gender" itemLabel="#{employeeBean.extractFromBundle(gender.key)}"/>
+								</p:selectOneMenu>
+
+								<p:outputLabel for="maritalStatus" value="Marital Status: " />
+								<p:selectOneMenu id="maritalStatus" value="#{employeeBean.selectedEmployee.maritalStatus}" style="width:250px">
+									<f:selectItem itemLabel="Select Marital Status" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.maritalStatus}" var="maritalStatus" itemLabel="#{employeeBean.extractFromBundle(maritalStatus.key)}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="country" value="Country: " />
+								<p:selectOneMenu id="country" converter="#{countryConverter}" value="#{employeeBean.selectedEmployee.country}" style="width:250px">
+									<f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.countries}" var="country" itemLabel="#{country.countryName}"/>
+								</p:selectOneMenu>
+								
+								<h:outputText value="Skip to last: " />
+								<h:selectBooleanCheckbox value="#{employeeBean.skip}" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="contact" title="Contact">
+						<p:panel header="Contact Information">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<p:outputLabel value="Telephone Number:" for="telephoneNumber"/>
+								<p:inputText id="telephoneNumber" converter="longConverter" value="#{employeeBean.selectedEmployee.telephoneNumber}"/>
+								
+								<p:outputLabel value="DDI Telephone Number:" for="ddiTelephoneNumber"/>
+								<p:inputText id="ddiTelephoneNumber" converter="shortConverter" value="#{employeeBean.selectedEmployee.ddiTelephoneNumber}"/>
+        			
+        						<p:outputLabel value="DDD Telephone Number:" for="dddTelephoneNumber"/>
+								<p:inputText id="dddTelephoneNumber" converter="shortConverter" value="#{employeeBean.selectedEmployee.dddTelephoneNumber}"/>
+					
+								<p:outputLabel value="Mobile Number:" for="mobileNumber"/>
+								<p:inputText id="mobileNumber" converter="longConverter" value="#{employeeBean.selectedEmployee.mobileNumber}"/>
+					
+								<p:outputLabel value="DDD Mobile Number:" for="ddiMobileNumber"/>
+								<p:inputText id="ddiMobileNumber" converter="shortConverter" value="#{employeeBean.selectedEmployee.ddiMobileNumber}"/>
+					
+								<p:outputLabel value="DDD Mobile Number:" for="dddMobileNumber"/>
+								<p:inputText id="dddMobileNumber" converter="shortConverter" value="#{employeeBean.selectedEmployee.dddMobileNumber}"/>
+								
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="email" title="email">
+						<p:panel header="Email">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<p:outputLabel value="Email1:" for="email1"/>
+								<p:inputText id="email1" value="#{employeeBean.selectedEmployee.email1Description}" style="width:250px">
+                					<f:validator validatorId="custom.emailValidator" />
+            					</p:inputText>
+					
+								<p:outputLabel value="Email2:" for="email2"/>
+								<p:inputText id="email2" value="#{employeeBean.selectedEmployee.email2Description}" style="width:250px">
+                					<f:validator validatorId="custom.emailValidator" />
+            					</p:inputText>
+
+								<h:outputText value="Skip to last: " />
+								<h:selectBooleanCheckbox value="#{employeeBean.skip}" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="company" title="Company">
+						<p:panel header="Company Details">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<p:outputLabel for="departments" value="Department: " />
+								<p:selectOneMenu id="departments" style="width:250px" converter="#{departmentConverter}" value="#{employeeBean.selectedEmployee.departmentSection.department}">
+									<f:selectItem itemLabel="Select Department" itemValue=""/>
+									<f:selectItems value="#{employeeBean.departmentList}" var="department" 
+										itemLabel="#{department.departmentName}" itemValue="#{department}"/>
+									<p:ajax event="valueChange" process="@this" listener="#{employeeBean.onDepartmentSelect()}" update="departmentSections"/>
+								</p:selectOneMenu>
+					
+								<p:outputLabel for="departmentSections" value="Department Section: " />
+								<p:selectOneMenu id="departmentSections" converter="#{departmentSectionConverter}" required="true"
+									value="#{employeeBean.selectedEmployee.departmentSection}" style="width:250px">
+									<f:selectItem itemLabel="Select Department Section" itemValue="" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.departmentSections}" var="departmentSection" 
+										itemLabel="#{departmentSection.sectionName}"/>
+								</p:selectOneMenu>
+					
+								<p:outputLabel for="establishments" value="Establishment: " />
+								<p:selectOneMenu id="establishments" converter="#{establishmentConverter}" required="true"
+									value="#{employeeBean.selectedEmployee.establishment}" style="width:250px">
+									<f:selectItem itemLabel="Select Establishment" itemValue="" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.establishments}" var="establishment" itemLabel="#{establishment.establishmentName}"/>
+								</p:selectOneMenu>
+					
+								<p:outputLabel for="jobTitleTypes" value="Job Title Type: " />
+								<p:selectOneMenu id="jobTitleTypes" converter="#{jobTitleConverter}" value="#{employeeBean.selectedEmployee.jobTitleType}" style="width:250px">
+									<f:selectItem itemLabel="Select Job Title Type" itemValue="" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.jobTitleTypes}" var="jobTitleType" itemLabel="#{jobTitleType.jobTitle}"/>
+								</p:selectOneMenu>
+					
+								<p:outputLabel value="Admission Date:" for="admissionDate" />
+        						<p:calendar id="admissionDate" value="#{employeeBean.selectedEmployee.admissionDate}" />
+        			
+        						<p:outputLabel value="Observation Description:" for="observationDescription" />
+								<p:inputText id="observationDescription" value="#{employeeBean.selectedEmployee.observationDescription}" style="width:250px"/>
+								
+								<p:outputLabel for="active" value="Active: " />
+								<p:selectOneMenu id="active" value="#{employeeBean.selectedEmployee.active}" required="true" 
+									requiredMessage="Activation is required" style="width:250px">
+									<f:selectItems value="#{employeeBean.active}" var="active" itemLabel="#{employeeBean.extractFromBundle(active.key)}"/>
+								</p:selectOneMenu>
+					
+								<p:outputLabel value="Inactivity Begin Date:" for="admissionDate" />
+        						<p:calendar id="inactivityBeginDate" value="#{employeeBean.selectedEmployee.inactivityBeginDate}" />
+        			
+        						<p:outputLabel for="employeeTypes" value="Employee Type: " />
+								<p:selectOneMenu id="employeeTypes" value="#{employeeBean.selectedEmployee.employeeType}" style="width:250px">
+								<f:selectItem itemLabel="Select Employee Type" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{employeeBean.employeeTypes}" var="employeeType" itemLabel="#{employeeBean.extractFromBundle(employeeType.key)}"/>
+								</p:selectOneMenu>
+					
+								<p:outputLabel for="documentTypes" value="Document Type: " />
+								<p:selectOneMenu id="documentTypes" value="#{employeeBean.selectedEmployee.indTypeDocument}" style="width:250px">
+									<f:selectItem itemLabel="Select Document Type" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{employeeBean.documentTypes}" var="documentType" itemLabel="#{employeeBean.extractFromBundle(documentType.key)}"/>
+								</p:selectOneMenu>
+
+								<h:outputText value="Skip to last: " />
+								<h:selectBooleanCheckbox value="#{employeeBean.skip}" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="imageTab" title="Image">
+						<p:panel header="Image">
+							<p:messages />
+							<h:panelGrid columns="1" columnClasses="label, value" style="text-align:center">
+								<p:outputLabel for="image" value="Employee Image" />
+						 		<itiGeeks:ImageUploader id="image" objectImplementsByteArrayHolder="#{employeeBean.selectedEmployee}" imageWidth="70" ImageHeight="100"/>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<ui:include src="confirmationTab4Edit.xhtml" />
+					
+				</p:wizard>
+
+			</h:form>
+		</center>
+	</ui:define>
+</ui:composition>

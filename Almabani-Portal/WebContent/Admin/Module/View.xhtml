@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ViewSecModuleTitle}">
+
+		<h:form id="viewForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{moduleManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewSecModuleLabel_id}" />
+					<h:outputText value="#{moduleManagementBean.selected.id}"
+						title="#{loc.ViewSecModuleTitle_id}" />
+					<h:outputText value="#{loc.ViewSecModuleLabel_system}" />
+					<h:outputText value="#{moduleManagementBean.selected.system.systemCode}" />
+
+					<h:outputText value="#{loc.ViewSecModuleLabel_moduleCode}" />
+					<h:outputText value="#{moduleManagementBean.selected.moduleCode}"
+						title="#{loc.ViewSecModuleTitle_moduleCode}" />
+					<h:outputText value="#{loc.ViewSecModuleLabel_moduleDescription}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.moduleDescription}"
+						title="#{loc.ViewSecModuleTitle_moduleDescription}" />
+					<h:outputText value="#{loc.ViewSecModuleLabel_orderMenuNumber}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.orderMenuNumber}"
+						title="#{loc.ViewSecModuleTitle_orderMenuNumber}" />
+					<h:outputText
+						value="#{loc.ViewSecModuleLabel_portugueseLabelDescription}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.portugueseLabelDescription}"
+						title="#{loc.ViewSecModuleTitle_portugueseLabelDescription}" />
+					<h:outputText
+						value="#{loc.ViewSecModuleLabel_englishLabelDescription}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.englishLabelDescription}"
+						title="#{loc.ViewSecModuleTitle_englishLabelDescription}" />
+					<h:outputText
+						value="#{loc.ViewSecModuleLabel_spanishLabelDescription}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.spanishLabelDescription}"
+						title="#{loc.ViewSecModuleTitle_spanishLabelDescription}" />
+					<h:outputText value="#{loc.ViewSecModuleLabel_indActive}" />
+					<h:outputText value="#{moduleManagementBean.selected.indActive}"
+						title="#{loc.ViewSecModuleTitle_indActive}" />
+					<h:outputText
+						value="#{loc.ViewSecModuleLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewSecModuleTitle_modificationMakerName}" />
+					<h:outputText
+						value="#{loc.ViewSecModuleLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{moduleManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewSecModuleTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" onclick="viewDialog.hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

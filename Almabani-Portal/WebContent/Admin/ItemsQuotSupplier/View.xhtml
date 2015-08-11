@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition xmlns:customComponents="http://java.sun.com/jsf/composite/components">
+
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		resizable="false" appendToBody="true" dynamic="true"
+		header="#{loc.ViewOamItemsQuotSupplierTitle}">
+	
+		<h:form id="viewForm">
+
+			<h:panelGroup id="display">
+			<p:panelGrid columns="2">
+				<p:panelGrid columns="2"
+					rendered="#{oamItemsQuotSupplierManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewOamItemsQuotSupplierLabel_id}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.id}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_id}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_itemQuotation}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.itemQuotation.observationDescription}"
+						title="#{loc.ViewOamItemsQuotSupplierLabel_itemQuotation}" />
+
+					<h:outputText value="#{loc.ViewOamItemsQuotSupplierLabel_supplier}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.supplier.supplierName}"
+						title="#{loc.ViewOamItemsQuotSupplierLabel_supplier}" />
+
+					<h:outputText value="#{loc.ViewOamItemsQuotSupplierLabel_qutItem}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.qutItem}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_qutItem}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_itemValue}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.itemValue}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_itemValue}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_warrantyMonthsQutation}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.warrantyMonthsQutation}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_warrantyMonthsQutation}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_deliveryDaysQuotation}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.deliveryDaysQuotation}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_deliveryDaysQuotation}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_perPaymentPo}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.perPaymentPo}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_perPaymentPo}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_desObservation}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.observationDescription}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_desObservation}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_modificationMakerName}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_indSelected}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.indSelected}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_indSelected}" />
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_datSelection}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.selectionDate}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_datSelection}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+					<h:outputText
+						value="#{loc.ViewOamItemsQuotSupplierLabel_namUserSelection}" />
+					<h:outputText
+						value="#{oamItemsQuotSupplierManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewOamItemsQuotSupplierTitle_namUserSelection}" />
+				</p:panelGrid>
+				<customComponents:ByteImageViewer objectImplementsByteArrayHolder="#{oamItemsQuotSupplierManagementBean.selected}"></customComponents:ByteImageViewer>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" onclick="viewDialog.hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

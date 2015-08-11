@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListSecSubModuleTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" value="#{subModuleManagementBean.items}" resizableColumns="true"
+				var="item" widgetVar="datalist" selectionMode="single" draggableColumns="true" draggableRows="true"
+				selection="#{subModuleManagementBean.selected}" rowKey="#{item.id}"
+				paginator="true" rows="10" lazy="true"
+				rowsPerPageTemplate="10,20,30">
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
+
+				<p:column headerText="#{loc.ListSecSubModuleTitle_id}"
+					sortBy="#{item.id}" filterBy="#{item.id}">
+
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column headerText="#{loc.ListSecSubModuleTitle_module}"
+					sortBy="#{item.module.moduleCode}"
+					filterBy="#{item.module.moduleCode}">
+					<h:outputText value="#{item.module.moduleCode}" />
+				</p:column>
+				<p:column
+					headerText="#{loc.ListSecSubModuleTitle_subModuleDescription}"
+					sortBy="#{item.subModuleDescription}"
+					filterBy="#{item.subModuleDescription}">
+
+					<h:outputText value="#{item.subModuleDescription}" />
+				</p:column>
+				<p:column headerText="#{loc.ListSecSubModuleTitle_orderMenuNumber}"
+					sortBy="#{item.orderMenuNumber}" filterBy="#{item.orderMenuNumber}">
+
+					<h:outputText value="#{item.orderMenuNumber}" />
+				</p:column>
+				<p:column
+					headerText="#{loc.ListSecSubModuleTitle_portugueseLabelDescription}"
+					sortBy="#{item.portugueseLabelDescription}"
+					filterBy="#{item.portugueseLabelDescription}">
+					<h:outputText value="#{item.portugueseLabelDescription}" />
+				</p:column>
+				<p:column
+					headerText="#{loc.ListSecSubModuleTitle_englishLabelDescription}"
+					sortBy="#{item.englishLabelDescription}"
+					filterBy="#{item.englishLabelDescription}">
+
+					<h:outputText value="#{item.englishLabelDescription}" />
+				</p:column>
+				<p:column
+					headerText="#{loc.ListSecSubModuleTitle_spanishLabelDescription}"
+					sortBy="#{item.spanishLabelDescription}"
+					filterBy="#{item.spanishLabelDescription}">
+					<h:outputText value="#{item.spanishLabelDescription}" />
+				</p:column>
+				<p:column headerText="#{loc.ListSecSubModuleTitle_indActive}"
+					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+				</p:column>
+
+
+				<f:facet name="footer">
+					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+						value="#{loc.Create}"
+						actionListener="#{subModuleManagementBean.prepareCreate}"
+						update=":createForm:display"
+						oncomplete="PF('createDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="PF('viewDialog').show()"
+						disabled="#{empty subModuleManagementBean.selected}" />
+					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
+						value="#{loc.Edit}" update=":editForm:display"
+						oncomplete="PF('editDialog').show()"
+						disabled="#{empty subModuleManagementBean.selected}" />
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

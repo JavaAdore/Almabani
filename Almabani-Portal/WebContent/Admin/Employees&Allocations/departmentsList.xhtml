@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="departmentListForm"
+				rendered="#{employeesAndAllocationsBean.selectedCompany.id gt 0}">
+				<br />
+				<p:panel header="#{loc.ListComDepartmentTitle}" style="width:88%">
+
+					<p:dataTable var="department"
+						value="#{employeesAndAllocationsBean.departmentList}"
+						scrollable="true" scrollRows="10" liveScroll="true"
+						resizableColumns="true" selectionMode="single"
+						selection="#{employeesAndAllocationsBean.selectedDepartment}"
+						rowKey="#{department.id}" paginator="true" rows="10"
+						rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect"
+							listener="#{employeesAndAllocationsBean.onDepartmentSelect()}"
+							update="@all" />
+						<br />
+						<p:column sortBy="#{department.id}" style="width:65px;" filterStyle="width:50px;"
+							filterBy="#{department.id}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Dept ID" />
+							</f:facet>
+							<h:outputText value="#{department.id}" />
+						</p:column>
+
+						<p:column sortBy="#{department.departmentCode}"
+							style="width:120px;" filterBy="#{department.departmentCode}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Department Code" />
+							</f:facet>
+							<h:outputText value="#{department.departmentCode}" />
+						</p:column>
+
+						<p:column sortBy="#{department.departmentName}"
+							filterBy="#{department.departmentName}"
+							filterMatchMode="contains" filterStyle="width:650px;">
+							<f:facet name="header">
+								<h:outputText value="Department Name" />
+							</f:facet>
+							<h:outputText value="#{department.departmentName}" />
+						</p:column>
+
+						<p:column sortBy="#{department.active}" style="width:80px;" filterStyle="width:60px;"
+							filterBy="#{department.active}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="Active" />
+							</f:facet>
+							<h:outputText value="#{employeesAndAllocationsBean.extractFromBundle(department.active.key)}" />
+						</p:column>
+
+						<p:column style="width:100px;text-align: center">
+							<f:facet name="header">
+								<h:outputText value="More Details" />
+							</f:facet>
+							<p:commandButton update="departmentListForm:deptDetails"
+								oncomplete="PF('deptDetailsOP').show('#{component.clientId}')"
+								icon="ui-icon-search" title="View Details"
+								actionListener="#{employeesAndAllocationsBean.departmentDetails(department)}">
+
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+
+				<p:overlayPanel widgetVar="deptDetailsOP" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+					<p:outputPanel id="deptDetails" style="text-align:center;">
+						<p:panelGrid columns="2"
+							rendered="#{not empty employeesAndAllocationsBean.department4Details}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+								<h:outputText
+									value="#{employeesAndAllocationsBean.department4Details.departmentName}" />
+							</f:facet>
+
+							<h:outputText value="Responsible User Code" />
+							<h:outputText value="#{employeesAndAllocationsBean.department4Details.responsibleUserCode}" />
+
+							<h:outputText value="Last Modification Date" />
+							<h:outputText value="#{employeesAndAllocationsBean.department4Details.lastModificationDate}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+
+							<h:outputText value="Modified By Username" />
+							<h:outputText value="#{employeesAndAllocationsBean.department4Details.modificationMakerName}" />
+
+							<h:outputText value="#{loc.ListComDepartmentTitle_company}" />
+							<h:outputText value="#{employeesAndAllocationsBean.department4Details.company.companyName}" />
+
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:overlayPanel>
+			</h:form>
+    </ui:composition>
+</html>

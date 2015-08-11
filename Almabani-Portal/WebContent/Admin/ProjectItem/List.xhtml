@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListOamProjectItemTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" value="#{projectItemManagementBean.items}"
+				widgetVar="datalist" var="item" selectionMode="single" resizableColumns="true"
+				selection="#{projectItemManagementBean.selected}" draggableColumns="true" draggableRows="true"
+				rowKey="#{item.id}" paginator="true" lazy="true" rows="10"
+				rowsPerPageTemplate="10,20,30">
+
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
+
+				<p:column headerText="#{loc.ListOamProjectItemTitle_id}"
+					sortBy="#{item.id}" filterBy="#{item.id}">
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamProjectItemTitle_item}"
+					sortBy="#{item.item.itemDescription}"
+					filterBy="#{item.item.itemDescription}">
+					<h:outputText value="#{item.item.itemDescription}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamProjectItemTitle_project}"
+					sortBy="#{item.project.projectCode}" filterBy="#{item.project}">
+					<f:facet name="filter">
+
+						<p:selectOneMenu onchange="PF('datalist').filter()"
+							converter="#{projectConverter}">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{projectItemManagementBean.projects}"
+								var="project" itemValue="#{project}"
+								itemLabel="#{project.projectCode}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText value="#{item.project.projectCode}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamItemTitle_indActive}"
+					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+						value="#{loc.Create}"
+						actionListener="#{projectItemManagementBean.prepareCreate}"
+						update=":createForm:display"
+						oncomplete="PF('createDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="PF('viewDialog').show()"
+						disabled="#{empty projectItemManagementBean.selected}" />
+					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
+						value="#{loc.Edit}" update=":editForm:display"
+						oncomplete="PF('editDialog').show()"
+						disabled="#{empty projectItemManagementBean.selected}" />
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/template/master.xhtml">
+
+	<ui:define name="title">
+		#{loc.QUOTATION_QUOTATION_MANAGEMENT_TITLE}
+	</ui:define>
+
+	<ui:define name="content">
+
+		<ui:include src="List.xhtml" />
+
+		<ui:include src="View.xhtml" />
+
+		<ui:include src="Edit.xhtml" />
+
+		<ui:include src="Create.xhtml" />
+
+
+		<ui:include src="/Admin/ItemQuotation/List.xhtml" />
+
+		<ui:include src="/Admin/ItemQuotation/View.xhtml" />
+
+		<ui:include src="/Admin/ItemQuotation/Edit.xhtml" />
+
+		<ui:include src="/Admin/ItemQuotation/Create.xhtml" />
+
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.EditSecSubModuleTitle}">
+
+		<h:form id="editForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{subModuleManagementBean.selected != null}">
+
+					<p:outputLabel value="#{loc.CreateSecSubModuleTitle_module}" />
+					<p:selectOneMenu id="module" styleClass="fullWith"
+						value="#{subModuleManagementBean.selected.module}" required="true"
+						converter="#{moduleConverter}"
+						requiredMessage="#{loc.EditSecSubModuleRequiredMessage_module}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{subModuleManagementBean.modules}"
+							var="moduleItem" itemValue="#{moduleItem}"
+							itemLabel="#{moduleItem.moduleCode}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.CreateSecSubModuleTitle_indActive}" />
+					<p:selectOneMenu
+						value="#{subModuleManagementBean.selected.indActive}"
+						required="true" styleClass="fullWith"
+						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel
+						value="#{loc.CreateSecSubModuleTitle_orderMenuNumber}" />
+
+
+					<p:spinner
+						value="#{subModuleManagementBean.selected.orderMenuNumber}"
+						requiredMessage="#{loc.CreateSecSubModuleRequiredMessage_orderMenuNumber}"
+						max="1000" min="0" />
+
+					<p:outputLabel
+						value="#{loc.CreateSecSubModuleTitle_subModuleDescription}" />
+					<p:inputTextarea id="subModuleDescription"
+						value="#{subModuleManagementBean.selected.subModuleDescription}"
+						required="true"
+						requiredMessage="#{loc.CreateSecSubModuleRequiredMessage_subModuleDescription}" />
+
+
+
+					<p:outputLabel
+						value="#{loc.CreateSecSubModuleTitle_portugueseLabelDescription}" />
+					<p:inputTextarea id="portugueseLabelDescription"
+						value="#{subModuleManagementBean.selected.portugueseLabelDescription}" />
+
+					<p:outputLabel
+						value="#{loc.CreateSecSubModuleTitle_englishLabelDescription}" />
+					<p:inputTextarea id="englishLabelDescription"
+						value="#{subModuleManagementBean.selected.englishLabelDescription}" />
+
+					<p:outputLabel
+						value="#{loc.CreateSecSubModuleTitle_spanishLabelDescription}" />
+					<p:inputTextarea id="spanishLabelDescription"
+						value="#{subModuleManagementBean.selected.spanishLabelDescription}" />
+
+
+
+
+
+				</p:panelGrid>
+				<p:commandButton actionListener="#{subModuleManagementBean.saveNew}"
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('editDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

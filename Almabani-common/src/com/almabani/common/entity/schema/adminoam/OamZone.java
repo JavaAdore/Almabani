@@ -1,0 +1,154 @@
+package com.almabani.common.entity.schema.adminoam;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.almabani.common.entity.AbstractEntity;
+
+/**
+ * @author Mohamed_Ibrahim
+ */
+
+@Entity
+@Table(schema="ADMINOAM", name = "OAM_ZONES")
+@SequenceGenerator(name = "OamZones_Id_Seq_Gen", sequenceName = "OAM_ZONES_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+public class OamZone extends AbstractEntity implements Serializable {
+	
+	private static final long serialVersionUID = -8952960956856131356L;
+	
+	@Id
+	@Column(name = "NUM_ZONE", unique = true, nullable = false, precision = 6, scale = 0)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamZones_Id_Seq_Gen")
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "NUM_SITE_DIRECTION", referencedColumnName="NUM_SITE_DIRECTION", nullable = false)
+	private OamSiteDirection siteDirection;
+	
+	@Column(name = "DES_ZONE", nullable = false, length = 80)
+	private String zoneDescription;
+	
+	@Column(name = "IND_TYPE_ZONE", nullable = false, length = 1)
+	private String indTypeZone;
+	
+	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
+	private String indActive;
+	
+	/**
+	 * modificationMakerName represent the user name who make the last modification
+	 */
+	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
+	private String modificationMakerName;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
+	private Date lastModificationDate;
+
+	public OamZone() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the siteDirection
+	 */
+	public OamSiteDirection getSiteDirection() {
+		return siteDirection;
+	}
+
+	/**
+	 * @param siteDirection the siteDirection to set
+	 */
+	public void setSiteDirection(OamSiteDirection siteDirection) {
+		this.siteDirection = siteDirection;
+	}
+
+	/**
+	 * @return the zoneDescription
+	 */
+	public String getZoneDescription() {
+		return zoneDescription;
+	}
+
+	/**
+	 * @param zoneDescription the zoneDescription to set
+	 */
+	public void setZoneDescription(String zoneDescription) {
+		this.zoneDescription = zoneDescription;
+	}
+
+	/**
+	 * @return the indTypeZone
+	 */
+	public String getIndTypeZone() {
+		return indTypeZone;
+	}
+
+	/**
+	 * @param indTypeZone the indTypeZone to set
+	 */
+	public void setIndTypeZone(String indTypeZone) {
+		this.indTypeZone = indTypeZone;
+	}
+
+	/**
+	 * @return the indActive
+	 */
+	public String getIndActive() {
+		return indActive;
+	}
+
+	/**
+	 * @param indActive the indActive to set
+	 */
+	public void setIndActive(String indActive) {
+		this.indActive = indActive;
+	}
+
+	/**
+	 * @return the modificationMakerName
+	 */
+	public String getModificationMakerName() {
+		return modificationMakerName;
+	}
+
+	/**
+	 * @param modificationMakerName the modificationMakerName to set
+	 */
+	public void setModificationMakerName(String modificationMakerName) {
+		this.modificationMakerName = modificationMakerName;
+	}
+
+	/**
+	 * @return the lastModificationDate
+	 */
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	/**
+	 * @param lastModificationDate the lastModificationDate to set
+	 */
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
+	}
+	
+}

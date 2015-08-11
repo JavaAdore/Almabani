@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateSecUserTitle}">
+
+		<h:form id="createForm">
+
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{userManagementBean.selected != null}">
+					<h:outputText value="#{loc.EditSecUserLabel_userLoginCode}" />
+					<p:inputText id="userLoginCode" styleClass="fullWith"
+						value="#{userManagementBean.selected.userLoginCode}"
+						required="true"
+						requiredMessage="#{loc.ALMABANI_GENERAL_USER_LOGIN_CODE_IS_REQUIRED}" />
+
+					<h:outputText value="#{loc.EditSecUserTitle_password}" />
+					<p:password required="true" styleClass="fullWith"
+						requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}"
+						value="#{userManagementBean.selected.password}" feedback="true"
+						promptLabel="#{loc.ALMABANI_GENERAL_ENTER_PASSWORD}"
+						weakLabel="#{loc.ALMABANI_GENERAL_WEAK_PASSWORD}"
+						goodLabel="#{loc.ALMABANI_GENERAL_GOOD_PASSWORD}"
+						strongLabel="#{loc.ALMABANI_GENERAL_STRONG_PASSWORD}" />
+
+					<h:outputText value="#{loc.EditSecUserTitle_employee}" />
+					<p:selectOneMenu value="#{userManagementBean.selected.employee}"
+						required="true" converter="#{employeeConverter}"
+						requiredMessage="#{loc.EditSecUserRequiredMessage_employee}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{userManagementBean.employees}"
+							var="employee" itemLabel="#{employee.employeeName}" />
+
+						<f:selectItem />
+					</p:selectOneMenu>
+
+
+
+					<h:outputText value="#{loc.EditSecUserTitle_indActive}" />
+					<p:selectOneMenu value="#{userManagementBean.selected.indActive}"
+						styleClass="fullWith" required="true"
+						requiredMessage="#{loc.CreateSecUserRequiredMessageIsActive}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+					<h:outputText value="#{loc.EditSecUserTitle_indAdminSystem}" />
+					<p:selectOneMenu
+						value="#{userManagementBean.selected.indAdminSystem}"
+						styleClass="fullWith" required="true"
+						requiredMessage="#{loc.CreateSecUserRequiredMessageIsAdmin}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
+				</p:panelGrid>
+				<p:commandButton actionListener="#{userManagementBean.saveNew}"
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('createDialog').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

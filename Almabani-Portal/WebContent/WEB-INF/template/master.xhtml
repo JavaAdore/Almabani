@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="title">Default Title</ui:insert></title>
+
+	<link rel="shortcut icon" type="image/png"
+		href="#{request.contextPath}/resources/images/favicon.ico" />
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+	<script>
+		var temp = "#{applicationScopeStore.getUserSessionId()}"
+		var interv = setInterval(function()
+		{
+			temp = getCookie("log");
+			if
+			(location.pathname.indexOf('Login.xhtml') !=-1)
+				{
+					if(temp ==null ||temp =='undefined' || temp.trim().length()==0)
+					{
+						clearInterval(interv);	
+						kick();	
+					}
+				}	
+			}, 3000);
+			
+		function kick()
+		{
+			PF('kickingOutDaialog').show();
+			setTimout(function(){PF('kickingOutDaialog').hide() } , 3000);
+			document.location = "Login.xhtml";
+			
+		}
+		function getCookie(name) {
+			  var value = "; " + document.cookie;
+			  var parts = value.split("; " + name + "=");
+			  if (parts.length == 2) return parts.pop().split(";").shift();
+			} 
+
+		window.history.forward()
+	</script>
+	<ui:insert name="header"></ui:insert>
+</h:head>
+<f:view contentType="text/html">
+
+	<h:body dir="#{loc.dir}" style="padding:0px; margin:0px;"  >
+		<h:form id="growl">
+			<p:growl life="10000" />
+		</h:form>
+		<div style="height: 15%; background-color: #232323;">
+			<ui:include src="header.xhtml" />
+		</div>
+		<br />
+		<center>
+			<div style="height: 10%;">
+				<h:form id="menubarForm" styleClass="menubarForm">
+					<p:menubar model="#{userSessionBean.menuModel}"
+						style="width:90%; padding-top: 15px; margin-top: 15px;">
+
+
+
+
+					</p:menubar>
+				</h:form>
+			</div>
+		</center>
+		<div style="height: 70%; min-height: 500px;">
+			<ui:insert name="content">Default Content</ui:insert>
+		</div>
+		<div style="height: 5%; text-align: center; color: white;">
+			<ui:include src="footer.xhtml" />
+		</div>
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loader.gif" />
+		</p:dialog>
+
+		<p:dialog widgetVar="kickingOutDaialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<center>
+				<p:outputLabel value="#{loc.ALMABANI_GEENRAL_KICK_OUT_MESSAGE}" />
+			</center>
+			<p:graphicImage name="/images/loader.gif" />
+		</p:dialog>
+
+
+
+	</h:body>
+	<ui:debug rendered="true" />
+</f:view>
+</html>

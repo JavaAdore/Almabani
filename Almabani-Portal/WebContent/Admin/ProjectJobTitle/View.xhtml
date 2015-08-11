@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="viewDlg" widgetVar="viewDialog" modal="true" resizable="false" appendToBody="true" header="Project Job Titles">
+
+            <h:form id="viewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{projectJobTitleBean.selectedProjectJobTitle != null}">
+                        <h:outputText value="ID"/>
+                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.id}" title="ID"/>
+                        
+                        <h:outputText value="Title Description"/>
+                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.projectJobTitleDescription}" title="Title Description"/>
+                        
+                        <h:outputText value="Project Code"/>
+                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.project.projectCode}" title="Project Code"/>
+                        
+                        <h:outputText value="Active"/>
+                        <h:outputText value="#{projectJobTitleBean.extractFromBundle(projectJobTitleBean.selectedProjectJobTitle.active.key)}" title="Active"/>
+                        
+                        <h:outputText value="Last Modifyied Date"/>
+                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.lastModificationDate}" title="Last Modifyied Date">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        
+                        <h:outputText value="Contractor Value"/>
+                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.contractorValue}" title="Contractor Value"/>
+                        
+                        <h:outputText value="Contractor Agreement Value"/>
+                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.contractorAgreementValue}" title="Contractor Agreement Value"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
