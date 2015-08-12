@@ -46,6 +46,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> getAllProjects() {
 		return projectDAO.getAllCompanies();
+	}
+
+	@Override
+	public boolean isProjectCodeExist(String projectCode) {
+		return projectDAO.isProjectCodeExist(projectCode);
 	}	
 
 }

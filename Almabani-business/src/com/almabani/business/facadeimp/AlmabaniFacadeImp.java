@@ -551,9 +551,13 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 		return projectItemService.loadProjectItems(first, pageSize, sortField,
 				b, filters);
 	}
-
+	
 	@Override
-	public Project saveOrUpdate(Project project) {
+	public Project saveOrUpdate(Project project) throws AlmabaniException {
+		if(!projectService.getProject(project.getId()).getProjectCode().equals(project.getProjectCode()))
+			if(projectService.isProjectCodeExist(project.getProjectCode())){
+				throw new AlmabaniException(MessagesKeyStore.DUPLICATE_PROJECT_CODE);
+			}
 		return projectService.saveOrUpdate(project);
 	}
 

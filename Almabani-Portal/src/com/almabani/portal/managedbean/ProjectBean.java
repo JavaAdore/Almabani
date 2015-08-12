@@ -16,8 +16,8 @@ import org.primefaces.model.SortOrder;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Contractor;
-import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.admincor.Project;
+import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
@@ -50,16 +50,23 @@ public class ProjectBean extends AbstractBeanHelper implements Serializable {
 
 	public void saveOrUpdate() {
 
-		boolean isAlreadyExisitEntity = Utils.hasID(selectedProject);
-		selectedProject.setLastModificationDate(new Date());
-		almabaniFacade.saveOrUpdate(selectedProject);
-		
-		WebUtils.invokeJavaScriptFunction("PF('createProjectDialog').hide()");
-		WebUtils.fireInfoMessage(
-				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
-						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY, 
-				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_PROJECT));
+		try {
 
+			boolean isAlreadyExisitEntity = Utils.hasID(selectedProject);
+			selectedProject.setLastModificationDate(new Date());
+
+			almabaniFacade.saveOrUpdate(selectedProject);
+
+			WebUtils.invokeJavaScriptFunction("PF('createProjectDialog').hide()");
+			WebUtils.invokeJavaScriptFunction("PF('editProjectDialog').hide()");
+			WebUtils.fireInfoMessage(
+					(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+							: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+					WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_PROJECT));
+
+		} catch (AlmabaniException e) {
+			WebUtils.fireInfoMessage(e.getKey());
+		}
 	}
 
 	public String extractFromBundle(String key) {
@@ -163,7 +170,6 @@ public class ProjectBean extends AbstractBeanHelper implements Serializable {
 		}
 
 	}
-	
 	
 	public void onRowSelect(SelectEvent event) {
 		selectedProject =  (Project) event.getObject();

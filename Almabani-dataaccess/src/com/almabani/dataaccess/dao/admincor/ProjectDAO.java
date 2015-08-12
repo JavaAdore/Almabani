@@ -25,4 +25,6 @@ public interface ProjectDAO extends AbstractDAOInt{
 	
 	List<Project> getAllCompanies();
 	
+	boolean isProjectCodeExist(String projectCode);
+	
 }

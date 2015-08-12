@@ -3,6 +3,7 @@ package com.almabani.dataaccess.daoimpl.admincor;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +51,13 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	@Override
 	public List<Project> getAllCompanies() {
 		return super.getAllEntities(Project.class);
+	}
+
+	@Override
+	public boolean isProjectCodeExist(String projectCode) {
+		Query query = getCurrentSession().createQuery("select p from Project p where p.projectCode =:projectCode");
+		query.setParameter("projectCode", projectCode);
+		return query.list().size() > 0 ? true : false;
 	}
 
 }

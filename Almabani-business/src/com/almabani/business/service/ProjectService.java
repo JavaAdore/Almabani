@@ -20,4 +20,6 @@ public interface ProjectService {
 	
 	List<Project> getAllProjects();
 	
+	boolean isProjectCodeExist(String projectCode);
+	
 }

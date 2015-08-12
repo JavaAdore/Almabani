@@ -15,27 +15,34 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{projectBean.selectedProject != null}">
                         <h:outputText value="ID"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.id}" title="ID"/>
-                        
-                        <h:outputText value="Title Description"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.projectJobTitleDescription}" title="Title Description"/>
+                        <h:outputText value="#{projectBean.selectedProject.id}" title="ID"/>
                         
                         <h:outputText value="Project Code"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.project.projectCode}" title="Project Code"/>
+                        <h:outputText value="#{projectBean.selectedProject.projectCode}" title="Project Code"/>
                         
-                        <h:outputText value="Active"/>
-                        <h:outputText value="#{projectJobTitleBean.extractFromBundle(projectJobTitleBean.selectedProjectJobTitle.active.key)}" title="Active"/>
+                        <h:outputText value="Company"/>
+                        <h:outputText value="#{projectBean.selectedProject.company.companyName}" title="Company"/>
                         
-                        <h:outputText value="Last Modifyied Date"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.lastModificationDate}" title="Last Modifyied Date">
+                        <h:outputText value="Contractor"/>
+                        <h:outputText value="#{projectBean.selectedProject.contractor.contractorDescription}" title="Contractor"/>
+                        
+                        <h:outputText value="Validate Begining Date"/>
+                        <h:outputText value="#{projectBean.selectedProject.validityBeginDate}" title="Validate Begining Date">
                             <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                         
-                        <h:outputText value="Contractor Value"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.contractorValue}" title="Contractor Value"/>
+                        <h:outputText value="Validate End Date"/>
+                        <h:outputText value="#{projectBean.selectedProject.validityEndDate}" title="Validate End Date">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
                         
-                        <h:outputText value="Contractor Agreement Value"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.contractorAgreementValue}" title="Contractor Agreement Value"/>
+                        <h:outputText value="Last Modification Date"/>
+                        <h:outputText value="#{projectBean.selectedProject.lastModificationDate}" title="Last Modification Date">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        
+                        <h:outputText value="Modifier Name"/>
+                        <h:outputText value="#{projectBean.selectedProject.modificationMakerName}" title="Modifier Name"/>
                         
                     </p:panelGrid>
                     <p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()"/>
