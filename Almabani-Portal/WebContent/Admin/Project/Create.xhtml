@@ -49,7 +49,8 @@
 				</p:panelGrid>
 				<br />
 				<center>
-				<p:commandButton value="Submit" update="createForm:createProjectMessages :growl :ProjectsListForm" validateClient="true"
+				<p:commandButton value="Submit" validateClient="true"
+					update="createForm:createProjectMessages :growl :projectsListForm"
 					actionListener="#{projectBean.saveOrUpdate()}" />
 				</center>
 			</h:panelGroup>

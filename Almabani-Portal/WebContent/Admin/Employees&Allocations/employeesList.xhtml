@@ -8,6 +8,7 @@
 	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
 
 <ui:composition>
+
 	<h:form id="employeeListForm"
 		rendered="#{employeesAndAllocationsBean.selectedDepartmentSection.id gt 0}">
 		<br />
@@ -127,6 +128,7 @@
 
 	<p:overlayPanel widgetVar="empOP" showEffect="fade" hideEffect="fade"
 		dismissable="false" showCloseIcon="true">
+		
 		<h:form id="empOPForm">
 			<p:outputPanel id="empDetails" style="text-align:center;">
 				<p:panelGrid columns="4"
@@ -134,8 +136,7 @@
 					columnClasses="label,value">
 
 					<f:facet name="header">
-						<!-- 								<itiGeeks:ByteImageViewer -->
-						<!-- 									objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" /> -->
+						<itiGeeks:ByteImageViewer objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
 					</f:facet>
 
 					<h:outputText value="Employee Name" />
@@ -229,18 +230,19 @@
 				</p:panelGrid>
 			</p:outputPanel>
 		</h:form>
+		
 	</p:overlayPanel>
 
 	<p:overlayPanel widgetVar="empAllocationsOP" showEffect="fade"
 		dynamic="true" hideEffect="fade" dismissable="false"
 		showCloseIcon="true">
+		
 		<h:form id ="empAllocationsOP">
 			<p:outputPanel id="empAllocationsDetails" style="text-align:center;">
 				<p:panelGrid columns="2" columnClasses="label,value">
 
 					<f:facet name="header">
-						<!-- 								<itiGeeks:ByteImageViewer -->
-						<!-- 									objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" /> -->
+						<itiGeeks:ByteImageViewer objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
 					</f:facet>
 
 					<p:dataTable var="projectsEmployee"
@@ -297,10 +299,10 @@
 						</f:facet>
 
 					</p:dataTable>
-
 				</p:panelGrid>
 			</p:outputPanel>
 		</h:form>
+		
 	</p:overlayPanel>
 
 </ui:composition>

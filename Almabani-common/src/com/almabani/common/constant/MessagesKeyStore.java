@@ -59,5 +59,8 @@ public class MessagesKeyStore {
 	public static final String ALMABANI_GENERAL_DATES_SECOND = "ALMABANI_GENERAL_DATES_SECOND"; 
 	public static final String ALMABANI_EMPLOYEE = "ALMABANI_EMPLOYEE";
 	public static final String ALMABANI_PROJECT = "ALMABANI_PROJECT";
+	
+	//Exceptions
+	public static final String DUPLICATE_PROJECT_CODE = "DUPLICATE_PROJECT_CODE";
 
 }

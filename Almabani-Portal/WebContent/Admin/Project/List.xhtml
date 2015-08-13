@@ -8,7 +8,7 @@
 
 
 
-	<h:form id="ProjectsListForm">
+	<h:form id="projectsListForm">
 
 		<p:panel header="Projects"
 			style="margin-left:auto; margin-right:auto ; width:85%">
@@ -19,8 +19,8 @@
 				paginator="true" rowsPerPageTemplate="10,20,30">
 
 				<p:ajax event="rowSelect" 	listener="#{projectBean.onRowSelect}"
-				
 					update="editButton viewButton" />
+					
 				<p:ajax event="rowUnselect"
 					update="viewButton  editButton" />
 
@@ -96,12 +96,12 @@
 						<p:commandButton id="viewButton" icon="ui-icon-search"
 							value="#{loc.View}" update=":growl :viewForm"
 							onclick="PF('viewDialog').show()"
-							disabled=" #{empty projectJobTitleBean.selectedProjectJobTitle}" />
+							disabled="#{projectBean.selectedProject == null}" />
 
 						<p:commandButton id="editButton" icon="ui-icon-pencil"
 							value="#{loc.Edit}" update=":growl :editForm"
-							onclick="PF('editPJTDialog').show()"
-							disabled=" #{empty projectJobTitleBean.selectedProjectJobTitle}" />
+							onclick="PF('editProjectDialog').show()"
+							disabled="#{projectBean.selectedProject == null}" />
 					</center>
 				</f:facet>
 			</p:dataTable>

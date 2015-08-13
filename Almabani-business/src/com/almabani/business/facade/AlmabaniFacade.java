@@ -183,7 +183,7 @@ public interface AlmabaniFacade {
 	List<Project> getAllProjects();
 
 	Project getProject(Long id);
-
+	
 	List<OamItem> getAllItems();
 
 	OamItem getItem(Long id);
@@ -194,7 +194,7 @@ public interface AlmabaniFacade {
 	SecModule addOrUpdateModule(SecModule selected,
 			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
 
-	Project saveOrUpdate(Project project);
+	Project saveOrUpdate(Project project)  throws AlmabaniException;
 	
 	List<SecModule> loadModules(int first, int pageSize, String sortField,
 			boolean b, Map<String, Object> filters);
