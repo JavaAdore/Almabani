@@ -25,7 +25,7 @@ public interface ApplicationDAO extends AbstractDAOInt{
 
 	SecApplication addOrUpdateApplication(SecApplication application);
 
-	SecApplication getApplication(Long id);
+	SecApplication getApplication(Long applicationId);
 
 	List<SecApplication> getAllApplications();
 
@@ -52,5 +52,7 @@ public interface ApplicationDAO extends AbstractDAOInt{
 	void deleteUserGrants(List<SecApplicationsCompany> revokeGrantList);
 
 	void deleteGrants(List<SecApplicationsCompany> revokeGrantList);
+	SecApplication getApplication(String codApplication);
+
 	
 }

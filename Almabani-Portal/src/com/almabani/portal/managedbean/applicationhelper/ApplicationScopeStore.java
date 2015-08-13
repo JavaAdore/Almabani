@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -50,10 +51,10 @@ public class ApplicationScopeStore implements Serializable {
 
 	private Map<String, String> unitTypesMap = new TreeMap();
 
-	private Map<String, String> yesNoMap = new TreeMap();
+	private Map<String, String> yesNoMap = new LinkedHashMap();
 
-	@PostConstruct
-	public void init() {
+	@PostConstruct  
+	public void init() {  
 		loadCountries();
 		constructCountriesStatesMap();
 		constructOamQoutationSituationMap();

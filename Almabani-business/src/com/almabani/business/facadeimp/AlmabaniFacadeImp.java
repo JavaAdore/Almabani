@@ -166,10 +166,10 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 
 	@Autowired
 	PrefilTypeService prefilTypeService;
-	
+
 	@Autowired
 	AllocationTypeService allocationTypeService;
-	
+
 	@Autowired
 	ProjectJobTitleService projectJobTitleService;
 
@@ -551,12 +551,14 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 		return projectItemService.loadProjectItems(first, pageSize, sortField,
 				b, filters);
 	}
-	
+
 	@Override
 	public Project saveOrUpdate(Project project) throws AlmabaniException {
-		if(!projectService.getProject(project.getId()).getProjectCode().equals(project.getProjectCode()))
-			if(projectService.isProjectCodeExist(project.getProjectCode())){
-				throw new AlmabaniException(MessagesKeyStore.DUPLICATE_PROJECT_CODE);
+		if (!projectService.getProject(project.getId()).getProjectCode()
+				.equals(project.getProjectCode()))
+			if (projectService.isProjectCodeExist(project.getProjectCode())) {
+				throw new AlmabaniException(
+						MessagesKeyStore.DUPLICATE_PROJECT_CODE);
 			}
 		return projectService.saveOrUpdate(project);
 	}
@@ -580,12 +582,12 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	public OamItem getItem(Long itemID) {
 		return itemService.getItem(itemID);
 	}
-	
+
 	@Override
 	public Contractor getContractor(Long contractorID) {
 		return contractorService.getContractor(contractorID);
 	}
-	
+
 	@Override
 	public List<Contractor> getAllContractors() {
 		return contractorService.getAllContractors();
@@ -670,12 +672,30 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Override
 	public SecApplication addOrUpdateApplication(SecApplication secApplication,
 			CommonDriverMap appendCurrentUserCode) throws AlmabaniException {
-		if (Utils.isNotEmptyString(secApplication.getCodApplication())) {
-			return applicationService.updateApplication(secApplication,
-					appendCurrentUserCode);
+
+		if (Utils.isNotNull(secApplication.getLastModificationDate())) {
+  
+			SecApplication application = applicationService
+					.getApplication(secApplication.getCodApplication());
+
+			if (Utils.isNotNull(application)
+					&& application.getLastModificationDate().equals(
+							secApplication.getLastModificationDate())) {
+				return applicationService.updateApplication(secApplication,
+						appendCurrentUserCode);
+			} else {
+				throw new AlmabaniException(
+						MessagesKeyStore.ALMABANI_APPLICATION_APPLICATION_CODE_ALREADY_EXSIT);
+			}
 		} else {
-			return applicationService.updateApplication(secApplication,
-					appendCurrentUserCode);
+			SecApplication application = applicationService
+					.getApplication(secApplication.getCodApplication());
+			if (Utils.isNull(application)) {
+				return applicationService.updateApplication(secApplication,
+						appendCurrentUserCode);
+			}
+			throw new AlmabaniException(
+					MessagesKeyStore.ALMABANI_APPLICATION_APPLICATION_CODE_ALREADY_EXSIT);
 
 		}
 	}
@@ -783,7 +803,8 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 				result.add(tempGrantApp.getSecApplicationCompany());
 			} else {
 				SecApplicationsCompany secApplicationsCompany = new SecApplicationsCompany();
-				secApplicationsCompany.setIndActive(DataAccessConstant.IND_ACTIVE);
+				secApplicationsCompany
+						.setIndActive(DataAccessConstant.IND_ACTIVE);
 				secApplicationsCompany.setApplication(secApplication);
 				secApplicationsCompany.setCompany(company);
 				result.add(secApplicationsCompany);
@@ -814,17 +835,19 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Override
 	public SecUser addorUpdateUser(SecUser user, CommonDriverMap commonDriverMap)
 			throws AlmabaniException {
-		
+
 		SecUser tempUser = secUserService.getUser(user.getUserLoginCode());
-		
+
 		if (Utils.isNotNull(tempUser)) {
-			if (Utils.isNotNull(user.getLastModificationDate()) && user.getLastModificationDate().equals(tempUser.getLastModificationDate())) {
+			if (Utils.isNotNull(user.getLastModificationDate())
+					&& user.getLastModificationDate().equals(
+							tempUser.getLastModificationDate())) {
 
 				return secUserService.updateUser(user, commonDriverMap);
-			} else { 
+			} else {
 				throw new AlmabaniException(
 						MessagesKeyStore.ALMABANI_GENERAL_USER_ALREADY_EXIST);
-			} 
+			}
 		} else {
 			return secUserService.addUser(user, commonDriverMap);
 
@@ -836,21 +859,22 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	public List<AllocationType> getAllAllocationTypes() {
 		return allocationTypeService.getAllAllocationTypes();
 	}
-	
+
 	@Override
 	public AllocationType getAllocationType(Long id) {
 		return allocationTypeService.getAllocationType(id);
 	}
-	
+
 	@Override
 	public ProjectJobTitle saveOrUpdate(ProjectJobTitle projectJobTitle) {
 		return projectJobTitleService.saveOrUpdate(projectJobTitle);
 	}
-	
+
 	@Override
 	public List<ProjectJobTitle> getAllProjectJobTitles() {
 		return projectJobTitleService.getAllProjectJobTitles();
 	}
+
 	@Override
 	public Integer getCountOfUsers(Map<String, Object> filters) {
 		return secUserService.getNumberOfUser(filters);
@@ -873,34 +897,34 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 
 	@Override
 	public Integer getCountOfProjectJobTitle(Map<String, Object> filters) {
-		return projectJobTitleService.getCountOfProjectJobTitle( filters);
+		return projectJobTitleService.getCountOfProjectJobTitle(filters);
 	}
 
 	@Override
 	public List<ProjectJobTitle> loadProjectJobTitles(int first, int pageSize,
 			String sortField, boolean asc, Map<String, Object> filters) {
-		return projectJobTitleService.loadProjectJobTitles( first,  pageSize,
-				 sortField,  asc,  filters);
+		return projectJobTitleService.loadProjectJobTitles(first, pageSize,
+				sortField, asc, filters);
 	}
 
 	@Override
 	public Integer getNumberOfProjectEmployees(Map<String, Object> filters) {
-		return projectEmployeeService.getNumberOfProjectEmployees( filters);
+		return projectEmployeeService.getNumberOfProjectEmployees(filters);
 	}
 
 	@Override
 	public List<ProjectEmployee> loadProjectsAllocationEmployee(int first,
 			int pageSize, String sortField, boolean ascending,
 			Map<String, Object> filters) {
-		return projectEmployeeService.loadProjectsAllocationEmployee( first,
-				 pageSize,  sortField,  ascending,
-				 filters);
+		return projectEmployeeService.loadProjectsAllocationEmployee(first,
+				pageSize, sortField, ascending, filters);
 	}
 
 	@Override
 	public List<Project> loadProjects(int first, int pageSize,
 			String sortField, boolean assending, Map<String, Object> filters) {
-		return projectService.loadProjects(first, pageSize, sortField, assending, filters);
+		return projectService.loadProjects(first, pageSize, sortField,
+				assending, filters);
 	}
-	
+
 }

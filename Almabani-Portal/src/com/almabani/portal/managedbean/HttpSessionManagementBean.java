@@ -41,7 +41,7 @@ public class HttpSessionManagementBean extends AbstractBeanHelper implements
 	@PostConstruct
 	public void init() {
 
-		sessionMap = SessionCapturerListener.sessionMap;
+		sessionMap = SessionCapturerListener.getSessionmap();
 		usersToCick = new HashSet();
 	}
 

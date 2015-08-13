@@ -39,21 +39,26 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 			// get the exception from context
 			Throwable t = context.getException();
 
-			final FacesContext fc = FacesContext.getCurrentInstance();
-			
+
 			// here you do what ever you want with exception
 			try {
 
 				// remove the comment below if you want to report the error in a
 				// jsf error message
-				Throwable ex = getRootCause(t); 
-				if(ex instanceof AlmabaniException)
-				{
-					
-					 WebUtils.fireErrorMessage( ((AlmabaniException ) ex).getKey()  );
+				Throwable ex = getRootCause(t);
+				if (t instanceof AlmabaniException) {
+					WebUtils.fireErrorMessage(((AlmabaniException) t).getKey());
+
+				} else if (t.getCause() instanceof AlmabaniException) {
+					WebUtils.fireErrorMessage(((AlmabaniException) t.getCause())
+							.getKey());
+
+				} else if (ex instanceof AlmabaniException) {
+ 
+					WebUtils.fireErrorMessage(((AlmabaniException) ex).getKey());
 
 				}
-				
+
 			} finally {
 				// remove it from queue
 				i.remove();
@@ -62,6 +67,5 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 		// parent hanle
 		getWrapped().handle();
 	}
-	
-	
+
 }
