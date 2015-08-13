@@ -62,5 +62,6 @@ public class MessagesKeyStore {
 	
 	//Exceptions
 	public static final String DUPLICATE_PROJECT_CODE = "DUPLICATE_PROJECT_CODE";
+	public static final String ALMABANI_APPLICATION_APPLICATION_CODE_ALREADY_EXSIT = "ALMABANI_APPLICATION_APPLICATION_CODE_ALREADY_EXSIT";
 
 }

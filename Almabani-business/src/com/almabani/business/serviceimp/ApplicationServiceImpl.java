@@ -153,28 +153,34 @@ public class ApplicationServiceImpl implements ApplicationService {
 		Company company = commonDriverMap.getAttachedCompany();
 		List<SecApplicationsCompany> revokeGrantList = new ArrayList<SecApplicationsCompany>();
 		Date date = new Date();
-		String modifiedByUserName =commonDriverMap.getCurrentUserCode(); 
-		for(SecApplicationsCompany secApplicationCompany : grantableApplications)
-		{
-			if(Utils.hasID(secApplicationCompany) && secApplicationCompany.isGranted() ==false)
-			{
+		String modifiedByUserName = commonDriverMap.getCurrentUserCode();
+		for (SecApplicationsCompany secApplicationCompany : grantableApplications) {
+			if (Utils.hasID(secApplicationCompany)
+					&& secApplicationCompany.isGranted() == false) {
 				secApplicationCompany.setLastModificationDate(date);
-				secApplicationCompany.setModificationMakerName(modifiedByUserName);
+				secApplicationCompany
+						.setModificationMakerName(modifiedByUserName);
 				revokeGrantList.add(secApplicationCompany);
-			}else if(secApplicationCompany.isGranted())
-			{   secApplicationCompany.setCompany(company);
+			} else if (secApplicationCompany.isGranted()) {
+				secApplicationCompany.setCompany(company);
 				secApplicationCompany.setLastModificationDate(date);
-				secApplicationCompany.setModificationMakerName(modifiedByUserName);    
-				applicationDAO.addCompanyApplicationGrant(secApplicationCompany);
+				secApplicationCompany
+						.setModificationMakerName(modifiedByUserName);
+				applicationDAO
+						.addCompanyApplicationGrant(secApplicationCompany);
 			}
-			
-		} 
-		 
-		if(Utils.isNotEmptyList(revokeGrantList))
-		{ 
+
+		}
+
+		if (Utils.isNotEmptyList(revokeGrantList)) {
 			applicationDAO.deleteGrants(revokeGrantList);
 		}
 
+	}
+
+	@Override
+	public SecApplication getApplication(String codApplication) {
+		return applicationDAO.getApplication(codApplication);
 	}
 
 }

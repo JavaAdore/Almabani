@@ -46,4 +46,6 @@ public interface ApplicationService {
 	void grantCompanyAccess(
 			List<SecApplicationsCompany> grantableApplications,
 			CommonDriverMap commonDriverMap);
+
+	SecApplication getApplication(String codApplication);
 }

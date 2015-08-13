@@ -182,4 +182,15 @@ public class ApplicationDAOImpl extends AbstractDAO implements ApplicationDAO {
 		}
 		
 	}
+
+	@Override
+	public SecApplication getApplication(String codApplication) {
+		Query query = super 
+				.getCurrentSession() 
+				.createQuery(
+						"from SecApplication app where app.codApplication =:codApplication "); 
+		query.setParameter("codApplication", codApplication);  
+		return (SecApplication) Utils.getFirstResult(query.list());  
+	
+	}
 }
