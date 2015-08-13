@@ -14,7 +14,7 @@
 				<p:panelGrid columns="2" rendered="#{projectBean.selectedProject != null}">
 					
 					<p:outputLabel for="projectCode" value="Project Code: " />
-					<p:inputText id="projectCode" style="width: 250px;"
+					<p:inputText id="projectCode" style="width: 250px;" maxlength="20"
 						value="#{projectBean.selectedProject.projectCode}" title="Project Code"
 						required="true" requiredMessage="Project Code field is required" />
 					
