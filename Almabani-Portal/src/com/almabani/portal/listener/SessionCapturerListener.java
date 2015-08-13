@@ -12,7 +12,7 @@ import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.common.SessionDetailsHolder;
 import com.almabani.portal.spring.CustomUserDetails;
-
+   
 public class SessionCapturerListener implements HttpSessionListener{
 
 	public static final Map<SecUser ,SessionDetailsHolder > sessionMap = new LinkedHashMap();
