@@ -12,10 +12,10 @@ import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.common.SessionDetailsHolder;
 import com.almabani.portal.spring.CustomUserDetails;
-   
+    
 public class SessionCapturerListener implements HttpSessionListener{
 
-	public static final Map<SecUser ,SessionDetailsHolder > sessionMap = new LinkedHashMap();
+	private static final Map<SecUser ,SessionDetailsHolder > sessionMap = new LinkedHashMap();
 	
 	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
@@ -36,6 +36,10 @@ public class SessionCapturerListener implements HttpSessionListener{
 			}
 		}
 		
+	}
+
+	public static Map<SecUser, SessionDetailsHolder> getSessionmap() {
+		return sessionMap;
 	}
 
 	  

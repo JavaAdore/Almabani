@@ -39,7 +39,7 @@ public class LogoutFilter implements Filter {
 			if(Utils.isObjectInstanceOf(securityContext.getAuthentication().getPrincipal(), CustomUserDetails.class))
 			{
 				SecUser currentSecUser = ((CustomUserDetails)	securityContext.getAuthentication().getPrincipal()).getUser();
-				SessionCapturerListener.sessionMap.remove(currentSecUser);
+				SessionCapturerListener.getSessionmap().remove(currentSecUser);
 			}
 		}
 		chain.doFilter(request, respon); 

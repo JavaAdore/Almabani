@@ -54,7 +54,7 @@ public class LoginHandlerBean implements Serializable {
 			userSessionBean.constructUserMenu((CustomUserDetails) result
 					.getPrincipal());
 			WebUtils.setCookie("log", "log", 1000000000);
-			SessionCapturerListener.sessionMap.put(
+			SessionCapturerListener.getSessionmap().put(
 					((CustomUserDetails) result.getPrincipal()).getUser(),
 					WebUtils.prepareCurrentSessionDetailsHolder());
 

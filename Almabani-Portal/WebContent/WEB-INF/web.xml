@@ -17,14 +17,16 @@
 	</context-param>
 
 
-	<listener>
-		<listener-class>com.almabani.portal.listener.SessionCapturerListener</listener-class>
-	</listener>
-	  
+
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+  
+<!-- 	<listener> -->
+<!-- 		<listener-class>com.almabani.portal.listener.SessionCapturerListener</listener-class> -->
+<!-- 	</listener> -->
+
 	<filter>
 		<filter-name>logoutFilter</filter-name>
 		<filter-class>com.almabani.portal.filter.LogoutFilter</filter-class>
@@ -32,8 +34,8 @@
 	<filter-mapping>
 		<filter-name>logoutFilter</filter-name>
 		<url-pattern>/logout.xhtml</url-pattern>
-	</filter-mapping>   
-	  
+	</filter-mapping>
+
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -116,6 +118,6 @@
 
 
 
-	
-	
+
+
 </web-app>
