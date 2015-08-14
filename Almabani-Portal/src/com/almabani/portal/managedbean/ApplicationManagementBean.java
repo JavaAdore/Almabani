@@ -72,6 +72,7 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 	
 	public void prepareCreate() {
 		   selected = new SecApplication();
+		   tempModule = null;
 	}
 
 	public void saveNew() throws AlmabaniException {

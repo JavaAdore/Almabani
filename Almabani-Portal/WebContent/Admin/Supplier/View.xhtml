@@ -36,7 +36,7 @@
                         <h:outputText value="#{loc.ViewOamSupplierLabel_observationDescription}"/>
                         <h:outputText value="#{supplierManagementBean.selected.observationDescription}" title="#{loc.ViewOamSupplierTitle_observationDescription}"/>
                         <h:outputText value="#{loc.ViewOamSupplierLabel_indActive}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.indActive}" title="#{loc.ViewOamSupplierTitle_indActive}"/>
+                        <h:outputText value="#{applicationScopeStore.getYesNoValue(supplierManagementBean.selected.indActive)}" title="#{loc.ViewOamSupplierTitle_indActive}"/>
                         <h:outputText value="#{loc.ViewOamSupplierLabel_modificationMakerName}"/>
                         <h:outputText value="#{supplierManagementBean.selected.modificationMakerName}" title="#{loc.ViewOamSupplierTitle_modificationMakerName}"/>
                         <h:outputText value="#{loc.ViewOamSupplierLabel_lastModificationDate}"/>
@@ -44,10 +44,10 @@
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </p:panelGrid>
-                    <p:commandButton value="#{loc.Close}" immediate="true" onclick="viewDialog.hide()"/>
+                    <p:commandButton value="#{loc.Close}" immediate="true" onclick="PF('viewDialog').hide()"/>
                 </h:panelGroup>
 
-            </h:form>
+            </h:form> 
 
         </p:dialog>
 

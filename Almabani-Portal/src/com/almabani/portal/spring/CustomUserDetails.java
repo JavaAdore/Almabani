@@ -30,8 +30,8 @@ public class CustomUserDetails implements UserDetails {
 
 	private Map<String, ApplicationAccess> allowedURLs = new HashMap<String, ApplicationAccess>();
 	MenuModel menuModel = new DefaultMenuModel();
- 
-	private SecUser user; 
+
+	private SecUser user;
 
 	public CustomUserDetails(SecUser user) {
 		super();
@@ -40,8 +40,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		if(Utils.isNotNull(user))
-		{
+		if (Utils.isNotNull(user)) {
 			return user.isActive();
 		}
 		return false;
@@ -95,18 +94,25 @@ public class CustomUserDetails implements UserDetails {
 
 						DefaultMenuItem menuItem = new DefaultMenuItem(
 								application.getApplicationName());
-						menuItem.setUrl("/" + application.getUrl());
-						String abstractAppURL = WebUtils.trimSlashs(application.getUrl());; 
-						allowedURLs
-								.put(abstractAppURL,
-										new ApplicationAccess(
-												abstractAppURL,
-												application.getPerfilCode()
-														.equals(Access.FULL
-																.toString()) ? Access.FULL
-														: Access.READ));
-
-						innerSubMenu.getElements().add(menuItem);
+					
+							menuItem.setUrl("/" + application.getUrl());
+							if(Utils.isNotEmptyString(application.getUrl()))
+							{
+							String abstractAppURL = WebUtils
+									.trimSlashs(application.getUrl());
+							
+							allowedURLs
+									.put(abstractAppURL,
+											new ApplicationAccess(
+													abstractAppURL,
+													application
+															.getPerfilCode()
+															.equals(Access.FULL
+																	.toString()) ? Access.FULL
+															: Access.READ));
+							innerSubMenu.getElements().add(menuItem);
+ 
+						} 
 					}
 
 					submenu.getElements().add(innerSubMenu);
@@ -120,7 +126,7 @@ public class CustomUserDetails implements UserDetails {
 
 	public MenuModel getMenuModel() {
 		return menuModel;
-	}
+	}	
 
 	public void setMenuModel(MenuModel menuModel) {
 		this.menuModel = menuModel;

@@ -62,12 +62,11 @@
 					
 					
 					<h:outputText value="#{loc.ListOamSupplierTitle_indActive}" />
-					<p:selectOneMenu
+					<p:selectOneMenu styleClass="fullWith"
 						value="#{supplierManagementBean.selected.indActive}"
 						required="true"
 						requiredMessage="#{loc.ALMABANI_GENERAL_STATAUS_REQUIRED}">
-						<f:selectItem itemValue=""
-							itemLabel="#{loc.ALMABANI_GENERAL_SELECT_STATUS}" />
+						
 						<f:selectItem itemValue="Y"
 							itemLabel="#{loc.ALMABANI_GENERAL_YES}" />
 						<f:selectItem itemValue="N" itemLabel="#{loc.ALMABANI_GENERAL_NO}" />

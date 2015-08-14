@@ -64,7 +64,7 @@
 					sortBy="#{item.linkCodeDescription}"
 					filterBy="#{item.linkCodeDescription}">
 
-					<p:commandLink action="#{item.linkCodeDescription}" ajax="false">#{item.linkCodeDescription}</p:commandLink>
+					<h:inputText readonly="true" value="#{item.linkCodeDescription}"   styleClass="fullWith"/>
 				</p:column>
 				<f:facet name="footer">
 					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"

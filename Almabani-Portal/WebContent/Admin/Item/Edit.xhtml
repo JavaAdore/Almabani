@@ -75,7 +75,6 @@
 					<p:selectOneMenu value="#{itemManagementBean.selected.indActive}"
 						styleClass="fullWith" required="true"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_indActive}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="yesNoItem" itemValue="#{yesNoItem.key}"
 							itemLabel="#{yesNoItem.value}" />

@@ -38,8 +38,7 @@
 					<p:selectOneMenu value="#{moduleManagementBean.selected.indActive}"
 						required="true" styleClass="fullWith"
 						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
-						<f:selectItem itemLabel="" itemValue="#{null}"
-							noSelectionOption="true" />
+					
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>

@@ -304,7 +304,6 @@ public class Utils {
 			class1.cast(obj);
 			return true;
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			return false;
 		}
 	}

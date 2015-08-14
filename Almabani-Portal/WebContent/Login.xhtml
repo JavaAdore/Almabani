@@ -19,6 +19,14 @@
 </h:head>
 
 <h:body>
+
+	<p:panel
+		rendered="#{applicationScopeStore.getCurrentlyLoggedUser()!=null}">
+		<script>
+					document.location = "/Almabani-Portal/Index.xhtml";
+					</script>
+
+	</p:panel>
 	<f:view contentType="text/html">
 
 		<div style="height: 15%; background-color: #232323;">
@@ -40,14 +48,18 @@
 
 								<h:outputText value="Username" style="font-size: 18px;" />
 
-								<p:inputText id="username" value="#{loginHandlerBean.userName}" required="true" requiredMessage="#{loc.ALMABANI_LOGIN_USER_NAME_IS_REQUIRED}"
+								<p:inputText id="username" value="#{loginHandlerBean.userName}"
+									required="true"
+									requiredMessage="#{loc.ALMABANI_LOGIN_USER_NAME_IS_REQUIRED}"
 									style="width: 420px;"></p:inputText>
 
 								<br />
 
 								<h:outputText value="Password" style="font-size: 18px;" />
 
-								<p:password id="password" value="#{loginHandlerBean.password}" required="true"  requiredMessage="#{loc.ALMABANI_PASSWORD_IS_REQUIRED}"
+								<p:password id="password" value="#{loginHandlerBean.password}"
+									required="true"
+									requiredMessage="#{loc.ALMABANI_PASSWORD_IS_REQUIRED}"
 									feedback="false" style="width: 420px;"></p:password>
 
 								<br />
@@ -55,10 +67,10 @@
 									<p:panelGrid columns="2" styleClass="loginPasswordGrid">
 										<p:commandButton id="login" value="Login" ajax="true"
 											update="@form" action="#{loginHandlerBean.login()}" />
-<!-- 										<p:commandLink id="user" actionListener="#" -->
-<!-- 											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;"> -->
-<!-- 											<h:outputText value="Forget Password" style="color: #098DB1;" /> -->
-<!-- 										</p:commandLink> -->
+										<!-- 										<p:commandLink id="user" actionListener="#" -->
+										<!-- 											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;"> -->
+										<!-- 											<h:outputText value="Forget Password" style="color: #098DB1;" /> -->
+										<!-- 										</p:commandLink> -->
 									</p:panelGrid>
 
 								</f:facet>
@@ -76,15 +88,15 @@
 		</div>
 	</f:view>
 
-<p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
 
-		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-			closable="false" resizable="false" showHeader="false">
-			<p:graphicImage name="/images/loader.gif" />
-		</p:dialog> 
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage name="/images/loader.gif" />
+	</p:dialog>
 
-	
+
 </h:body>
 <ui:debug rendered="true" />
 

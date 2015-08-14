@@ -44,8 +44,7 @@
 					<p:selectOneMenu value="#{applicationManagementBean.selected.indActive}"
 						required="true" styleClass="fullWith"
 						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
-						<f:selectItem itemLabel="" itemValue="#{null}"
-							noSelectionOption="true" />
+						
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>  
@@ -95,7 +94,7 @@
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_englishLabelDescription}" />
-					<p:inputTextarea id="englishLabelDescription"  maxlength="25"
+					<p:inputTextarea id="englishLabelDescription"  maxlength="25" required="true" requiredMessage="#{loc.CreateSecApplicationRequiredMessage_englishLabelDescription}"
 						value="#{applicationManagementBean.selected.englishLabelDescription}" />
 
 					<p:outputLabel

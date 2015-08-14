@@ -50,7 +50,7 @@
 						value="#{moduleManagementBean.selected.spanishLabelDescription}"
 						title="#{loc.ViewSecModuleTitle_spanishLabelDescription}" />
 					<h:outputText value="#{loc.ViewSecModuleLabel_indActive}" />
-					<h:outputText value="#{moduleManagementBean.selected.indActive}"
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(moduleManagementBean.selected.indActive)}"
 						title="#{loc.ViewSecModuleTitle_indActive}" />
 					<h:outputText
 						value="#{loc.ViewSecModuleLabel_modificationMakerName}" />

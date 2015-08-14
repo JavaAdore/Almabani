@@ -33,9 +33,7 @@ public class Contractor extends AbstractEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ComContractors_Id_Seq_Gen")
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name="NUM_COUNTRY" , referencedColumnName ="NUM_COUNTRY")
-	private Country country;
+	
 	
 	@Column(name = "DES_CONTRACTOR", nullable = false, length = 60)
 	private String contractorDescription;
@@ -69,13 +67,6 @@ public class Contractor extends AbstractEntity implements Serializable {
 		this.id = id;
 	}
 
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
 	
 	public String getContractorDescription() {
 		return contractorDescription;

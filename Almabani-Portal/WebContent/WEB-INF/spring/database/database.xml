@@ -9,26 +9,26 @@
     http://www.springframework.org/schema/tx 
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> -->
-<!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
-<!-- 		<property name="url" value="jdbc:oracle:thin:@dbinst.cx3b8roehzzr.sa-east-1.rds.amazonaws.com:1521:db4cred"></property> -->
-<!-- 		<property name="username" value="adminsec">    -->
-<!-- 		</property>   -->
-<!-- 		<property name="password" value="zaza#2014">  -->
-
-<!-- 		</property> -->
-<!-- 	</bean> -->
-	
-	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
-		<property name="username" value="system">   
+		<property name="url" value="jdbc:oracle:thin:@dbinst.cx3b8roehzzr.sa-east-1.rds.amazonaws.com:1521:db4cred"></property>
+		<property name="username" value="USERONLINE">   
 		</property>  
-		<property name="password" value="a">   
+		<property name="password" value="braegy#2015"> 
 
 		</property> 
 	</bean>
+	
+	   
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
+<!-- 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property> -->
+<!-- 		<property name="username" value="system">    -->
+<!-- 		</property>   -->
+<!-- 		<property name="password" value="a">    -->
+
+<!-- 		</property>  -->
+<!-- 	</bean> -->
 
 	<bean id="sessionfactoryBean"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
