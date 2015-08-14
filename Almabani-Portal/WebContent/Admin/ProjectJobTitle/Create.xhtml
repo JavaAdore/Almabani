@@ -17,7 +17,7 @@
 					rendered="#{projectJobTitleBean.selectedProjectJobTitle != null}">
 
 					<p:outputLabel for="titleDescription" value="Title Description: " />
-					<p:inputTextarea id="titleDescription" rows="5" cols="33"
+					<p:inputTextarea id="titleDescription" rows="5" cols="33" maxlength="80"
 						value="#{projectJobTitleBean.selectedProjectJobTitle.projectJobTitleDescription}"
 						style="width:250px; resize: none;" />
 
@@ -42,11 +42,11 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="Contractor Value:" for="contractorValue" />
-					<p:inputText id="contractorValue" converter="shortConverter"
+					<p:spinner id="contractorValue"  min="1" max="2147483647"
 						value="#{projectJobTitleBean.selectedProjectJobTitle.contractorValue}" />
 						
 					<p:outputLabel value="Contractor Agreement Value:" for="contractorAgreementValue" />
-					<p:inputText id="contractorAgreementValue" converter="shortConverter"
+					<p:spinner id="contractorAgreementValue"   min="1" max="2147483647"
 						value="#{projectJobTitleBean.selectedProjectJobTitle.contractorAgreementValue}" />
 					
 				</p:panelGrid>

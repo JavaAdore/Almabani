@@ -8,13 +8,14 @@
 	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
 
 	<h:form>
-		<p:remoteCommand name="updateForm" update=":createEmployeeForm"   ></p:remoteCommand>
+		<p:remoteCommand name="updateForm" update=":createEmployeeForm"></p:remoteCommand>
 	</h:form>
-	<p:dialog id="createEmpDialog" widgetVar="createEmployeeDialog" 
+	<p:dialog id="createEmpDialog" widgetVar="createEmployeeDialog"
 		modal="true" onShow="updateForm()" dynamic="true" resizable="false"
 		appendToBody="true" header="Create New Employee" width="90%">
-		
-		<p:ajax event="close"  oncomplete="PF('wizard').loadStep('first',false)" update=":growl" />
+
+		<p:ajax event="close"
+			oncomplete="PF('wizard').loadStep('first',false)" update=":growl" />
 		<h:form id="createEmployeeForm">
 			<p:growl id="growl4create" sticky="true" showDetail="true" />
 			<h:panelGroup id="display">
@@ -22,14 +23,14 @@
 					<p:messages id="createMessages" />
 					<p:panelGrid columns="1" style="width:100%"
 						rendered="#{employeeBean.employee != null}">
-						<p:wizard flowListener="#{employeeBean.onFlowProcess}" widgetVar="wizard"
-							step="#{employeeBean.step}">
+						<p:wizard flowListener="#{employeeBean.onFlowProcess}"
+							widgetVar="wizard" step="#{employeeBean.step}">
 							<p:tab id="first" title="Personal">
 								<p:panel header="Personal Details">
 
 									<h:panelGrid columns="2" columnClasses="label, value">
 										<p:outputLabel value="Employee Name:" for="empName" />
-										<p:inputText id="empName"
+										<p:inputText id="empName" maxlength="100"
 											value="#{employeeBean.employee.employeeName}" required="true"
 											requiredMessage="Employee Name is required"
 											style="width:250px" />
@@ -38,13 +39,13 @@
 											for="federalIdentityCode" />
 										<p:inputText id="federalIdentityCode"
 											value="#{employeeBean.employee.federalIdentityCode}"
-											required="true"
+											required="true" maxlength="30"
 											requiredMessage="Federal Identity Code is required"
 											style="width:250px" />
 
 										<p:outputLabel value="State Identity Code:"
 											for="stateIdentityCode" />
-										<p:inputText id="stateIdentityCode"
+										<p:inputText id="stateIdentityCode" maxlength="30"
 											value="#{employeeBean.employee.stateIdentityCode}"
 											style="width:250px" />
 
@@ -89,56 +90,35 @@
 									<p:messages />
 									<h:panelGrid columns="2" columnClasses="label, value">
 										<p:outputLabel value="Telephone Number:" for="telephoneNumber" />
-										<p:inputText id="telephoneNumber" converter="longConverter"
+										<p:inputText id="telephoneNumber" maxlength="10"
+											converter="longConverter"
 											value="#{employeeBean.employee.telephoneNumber}" />
 
 										<p:outputLabel value="DDI Telephone Number:"
 											for="ddiTelephoneNumber" />
-										<p:inputText id="ddiTelephoneNumber"
-											converter="shortConverter"
+										<p:inputText id="ddiTelephoneNumber" maxlength="3"
 											value="#{employeeBean.employee.ddiTelephoneNumber}" />
 
 										<p:outputLabel value="DDD Telephone Number:"
 											for="dddTelephoneNumber" />
-										<p:inputText id="dddTelephoneNumber"
-											converter="shortConverter"
+										<p:inputText id="dddTelephoneNumber" maxlength="3"
 											value="#{employeeBean.employee.dddTelephoneNumber}" />
 
 										<p:outputLabel value="Mobile Number:" for="mobileNumber" />
 										<p:inputText id="mobileNumber" converter="longConverter"
-											value="#{employeeBean.employee.mobileNumber}" />
+											maxlength="10" value="#{employeeBean.employee.mobileNumber}" />
 
 										<p:outputLabel value="DDD Mobile Number:"
 											for="ddiMobileNumber" />
-										<p:inputText id="ddiMobileNumber" converter="shortConverter"
-											value="#{employeeBean.employee.ddiMobileNumber}" />
+										<p:inputText id="ddiMobileNumber"
+											value="#{employeeBean.employee.ddiMobileNumber}"
+											maxlength="3" />
 
 										<p:outputLabel value="DDD Mobile Number:"
 											for="dddMobileNumber" />
-										<p:inputText id="dddMobileNumber" converter="shortConverter"
+										<p:inputText id="dddMobileNumber" maxlength="3"
 											value="#{employeeBean.employee.dddMobileNumber}" />
 
-									</h:panelGrid>
-								</p:panel>
-							</p:tab>
-
-							<p:tab id="email" title="email">
-								<p:panel header="Email">
-									<p:messages />
-									<h:panelGrid columns="2" columnClasses="label, value">
-										<p:outputLabel value="Email1:" for="email1" />
-										<p:inputText id="email1"
-											value="#{employeeBean.employee.email1Description}"
-											style="width:250px">
-											<f:validator validatorId="custom.emailValidator" />
-										</p:inputText>
-
-										<p:outputLabel value="Email2:" for="email2" />
-										<p:inputText id="email2"
-											value="#{employeeBean.employee.email2Description}"
-											style="width:250px">
-											<f:validator validatorId="custom.emailValidator" />
-										</p:inputText>
 									</h:panelGrid>
 								</p:panel>
 							</p:tab>
@@ -147,13 +127,13 @@
 								<p:panel header="Company Details">
 									<p:messages />
 									<h:panelGrid columns="2" columnClasses="label, value">
-									
+
 										<p:outputLabel for="departments" value="Department: " />
 										<p:selectOneMenu id="departments" style="width:250px"
 											converter="#{departmentConverter}" required="true"
 											value="#{employeeBean.selectedDepartment}">
-											<f:selectItem itemLabel="Select Department" 
-												itemValue="" noSelectionOption="true"/>
+											<f:selectItem itemLabel="Select Department" itemValue=""
+												noSelectionOption="true" />
 											<f:selectItems value="#{employeeBean.departmentList}"
 												var="department" itemLabel="#{department.departmentName}" />
 											<p:ajax event="valueChange" process="@this"
@@ -201,11 +181,7 @@
 										<p:calendar id="admissionDate"
 											value="#{employeeBean.employee.admissionDate}" />
 
-										<p:outputLabel value="Observation Description:"
-											for="observationDescription" />
-										<p:inputText id="observationDescription"
-											value="#{employeeBean.employee.observationDescription}"
-											style="width:250px" />
+
 
 										<p:outputLabel for="active" value="Active: " />
 										<p:selectOneMenu id="active"
@@ -214,6 +190,12 @@
 											<f:selectItems value="#{employeeBean.active}" var="active"
 												itemLabel="#{employeeBean.extractFromBundle(active.key)}" />
 										</p:selectOneMenu>
+
+										<p:outputLabel value="Observation Description:"
+											for="observationDescription" />
+										<p:inputText id="observationDescription" maxlength="300"
+											value="#{employeeBean.employee.observationDescription}"
+											style="width:250px" />
 
 										<p:outputLabel value="Inactivity Begin Date:"
 											for="admissionDate" />
@@ -244,6 +226,28 @@
 									</h:panelGrid>
 								</p:panel>
 							</p:tab>
+
+							<p:tab id="email" title="email">
+								<p:panel header="Email">
+									<p:messages />
+									<h:panelGrid columns="2" columnClasses="label, value">
+										<p:outputLabel value="Email1:" for="email1" />
+										<p:inputText id="email1" maxlength="80"
+											value="#{employeeBean.employee.email1Description}"
+											style="width:250px">
+											<f:validator validatorId="custom.emailValidator" />
+										</p:inputText>
+
+										<p:outputLabel value="Email2:" for="email2" />
+										<p:inputText id="email2" maxlength="80"
+											value="#{employeeBean.employee.email2Description}"
+											style="width:250px">
+											<f:validator validatorId="custom.emailValidator" />
+										</p:inputText>
+									</h:panelGrid>
+								</p:panel>
+							</p:tab>
+
 
 							<p:tab id="imageTab" title="Image">
 								<p:panel header="Image">

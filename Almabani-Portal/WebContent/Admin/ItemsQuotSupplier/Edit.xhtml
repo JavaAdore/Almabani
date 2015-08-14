@@ -54,28 +54,28 @@
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_ITEM_VALUE}" />
 							<p:spinner
 								value="#{oamItemsQuotSupplierManagementBean.selected.itemValue}"
-								min="1" required="true"
+								min="1" required="true" max="2147483647"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_ITEM_VALUE_IS_REQUIRED}" />
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_ITEM_QUANTITY}" />
 							<p:spinner
 								value="#{oamItemsQuotSupplierManagementBean.selected.qutItem}"
-								min="1" required="true"
+								min="1" required="true" max="999"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_ITEM_QUANTITY_IS_REQUIRED}" />
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_NUMBER_OF_WARRENY_MONTHS}" />
 							<p:spinner
 								value="#{oamItemsQuotSupplierManagementBean.selected.warrantyMonthsQutation}"
-								min="1" required="true"
+								min="1" required="true" max="999"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_NUMBER_OF_WARRENY_MONTHS_IS_REQUIRED}" />
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_NUMBER_OF_DELIVERY_DAYS}" />
 							<p:spinner
-								value="#{oamItemsQuotSupplierManagementBean.selected.warrantyMonthsQutation}"
-								min="1" required="true"
+								value="#{oamItemsQuotSupplierManagementBean.selected.deliveryDaysQuotation}"
+								min="1" required="true" max="9999"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_NUMBER_OF_WDELIVERY_DAYS_IS_REQUIRED}" />
 
 							<p:outputLabel
@@ -85,7 +85,7 @@
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OBSERVATION_DESCRIPTION}" />
-							<p:inputTextarea
+							<p:inputTextarea maxlength="100"
 								value="#{oamItemsQuotSupplierManagementBean.selected.observationDescription}"
 								required="true"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OBSERVATION_DESCRIPTION_IS_REQUIRED}" />

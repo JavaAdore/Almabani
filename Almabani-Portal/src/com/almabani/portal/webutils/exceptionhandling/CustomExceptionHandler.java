@@ -3,10 +3,8 @@ package com.almabani.portal.webutils.exceptionhandling;
 import java.util.Iterator;
 
 import javax.faces.FacesException;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 

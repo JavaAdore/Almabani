@@ -3,7 +3,6 @@ package com.almabani.portal.component.imageuploader;
 import java.io.File;
 import java.io.Serializable;
 
-import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 

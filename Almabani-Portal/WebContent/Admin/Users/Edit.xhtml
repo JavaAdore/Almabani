@@ -21,25 +21,57 @@
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
 					rendered="#{userManagementBean.selected != null}">
-					
-					<h:outputText id="userLoginCode"
-						value="#{userManagementBean.selected.userLoginCode}" />
-					
-					<p:inputText id="indActive"
-						value="#{userManagementBean.selected.indActive}"
-						title="#{loc.EditSecUserTitle_indActive}" />
-					<p:calendar id="beginInactivityDate" pattern="MM/dd/yyyy"
-						value="#{userManagementBean.selected.beginInactivityDate}"
-						title="#{loc.EditSecUserTitle_beginInactivityDate}"
-						showOn="button" />
-					
-					<p:inputText id="indAdminSystem"
+					<h:outputText value="#{loc.EditSecUserLabel_userLoginCode}" />
+					<p:inputText id="userLoginCode" styleClass="fullWith"
+						value="#{userManagementBean.selected.userLoginCode}"
+						required="true" maxlength="15"
+						requiredMessage="#{loc.ALMABANI_GENERAL_USER_LOGIN_CODE_IS_REQUIRED}" />
+
+					<h:outputText value="#{loc.EditSecUserTitle_password}" />
+					<p:password required="true" styleClass="fullWith" maxlength="100"
+						requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}"
+						value="#{userManagementBean.selected.password}" feedback="true"
+						promptLabel="#{loc.ALMABANI_GENERAL_ENTER_PASSWORD}"
+						weakLabel="#{loc.ALMABANI_GENERAL_WEAK_PASSWORD}"
+						goodLabel="#{loc.ALMABANI_GENERAL_GOOD_PASSWORD}"
+						strongLabel="#{loc.ALMABANI_GENERAL_STRONG_PASSWORD}" />
+
+					<h:outputText value="#{loc.EditSecUserTitle_employee}" />
+					<p:selectOneMenu value="#{userManagementBean.selected.employee}"
+						required="true" converter="#{employeeConverter}"
+						requiredMessage="#{loc.EditSecUserRequiredMessage_employee}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{userManagementBean.employees}"
+							var="employee" itemLabel="#{employee.employeeName}" />
+
+						<f:selectItem />
+					</p:selectOneMenu>
+
+
+
+					<h:outputText value="#{loc.EditSecUserTitle_indActive}" />
+					<p:selectOneMenu value="#{userManagementBean.selected.indActive}"
+						styleClass="fullWith" required="true"
+						requiredMessage="#{loc.CreateSecUserRequiredMessageIsActive}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+					<h:outputText value="#{loc.EditSecUserTitle_indAdminSystem}" />
+					<p:selectOneMenu
 						value="#{userManagementBean.selected.indAdminSystem}"
-						title="#{loc.EditSecUserTitle_indAdminSystem}" />
-					
-					<p:inputText id="password"
-						value="#{userManagementBean.selected.password}"
-						title="#{loc.EditSecUserTitle_password}" />
+						styleClass="fullWith" required="true"
+						requiredMessage="#{loc.CreateSecUserRequiredMessageIsAdmin}">
+						<f:selectItem itemLabel="" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
 				</p:panelGrid>
 				<p:commandButton actionListener="#{userManagementBean.saveNew}"
 					value="#{loc.Save}"

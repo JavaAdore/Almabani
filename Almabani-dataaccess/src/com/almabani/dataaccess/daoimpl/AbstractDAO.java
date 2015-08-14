@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.almabani.common.entity.schema.admincor.Company;
-import com.almabani.common.entity.schema.adminsec.SecApplicationsCompany;
 import com.almabani.common.util.Utils;
 
 @Repository

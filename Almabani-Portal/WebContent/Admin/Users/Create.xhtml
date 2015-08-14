@@ -21,11 +21,11 @@
 					<h:outputText value="#{loc.EditSecUserLabel_userLoginCode}" />
 					<p:inputText id="userLoginCode" styleClass="fullWith"
 						value="#{userManagementBean.selected.userLoginCode}"
-						required="true"
+						required="true" maxlength="15"
 						requiredMessage="#{loc.ALMABANI_GENERAL_USER_LOGIN_CODE_IS_REQUIRED}" />
 
 					<h:outputText value="#{loc.EditSecUserTitle_password}" />
-					<p:password required="true" styleClass="fullWith"
+					<p:password required="true" styleClass="fullWith" maxlength="100"
 						requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}"
 						value="#{userManagementBean.selected.password}" feedback="true"
 						promptLabel="#{loc.ALMABANI_GENERAL_ENTER_PASSWORD}"

@@ -3,7 +3,6 @@ package com.almabani.portal.managedbean.applicationhelper;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.annotation.PostConstruct;

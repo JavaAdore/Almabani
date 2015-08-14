@@ -1,23 +1,11 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
-
-import com.almabani.common.constant.MessagesKeyStore;
-import com.almabani.common.dto.CommonDriverMap;
-import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
-import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
-import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;

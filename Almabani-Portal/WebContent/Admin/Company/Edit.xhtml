@@ -20,7 +20,7 @@
 				<p:panelGrid columns="4"
 					rendered="#{companyManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_NAME}" />
-					<p:inputText id="name"
+					<p:inputText id="name" maxlength="80"
 						value="#{companyManagementBean.selected.companyName}"
 						title="#{loc.CreateComCompanyTitle_name}" required="true"
 						requiredMessage="#{loc.CreateComCompanyRequiredMessage_name}" />
@@ -28,23 +28,21 @@
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_FEDRAL_IDENTITY_CODE}" />
 
-					<p:inputText id="fedralIdentityCode"
+					<p:inputText id="fedralIdentityCode" maxlength="30"
 						value="#{companyManagementBean.selected.federalIdentityCode}"
 						title="#{loc.CreateComCompanyTitle_fedralIdentityCode}"
 						required="true"
 						requiredMessage="#{loc.CreateComCompanyRequiredMessage_fedralIdentityCode}" />
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_ALTERNATIVE_COMPANY_NAME}" />
-					<p:inputText id="companyNameAlternative"
+					<p:inputText id="companyNameAlternative" maxlength="100"
 						value="#{companyManagementBean.selected.alternativeCompanyName}"
 						title="#{loc.CreateComCompanyTitle_companyNameAlternative}" />
 
 
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_COUNTRY}" />
-					<p:selectOneMenu
-						
-						converter="#{countryConverter}">
+					<p:selectOneMenu converter="#{countryConverter}">
 						<p:ajax listener="#{companyManagementBean.countryChanged}"
 							update="states" />
 
@@ -55,9 +53,7 @@
 							var="country" itemLabel="#{country.countryName} "
 							itemValue="#{country}" />
 					</p:selectOneMenu>
-
-
-
+					
 					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_STATE}" />
 					<p:selectOneMenu id="states"
 						value="#{companyManagementBean.selected.state}"
@@ -76,11 +72,12 @@
 						<f:selectItem itemValue="E" itemLabel="English" />
 						<f:selectItem itemValue="P" itemLabel="Portoges" />
 						<f:selectItem itemValue="S" itemLabel="Spanish" />
-					</p:selectOneMenu>
+					</p:selectOneMenu>  
 
 
 
 				</p:panelGrid>
+
 			</h:panelGroup>
 	<p:commandButton actionListener="#{companyManagementBean.saveNew}"
 					value="#{loc.Save}" update=":growl :listForm"

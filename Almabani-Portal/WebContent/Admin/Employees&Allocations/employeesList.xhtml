@@ -126,7 +126,7 @@
 		</p:panel>
 	</h:form>
 
-	<p:overlayPanel widgetVar="empOP" showEffect="fade" hideEffect="fade"
+	<p:dialog modal="true" widgetVar="empOP" showEffect="fade" hideEffect="fade" 
 		dismissable="false" showCloseIcon="true">
 		
 		<h:form id="empOPForm">
@@ -231,9 +231,9 @@
 			</p:outputPanel>
 		</h:form>
 		
-	</p:overlayPanel>
+	</p:dialog>
 
-	<p:overlayPanel widgetVar="empAllocationsOP" showEffect="fade"
+	<p:dialog widgetVar="empAllocationsOP" showEffect="fade"  modal="true"
 		dynamic="true" hideEffect="fade" dismissable="false"
 		showCloseIcon="true">
 		
@@ -303,7 +303,6 @@
 			</p:outputPanel>
 		</h:form>
 		
-	</p:overlayPanel>
-
+	</p:dialog>
 </ui:composition>
 </html>

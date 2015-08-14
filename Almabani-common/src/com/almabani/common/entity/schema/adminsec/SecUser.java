@@ -10,11 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import com.almabani.common.constant.DataAccessConstant;
 import com.almabani.common.entity.schema.admincor.Employee;
-import com.almabani.common.enums.Active;
 
 /**
  * @author Mohamed_Ibrahim
@@ -46,7 +44,7 @@ public class SecUser implements java.io.Serializable {
 	private Date beginInactivityDate;
 
 	@Column(name = "DES_MOTIVE_INACTIVITY", length = 300)
-	private String motiveInactivityDate;
+	private String motiveInactivityDecription;
 
 	/**
 	 * modificationMakerName represent the user name who make the last
@@ -151,15 +149,15 @@ public class SecUser implements java.io.Serializable {
 	 * @return the motiveInactivityDate
 	 */
 	public String getMotiveInactivityDate() {
-		return motiveInactivityDate;
+		return motiveInactivityDecription;
 	}
 
 	/**
 	 * @param motiveInactivityDate
 	 *            the motiveInactivityDate to set
 	 */
-	public void setMotiveInactivityDate(String motiveInactivityDate) {
-		this.motiveInactivityDate = motiveInactivityDate;
+	public void setMotiveInactivityDate(String motiveInactivityDecription) {
+		this.motiveInactivityDecription = motiveInactivityDecription;
 	}
 
 	/**

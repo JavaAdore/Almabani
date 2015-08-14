@@ -9,7 +9,6 @@ import javax.faces.bean.ViewScoped;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
-import com.almabani.common.dto.CompanyApplicationGrant;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecApplicationsCompany;
 import com.almabani.common.util.Utils;

@@ -45,7 +45,7 @@ public class ProjectJobTitle extends AbstractEntity implements Serializable {
 	private Project project;
 	
 	@Column(name = "VAL_CONTRACTOR", precision = 15)
-	private Short contractorValue;
+	private Integer contractorValue;
 	
 //	@Convert(converter = ActiveConverter.class)
 	@Enumerated(EnumType.STRING)
@@ -63,7 +63,7 @@ public class ProjectJobTitle extends AbstractEntity implements Serializable {
 	private Date lastModificationDate;
 	
 	@Column(name = "VAL_CONTRACTOR_AGREEMENT", precision = 15)
-	private Short contractorAgreementValue;
+	private Integer contractorAgreementValue;
 	
 	public ProjectJobTitle() {
 	}
@@ -107,14 +107,14 @@ public class ProjectJobTitle extends AbstractEntity implements Serializable {
 	/**
 	 * @return the contractorValue
 	 */
-	public Short getContractorValue() {
+	public Integer getContractorValue() {
 		return contractorValue;
 	}
 
 	/**
 	 * @param contractorValue the contractorValue to set
 	 */
-	public void setContractorValue(Short contractorValue) {
+	public void setContractorValue(Integer contractorValue) {
 		this.contractorValue = contractorValue;
 	}
 	
@@ -157,14 +157,14 @@ public class ProjectJobTitle extends AbstractEntity implements Serializable {
 	 * @param lastModificationDate the lastModificationDate to set
 	 */
 	public void setLastModificationDate(Date lastModificationDate) {
-		this.lastModificationDate = lastModificationDate;
+		this.lastModificationDate = lastModificationDate; 
 	}
 	
-	public Short getContractorAgreementValue() {
+	public Integer getContractorAgreementValue() {
 		return contractorAgreementValue;
 	}
 
-	public void setContractorAgreementValue(Short contractorAgreementValue) {
+	public void setContractorAgreementValue(Integer contractorAgreementValue) {
 		this.contractorAgreementValue = contractorAgreementValue;
 	}
 	

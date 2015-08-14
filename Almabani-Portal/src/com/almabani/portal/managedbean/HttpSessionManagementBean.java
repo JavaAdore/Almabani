@@ -1,22 +1,16 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpSession;
 
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.portal.common.SessionDetailsHolder;

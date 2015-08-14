@@ -2,7 +2,6 @@ package com.almabani.dataaccess.daoimpl.admincor;
 
 import java.util.List;
 
-  
 import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Country;

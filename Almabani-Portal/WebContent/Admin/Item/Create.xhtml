@@ -20,7 +20,7 @@
 				<p:panelGrid columns="2"
 					rendered="#{itemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCode}" />
-					<p:inputText   value="#{itemManagementBean.selected.itemCode}" style="width:177px" required="true" requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
+					<p:inputText   value="#{itemManagementBean.selected.itemCode}" maxlength="20" style="width:177px" required="true" requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
 					<p:selectOneMenu converter="#{manufacturerConverter}" styleClass="fullWith"
@@ -78,8 +78,8 @@
 
 					<p:inputTextarea
 						value="#{itemManagementBean.selected.itemDescription}" 
-						required="true"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}" maxlength="50" />
+						required="true" 
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}" maxlength="150" />
 
 
 

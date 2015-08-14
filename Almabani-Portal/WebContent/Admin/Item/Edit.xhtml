@@ -21,7 +21,7 @@
 					rendered="#{itemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCode}" />
 					<p:inputText value="#{itemManagementBean.selected.itemCode}"
-						style="width:177px" required="true"
+						style="width:177px" required="true" maxlength="20"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
@@ -86,7 +86,7 @@
 						value="#{itemManagementBean.selected.itemDescription}"
 						required="true"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}"
-						maxlength="50" />
+						maxlength="150" />
 
 
 

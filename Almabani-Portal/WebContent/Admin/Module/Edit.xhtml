@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
- 
-        <p:dialog id="editDlg" widgetVar="editDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.EditSecModuleTitle}">
+<ui:composition>
 
-            <h:form id="editForm">
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.EditSecModuleTitle}">
 
-               
+		<h:form id="editForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid  columns="2" rendered="#{moduleManagementBean.selected != null}">
-                        <p:outputLabel value="#{loc.CreateSecModuleLabel_orderMenuNumber}" />
+
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{moduleManagementBean.selected != null}">
+
+					<p:outputLabel value="#{loc.CreateSecModuleLabel_orderMenuNumber}" />
 					<p:spinner value="#{moduleManagementBean.selected.orderMenuNumber}"
-						max="1000" min="0" /> 
+						max="1000" min="0" />
 					<p:outputLabel value="#{loc.CreateSecModuleLabel_system}" />
 					<p:selectOneMenu id="item"
 						value="#{moduleManagementBean.selected.system}" required="true"
@@ -43,12 +47,12 @@
 
 					<p:outputLabel value="#{loc.CreateSecModuleLabel_moduleCode}" />
 					<p:inputText value="#{moduleManagementBean.selected.moduleCode}"
-						required="true" style="width:175px"
+						required="true" style="width:175px" maxlength="3"
 						requiredMessage="#{loc.CreateSecModuleRequiredMessage_moduleCode}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_moduleDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="50"
 						value="#{moduleManagementBean.selected.moduleDescription}"
 						required="true"
 						requiredMessage="#{loc.CreateSecModuleRequiredMessage_moduleDescription}" />
@@ -56,29 +60,34 @@
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_englishLabelDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="25"
 						value="#{moduleManagementBean.selected.englishLabelDescription}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_portugueseLabelDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="25"
 						value="#{moduleManagementBean.selected.portugueseLabelDescription}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_spanishLabelDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="25"
 						value="#{moduleManagementBean.selected.spanishLabelDescription}" />
 
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{moduleManagementBean.saveNew}" value="#{loc.Save}" update="display,:growl,:listForm:datalist" oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}"/>
-                    <p:commandButton value="#{loc.Cancel}" onclick="PF('editDialog').hide()"/>
-                </h:panelGroup>
 
-            </h:form>
 
-        </p:dialog>
+				</p:panelGrid>
+				<p:commandButton actionListener="#{moduleManagementBean.saveNew}"
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('editDialog').hide()" />
+			</h:panelGroup>
 
-    </ui:composition>
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
 
 </html>

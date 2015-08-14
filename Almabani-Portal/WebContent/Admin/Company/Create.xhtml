@@ -16,7 +16,7 @@
 				<p:panelGrid columns="4"
 					rendered="#{companyManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_NAME}" />
-					<p:inputText id="name"
+					<p:inputText id="name" maxlength="80"
 						value="#{companyManagementBean.selected.companyName}"
 						title="#{loc.CreateComCompanyTitle_name}" required="true"
 						requiredMessage="#{loc.CreateComCompanyRequiredMessage_name}" />
@@ -24,14 +24,14 @@
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_FEDRAL_IDENTITY_CODE}" />
 
-					<p:inputText id="fedralIdentityCode"
+					<p:inputText id="fedralIdentityCode" maxlength="30"
 						value="#{companyManagementBean.selected.federalIdentityCode}"
 						title="#{loc.CreateComCompanyTitle_fedralIdentityCode}"
 						required="true"
 						requiredMessage="#{loc.CreateComCompanyRequiredMessage_fedralIdentityCode}" />
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_ALTERNATIVE_COMPANY_NAME}" />
-					<p:inputText id="companyNameAlternative"
+					<p:inputText id="companyNameAlternative" maxlength="100"
 						value="#{companyManagementBean.selected.alternativeCompanyName}"
 						title="#{loc.CreateComCompanyTitle_companyNameAlternative}" />
 

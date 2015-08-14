@@ -49,7 +49,7 @@
 					
 					<p:outputLabel
 						value="#{loc.CreateSecSubModuleTitle_subModuleDescription}" />
-					<p:inputTextarea id="subModuleDescription"
+					<p:inputTextarea id="subModuleDescription" maxlength="50"
 						value="#{subModuleManagementBean.selected.subModuleDescription}"
 						required="true"
 						requiredMessage="#{loc.CreateSecSubModuleRequiredMessage_subModuleDescription}" />
@@ -58,17 +58,17 @@
 						
 					<p:outputLabel
 						value="#{loc.CreateSecSubModuleTitle_portugueseLabelDescription}" />
-					<p:inputTextarea id="portugueseLabelDescription"
+					<p:inputTextarea id="portugueseLabelDescription" maxlength="25"
 						value="#{subModuleManagementBean.selected.portugueseLabelDescription}" />
 						
 					<p:outputLabel
 						value="#{loc.CreateSecSubModuleTitle_englishLabelDescription}" />
-					<p:inputTextarea id="englishLabelDescription"
+					<p:inputTextarea id="englishLabelDescription" maxlength="25"
 						value="#{subModuleManagementBean.selected.englishLabelDescription}" />
 						
 					<p:outputLabel
 						value="#{loc.CreateSecSubModuleTitle_spanishLabelDescription}" />
-					<p:inputTextarea id="spanishLabelDescription"
+					<p:inputTextarea id="spanishLabelDescription" maxlength="25"
 						value="#{subModuleManagementBean.selected.spanishLabelDescription}" />
 						
 						

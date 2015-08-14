@@ -15,7 +15,6 @@
 		<h:form id="createForm">
 
 
-
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
 					rendered="#{applicationManagementBean.selected != null}">
@@ -80,7 +79,7 @@
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_applicationDescription}" />
-					<p:inputTextarea id="applicationDescription"
+					<p:inputTextarea id="applicationDescription" maxlength="50"
 						value="#{applicationManagementBean.selected.applicationDescription}"
 						title="#{loc.CreateSecApplicationTitle_applicationDescription}"
 						required="true"
@@ -91,24 +90,24 @@
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_portugueseLabel}" />
-					<p:inputTextarea id="portugueseLabel"
+					<p:inputTextarea id="portugueseLabel" maxlength="25"
 						value="#{applicationManagementBean.selected.portugueseLabel}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_englishLabelDescription}" />
-					<p:inputTextarea id="englishLabelDescription"
+					<p:inputTextarea id="englishLabelDescription"  maxlength="25"
 						value="#{applicationManagementBean.selected.englishLabelDescription}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_spanishLabelDescription}" />
-					<p:inputTextarea id="spanishLabelDescription"
+					<p:inputTextarea id="spanishLabelDescription"  maxlength="25"
 						value="#{applicationManagementBean.selected.spanishLabelDescription}"
 						 />
 
 					
 					
 					<p:outputLabel value="#{loc.CreateSecApplicationTitle_linkCodeDescription}" />
-					<p:inputTextarea id="linkCodeDescription"
+					<p:inputTextarea id="linkCodeDescription" maxlength="100"
 						value="#{applicationManagementBean.selected.linkCodeDescription}"
 						 />
 						

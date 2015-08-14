@@ -35,13 +35,13 @@
 					</p:selectOneMenu>
 					<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_qutItem}" />
 
-					<p:spinner id="qutItem"  styleClass="fullWith" min="1"
+					<p:spinner id="qutItem"  styleClass="fullWith" min="1" max="999"
 						value="#{quotationItemManagementBean.selected.qutItem}"
 						 required="true"
 						requiredMessage="#{loc.CreateOamItemQuotationRequiredMessage_qutItem}" />
 						
 						<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_observationDescription}"/>
-					<p:inputTextarea id="observationDescription" styleClass="fullWith"
+					<p:inputTextarea id="observationDescription" styleClass="fullWith" maxlength="80"
 						value="#{quotationItemManagementBean.selected.observationDescription}"
 						 />
 					

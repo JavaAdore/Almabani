@@ -19,7 +19,7 @@
 				<p:panelGrid columns="4"
 					rendered="#{supplierManagementBean.selected != null}">
 					<h:outputText value="#{loc.ListOamSupplierTitle_supplierName}" />
-					<p:inputText
+					<p:inputText maxlength="50"
 						value="#{supplierManagementBean.selected.supplierName}"
 						required="true"
 						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_supplierName}" />
@@ -40,25 +40,27 @@
 
 					<h:outputText value="#{loc.ListOamSupplierTitle_addComplementName}" />
 
-					<p:inputText
+					<p:inputText maxlength="50"
 						value="#{supplierManagementBean.selected.addComplementName}" />
 
 					<h:outputText value="#{loc.ListOamSupplierTitle_responsibleNumber}" />
 
-					<p:inputText
-						value="#{supplierManagementBean.selected.responsibleNumber}" />
+					<p:inputText maxlength="50"
+						value="#{supplierManagementBean.selected.responsibleName}" />
 
-					<h:outputText value="#{loc.ListOamSupplierTitle_telephoneNumber}" />
+					<h:outputText value="#{loc.ListOamSupplierTitle_telephoneNumber}"  />
 
-					<p:inputText
+					<p:inputText maxlength="10"
 						value="#{supplierManagementBean.selected.telephoneNumber}" />
 
 					<h:outputText value="#{loc.ListOamSupplierTitle_mobileNumber}" />
-					<p:inputText
+					<p:inputText maxlength="10"
 						value="#{supplierManagementBean.selected.mobileNumber}" />
 
 					<h:outputText value="#{loc.ListOamSupplierTitle_faxNumber}" />
-					<p:inputText value="#{supplierManagementBean.selected.faxNumber}" />
+					<p:inputText value="#{supplierManagementBean.selected.faxNumber}" maxlength="10"/>
+					
+					
 					<h:outputText value="#{loc.ListOamSupplierTitle_indActive}" />
 					<p:selectOneMenu
 						value="#{supplierManagementBean.selected.indActive}"
@@ -73,14 +75,14 @@
 					</p:selectOneMenu>
 					<h:outputText
 						value="#{loc.ListOamSupplierTitle_observationDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="300"
 						value="#{supplierManagementBean.selected.observationDescription}" />
 
 
 					<h:outputText value="#{loc.ListOamSupplierTitle_address}" />
 
 					<p:inputTextarea value="#{supplierManagementBean.selected.address}"
-						required="true"
+						required="true" maxlength="50"
 						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_address}" />
 				</p:panelGrid>
 				<p:commandButton actionListener="#{supplierManagementBean.saveNew}"

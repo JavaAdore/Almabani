@@ -60,7 +60,7 @@
 					<p:outputLabel
 						value="#{loc.CreateOamQuotationTitle_quotationDescription}" />
 
-					<p:inputTextarea id="quotationDescription"
+					<p:inputTextarea id="quotationDescription" maxlength="80"
 						value="#{quotationManagementBean.selected.quotationDescription}"
 						required="true"
 						requiredMessage="#{loc.CreateOamQuotationRequiredMessage_quotationDescription}" />

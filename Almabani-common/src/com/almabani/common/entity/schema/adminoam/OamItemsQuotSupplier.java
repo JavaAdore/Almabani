@@ -1,7 +1,6 @@
 package com.almabani.common.entity.schema.adminoam;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;

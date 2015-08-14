@@ -32,7 +32,6 @@ import org.springframework.security.core.context.SecurityContext;
 
 import com.almabani.common.annotataion.Bundle;
 import com.almabani.common.constant.MessagesKeyStore;
-import com.almabani.common.dto.menu.Application;
 import com.almabani.common.dto.menu.ApplicationAccess;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.exception.AlmabaniException;

@@ -1,6 +1,5 @@
 package com.almabani.common.dto;
 
-import java.lang.annotation.Target;
 import java.util.LinkedHashMap;
 
 import com.almabani.common.entity.schema.admincor.Company;

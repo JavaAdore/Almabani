@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -18,7 +17,6 @@ import org.primefaces.model.SortOrder;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Employee;
-import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;

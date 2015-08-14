@@ -48,7 +48,7 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 	private String addComplementName;
 	
 	@Column(name = "NAM_RESPONSIBLE", length = 50)
-	private String responsibleNumber;
+	private String responsibleName;
 	
 	@Column(name = "NUM_TELEFONE")
 	private Long telephoneNumber;
@@ -142,19 +142,7 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 		this.addComplementName = addComplementName;
 	}
 
-	/**
-	 * @return the responsibleNumber
-	 */
-	public String getResponsibleNumber() {
-		return responsibleNumber;
-	}
 
-	/**
-	 * @param responsibleNumber the responsibleNumber to set
-	 */
-	public void setResponsibleNumber(String responsibleNumber) {
-		this.responsibleNumber = responsibleNumber;
-	}
 
 	/**
 	 * @return the telephoneNumber
@@ -254,4 +242,11 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 		this.lastModificationDate = lastModificationDate;
 	}
 	
+	public String getResponsibleName() {
+		return responsibleName;
+	}
+
+	public void setResponsibleName(String responsibleName) {
+		this.responsibleName = responsibleName;
+	}  
 }

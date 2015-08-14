@@ -45,12 +45,12 @@
 
 					<p:outputLabel value="#{loc.CreateSecModuleLabel_moduleCode}" />
 					<p:inputText value="#{moduleManagementBean.selected.moduleCode}"
-						required="true" style="width:175px"
+						required="true" style="width:175px" maxlength="3"
 						requiredMessage="#{loc.CreateSecModuleRequiredMessage_moduleCode}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_moduleDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="50"
 						value="#{moduleManagementBean.selected.moduleDescription}"
 						required="true"
 						requiredMessage="#{loc.CreateSecModuleRequiredMessage_moduleDescription}" />
@@ -58,17 +58,17 @@
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_englishLabelDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea maxlength="25"
 						value="#{moduleManagementBean.selected.englishLabelDescription}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_portugueseLabelDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea  maxlength="25"
 						value="#{moduleManagementBean.selected.portugueseLabelDescription}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecModuleLabel_spanishLabelDescription}" />
-					<p:inputTextarea
+					<p:inputTextarea  maxlength="25"
 						value="#{moduleManagementBean.selected.spanishLabelDescription}" />
 
 
