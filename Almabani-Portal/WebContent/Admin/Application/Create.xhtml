@@ -68,12 +68,12 @@
 						value="#{loc.CreateSecApplicationTitle_orderMenuNumber}" />
 					<p:spinner id="orderMenuNumber"
 						value="#{applicationManagementBean.selected.orderMenuNumber}"
-						required="true" min="1" maxlength="1000"
+						required="true" min="1" max="1000"
 						requiredMessage="#{loc.CreateSecApplicationRequiredMessage_orderMenuNumber}" />
 					
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_codApplication}" />
-					<p:inputText id="codApplication"
+					<p:inputText id="codApplication" maxlength="8"
 						value="#{applicationManagementBean.selected.codApplication}"
 						required="true"
 						requiredMessage="#{loc.CreateSecApplicationRequiredMessage_codApplication}" />

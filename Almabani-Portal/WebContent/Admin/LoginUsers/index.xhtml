@@ -16,10 +16,11 @@
 		<h:form>
 			<p:remoteCommand name="refreshForm" update=":listForm"></p:remoteCommand>
 		</h:form>
-		<h:form id="listForm">
 
-			<p:panel header="#{loc.ListOamItemTitle}"
-				style="margin-left:auto; margin-right:auto ; width:85%">
+
+		<p:panel header="#{loc.ListOamItemTitle}"
+			style="margin-left:auto; margin-right:auto ; width:85%">
+			<h:form id="listForm">
 				<p:dataTable id="datalist"
 					value="#{httpSessionManagementBean.sessionMap.entrySet()}"
 					draggableColumns="true" draggableRows="true" rowIndexVar="index"
@@ -39,15 +40,10 @@
 
 					<p:column headerText="#{loc.ALMABANI_GENERAL_SELECT_USER}"
 						width="70">
-						<f:facet name="hader">
-							<p:selectOneMenu style="margin-left:auto ; margin-right:auto;">
-								<p:ajax  update="cick"
-									listener="#{httpSessionManagementBean.selectDeSelectAll}" />
-							</p:selectOneMenu>
-						</f:facet>
+
 						<center>
 							<p:selectBooleanCheckbox converter="#{userConverter}">
-								<p:ajax event="change" update="cick"
+								<p:ajax event="change" update=":cick"
 									listener="#{httpSessionManagementBean.checkChanged}" />
 								<f:attribute name="user" value="#{item.key}" />
 							</p:selectBooleanCheckbox>
@@ -87,19 +83,28 @@
 
 					<f:facet name="footer">
 
-						<p:commandButton id="cick"
-							actionListener="#{httpSessionManagementBean.kickSelected()}" disabled="#{empty httpSessionManagementBean.usersToCick}"
-							value="#{loc.ALMABANI_GENERAL_KICK_SELECTED}" update="@form"></p:commandButton>
 					</f:facet>
+
 				</p:dataTable>
 
-			</p:panel>
 
-		</h:form>
+			</h:form>
+			<h:form id="cick">
+				<center>
+					<p:panel style="background:white">
 
-		<script> 
-	
-	</script>
+						<p:commandButton
+							actionListener="#{httpSessionManagementBean.kickSelected()}"
+							disabled="#{ httpSessionManagementBean.usersToCick.size()==0}"
+							value="#{loc.ALMABANI_GENERAL_KICK_SELECTED}" update=":listForm"></p:commandButton>
+					</p:panel>
+				</center>
+			</h:form>
+		</p:panel>
+
+
+
+
 
 	</ui:define>
 
