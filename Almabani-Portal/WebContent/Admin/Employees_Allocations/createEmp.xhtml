@@ -10,7 +10,7 @@
 	<h:form>
 		<p:remoteCommand name="updateForm" update=":createEmployeeForm"></p:remoteCommand>
 	</h:form>
-	<p:dialog id="createEmpDialog" widgetVar="createEmployeeDialog"
+	<p:dialog id="createEmpDialog" widgetVar="createEmployeeDialog" rendered="#{applicationScopeStore.hasFullAccess()}" 
 		modal="true" onShow="updateForm()" dynamic="true" resizable="false"
 		appendToBody="true" header="Create New Employee" width="90%">
 

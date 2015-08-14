@@ -24,9 +24,9 @@
 						value="#{applicationScopeStore.getCurrentlyLoggedUser().userLoginCode}"
 						style="color: orange;" />
 				</p:commandLink> <h:outputText value="   |   " style="color: white;" /> <!-- 				 <h:form> -->
-				<!-- 					<p:commandLink action="/logout.xhtml" ajax="false"  value="#{loc.ALMABANI_GENERAL_LOG_OUT}" -->
+				<!-- 					<p:commandLink action="/logout.xhtml" ajax="false"  value="" -->
 				<!-- 						immediate="true"></p:commandLink> --> <!-- 				</h:form> -->
-							<form id="logout" action="/Almabani-Portal/logout.xhtml"> <a href="#" style="color:yellow" onclick="$('#logout').submit()"> logout </a></form>
+							<form id="logout" action="/Almabani-Portal/logout.xhtml"> <a href="#" style="color:yellow" onclick="$('#logout').submit()"> #{loc.ALMABANI_GENERAL_LOG_OUT} </a></form>
 
 			</span>
 			

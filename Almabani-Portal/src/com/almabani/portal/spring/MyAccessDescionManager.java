@@ -28,8 +28,8 @@ public class MyAccessDescionManager implements AccessDecisionManager {
 
 		 
 		String path = WebUtils.trimSlashs(filterInvocation.getRequestUrl());
-	  //	WebUtils.isAllowedURL(authentication , path); 
-	} 
+	  	WebUtils.isAllowedURL(authentication , path); 
+	}  
 
 	@Override
 	public boolean supports(ConfigAttribute attribute) {

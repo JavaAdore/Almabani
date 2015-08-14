@@ -112,10 +112,10 @@
 					<p:commandButton id="createButton" icon="ui-icon-plus"
 						value="#{loc.Create}"
 						actionListener="#{employeeBean.prepareCreateEmployee()}"
-						update=":employeeListForm"
+						update=":employeeListForm"  rendered="#{applicationScopeStore.hasFullAccess()}" 
 						oncomplete="PF('createEmployeeDialog').show()" />
 					<p:commandButton id="editButton" icon="ui-icon-pencil"
-						value="#{loc.Edit}"
+						value="#{loc.Edit}" rendered="#{applicationScopeStore.hasFullAccess()}" 
 						update=":employeeListForm :editEmployeeForm:departments :editEmployeeForm:departmentSections"
 						actionListener="#{employeeBean.prepareEditEmployee(employeesAndAllocationsBean.selectedEmployee)}"
 						oncomplete="PF('editEmployeeDialog').show()"
