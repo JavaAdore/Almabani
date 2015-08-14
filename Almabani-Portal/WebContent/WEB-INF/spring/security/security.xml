@@ -33,17 +33,13 @@
 			pattern="/Admin/**.*" />
 		<security:intercept-url access="IS_AUTHENTICATED_ANONYMOUSLY"
 			pattern="/Login.xhtml" />
-		<security:logout logout-url="/logout.xhtml" invalidate-session="true"  delete-cookies="true"/>
+		<security:logout logout-url="/logout.xhtml"   success-handler-ref="customLogoutSuccessHandler"  invalidate-session="true"  delete-cookies="true" />
+		
 		<security:form-login login-page="/Login.xhtml"
 			authentication-failure-url="/Login.xhtml" />
 		<security:http-basic />
 
-
-		<security:logout logout-success-url="/Login.xhtml" />
-
-		<!-- <security:access-denied-handler /> -->
-		<!-- <security:remember-me key="myAppKey" -->
-		<!-- user-service-ref="customUserDetailsService" /> -->
+  
 	</security:http>
 
 	<security:authentication-manager alias="authenticationManager">
@@ -52,11 +48,7 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<beans:bean
-		class="org.springframework.security.web.context.SecurityContextPersistenceFilter"
-		id="securityContextPersistenceFilter">
-		<beans:property name="forceEagerSessionCreation" value="true"></beans:property>
-	</beans:bean>
+
 
 
 

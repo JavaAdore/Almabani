@@ -41,6 +41,7 @@ public class LogoutFilter implements Filter {
 				SessionCapturerListener.getSessionmap().remove(currentSecUser);
 			}
 		}
+		((HttpSession)((HttpServletRequest)request).getSession()).invalidate();
 		chain.doFilter(request, respon); 
 	}
 
