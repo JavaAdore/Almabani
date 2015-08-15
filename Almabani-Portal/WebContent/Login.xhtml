@@ -63,10 +63,15 @@
 									feedback="false" style="width: 420px;"></p:password>
 
 								<br />
-								<f:facet name="footer">
+								<f:facet name="footer"> 
 									<p:panelGrid columns="2" styleClass="loginPasswordGrid">
 										<p:commandButton id="login" value="Login" ajax="true"
 											update="@form" action="#{loginHandlerBean.login()}" />
+
+										<p:selectBooleanCheckbox itemLabel="AWS database" value="#{loginHandlerBean.awsdb}">
+											<p:ajax event="change"
+												listener="#{loginHandlerBean.checkChanged}" />
+										</p:selectBooleanCheckbox>
 										<!-- 										<p:commandLink id="user" actionListener="#" -->
 										<!-- 											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;"> -->
 										<!-- 											<h:outputText value="Forget Password" style="color: #098DB1;" /> -->

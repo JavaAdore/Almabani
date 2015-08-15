@@ -27,7 +27,7 @@ import com.almabani.common.interfaces.ByteArrayHolder;
 
 @Entity
 @Table( schema="ADMINCOR",name = "COM_EMPLOYEES")
-@SequenceGenerator(name = "ComEmployees_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_EMPLOYEES_ID_SEQ_GEN")
+@SequenceGenerator(name = "ComEmployees_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_COD_EMPLOYEE")
 public class Employee extends AbstractEntity implements ByteArrayHolder, Serializable {
 	
 	private static final long serialVersionUID = -9109549932466687734L;

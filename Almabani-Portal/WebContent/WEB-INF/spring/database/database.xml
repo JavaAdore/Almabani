@@ -9,26 +9,39 @@
     http://www.springframework.org/schema/tx 
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<bean id="aws" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url" value="jdbc:oracle:thin:@dbinst.cx3b8roehzzr.sa-east-1.rds.amazonaws.com:1521:db4cred"></property>
-		<property name="username" value="USERONLINE">   
-		</property>  
-		<property name="password" value="braegy#2015"> 
+		<property name="url"
+			value="jdbc:oracle:thin:@dbinst.cx3b8roehzzr.sa-east-1.rds.amazonaws.com:1521:db4cred"></property>
+		<property name="username" value="USERONLINE">
+		</property>
+		<property name="password" value="braegy#2015">
 
-		</property> 
+		</property>
 	</bean>
-	
-	   
-<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> -->
-<!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
-<!-- 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property> -->
-<!-- 		<property name="username" value="system">    -->
-<!-- 		</property>   -->
-<!-- 		<property name="password" value="a">    -->
 
-<!-- 		</property>  -->
-<!-- 	</bean> -->
+
+	<bean id="local" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		<property name="username" value="system">
+		</property>
+		<property name="password" value="a">
+
+		</property>
+	</bean>
+
+
+	<bean id="dataSource" class="com.almabani.portal.spring.CustomDataSourceRouter">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="local" value-ref="local" />
+				<entry key="aws" value-ref="aws" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="local"/>
+	</bean>
+
 
 	<bean id="sessionfactoryBean"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -44,9 +57,9 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-<!-- 				<prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
 				<prop key="hibernate.show_sql">true</prop>
- 
+
 			</props>
 		</property>
 	</bean>
@@ -59,13 +72,14 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionfactoryBean" />
 	</bean>
-	
-	
-	
+
+
+
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="WEB-INF/mybatis/mybatis-config.xml"/>
-		<property name="mapperLocations" value="WEB-INF/mybatis/mappers/*.xml"> </property>
+		<property name="configLocation" value="WEB-INF/mybatis/mybatis-config.xml" />
+		<property name="mapperLocations" value="WEB-INF/mybatis/mappers/*.xml">
+		</property>
 	</bean>
 
 

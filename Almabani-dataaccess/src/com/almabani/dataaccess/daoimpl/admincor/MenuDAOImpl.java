@@ -17,10 +17,10 @@ public class MenuDAOImpl implements MenuDAO {
 
 	@Autowired
 	private DefaultSqlSessionFactory defaultSqlSessionFactory;
-
+	
 	@Override
 	public List<Module> getUserModules(String userName) {
-
+		
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = defaultSqlSessionFactory.openSession();

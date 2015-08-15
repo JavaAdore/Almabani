@@ -82,8 +82,8 @@
 							value="#{projectEmployeeBean.projectEmployee4Create.validityEndDate}" />
 
 					</p:panelGrid>
-					<p:commandButton value="Submit" update=":growl :employeeListForm:projectsEmployeeCurrentList" validateClient="true"
-					actionListener="#{projectEmployeeBean.saveOrUpdate(projectEmployeeBean.projectEmployee4Create)}"  oncomplete="PF('createProjectEmployeeDialog').hide()"/>
+					<p:commandButton value="Submit" update=":growl @form :empAllocationsOP" validateClient="true"
+					actionListener="#{projectEmployeeBean.saveOrUpdate(projectEmployeeBean.projectEmployee4Create)}" oncomplete="if(!args.validationFailed ){PF('createProjectEmployeeDialog').hide();}"  />
 				</center>
 			</h:panelGroup>
 		</h:form>
