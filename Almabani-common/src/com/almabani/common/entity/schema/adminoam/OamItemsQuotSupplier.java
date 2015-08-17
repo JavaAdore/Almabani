@@ -24,7 +24,7 @@ import com.almabani.common.interfaces.ByteArrayHolder;
 
 @Entity 
 @Table(schema="ADMINOAM", name = "OAM_ITEMS_QUOT_SUPPLIERS")
-@SequenceGenerator(name = "OamItemsQuotSuppliers_Id_Seq_Gen", sequenceName = "ADMINOAM.NUM_ITEM_QUOT_SUPPLIER", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamItemsQuotSuppliers_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_ITEM_QUOT_SUPPLIER", allocationSize = 50, initialValue = 50)
 public class OamItemsQuotSupplier extends AbstractEntity implements ByteArrayHolder, Serializable {
 	
 	private static final long serialVersionUID = 3294985301470505243L;
