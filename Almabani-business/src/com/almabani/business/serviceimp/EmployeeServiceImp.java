@@ -1,6 +1,7 @@
 package com.almabani.business.serviceimp;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,23 @@ public class EmployeeServiceImp implements EmployeeService {
 	@Override
 	public List<Employee> getAllEmployees() {
 		return employeeDAO.getAllEmployees();
+	}
+
+	@Override
+	public boolean isFederalIdentityCodeExist(String federalIdentityCode) {
+		return employeeDAO.isFederalIdentityCodeExist(federalIdentityCode);
+	}
+
+	@Override
+	public Integer getNumberOfEmployees(Map<String, Object> filters) {
+		return employeeDAO.getNumberOfEmployees(filters);
+	}
+
+	@Override
+	public List<Employee> loadEmployees(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		return employeeDAO.loadEmployees(first, pageSize,
+				sortField, ascending, filters);
 	}
 
 }

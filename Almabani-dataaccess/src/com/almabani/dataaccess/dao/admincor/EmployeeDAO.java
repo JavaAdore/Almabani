@@ -1,6 +1,7 @@
 package com.almabani.dataaccess.dao.admincor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,11 @@ public interface EmployeeDAO extends AbstractDAOInt{
 	List<Employee> getEmployees(DepartmentSection departmentSection);
 
 	List<Employee> getAllEmployees();
+
+	boolean isFederalIdentityCodeExist(String federalIdentityCode);
+
+	Integer getNumberOfEmployees(Map<String, Object> filters);
+
+	List<Employee> loadEmployees(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters);
 }

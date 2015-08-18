@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.dataaccess.dao.admincor.ProjectDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -19,15 +20,15 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Project> loadProjects(Integer first, Integer pageSize,
-			String sortField, boolean assending, Map<String, Object> filters) {
+			String sortField, boolean ascending, Map<String, Object> filters) {
 
 		return super.lazyLoadEntities(Project.class, first, pageSize,
-				sortField, assending, filters);
+				sortField, ascending, filters);
 	}
 
 	@Override
 	@Transactional
-	public Project addProject(Project Project) {
+	public Project persist(Project Project) {
 		return (Project) super.persist(Project);
 	}
 	
@@ -58,6 +59,15 @@ public class ProjectDAOImpl extends AbstractDAO implements ProjectDAO {
 		Query query = getCurrentSession().createQuery("select p from Project p where p.projectCode =:projectCode");
 		query.setParameter("projectCode", projectCode);
 		return query.list().size() > 0 ? true : false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Project> getProjects(Company company) {
+		
+		Query query = getCurrentSession().createQuery("select p from Project p where p.company =:company");
+		query.setParameter("company", company);
+		return query.list();
 	}
 
 }

@@ -2,12 +2,15 @@ package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Department;
@@ -15,6 +18,7 @@ import com.almabani.common.entity.schema.admincor.DepartmentSection;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.common.enums.EmployeeContractType;
+import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
 
@@ -292,5 +296,45 @@ public class EmployeesAndAllocationsBean extends AbstractBeanHelper implements
 	 public void onRowSelect(SelectEvent event) {
 		 selectedEmployee =  (Employee) event.getObject();
 	 }   
+	 
+	 private class EmployeeLazyModel extends
+		LazyDataModel<Employee> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer rowCount;
+
+	List<Employee> result;
+
+	@Override
+	public List<Employee> load(int first, int pageSize,
+			String sortField, SortOrder sortOrder,
+			Map<String, Object> filters) {
+		
+		rowCount = almabaniFacade.getNumberOfEmployees(filters);
+
+		result = (List<Employee>) almabaniFacade
+				.loadEmployees(first, pageSize, sortField,
+						sortOrder == SortOrder.ASCENDING, filters);
+
+		setRowCount(this.rowCount);
+
+		return result;
+	}
+
+
+	@Override
+	public Employee getRowData(String rowKey) {
+
+		for (Employee employee : result) {
+			if (employee.getId().toString().equals(rowKey)) {
+				selectedEmployee = employee;
+				return employee;
+			}
+		}
+
+		return null;
+	}
+
+}
 	
 }

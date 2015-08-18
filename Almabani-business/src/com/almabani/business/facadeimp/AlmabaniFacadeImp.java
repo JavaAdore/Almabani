@@ -200,6 +200,16 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 			DepartmentSection selectedDepartmentSection) {
 		return employeeService.getEmployees(selectedDepartmentSection);
 	}
+	
+	@Override
+	public boolean isFederalIdentityCodeExist(String federalIdentityCode) {
+		return employeeService.isFederalIdentityCodeExist(federalIdentityCode);
+	}
+	
+	@Override
+	public Integer getNumberOfEmployees(Map<String, Object> filters) {
+		return employeeService.getNumberOfEmployees(filters);
+	}
 
 	@Override
 	public Department saveOrUpdate(Department department) {
@@ -239,7 +249,17 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Override
 	public JobTitleType getJobTitle(Long id) {
 
-		return null;
+		return jobTitleTypeService.getJobTitle(id);
+	}
+	
+	@Override
+	public List<JobTitleType> getJobTitleTypes(Company company) {
+		return jobTitleTypeService.getJobTitleTypes(company);
+	}
+	
+	@Override
+	public List<JobTitleType> getAllJobTitleTypes() {
+		return jobTitleTypeService.getAllJobTitleTypes();
 	}
 
 	@Override
@@ -320,15 +340,15 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	public Establishment getEstablishment(Long key) {
 		return establishmentService.getEstablishment(key);
 	}
+	
+	@Override
+	public List<Establishment> getEstablishments(Company company) {
+		return establishmentService.getEstablishments(company);
+	}
 
 	@Override
 	public List<Establishment> getEstablishments() {
 		return establishmentService.getEstablishments();
-	}
-
-	@Override
-	public List<JobTitleType> getJobTitleTypes() {
-		return jobTitleTypeService.getJobTitleTypes();
 	}
 
 	@Override
@@ -554,23 +574,43 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 
 	@Override
 	public Project saveOrUpdate(Project project) throws AlmabaniException {
-		if (!projectService.getProject(project.getId()).getProjectCode()
-				.equals(project.getProjectCode()))
+		
+		if(project.getId() == null){
+			
 			if (projectService.isProjectCodeExist(project.getProjectCode())) {
 				throw new AlmabaniException(
 						MessagesKeyStore.DUPLICATE_PROJECT_CODE);
 			}
-		return projectService.saveOrUpdate(project);
+			
+			projectService.persist(project);
+		} else{
+			
+			if (!projectService.getProject(project.getId()).getProjectCode()
+					.equals(project.getProjectCode()))
+				if (projectService.isProjectCodeExist(project.getProjectCode())) {
+					throw new AlmabaniException(
+							MessagesKeyStore.DUPLICATE_PROJECT_CODE);
+				}
+			
+			projectService.update(project);
+		}
+		
+		return project;
+	}
+	
+	@Override
+	public Project getProject(Long id) {
+		return projectService.getProject(id);
+	}
+	
+	@Override
+	public List<Project> getProjects(Company company) {
+		return projectService.getProjects(company);
 	}
 
 	@Override
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
-	}
-
-	@Override
-	public Project getProject(Long id) {
-		return projectService.getProject(id);
 	}
 
 	@Override
@@ -854,6 +894,11 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 		}
 
 	}
+	
+	@Override
+	public List<AllocationType> getAllocationTypes(Company company) {
+		return allocationTypeService.getAllocationTypes(company);
+	}
 
 	@Override
 	public List<AllocationType> getAllAllocationTypes() {
@@ -869,7 +914,17 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	public ProjectJobTitle saveOrUpdate(ProjectJobTitle projectJobTitle) {
 		return projectJobTitleService.saveOrUpdate(projectJobTitle);
 	}
+	
+	@Override
+	public ProjectJobTitle getProjectJobTitle(Long id) {
+		return projectJobTitleService.getProjectJobTitle(id);
+	}
 
+	@Override
+	public List<ProjectJobTitle> getProjectJobTitles(Company company) {
+		return projectJobTitleService.getProjectJobTitles(company);
+	}
+	
 	@Override
 	public List<ProjectJobTitle> getAllProjectJobTitles() {
 		return projectJobTitleService.getAllProjectJobTitles();
@@ -883,11 +938,6 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Override
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
-	}
-
-	@Override
-	public ProjectJobTitle getProjectJobTitle(Long id) {
-		return projectJobTitleService.getProjectJobTitle(id);
 	}
 
 	@Override
@@ -922,9 +972,16 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 
 	@Override
 	public List<Project> loadProjects(int first, int pageSize,
-			String sortField, boolean assending, Map<String, Object> filters) {
+			String sortField, boolean ascending, Map<String, Object> filters) {
 		return projectService.loadProjects(first, pageSize, sortField,
-				assending, filters);
+				ascending, filters);
+	}
+
+	@Override
+	public List<Employee> loadEmployees(int first, int pageSize,
+			String sortField, boolean assending, Map<String, Object> filters) {
+		return employeeService.loadEmployees(first, pageSize,
+				sortField, assending, filters);
 	}
 
 }

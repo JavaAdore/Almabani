@@ -1,6 +1,7 @@
 package com.almabani.dataaccess.daoimpl.admincor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -38,9 +39,30 @@ public class EmployeeDAOImp extends AbstractDAO implements EmployeeDAO {
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Employee> getAllEmployees() {
 		return super.getAllEntities(Employee.class);    
+	}
+
+	@Override
+	public boolean isFederalIdentityCodeExist(String federalIdentityCode) {
+		
+		Query query = getCurrentSession().createQuery("select e from Employee e where e.federalIdentityCode =:federalIdentityCode");
+		query.setParameter("federalIdentityCode", federalIdentityCode);
+		return query.list().size() > 0 ? true : false;
+	}
+
+	@Override
+	public Integer getNumberOfEmployees(Map<String, Object> filters) {
+		return super.getCountOfResults(Employee.class, filters);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Employee> loadEmployees(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		return super.lazyLoadEntities(Employee.class, first, pageSize, sortField, ascending, filters);
 	}
 	
 }

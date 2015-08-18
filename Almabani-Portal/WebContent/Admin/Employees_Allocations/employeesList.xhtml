@@ -111,7 +111,7 @@
 				<f:facet name="footer">
 					<p:commandButton id="createButton" icon="ui-icon-plus"
 						value="#{loc.Create}"
-						actionListener="#{employeeBean.prepareCreateEmployee()}"
+						actionListener="#{employeeBean.prepareCreateEmployee(employeesAndAllocationsBean.selectedCompany)}"
 						update=":employeeListForm :createEmployeeForm"  rendered="#{applicationScopeStore.hasFullAccess()}" 
 						oncomplete="PF('createEmployeeDialog').show()" />
 					<p:commandButton id="editButton" icon="ui-icon-pencil"
@@ -288,7 +288,7 @@
 						<f:facet name="footer">
 							<p:commandButton id="createButton" icon="ui-icon-plus"
 								value="#{loc.Create}" 
-								actionListener="#{projectEmployeeBean.prepareCreateProjectEmployee()}"
+								actionListener="#{projectEmployeeBean.prepareCreateProjectEmployee(employeesAndAllocationsBean.selectedCompany)}"
 								update=":createProjectEmployeeForm"
 								oncomplete="PF('createProjectEmployeeDialog').show()" />
 
