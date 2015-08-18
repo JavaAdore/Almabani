@@ -23,74 +23,87 @@
 	<p:panel
 		rendered="#{applicationScopeStore.getCurrentlyLoggedUser()!=null}">
 		<script>
-					document.location = "/Almabani-Portal/Index.xhtml";
-					</script>
+			document.location = "/Almabani-Portal/Index.xhtml";
+		</script>
 
 	</p:panel>
 	<f:view contentType="text/html">
 
-		<div style="height: 15%; background-color: #232323;">
-			<ui:include src="WEB-INF/template/header4Login.xhtml" />
-		</div>
-		<div style="height: 80%;">
-			<br /> <br /> <br /> <br /> <br /> <br /> <br />
-			<center>
-				<div style="font-family: fantasy; top: 50%;">
+		<p:layout fullPage="true" style="margin: 2em !important; ">
 
-					<h:form id="loginForm">
-
-						<p:panel header="Login" style="width: 470px;  text-align: left;">
-
-							<h:panelGrid id="loginPanel" columns="1">
-
-								<p:growl />
-
-
-								<h:outputText value="Username" style="font-size: 18px;" />
-
-								<p:inputText id="username" value="#{loginHandlerBean.userName}"
-									required="true"
-									requiredMessage="#{loc.ALMABANI_LOGIN_USER_NAME_IS_REQUIRED}"
-									style="width: 420px;"></p:inputText>
-
-								<br />
-
-								<h:outputText value="Password" style="font-size: 18px;" />
-
-								<p:password id="password" value="#{loginHandlerBean.password}"
-									required="true"
-									requiredMessage="#{loc.ALMABANI_PASSWORD_IS_REQUIRED}"
-									feedback="false" style="width: 420px;"></p:password>
-
-								<br />
-								<f:facet name="footer"> 
-									<p:panelGrid columns="2" styleClass="loginPasswordGrid">
-										<p:commandButton id="login" value="Login" ajax="true"
-											update="@form" action="#{loginHandlerBean.login()}" />
-
-										<p:selectBooleanCheckbox itemLabel="AWS database" value="#{loginHandlerBean.awsdb}">
-											<p:ajax event="change"
-												listener="#{loginHandlerBean.checkChanged}" />
-										</p:selectBooleanCheckbox>
-										<!-- 										<p:commandLink id="user" actionListener="#" -->
-										<!-- 											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;"> -->
-										<!-- 											<h:outputText value="Forget Password" style="color: #098DB1;" /> -->
-										<!-- 										</p:commandLink> -->
-									</p:panelGrid>
-
-								</f:facet>
-							</h:panelGrid>
-
-						</p:panel>
-
-					</h:form>
+			<p:layoutUnit position="center" id="loginCenterLayout">
+				<div style="height: 15%; background-color: #232323;">
+					<ui:include src="WEB-INF/template/header4Login.xhtml" />
 				</div>
-			</center>
-		</div>
-		<div
-			style="height: 5%; text-align: center; color: white; padding-bottom: 5px;">
-			<ui:include src="WEB-INF/template/footer.xhtml" />
-		</div>
+				<div style="height: 80%;">
+					<br /> <br /> <br /> <br /> <br /> <br /> <br />
+					<center>
+						<div style="font-family: fantasy; top: 50%;">
+
+							<h:form id="loginForm">
+
+								<p:panel header="Login" style="width: 470px;  text-align: left;">
+
+									<h:panelGrid id="loginPanel" columns="1">
+
+										<p:growl />
+
+
+										<h:outputText value="Username" style="font-size: 18px;" />
+
+										<p:inputText id="username"
+											value="#{loginHandlerBean.userName}" required="true"
+											requiredMessage="#{loc.ALMABANI_LOGIN_USER_NAME_IS_REQUIRED}"
+											style="width: 420px;"></p:inputText>
+
+										<br />
+
+										<h:outputText value="Password" style="font-size: 18px;" />
+
+										<p:password id="password" value="#{loginHandlerBean.password}"
+											required="true"
+											requiredMessage="#{loc.ALMABANI_PASSWORD_IS_REQUIRED}"
+											feedback="false" style="width: 420px;"></p:password>
+
+										<br />
+										<f:facet name="footer">
+											<p:panelGrid columns="2" styleClass="loginPasswordGrid">
+												<p:commandButton id="login" value="Login" ajax="true"
+													update="@form" action="#{loginHandlerBean.login()}" />
+
+												<p:selectBooleanCheckbox itemLabel="AWS database"
+													value="#{loginHandlerBean.awsdb}">
+													<p:ajax event="change"
+														listener="#{loginHandlerBean.checkChanged}" />
+												</p:selectBooleanCheckbox>
+												<!-- 										<p:commandLink id="user" actionListener="#" -->
+												<!-- 											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;"> -->
+												<!-- 											<h:outputText value="Forget Password" style="color: #098DB1;" /> -->
+												<!-- 										</p:commandLink> -->
+											</p:panelGrid>
+
+										</f:facet>
+									</h:panelGrid>
+
+								</p:panel>
+
+							</h:form>
+						</div>
+					</center>
+				</div>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" id="loginSouthLayout">
+				<div
+					style="height: 5%; text-align: center; color: white; padding-bottom: 5px;">
+					<ui:include src="WEB-INF/template/footer.xhtml" />
+				</div>
+			</p:layoutUnit>
+		</p:layout>
+
+
+
+
 	</f:view>
 
 	<p:ajaxStatus onstart="PF('statusDialog').show()"

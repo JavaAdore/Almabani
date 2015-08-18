@@ -17,6 +17,12 @@
 			</span> 
 			
 			<span style="padding-right: 30px; margin-right: 15px; padding-top: 15px; float: right;">
+				<form id="logout" action="/Almabani-Portal/logout.xhtml"> 
+					<a href="#" style="color:yellow" onclick="$('#logout').submit()"> #{loc.ALMABANI_GENERAL_LOG_OUT} </a>
+				</form>
+			</span>
+			
+			<span style="padding-top: 15px; float: right;">
 				<h:outputText value="Hello, " style="color: white; font-size: 17px;" />
 				<p:commandLink id="user" actionListener="#"
 					style="text-decoration: none;">
@@ -24,13 +30,7 @@
 						value="#{applicationScopeStore.getCurrentlyLoggedUser().userLoginCode}"
 						style="color: orange;" />
 				</p:commandLink> 
-				<h:outputText value="   |   " style="color: white;" /> 
-			</span>
-			
-			<span style="padding-right: 30px; margin-right: 15px; padding-top: 15px; float: right;">
-				<form id="logout" action="/Almabani-Portal/logout.xhtml"> 
-					<a href="#" style="color:yellow" onclick="$('#logout').submit()"> #{loc.ALMABANI_GENERAL_LOG_OUT} </a>
-				</form>
+				<h:outputText value="&#160;&#160; | &#160;&#160;" style="color: white;" /> 
 			</span>
 
 		</div>

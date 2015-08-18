@@ -67,29 +67,27 @@ body {
 	position: absolute !important;
 }
 
-#loginHeaderLayout.ui-widget-content{
+#loginCenterLayout.ui-widget-content{
 	padding: 0px !important;
+	border: 0px !important;
 	background: transparent !important;
 }
-#loginHeaderLayout.ui-layout-unit .ui-layout-unit-content{
+#loginCenterLayout.ui-layout-unit .ui-layout-unit-content{
 	padding: 0px !important;
 	background-color: transparent !important;
 }
 
-#loginContentLayout.ui-widget-content{
+#loginSouthLayout.ui-widget-content{
 	padding: 0px !important;
+	border: 0px !important;
 	background: transparent !important;
 }
-#loginContentLayout.ui-layout-unit .ui-layout-unit-content{
+#loginSouthLayout.ui-layout-unit .ui-layout-unit-content{
 	padding: 0px !important;
 	background-color: transparent !important;
 }
 
-#loginFooterLayout.ui-widget-content{
-	padding: 0px !important;
-	background: transparent !important;
-}
-#loginFooterLayout.ui-layout-unit .ui-layout-unit-content{
+#loginSouthLayout.ui-layout-unit{
 	padding: 0px !important;
 	background-color: transparent !important;
 }
@@ -126,7 +124,6 @@ body {
 		font-size: small !important;
 	  
 }
-
 
 .ui-cell-editor
 {
