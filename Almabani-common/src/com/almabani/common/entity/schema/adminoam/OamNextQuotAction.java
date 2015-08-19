@@ -31,7 +31,7 @@ public class OamNextQuotAction implements java.io.Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_TYPE_ACTION_NEXT_SECOND", referencedColumnName="NUM_TYPE_QUOT_ACTION", nullable = false)
-	private OamTypeQuotAction oamTypeQuotActionNextSecond;
+	private OamQuotationActionType oamTypeQuotActionNextSecond;
 	
 	@Column(name = "DES_NEXT_QUOT_ACTION", nullable = false, length = 20)
 	private String nextQuotActionDescription;
@@ -72,7 +72,7 @@ public class OamNextQuotAction implements java.io.Serializable {
 	/**
 	 * @return the oamTypeQuotActionNextSecond
 	 */
-	public OamTypeQuotAction getOamTypeQuotActionNextSecond() {
+	public OamQuotationActionType getOamTypeQuotActionNextSecond() {
 		return oamTypeQuotActionNextSecond;
 	}
 
@@ -80,7 +80,7 @@ public class OamNextQuotAction implements java.io.Serializable {
 	 * @param oamTypeQuotActionNextSecond the oamTypeQuotActionNextSecond to set
 	 */
 	public void setOamTypeQuotActionNextSecond(
-			OamTypeQuotAction oamTypeQuotActionNextSecond) {
+			OamQuotationActionType oamTypeQuotActionNextSecond) {
 		this.oamTypeQuotActionNextSecond = oamTypeQuotActionNextSecond;
 	}
 

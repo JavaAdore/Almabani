@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.component.selectonemenu.SelectOneMenu;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -21,6 +22,8 @@ import com.almabani.common.entity.schema.admincor.Country;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
+import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
+import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.interfaces.QuotataionHolder;
@@ -114,6 +117,7 @@ private List<Department> departments;
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_QUOTATION));
 		quotationQuotationItemManagementBean.setQuotation(selected);
+		attachAvailableActionTypes();    
 		operationSucceded();
 
 	}
@@ -193,13 +197,22 @@ private List<Department> departments;
 	public void setSelected(OamQuotation selected) {
 		this.selected = selected;
 		quotationQuotationItemManagementBean.setQuotation(selected);
- 
+		attachAvailableActionTypes();  
 	}
 
-	public void onRowSelect(SelectEvent event) {
+	public void onRowSelect(SelectEvent event) {  
 		selected = (OamQuotation) event.getObject();
+	}
+	
+	public void attachAvailableActionTypes()
+	{
 		
-	} 
+		 List<OamQuotationActionType> availableActionTypes = almabaniFacade.getAvailableQuotationActionTypes(selected);
+		 selected.setAvailableActionTypes(availableActionTypes);   
+		 if(Utils.isNotNull(selected.getQuotataionActions())){
+		 selected.setSelectedActionType(selected.getQuotataionActions().get(selected.getQuotataionActions().size()-1).getOamTypesQuotActions());
+		 }   
+	}
 
 	public void operationFaild() {
 		operationSuccess = false;
@@ -249,6 +262,12 @@ private List<Department> departments;
 	}
 
 	
+	 public void onRowEdit(RowEditEvent event) {
+	       
+		 selected = (OamQuotation) event.getObject();
+		
+		 
+	    }
 	
-
+	    
 }

@@ -1,17 +1,21 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
-import org.apache.commons.dbcp.BasicDataSource;
+
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.portal.constant.PortalConstants;
 import com.almabani.portal.listener.SessionCapturerListener;
@@ -26,14 +30,26 @@ public class LoginHandlerBean implements Serializable {
 	@ManagedProperty(value = "#{authenticationManager}")
 	private AuthenticationManager authenticationManager;
 
+	private Map<String,String> datasources = new LinkedHashMap();
 	private static final long serialVersionUID = 1L;
 	private String userName;
 	private String password;
 	
 	public static boolean awsDataBase ;
-	
+	  
 	
 	public boolean awsdb;
+	
+	@PostConstruct
+	public void init()
+	{
+		datasources.put("Developement", "Development");
+		datasources.put("Homologation", "Homologation");
+		datasources.put("Production", "Production");
+		datasources.put("aws", "aws");
+
+		
+	}
 
 	public boolean isAwsdb() {
 		return awsDataBase;

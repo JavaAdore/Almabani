@@ -26,6 +26,8 @@ import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
+import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
+import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
@@ -292,5 +294,17 @@ public interface AlmabaniFacade {
 
 	List<Project> loadProjects(int first, int pageSize, String sortField,
 			boolean b, Map<String, Object> filters);
+
+
+	List<OamQuotationActionType> getAvailableQuotationActionTypes(
+			OamQuotation selected);
+
+	OamQuotationActionType getOamQuotationActionType(Long id);
+
+	List<UserApplicationGrant> getGrantedApplication(
+			CommonDriverMap commonDriverMap);
+
+	
+	
 	
 }

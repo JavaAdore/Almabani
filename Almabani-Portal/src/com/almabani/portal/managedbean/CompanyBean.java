@@ -20,7 +20,6 @@ public class CompanyBean extends AbstractBeanHelper implements
 	
 	private static final long serialVersionUID = 1L;
 	
-//	private List<Company> companiesList;
 	
 	private List<Company> companiesList;
 	

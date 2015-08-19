@@ -12,6 +12,7 @@ import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.dto.UserApplicationGrant;
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.exception.AlmabaniException;
@@ -40,7 +41,9 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 	private SecUser activeUser;
 
 	private List<SecTypesPerfil> prefelTypes;
-
+	private List<SecModule> modules ;
+	
+	private SecModule activeModule;
 	@PostConstruct
 	public void init() {
 		initializeInitialLists();
@@ -51,7 +54,12 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 		initializeUsersList();
 		initializeCompanyList();
 		initializePrefilTypeList();
+		initializeModulesList();
 
+	}
+
+	private void initializeModulesList() {
+		modules = almabaniFacade.getAllModules();		
 	}
 
 	public void grantAccess() throws AlmabaniException {
@@ -77,11 +85,22 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 
 	public void displayGrants() {
 		if (Utils.isNotNull(activeCompany) && Utils.isNotNull(activeUser)) {
-			initializeAllApplicationsList(activeCompany, activeUser);
+			CommonDriverMap commonDriverMap = new CommonDriverMap();
+			commonDriverMap.appendTargetUser(commonDriverMap, activeUser); 
+			commonDriverMap = commonDriverMap.appendCompany(commonDriverMap, activeCompany);
+			commonDriverMap = commonDriverMap.appendCurrentModule(commonDriverMap,activeModule);
+			initializeAllApplicationsList(commonDriverMap);
 		} else {
 			allApplications = new ArrayList();
 
 		}
+	}
+
+	private void initializeAllApplicationsList(CommonDriverMap commonDriverMap) {
+		allApplications = almabaniFacade.getGrantedApplication(commonDriverMap);	
+				if (Utils.isEmptyList(allApplications)) {
+					WebUtils.fireInfoMessage(MessagesKeyStore.ALMABANI_GRANTS_NO_RESULT_FOUND);
+				}
 	}
 
 	private void initializeCompanyList() {
@@ -93,14 +112,7 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 		users = almabaniFacade.getAllUsers();
 	}
 
-	private void initializeAllApplicationsList(Company company, SecUser secUser) {
-		allApplications = almabaniFacade
-				.getGrantedApplication(secUser, company);
-		if (Utils.isEmptyList(allApplications)) {
-			WebUtils.fireInfoMessage(MessagesKeyStore.ALMABANI_GRANTS_COMPANY_HAS_NO_GRANTS_TO_ANY_APPLICATION);
-		}
-	}
-
+	
 	public List<UserApplicationGrant> getAllApplications() {
 		return allApplications;
 	}
@@ -147,5 +159,21 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 
 	public void setPrefelTypes(List<SecTypesPerfil> prefelTypes) {
 		this.prefelTypes = prefelTypes;
+	}
+
+	public List<SecModule> getModules() {
+		return modules;
+	}
+
+	public void setModules(List<SecModule> modules) {
+		this.modules = modules;
+	}
+
+	public SecModule getActiveModule() {
+		return activeModule;
+	}
+
+	public void setActiveModule(SecModule activeModule) {
+		this.activeModule = activeModule;
 	}
 }

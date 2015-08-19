@@ -2,8 +2,6 @@ package com.almabani.portal.spring;
 
 import java.io.Serializable;
 
-
-
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.almabani.portal.managedbean.LoginHandlerBean;

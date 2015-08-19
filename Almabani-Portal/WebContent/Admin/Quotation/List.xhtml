@@ -15,9 +15,9 @@
 				resizableColumns="true" widgetVar="datalist" var="item"
 				selectionMode="single" lazy="true" draggableColumns="true"
 				draggableRows="true" selection="#{quotationManagementBean.selected}"
-				rowKey="#{item.id}" paginator="true" rows="10"
+				rowKey="#{item.id}" paginator="true" rows="10" editable="true"
 				rowsPerPageTemplate="10,20,30">
-			  
+
 
 				<f:facet name="header">
 					<p:commandButton id="toggler" type="button"
@@ -26,7 +26,9 @@
 					<p:columnToggler datasource="datalist" trigger="toggler" />
 				</f:facet>
 
-				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowSelect"
+					listener="#{quotationManagementBean.onRowSelect}"
+					update=" viewButton editButton" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
 				<p:column headerText="#{loc.ListOamQuotationCompany_number}"
@@ -91,10 +93,20 @@
 					filterBy="#{item.demand.maximoNumber}">
 					<h:outputText value="#{item.demand.maximoNumber}" />
 				</p:column>
+				
+				<p:column headerText="#{loc.ListOamQuotationTitle_maximum}"
+					sortBy="#{item.demand.maximoNumber}" 
+					filterBy="#{item.demand.maximoNumber}">
+					<h:outputText rendered="#{not empty item.quotataionActions}"  value="#{item.quotataionActions.get(item.quotataionActions.size()-1).oamTypesQuotActions.typeQuotActionDescription}" />
+				</p:column>
+
+			
+			
 
 				<f:facet name="footer">
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{quotationManagementBean.prepareCreate}"
 						update=":QuotataionCreateForm:quotationDisplay"
 						oncomplete="PF('createQuotationDialog').show()" />
@@ -103,12 +115,13 @@
 						update=":quotationquotationViewForm:quotationDisplay"
 						oncomplete="PF('viewQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
-					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}" update=":editQuotataionForm:quotationDisplay"
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						update=":editQuotataionForm:quotationDisplay"
 						oncomplete="PF('editQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 				</f:facet>
-
 			</p:dataTable>
 
 		</p:panel>

@@ -20,5 +20,7 @@ public interface QoutationDAO extends AbstractDAOInt{
 	List<OamQuotation> getAllQuotations();
 
 	OamQuotation getQuotataion(Long quotationID);
+
+	
 	
 }

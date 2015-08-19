@@ -3,6 +3,7 @@ package com.almabani.common.dto;
 import java.util.LinkedHashMap;
 
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 
 public class CommonDriverMap extends LinkedHashMap<String, Object> {
@@ -18,7 +19,8 @@ public class CommonDriverMap extends LinkedHashMap<String, Object> {
 
 	private static final String TARGET_USER = "TARGET_USER";
 
-	
+	private static final String CURRENT_MODULE = "CURRENT_MODULE";
+
 	public CommonDriverMap setCurrentUserCode(String currentUserCode) {
 		put(CURRENT_USER_CODE, currentUserCode);
 		return this;
@@ -39,7 +41,8 @@ public class CommonDriverMap extends LinkedHashMap<String, Object> {
 
 	}
 
-	public CommonDriverMap appendCompany(CommonDriverMap commonDriverMap , Company activeCompany) {
+	public CommonDriverMap appendCompany(CommonDriverMap commonDriverMap,
+			Company activeCompany) {
 		if (commonDriverMap == null) {
 
 			commonDriverMap = new CommonDriverMap();
@@ -51,9 +54,8 @@ public class CommonDriverMap extends LinkedHashMap<String, Object> {
 		put(CURRENT_COMPANY, activeCompany);
 		return this;
 	}
-	
-	public Company getAttachedCompany()
-	{
+
+	public Company getAttachedCompany() {
 		return (Company) get(CURRENT_COMPANY);
 	}
 
@@ -70,10 +72,27 @@ public class CommonDriverMap extends LinkedHashMap<String, Object> {
 		put(TARGET_USER, user);
 		return this;
 	}
-	
-	public SecUser getTargetUser()
-	{
+
+	private CommonDriverMap setTargetModule(SecModule secModule) {
+		put(CURRENT_MODULE, secModule);
+		return this;
+	}
+
+	public SecModule getTargetModule() {
+		return (SecModule) get(CURRENT_MODULE);
+	}
+
+	public SecUser getTargetUser() {
 		return (SecUser) get(TARGET_USER);
+	}
+
+	public CommonDriverMap appendCurrentModule(CommonDriverMap commonDriverMap,
+			SecModule activeModule) {
+		if (commonDriverMap == null) {
+
+			commonDriverMap = new CommonDriverMap();
+		}
+		return commonDriverMap.setTargetModule(activeModule);
 	}
 
 }

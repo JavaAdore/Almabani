@@ -91,10 +91,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Map<SecApplication, UserApplicationGrant> getGrantedApplication(
-			Company company) {
-		List<UserApplicationGrant> result = applicationDAO
-				.getGrantedApplication(company);
+	public Map<SecApplication, UserApplicationGrant> getCompanyGrantedApps(
+			CommonDriverMap commonDriverMap ) {
+		List<UserApplicationGrant> result = applicationDAO.getCompanyGrante(commonDriverMap);
+				
 		Map<SecApplication, UserApplicationGrant> mapToReturn = new LinkedHashMap<SecApplication, UserApplicationGrant>();
 		for (UserApplicationGrant userApplicationGrant : result) {
 			mapToReturn.put(userApplicationGrant.getApplication(),
@@ -183,4 +183,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 		return applicationDAO.getApplication(codApplication);
 	}
 
-}
+	@Override
+	public Map<SecApplication, SecApplicationGrants> getGrantedApplication(
+			CommonDriverMap commonDriverMap) {
+		return  applicationDAO.getGrantedApplication(commonDriverMap);
+	}
+ 
+} 

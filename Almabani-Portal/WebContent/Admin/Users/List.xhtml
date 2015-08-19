@@ -5,25 +5,23 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<h:form>
 		<p:remoteCommand name="updateForm" update=":listForm"></p:remoteCommand>
 	</h:form>
-	<h:form id="listForm">
+	<h:form id="listForm" prependId="false">
 
-		<p:panel header="#{loc.ListSecUserTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
-			<p:dataTable id="datalist" value="#{userManagementBean.items}" 
+		<p:panel header="#{loc.ListSecUserTitle}"
+			style="margin-left:auto; margin-right:auto ; width:85%">
+			<p:dataTable id="datalist" value="#{userManagementBean.items}"
 				var="item" widgetVar="datalist" selectionMode="single"
 				selection="#{userManagementBean.selected}" editable="true"
 				rowKey="#{item.userLoginCode}" paginator="true" rows="10"
 				lazy="true" rowsPerPageTemplate="10,20,30">
-
 				<p:ajax event="rowSelect" update="viewButton " />
 				<p:ajax event="rowUnselect" update="viewButton " />
 				<p:ajax event="rowEdit" listener="#{userManagementBean.onRowEdit}"
 					update=":growl  " oncomplete="updateForm()" />
-				<p:ajax event="rowEditCancel"
-					listener="#{userManagementBean.onRowCancel}" update=":growl" />
 				<p:ajax event="rowEditCancel"
 					listener="#{userManagementBean.onRowCancel}" update=":growl" />
 
@@ -34,10 +32,32 @@
 							<h:outputText value="#{item.userLoginCode}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText id="modelInput" maxlength="15" value="#{item.userLoginCode}" />
+							<p:inputText id="modelInput" maxlength="15"
+								value="#{item.userLoginCode}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
+
+				<p:column headerText="#{loc.ALMABANI_GENERAL_COMPANY}"
+					sortBy="#{item.employee.establishment.company}"
+					filterBy="#{item.employee.establishment.company}">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()"
+							converter="#{companyConverter}">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{userManagementBean.companies}"
+								var="company" itemValue="#{company}" itemLabel="#{company.companyName}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<p:outputLabel value="#{item.employee.establishment.company.companyName}" />
+
+
+				</p:column>
+
+
 
 
 				<p:column headerText="#{loc.ListSecUserTitle_employee}"
@@ -46,18 +66,17 @@
 
 
 					<p:cellEditor>
-						<f:facet name="output"  >
-							<h:outputText
-								value="#{item.employee.employeeName}" />
+						<f:facet name="output">
+							<h:outputText value="#{item.employee.employeeName}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectOneMenu value="#{item.employee}"
-								styleClass="fullWith" required="true"
-								converter="#{employeeConverter}"
+							<p:selectOneMenu value="#{item.employee}" styleClass="fullWith"
+								required="true" converter="#{employeeConverter}"
 								requiredMessage="#{loc.EditSecUserRequiredMessage_employee}">
-								<f:selectItem itemLabel="" itemValue=""/>
-								<f:selectItems value="#{userManagementBean.employees}" itemValue="#{employee}"
-									var="employee" itemLabel="#{employee.employeeName}" />
+								<f:selectItem itemLabel="" itemValue="" />
+								<f:selectItems value="#{userManagementBean.employees}"
+									itemValue="#{employee}" var="employee"
+									itemLabel="#{employee.employeeName}" />
 
 								<f:selectItem />
 							</p:selectOneMenu>
@@ -124,20 +143,23 @@
 					</f:facet>
 
 					<p:inplace id="event" effectSpeed="fast" event="click"
-						label="#{loc.ALMABANO_GENERAL_CLICK_HERE_TO_DISPLAY_PASSWORD}" editor="true">
+						label="#{loc.ALMABANO_GENERAL_CLICK_HERE_TO_DISPLAY_PASSWORD}"
+						editor="true">
 						<p:ajax event="save" update=":growl" />
-						<h:inputText value="#{item.password}" required="true" maxlength="100"
+						<h:inputText value="#{item.password}" required="true"
+							maxlength="100"
 							requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}" />
 					</p:inplace>
 				</p:column>
 				<p:column style="width:32px">
-					<p:rowEditor  >
-					</p:rowEditor> 
+					<p:rowEditor>
+					</p:rowEditor>
 
 				</p:column>
 				<f:facet name="footer">
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{userManagementBean.prepareCreate}"
 						update=":createForm:display"
 						oncomplete="PF('createDialog').show()" />

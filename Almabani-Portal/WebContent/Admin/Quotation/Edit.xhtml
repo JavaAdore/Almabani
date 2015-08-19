@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="editQuotationDialog" widgetVar="editQuotationDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.EditOamQuotationTitle}">
+	<p:dialog id="editQuotationDialog" widgetVar="editQuotationDialog"
+		modal="true" resizable="false" appendToBody="true"
+		header="#{loc.EditOamQuotationTitle}">
 
-            <h:form id="editQuotataionForm">
+		<h:form id="editQuotataionForm">
 
-            
-                <h:panelGroup id="quotationDisplay">
-                    <p:panelGrid columns="2"
+
+			<h:panelGroup id="quotationDisplay">
+				<p:panelGrid columns="2"
 					rendered="#{quotationManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.EditOamQuotationTitle_department}" />
 					<p:selectOneMenu id="department" styleClass="fullWith"
@@ -53,6 +55,20 @@
 							itemLabel="#{demandItem.demandSummaryDescription}" />
 					</p:selectOneMenu>
 
+					<p:outputLabel
+						value="#{loc.ListOamQuotation_Quotation_Action}" />
+						
+					<p:selectOneMenu value="#{quotationManagementBean.selected.selectedActionType}"
+						id="actionTypes" widgetVar="actionTypes"
+						converter="#{oamQuotationActionTypeConverter}">
+						<f:selectItems value="#{quotationManagementBean.selected.availableActionTypes}"
+							var="actionType"
+							itemLabel="#{actionType.typeQuotActionDescription}"
+							itemValue="#{actionType}" />
+					</p:selectOneMenu>
+
+
+
 
 					<p:outputLabel
 						value="#{loc.CreateOamQuotationTitle_quotationDescription}" />
@@ -66,14 +82,19 @@
 
 
 				</p:panelGrid>
-                    <p:commandButton actionListener="#{quotationManagementBean.saveNew()}" value="#{loc.Save}" update="quotationDisplay,:growl,:quotationListForm:datalist" oncomplete="if(!args.validationFailed) {PF('editQuotationDialog').hide();}"/>
-                    <p:commandButton value="#{loc.Cancel}" onclick="PF('editQuotationDialog').hide()"/>
-                </h:panelGroup>
+				<p:commandButton
+					actionListener="#{quotationManagementBean.saveNew()}"
+					value="#{loc.Save}"
+					update="quotationDisplay,:growl,:quotationListForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF('editQuotationDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('editQuotationDialog').hide()" />
+			</h:panelGroup>
 
-            </h:form>
+		</h:form>
 
-        </p:dialog>
+	</p:dialog>
 
-    </ui:composition>
+</ui:composition>
 
 </html>

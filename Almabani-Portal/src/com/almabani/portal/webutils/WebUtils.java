@@ -578,6 +578,11 @@ public class WebUtils {
 		sessionDetailsHolder.setSession(getCurrentSession());
 		return sessionDetailsHolder;
 	}
+
+	public static void updatePrimeFacesComponent(String componentId) {
+		RequestContext.getCurrentInstance().update(componentId);
+		
+	}
 	
 	
 

@@ -26,6 +26,7 @@ import com.almabani.business.service.ManufacturerService;
 import com.almabani.business.service.MaterialTypeService;
 import com.almabani.business.service.MenuService;
 import com.almabani.business.service.ModuleService;
+import com.almabani.business.service.OamQuotationActionTypeService;
 import com.almabani.business.service.PrefilTypeService;
 import com.almabani.business.service.ProjectEmployeeService;
 import com.almabani.business.service.ProjectItemService;
@@ -62,6 +63,7 @@ import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
+import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
@@ -172,6 +174,9 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 
 	@Autowired
 	ProjectJobTitleService projectJobTitleService;
+	
+	@Autowired
+	OamQuotationActionTypeService oamQuotationActionTypeService;
 
 	@Override
 	public Company getCompany(Long id) {
@@ -745,25 +750,12 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Override
 	public List<UserApplicationGrant> getGrantedApplication(SecUser secUser,
 			Company company) {
-		Map<SecApplication, UserApplicationGrant> appsGrantedToCompany = applicationService
-				.getGrantedApplication(company);
+		CommonDriverMap commonDriverMap = new CommonDriverMap();
+		commonDriverMap.appendCompany(commonDriverMap, company);
+		commonDriverMap.appendTargetUser(commonDriverMap, secUser);
+		return getGrantedApplication(commonDriverMap); 
 
-		Map<SecApplication, SecApplicationGrants> appsGrantedToUserInCompany = applicationService
-				.getGrantedApplication(secUser, company);
-
-		for (UserApplicationGrant userApplicationGrant : appsGrantedToCompany
-				.values()) {
-			if (appsGrantedToUserInCompany.get(userApplicationGrant
-					.getApplication()) != null) {
-
-				userApplicationGrant.setGranted(true);
-				userApplicationGrant.setPrefilType(appsGrantedToUserInCompany
-						.get(userApplicationGrant.getApplication())
-						.getTypesPerfil());
-			}
-
-		}
-		return new ArrayList(appsGrantedToCompany.values());
+		
 	}
 
 	@Override
@@ -790,9 +782,10 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 				.getAllApplications();
 
 		List<SecApplicationsCompany> result = new ArrayList<SecApplicationsCompany>();
-
+CommonDriverMap commonDriverMap   = new CommonDriverMap();
+commonDriverMap.appendCompany(commonDriverMap, company);
 		Map<SecApplication, UserApplicationGrant> appsGrantedToCompany = applicationService
-				.getGrantedApplication(company);
+				.getCompanyGrantedApps(commonDriverMap);
 
 		for (SecApplication secApplication : allApplications) {
 
@@ -926,5 +919,44 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 		return projectService.loadProjects(first, pageSize, sortField,
 				assending, filters);
 	}
+
+	@Override
+	public List<OamQuotationActionType> getAvailableQuotationActionTypes(
+			OamQuotation selected) {
+		
+		return oamQuotationActionTypeService.getAvailableQuotationActionTypes( selected) ;
+				
+	}
+
+	@Override
+	public OamQuotationActionType getOamQuotationActionType(Long id) {
+		return oamQuotationActionTypeService.getOamQuotationActionType( id);
+	}
+
+	@Override
+	public List<UserApplicationGrant> getGrantedApplication(
+			CommonDriverMap commonDriverMap) {
+		Map<SecApplication, UserApplicationGrant> appsGrantedToCompany = applicationService
+				.getCompanyGrantedApps(commonDriverMap);
+
+		Map<SecApplication, SecApplicationGrants> appsGrantedToUserInCompany = applicationService
+				.getGrantedApplication(commonDriverMap);
+
+		for (UserApplicationGrant userApplicationGrant : appsGrantedToCompany
+				.values()) {
+			if (appsGrantedToUserInCompany.get(userApplicationGrant
+					.getApplication()) != null) {
+
+				userApplicationGrant.setGranted(true);
+				userApplicationGrant.setPrefilType(appsGrantedToUserInCompany
+						.get(userApplicationGrant.getApplication())
+						.getTypesPerfil());
+			}
+
+		}
+		return new ArrayList(appsGrantedToCompany.values());
+	}
+
+	
 
 }

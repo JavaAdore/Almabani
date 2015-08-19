@@ -36,7 +36,7 @@ public interface ApplicationService {
 
 	List<UserApplicationGrant> getAllUserApplications();
 
-	Map<SecApplication, UserApplicationGrant> getGrantedApplication(Company company);
+	Map<SecApplication, UserApplicationGrant> getCompanyGrantedApps(CommonDriverMap commonDriverMap);
 
 	Map<SecApplication, SecApplicationGrants> getGrantedApplication(SecUser secUser, Company company);
 
@@ -48,4 +48,9 @@ public interface ApplicationService {
 			CommonDriverMap commonDriverMap);
 
 	SecApplication getApplication(String codApplication);
+
+	Map<SecApplication, SecApplicationGrants> getGrantedApplication(
+			CommonDriverMap commonDriverMap);
+
+	
 }

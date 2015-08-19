@@ -23,7 +23,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_QUOTATION_ACTIONS")
-@SequenceGenerator(name = "OamQuotationActions_Id_Seq_Gen", sequenceName = "OAM_QUOTATION_ACTIONS_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamQuotationActions_Id_Seq_Gen", sequenceName = "adminoam.OAM_SEQ_NUM_QUOTATION_ACTION", allocationSize = 50, initialValue = 50)
 public class OamQuotationAction extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -6649839838260967977L;
@@ -39,7 +39,7 @@ public class OamQuotationAction extends AbstractEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_TYPE_QUOT_ACTION", referencedColumnName="NUM_TYPE_QUOT_ACTION", nullable = false)
-	private OamTypeQuotAction oamTypesQuotActions;
+	private OamQuotationActionType oamTypesQuotActions;
 	
 	@Column(name = "COD_LOGIN_ACTION", nullable = false, length = 10)
 	private String loginActionCode;
@@ -92,14 +92,14 @@ public class OamQuotationAction extends AbstractEntity implements Serializable {
 	/**
 	 * @return the oamTypesQuotActions
 	 */
-	public OamTypeQuotAction getOamTypesQuotActions() {
+	public OamQuotationActionType getOamTypesQuotActions() {
 		return oamTypesQuotActions;
 	}
 
 	/**
 	 * @param oamTypesQuotActions the oamTypesQuotActions to set
 	 */
-	public void setOamTypesQuotActions(OamTypeQuotAction oamTypesQuotActions) {
+	public void setOamTypesQuotActions(OamQuotationActionType oamTypesQuotActions) {
 		this.oamTypesQuotActions = oamTypesQuotActions;
 	}
 

@@ -16,6 +16,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.exception.AlmabaniException;
@@ -33,6 +34,16 @@ public class UserManagementBean extends AbstractBeanHelper implements
 
 	private List<Employee> employees;
 
+	private List<Company> companies;
+	
+	public List<Company> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(List<Company> companies) {
+		this.companies = companies;
+	}
+
 	private boolean operationSuccess = false;
 
 	private SecUser selected;
@@ -41,7 +52,12 @@ public class UserManagementBean extends AbstractBeanHelper implements
 	public void init() {
 		initializeUsersLazyList();
 		initializeEmployeesList();
+		initializeCompaniesList();
 
+	}
+
+	private void initializeCompaniesList() {
+		companies = almabaniFacade.getAllCompanies();		
 	}
 
 	private void initializeEmployeesList() {

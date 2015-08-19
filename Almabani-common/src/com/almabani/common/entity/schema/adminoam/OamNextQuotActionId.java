@@ -15,11 +15,11 @@ public class OamNextQuotActionId implements java.io.Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "NUM_TYPE_QUOT_ACTION", referencedColumnName="NUM_TYPE_QUOT_ACTION", nullable = false)
-	private OamTypeQuotAction oamTypeQuotAction;
+	private OamQuotationActionType oamTypeQuotAction;
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_TYPE_ACTION_NEXT_FIRST", referencedColumnName="NUM_TYPE_QUOT_ACTION", nullable = false)
-	private OamTypeQuotAction oamTypeQuotActionNextFirst;
+	private OamQuotationActionType oamTypeQuotActionNextFirst;
 
 	public OamNextQuotActionId() {
 	}
@@ -27,21 +27,21 @@ public class OamNextQuotActionId implements java.io.Serializable {
 	/**
 	 * @return the oamTypeQuotAction
 	 */
-	public OamTypeQuotAction getOamTypeQuotAction() {
+	public OamQuotationActionType getOamTypeQuotAction() {
 		return oamTypeQuotAction;
 	}
 
 	/**
 	 * @param oamTypeQuotAction the oamTypeQuotAction to set
 	 */
-	public void setOamTypeQuotAction(OamTypeQuotAction oamTypeQuotAction) {
+	public void setOamTypeQuotAction(OamQuotationActionType oamTypeQuotAction) {
 		this.oamTypeQuotAction = oamTypeQuotAction;
 	}
 
 	/**
 	 * @return the oamTypeQuotActionNextFirst
 	 */
-	public OamTypeQuotAction getOamTypeQuotActionNextFirst() {
+	public OamQuotationActionType getOamTypeQuotActionNextFirst() {
 		return oamTypeQuotActionNextFirst;
 	}
 
@@ -49,7 +49,7 @@ public class OamNextQuotActionId implements java.io.Serializable {
 	 * @param oamTypeQuotActionNextFirst the oamTypeQuotActionNextFirst to set
 	 */
 	public void setOamTypeQuotActionNextFirst(
-			OamTypeQuotAction oamTypeQuotActionNextFirst) {
+			OamQuotationActionType oamTypeQuotActionNextFirst) {
 		this.oamTypeQuotActionNextFirst = oamTypeQuotActionNextFirst;
 	}
 

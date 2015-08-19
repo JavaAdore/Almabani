@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.dto.UserApplicationGrant;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.ApplicationType;
@@ -53,6 +54,11 @@ public interface ApplicationDAO extends AbstractDAOInt{
 
 	void deleteGrants(List<SecApplicationsCompany> revokeGrantList);
 	SecApplication getApplication(String codApplication);
+
+	Map<SecApplication, SecApplicationGrants> getGrantedApplication(
+			CommonDriverMap commonDriverMap);
+
+	List<UserApplicationGrant> getCompanyGrante(CommonDriverMap commonDriverMap);
 
 	
 }
