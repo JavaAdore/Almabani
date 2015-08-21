@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.almabani.common.entity.AbstractEntity;
+import com.almabani.common.entity.schema.adminsec.SecApplication;
 
 public class Utils {
 
@@ -328,6 +329,24 @@ public class Utils {
 	        result.put(unit,diff);
 	    }
 	    return result;
+	}
+
+	public static String getAbsoluteStringValue(String applicationDescription) {
+		if(isNotEmptyString(applicationDescription))
+		{
+			return applicationDescription.trim();
+		} 
+		return "";
+		
+	}
+
+	public static boolean isEmptySet(Set allApplications) {
+		return Utils.isNull(allApplications) || allApplications.size()==0;
+	}
+
+	public static boolean isEmptyMap(
+			Map<String, String> applicationsDescriptions) {
+		return isNull(applicationsDescriptions) || applicationsDescriptions.size()==0;
 	}
 	
 }

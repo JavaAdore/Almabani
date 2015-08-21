@@ -1,6 +1,10 @@
 package com.almabani.common.entity.schema.adminsec;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.dto.menu.Application;
 import com.almabani.common.entity.schema.admincor.Employee;
 
 /**
@@ -62,6 +68,9 @@ public class SecUser implements java.io.Serializable {
 
 	@Column(name = "COD_password", nullable = false, length = 100)
 	private String password;
+	
+	@Transient
+	private List<Application> alllowedApps= new ArrayList();
 	
 
 	public SecUser() {
@@ -256,6 +265,16 @@ public class SecUser implements java.io.Serializable {
 
 		return indAdminSystem != null && indAdminSystem.equalsIgnoreCase("Y");
 	}
+
+	public List<Application> getAlllowedApps() {
+		return alllowedApps;
+	}
+
+	public void setAlllowedApps(List<Application> alllowedApps) {
+		this.alllowedApps = alllowedApps;
+	}
+
+	
 
 
 }

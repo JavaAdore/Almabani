@@ -15,6 +15,8 @@ public class Application implements Serializable{
 	
 	private String applicationName;
 	
+	private String applicationDescription;
+	
 	private String perfilCode ;
 	
 	private String url;
@@ -54,6 +56,14 @@ public class Application implements Serializable{
 
 	public void setPerfilCode(String perfilCode) {
 		this.perfilCode = perfilCode;
+	}
+
+	public String getApplicationDescription() {
+		return applicationDescription;
+	}
+
+	public void setApplicationDescription(String applicationDescription) {
+		this.applicationDescription = applicationDescription;
 	}
 	
 	

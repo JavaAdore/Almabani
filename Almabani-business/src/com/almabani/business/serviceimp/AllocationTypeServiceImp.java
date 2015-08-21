@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.AllocationTypeService;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.dataaccess.dao.adminoam.AllocationTypeDAO;
 
@@ -23,6 +24,11 @@ public class AllocationTypeServiceImp implements AllocationTypeService {
 	@Override
 	public AllocationType getAllocationType(Long id) {
 		return allocationTypeDAO.getAllocationType(id);
+	}
+
+	@Override
+	public List<AllocationType> getAllocationTypes(Company company) {
+		return allocationTypeDAO.getAllocationTypes(company);
 	}
 	
 }

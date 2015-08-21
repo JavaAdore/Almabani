@@ -15,8 +15,11 @@
 		href="#{request.contextPath}/resources/images/favicon.ico" />
 
 	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputScript  library="scripts" name="script.js"  ></h:outputScript>
 
 	<script>
+
+	
 		var temp = "#{applicationScopeStore.getUserSessionId()}"
 		var interv = setInterval(function()
 		{
@@ -39,19 +42,32 @@
 			document.location = "Login.xhtml";
 			
 		}
-		function getCookie(name) {
-			  var value = "; " + document.cookie;
-			  var parts = value.split("; " + name + "=");
-			  if (parts.length == 2) return parts.pop().split(";").shift();
-			} 
+		
 
-		window.history.forward()
+		window.history.forward();
+
+		
+		function displayApplicationDescriptionPanel(obj,applicatinoCode)
+		{
+			$('#applicationDescription').html("( "+applicatinoCode +" ) "+ getApplicationDescription(applicatinoCode));
+			
+		} 
+
+		function hideApplicationDescriptionPanel()
+		{
+			$('#applicationDescription').html('');
+		}
+
+		
+		
 	</script>
 	<ui:insert name="header"></ui:insert>
 </h:head>
 <f:view contentType="text/html">
 
-	<h:body dir="#{loc.dir}" style="padding:0px; margin:0px;"  >
+	<h:body dir="#{loc.dir}" style="padding:0px; margin:0px;">
+
+	
 		<h:form id="growl">
 			<p:growl life="10000" />
 		</h:form>
@@ -61,14 +77,26 @@
 		<br />
 		<center>
 			<div style="height: 10%;">
-				<h:form id="menubarForm" styleClass="menubarForm">
-					<p:menubar model="#{userSessionBean.menuModel}"
-						style="width:90%; padding-top: 15px; margin-top: 15px;">
 
+				<h:form id="menubarForm" prependId="false" styleClass="menubarForm">
+					<p:outputLabel id="applicationDescription"  style=";top:20px ; color:white"
+						/>
+					<p:menubar  id="menuBar" model="#{userSessionBean.menuModel}"
+						style="width:90%; padding-top: 15px; margin-top: 15px;" />
+					<br />
+					<script>
+					$(document).ready(function()
+					{
+						$('#applicationDescription').css('right','30px');
+						$('#applicationDescription').css('position','absolute');
+						
+						$('#applicationDescription').appendTo('#menuBar');
 
+					});
+					</script>
+					
+					
 
-
-					</p:menubar>
 				</h:form>
 			</div>
 		</center>
@@ -96,6 +124,30 @@
 			<p:graphicImage name="/images/loader.gif" />
 		</p:dialog>
 
+
+
+		<script>
+		$(document).ready(function()
+				{
+					$('.app').each(function(index , obj)
+					{	
+						var appCode =	$(obj)[0].classList[3].substring(4,$(obj)[0].classList[3].length);	
+						console.log(appCode);
+						$(obj).mouseenter(function() 
+						{
+						var pos = $(obj).position();
+						displayApplicationDescriptionPanel(this,appCode);
+					});
+
+					$(obj).mouseleave(function()
+					{
+							    hideApplicationDescriptionPanel();
+					});
+
+					});
+
+				});
+		</script>
 
 
 	</h:body>

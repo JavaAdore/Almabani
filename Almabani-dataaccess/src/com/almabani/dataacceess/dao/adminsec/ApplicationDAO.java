@@ -60,5 +60,7 @@ public interface ApplicationDAO extends AbstractDAOInt{
 
 	List<UserApplicationGrant> getCompanyGrante(CommonDriverMap commonDriverMap);
 
+	Map<String, String> getApplicationDescriptionMap();
+
 	
 }

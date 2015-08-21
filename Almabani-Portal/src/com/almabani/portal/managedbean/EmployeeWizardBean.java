@@ -72,7 +72,7 @@ public class EmployeeWizardBean extends AbstractBeanHelper implements Serializab
 		departmentList = almabaniFacade.getDepartments();
 		countries = almabaniFacade.getAllCountries();
 		establishments = almabaniFacade.getEstablishments();
-		jobTitleTypes = almabaniFacade.getJobTitleTypes();
+		jobTitleTypes = almabaniFacade.getAllJobTitleTypes();
 		genders = Gender.values();
 		maritalStatus = MaritalStatus.values();
 		active = Active.values();

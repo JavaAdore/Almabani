@@ -188,5 +188,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 			CommonDriverMap commonDriverMap) {
 		return  applicationDAO.getGrantedApplication(commonDriverMap);
 	}
+
+	@Override
+	public Map<String, String> getApplicationDescriptionMap() {
+		return applicationDAO.getApplicationDescriptionMap();
+	}
  
 } 

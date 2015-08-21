@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -15,10 +16,12 @@ public interface ProjectJobTitleDAO extends AbstractDAOInt{
 	
 	ProjectJobTitle update(ProjectJobTitle projectJobTitle);
 	
-	List<ProjectJobTitle> getAllProjectJobTitles();
-
 	ProjectJobTitle getProjectJobTitle(Long id);
-
+	
+	List<ProjectJobTitle> getProjectJobTitles(Company company);
+	
+	List<ProjectJobTitle> getAllProjectJobTitles();
+	
 	Integer getCountOfProjectJobTitle(Map<String, Object> filters);
 
 	List<ProjectJobTitle> loadProjectJobTitles(int first, int pageSize,

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.ProjectJobTitleService;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.dataaccess.dao.adminoam.ProjectJobTitleDAO;
 
@@ -27,13 +28,18 @@ public class ProjectJobTitleServiceImp implements ProjectJobTitleService {
 	}
 	
 	@Override
-	public List<ProjectJobTitle> getAllProjectJobTitles() {
-		return projectJobTitleDAO.getAllProjectJobTitles();
-	}
-
-	@Override
 	public ProjectJobTitle getProjectJobTitle(Long id) {
 		return projectJobTitleDAO.getProjectJobTitle(id);
+	}
+	
+	@Override
+	public List<ProjectJobTitle> getProjectJobTitles(Company company) {
+		return projectJobTitleDAO.getProjectJobTitles(company);
+	}
+	
+	@Override
+	public List<ProjectJobTitle> getAllProjectJobTitles() {
+		return projectJobTitleDAO.getAllProjectJobTitles();
 	}
 
 	@Override

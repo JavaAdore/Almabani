@@ -52,5 +52,7 @@ public interface ApplicationService {
 	Map<SecApplication, SecApplicationGrants> getGrantedApplication(
 			CommonDriverMap commonDriverMap);
 
+	Map<String, String> getApplicationDescriptionMap();
+
 	
 }

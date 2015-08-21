@@ -66,3 +66,7 @@ body {
 #menubarForm .ui-menu-list {
 	position: absolute !important;
 }
+
+#loginLayout.ui-layout-unit-content ui-widget-content{
+	background: transparent !important;
+}

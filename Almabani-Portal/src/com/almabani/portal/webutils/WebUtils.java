@@ -268,11 +268,8 @@ public class WebUtils {
 	}
 
 	public static Object extractFromRequest(String key) {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		Object attributeValue = request.getAttribute(key);
-		return attributeValue;
-	}
+		return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
+	} 
 
 	public static void injectIntoRequest(String key, Object value) {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -513,7 +510,7 @@ public class WebUtils {
 					cookie = userCookies[i];
 					break;
 				}
-			}
+			} 
 		}
 
 		if (cookie != null) {
@@ -523,8 +520,7 @@ public class WebUtils {
 			cookie.setPath(request.getContextPath());
 		}
 
-		cookie.setMaxAge(expiry);
-
+  
 		HttpServletResponse response = (HttpServletResponse) facesContext
 				.getExternalContext().getResponse();
 		response.addCookie(cookie);
@@ -573,7 +569,7 @@ public class WebUtils {
 	public static SessionDetailsHolder prepareCurrentSessionDetailsHolder() {
 		SessionDetailsHolder sessionDetailsHolder = new SessionDetailsHolder();
 		sessionDetailsHolder.setIpAddress(getCurrentIpAddress());
-		sessionDetailsHolder.setLoginDate(new Date());  
+		sessionDetailsHolder.setLoginDate(new Date());
 		sessionDetailsHolder.setDeviceType(getCurrentDeviceTypeAddress());
 		sessionDetailsHolder.setSession(getCurrentSession());
 		return sessionDetailsHolder;
@@ -581,9 +577,7 @@ public class WebUtils {
 
 	public static void updatePrimeFacesComponent(String componentId) {
 		RequestContext.getCurrentInstance().update(componentId);
-		
+
 	}
-	
-	
 
 }

@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FlowEvent;
 
 import com.almabani.common.constant.MessagesKeyStore;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Country;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.admincor.DepartmentSection;
@@ -69,10 +70,7 @@ private static final long serialVersionUID = 1L;
 	public void init() {
 		employee = new Employee();
 		employee.setActive(Active.Y);
-		departmentList = almabaniFacade.getDepartments();
 		countries = almabaniFacade.getAllCountries();
-		establishments = almabaniFacade.getEstablishments();
-		jobTitleTypes = almabaniFacade.getJobTitleTypes();
 		genders = Gender.values();
 		maritalStatus = MaritalStatus.values();
 		active = Active.values();
@@ -80,16 +78,24 @@ private static final long serialVersionUID = 1L;
 		documentTypes = DocumentType.values();
 	}
 	
-	public void prepareCreateEmployee(){
+	public void prepareCreateEmployee(Company company){
+		initializeCompanyData(company);
 		employee = new Employee();
 		step = "first";
 	}
 	
 	public void prepareEditEmployee(Employee emp){
 		selectedEmployee = emp;
+		initializeCompanyData(emp.getDepartmentSection().getDepartment().getCompany());
 		departmentSections = almabaniFacade.getDepartmentSections(emp.getDepartmentSection().getDepartment());
 		selectedDepartment = emp.getDepartmentSection().getDepartment();
 		step = "first";
+	}
+	
+	private void initializeCompanyData(Company company){
+		departmentList = almabaniFacade.getDepartments(company);
+		jobTitleTypes = almabaniFacade.getJobTitleTypes(company);
+		establishments = almabaniFacade.getEstablishments(company);
 	}
 	
 	public void onDepartmentSelect(){
@@ -113,18 +119,26 @@ private static final long serialVersionUID = 1L;
         	emp.setRegistrationDate(new Date());
         	emp.setLastModificationDate(new Date());
         	emp.setModificationMakerName("Register");
-            almabaniFacade.saveOrUpdate(emp);
-            if(isAlreadyExisitEntity)
-            	WebUtils.invokeJavaScriptFunction("PF('editEmployeeDialog').hide()");
-            else
-            	WebUtils.invokeJavaScriptFunction("PF('createEmployeeDialog').hide()");
-                        
-            WebUtils.fireInfoMessage(
-					(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
-							: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY, 
-					WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_EMPLOYEE));
-            
-            prepareCreateEmployee();
+        	
+        	if(!almabaniFacade.isFederalIdentityCodeExist(emp.getFederalIdentityCode())){
+        		
+        		almabaniFacade.saveOrUpdate(emp);
+                if(isAlreadyExisitEntity)
+                	WebUtils.invokeJavaScriptFunction("PF('editEmployeeDialog').hide()");
+                else
+                	WebUtils.invokeJavaScriptFunction("PF('createEmployeeDialog').hide()");
+                            
+                WebUtils.fireInfoMessage(
+    					(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+    							: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY, 
+    					WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_EMPLOYEE));
+                
+                employee = new Employee();
+        		step = "first";
+        	} else{
+        		WebUtils.fireErrorMessage(MessagesKeyStore.ALMABANI_EMPLOYEE_FEDERAL_IDENTITY_CODE_EXIST);
+        	}
+        	
         } catch (Exception ex) {
             ex.printStackTrace();
         }

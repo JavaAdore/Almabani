@@ -10,7 +10,9 @@
          t2.cod_application applicationCode,
          t3.des_label_english applicationName,
          t1.COD_PERFIL perfilCode,
-         DES_LINK_CODE url   
+         DES_LINK_CODE url   ,
+         T3.DES_APPLICATION applicationDescription
+         
     FROM adminsec.sec_applications_grants t1,
          adminsec.sec_applications_companies t2,
          adminsec.sec_applications t3,
@@ -45,6 +47,7 @@ ORDER BY 1, 2, 3
 
 	<resultMap type='application' id='application'>
 		<result property='applicationCode' column='applicationCode' />
+		<result property='applicationDescription' column="applicationDescription" />
 		<result property='applicationName' column='applicationName' />
 		<result property="perfilCode" column="perfilCode"/>
 		<result property='url' column='url' /> 

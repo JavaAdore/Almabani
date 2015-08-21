@@ -13,6 +13,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
@@ -48,9 +49,6 @@ public class ProjectEmployeeBean extends AbstractBeanHelper implements
 
 	@PostConstruct
 	public void init() {
-		allocationTypes = almabaniFacade.getAllAllocationTypes();
-		projectJobTitles = almabaniFacade.getAllProjectJobTitles();
-		projects = almabaniFacade.getAllProjects();
 		employeeContractTypes = EmployeeContractType.values();
 	}
 
@@ -72,9 +70,13 @@ public class ProjectEmployeeBean extends AbstractBeanHelper implements
 		return WebUtils.extractFromBundle(key);
 	}
 
-	public void prepareCreateProjectEmployee() {
+	public void prepareCreateProjectEmployee(Company company) {
 		projectEmployee4Create = new ProjectEmployee();
 		projectEmployee4Create.setEmployee(employee4Details);
+		
+		allocationTypes = almabaniFacade.getAllocationTypes(company);
+		projectJobTitles = almabaniFacade.getProjectJobTitles(company);
+		projects = almabaniFacade.getProjects(company);
 
 	}
 	

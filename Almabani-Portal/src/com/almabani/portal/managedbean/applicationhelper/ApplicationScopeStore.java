@@ -53,8 +53,8 @@ public class ApplicationScopeStore implements Serializable {
 
 	private Map<String, String> yesNoMap = new LinkedHashMap();
 
-	@PostConstruct  
-	public void init() {  
+	@PostConstruct
+	public void init() {
 		loadCountries();
 		constructCountriesStatesMap();
 		constructOamQoutationSituationMap();
@@ -333,9 +333,8 @@ public class ApplicationScopeStore implements Serializable {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		if (Utils.isNotNull(date)) {
-			Map<TimeUnit, Long> result = Utils.computeDiff( date , new Date());
- 
-			 
+			Map<TimeUnit, Long> result = Utils.computeDiff(date, new Date());
+
 			stringBuilder
 					.append(String.format(
 							"%s %s ",
@@ -345,7 +344,7 @@ public class ApplicationScopeStore implements Serializable {
 					.append(String.format(
 							"%s %s ",
 							result.get(TimeUnit.MINUTES),
-							WebUtils.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_DATES_MINUTE)));
+	 						WebUtils.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_DATES_MINUTE)));
 			stringBuilder
 					.append(String.format(
 							"%s %s ",
@@ -353,6 +352,15 @@ public class ApplicationScopeStore implements Serializable {
 							WebUtils.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_DATES_SECOND)));
 		}
 		return stringBuilder.toString();
+	}
+
+	public String getApplicationDescription() {
+		String val = (String) WebUtils.extractFromRequest("applicationCode");
+		if(Utils.isNotEmptyString(val)) 
+		{
+		val = almabaniFacade.getApplicationDescription(val);
+		}
+		return Utils.getAbsoluteStringValue(val);
 	}
 
 }

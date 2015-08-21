@@ -29,6 +29,8 @@ public class CustomUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, ApplicationAccess> allowedURLs = new HashMap<String, ApplicationAccess>();
+	
+	
 	MenuModel menuModel = new DefaultMenuModel();
 
 	private SecUser user;
@@ -82,6 +84,7 @@ public class CustomUserDetails implements UserDetails {
 	public void assignAllowedUrls(List<Module> modules) {
 
 		if (Utils.isNotEmptyList(modules)) {
+
 			for (Module module : modules) {
 				Submenu submenu = new DefaultSubMenu(module.getModuleName());
 
@@ -103,14 +106,17 @@ public class CustomUserDetails implements UserDetails {
 							
 							allowedURLs
 									.put(abstractAppURL,
-											new ApplicationAccess(
+					 						new ApplicationAccess(
 													abstractAppURL,
 													application
 															.getPerfilCode()
 															.equals(Access.FULL
 																	.toString()) ? Access.FULL
 															: Access.READ));
-							innerSubMenu.getElements().add(menuItem);
+							menuItem.setStyleClass(String.format("app app-%s" ,application.getApplicationCode()));
+							
+							user.getAlllowedApps().add(application); 
+							innerSubMenu.getElements().add(menuItem); 
  
 						} 
 					}

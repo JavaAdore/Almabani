@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import oracle.jdbc.proxy.annotation.Post;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -83,7 +87,7 @@ import com.almabani.common.util.Utils;
 
 @Service
 @EnableTransactionManagement
-public class AlmabaniFacadeImp implements AlmabaniFacade {
+public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Autowired
 	private EmployeeService employeeService;
@@ -178,6 +182,19 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Autowired
 	OamQuotationActionTypeService oamQuotationActionTypeService;
 
+	
+	@PostConstruct
+	public void cacheApplications()
+	{
+		if(Utils.isEmptyMap(getApplicationsDescriptions()))
+		{
+			Map<String,String> applicationDescription = applicationService.getApplicationDescriptionMap();
+			setApplicationsDescriptions(applicationDescription);
+		}
+	}
+	
+	
+	
 	@Override
 	public Company getCompany(Long id) {
 
@@ -204,6 +221,16 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	public List<Employee> getEmployees(
 			DepartmentSection selectedDepartmentSection) {
 		return employeeService.getEmployees(selectedDepartmentSection);
+	}
+	
+	@Override
+	public boolean isFederalIdentityCodeExist(String federalIdentityCode) {
+		return employeeService.isFederalIdentityCodeExist(federalIdentityCode);
+	}
+	
+	@Override
+	public Integer getNumberOfEmployees(Map<String, Object> filters) {
+		return employeeService.getNumberOfEmployees(filters);
 	}
 
 	@Override
@@ -244,7 +271,17 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	@Override
 	public JobTitleType getJobTitle(Long id) {
 
-		return null;
+		return jobTitleTypeService.getJobTitle(id);
+	}
+	
+	@Override
+	public List<JobTitleType> getJobTitleTypes(Company company) {
+		return jobTitleTypeService.getJobTitleTypes(company);
+	}
+	
+	@Override
+	public List<JobTitleType> getAllJobTitleTypes() {
+		return jobTitleTypeService.getAllJobTitleTypes();
 	}
 
 	@Override
@@ -325,15 +362,15 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 	public Establishment getEstablishment(Long key) {
 		return establishmentService.getEstablishment(key);
 	}
+	
+	@Override
+	public List<Establishment> getEstablishments(Company company) {
+		return establishmentService.getEstablishments(company);
+	}
 
 	@Override
 	public List<Establishment> getEstablishments() {
 		return establishmentService.getEstablishments();
-	}
-
-	@Override
-	public List<JobTitleType> getJobTitleTypes() {
-		return jobTitleTypeService.getJobTitleTypes();
 	}
 
 	@Override
@@ -559,23 +596,43 @@ public class AlmabaniFacadeImp implements AlmabaniFacade {
 
 	@Override
 	public Project saveOrUpdate(Project project) throws AlmabaniException {
-		if (!projectService.getProject(project.getId()).getProjectCode()
-				.equals(project.getProjectCode()))
+		
+		if(project.getId() == null){
+			
 			if (projectService.isProjectCodeExist(project.getProjectCode())) {
 				throw new AlmabaniException(
 						MessagesKeyStore.DUPLICATE_PROJECT_CODE);
 			}
-		return projectService.saveOrUpdate(project);
+			
+			projectService.persist(project);
+		} else{
+			
+			if (!projectService.getProject(project.getId()).getProjectCode()
+					.equals(project.getProjectCode()))
+				if (projectService.isProjectCodeExist(project.getProjectCode())) {
+					throw new AlmabaniException(
+							MessagesKeyStore.DUPLICATE_PROJECT_CODE);
+				}
+			
+			projectService.update(project);
+		}
+		
+		return project;
+	}
+	
+	@Override
+	public Project getProject(Long id) {
+		return projectService.getProject(id);
+	}
+	
+	@Override
+	public List<Project> getProjects(Company company) {
+		return projectService.getProjects(company);
 	}
 
 	@Override
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
-	}
-
-	@Override
-	public Project getProject(Long id) {
-		return projectService.getProject(id);
 	}
 
 	@Override
@@ -847,6 +904,11 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 		}
 
 	}
+	
+	@Override
+	public List<AllocationType> getAllocationTypes(Company company) {
+		return allocationTypeService.getAllocationTypes(company);
+	}
 
 	@Override
 	public List<AllocationType> getAllAllocationTypes() {
@@ -862,7 +924,17 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 	public ProjectJobTitle saveOrUpdate(ProjectJobTitle projectJobTitle) {
 		return projectJobTitleService.saveOrUpdate(projectJobTitle);
 	}
+	
+	@Override
+	public ProjectJobTitle getProjectJobTitle(Long id) {
+		return projectJobTitleService.getProjectJobTitle(id);
+	}
 
+	@Override
+	public List<ProjectJobTitle> getProjectJobTitles(Company company) {
+		return projectJobTitleService.getProjectJobTitles(company);
+	}
+	
 	@Override
 	public List<ProjectJobTitle> getAllProjectJobTitles() {
 		return projectJobTitleService.getAllProjectJobTitles();
@@ -876,11 +948,6 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 	@Override
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
-	}
-
-	@Override
-	public ProjectJobTitle getProjectJobTitle(Long id) {
-		return projectJobTitleService.getProjectJobTitle(id);
 	}
 
 	@Override
@@ -915,9 +982,16 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 
 	@Override
 	public List<Project> loadProjects(int first, int pageSize,
-			String sortField, boolean assending, Map<String, Object> filters) {
+			String sortField, boolean ascending, Map<String, Object> filters) {
 		return projectService.loadProjects(first, pageSize, sortField,
-				assending, filters);
+				ascending, filters);
+	}
+
+	@Override
+	public List<Employee> loadEmployees(int first, int pageSize,
+			String sortField, boolean assending, Map<String, Object> filters) {
+		return employeeService.loadEmployees(first, pageSize,
+				sortField, assending, filters);
 	}
 
 	@Override
@@ -957,6 +1031,10 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 		return new ArrayList(appsGrantedToCompany.values());
 	}
 
-	
+	@Override
+	public String getApplicationDescription(String applicationCode)
+	{
+		return super.getApplicationDescription(applicationCode);
+	}
 
 }

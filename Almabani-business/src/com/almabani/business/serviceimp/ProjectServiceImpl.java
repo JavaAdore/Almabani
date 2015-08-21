@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.ProjectService;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.dataaccess.dao.admincor.ProjectDAO;
 
@@ -17,25 +18,29 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private ProjectDAO projectDAO;
 
-
-	@Override
-	public List<Project> loadProjects(Integer first, Integer pageSize, String sortField, boolean assending, Map<String, Object> filters){
-		return projectDAO.loadProjects(first,pageSize,sortField,assending,filters);
-	}
-
 	@Override
 	public Project getProject(Long id) {
 		return projectDAO.getProject(id);
 	}
+	
+	@Override
+	public Project persist(Project project) {
+		return projectDAO.persist(project);
+	}
 
 	@Override
-	public Project saveOrUpdate(Project project) {
-		if(project.getId() == null)
-			projectDAO.addProject(project);
-		else
-			projectDAO.update(project);
-		
-		return project;
+	public Project update(Project project) {
+		return projectDAO.update(project);
+	}
+
+	@Override
+	public List<Project> loadProjects(Integer first, Integer pageSize, String sortField, boolean ascending, Map<String, Object> filters){
+		return projectDAO.loadProjects(first,pageSize,sortField,ascending,filters);
+	}
+	
+	@Override
+	public List<Project> getProjects(Company company) {
+		return projectDAO.getProjects(company);
 	}
 
 	@Override

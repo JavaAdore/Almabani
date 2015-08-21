@@ -6,7 +6,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;

@@ -31,7 +31,7 @@ public class UserSessionBean extends AbstractBeanHelper implements Serializable 
 	private MenuModel menuModel;
 
 	public void constructUserMenu(CustomUserDetails customUserDetails) {
-
+              
 		menuModel = customUserDetails.getMenuModel();
 		menuModel.addElement(new DefaultMenuItem("Help")); 
 	}

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -252,5 +253,18 @@ public class ApplicationDAOImpl extends AbstractDAO implements ApplicationDAO {
 			result = query.list();
 		}
 		return result;
+	}
+
+	@Override
+	public Map<String, String> getApplicationDescriptionMap() {
+		String HQL_QUERY = "select codApplication ,applicationDescription  from SecApplication ";        
+		Query query = getCurrentSession().createQuery(HQL_QUERY);
+		List<Object[] >result = (List<Object[] >)query.list();
+		Map<String,String > mapToReturn = new TreeMap();
+		for(Object[] currentRow : result)  
+		{ 
+			mapToReturn.put((String)currentRow[0], (String)currentRow[1]); 
+		}
+		return mapToReturn; 
 	}
 }

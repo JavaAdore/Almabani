@@ -22,7 +22,6 @@ import com.almabani.common.entity.schema.admincor.Country;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
-import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.exception.AlmabaniException;

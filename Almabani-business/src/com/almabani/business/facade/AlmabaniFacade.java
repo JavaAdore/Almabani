@@ -26,7 +26,6 @@ import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
-import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
@@ -67,8 +66,14 @@ public interface AlmabaniFacade {
 	Employee saveOrUpdate(Employee employee);
 	
 	Employee getEmployee(Long id);
+	
+	boolean isFederalIdentityCodeExist(String federalIdentityCode);
+	
+	Integer getNumberOfEmployees(Map<String, Object> filters);
 
 	JobTitleType getJobTitle(Long id);
+	
+	List<JobTitleType> getJobTitleTypes(Company company);
 
 	OamQuotation getQuotataion(Long key);
 
@@ -98,9 +103,11 @@ public interface AlmabaniFacade {
 
 	Establishment getEstablishment(Long key);
 	
+	List<Establishment> getEstablishments(Company company);
+	
 	List<Establishment> getEstablishments();
 	
-	List<JobTitleType> getJobTitleTypes();
+	List<JobTitleType> getAllJobTitleTypes();
 	List<OamQuotation> loadQoutations(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
 
@@ -182,9 +189,11 @@ public interface AlmabaniFacade {
 	List<OamProjectItem> loadProjectItems(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
 
-	List<Project> getAllProjects();
-
 	Project getProject(Long id);
+	
+	List<Project> getProjects(Company company);
+	
+	List<Project> getAllProjects();
 	
 	List<OamItem> getAllItems();
 
@@ -258,12 +267,16 @@ public interface AlmabaniFacade {
 
 	void grantCompanyAccess(List<SecApplicationsCompany> grantableApplications,
 			CommonDriverMap commonDriverMap);
+	
+	List<AllocationType> getAllocationTypes(Company company);
 
 	List<AllocationType> getAllAllocationTypes();
 	
 	AllocationType getAllocationType(Long id);
 	
 	ProjectJobTitle saveOrUpdate(ProjectJobTitle projectJobTitle);
+	
+	List<ProjectJobTitle> getProjectJobTitles(Company company);
 	
 	List<ProjectJobTitle> getAllProjectJobTitles();
 
@@ -295,6 +308,9 @@ public interface AlmabaniFacade {
 	List<Project> loadProjects(int first, int pageSize, String sortField,
 			boolean b, Map<String, Object> filters);
 
+	List<Employee> loadEmployees(int first, int pageSize, String sortField,
+			boolean b, Map<String, Object> filters);
+
 
 	List<OamQuotationActionType> getAvailableQuotationActionTypes(
 			OamQuotation selected);
@@ -304,7 +320,7 @@ public interface AlmabaniFacade {
 	List<UserApplicationGrant> getGrantedApplication(
 			CommonDriverMap commonDriverMap);
 
-	
+	String getApplicationDescription(String applicationKey);
 	
 	
 }
