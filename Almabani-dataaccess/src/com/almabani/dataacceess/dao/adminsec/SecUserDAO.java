@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 @Repository
@@ -20,6 +21,8 @@ public interface SecUserDAO extends AbstractDAOInt{
 	SecUser saveOrUpdate(SecUser user);
 
 	Integer getNumberOfUser(Map<String, Object> filters);
+
+	List<SecUser> getUsers(Company company);
 
 	
 }

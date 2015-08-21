@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 
 @Service
@@ -24,4 +25,6 @@ public interface SecUserService {
 	SecUser addUser(SecUser user, CommonDriverMap commonDriverMap);
 
 	Integer getNumberOfUser(Map<String, Object> filters);
+
+	List<SecUser> getUsers(Company company);
 }

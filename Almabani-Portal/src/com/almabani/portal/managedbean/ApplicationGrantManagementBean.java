@@ -8,6 +8,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.push.EventBus;
+import org.primefaces.push.EventBusFactory;
+
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.dto.UserApplicationGrant;
@@ -104,12 +107,26 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 	}
 
 	private void initializeCompanyList() {
-
-		companies = almabaniFacade.getAllCompanies();
+		if(WebUtils.getCurrentLoggedUser().isAdminUser())
+		{
+			companies = almabaniFacade.getAllCompanies();
+		}else
+		{
+			companies = new ArrayList();
+			companies.add(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany());
+		}
 	}
 
 	private void initializeUsersList() {
-		users = almabaniFacade.getAllUsers();
+		if(WebUtils.getCurrentLoggedUser().isAdminUser())
+		{
+			users = almabaniFacade.getAllUsers();
+		}else
+		{
+	        
+			users = almabaniFacade.getCompanyUsers(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany());
+		}
+	   
 	}
 
 	
