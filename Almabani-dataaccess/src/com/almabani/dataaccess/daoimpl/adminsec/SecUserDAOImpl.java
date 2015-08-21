@@ -6,6 +6,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.util.Utils;
 import com.almabani.dataacceess.dao.adminsec.SecUserDAO;
@@ -44,6 +45,13 @@ public class SecUserDAOImpl extends AbstractDAO implements SecUserDAO {
 	@Override
 	public Integer getNumberOfUser(Map<String, Object> filters) {
 		return super.getCountOfResults(SecUser.class, filters);
+	}
+
+	@Override
+	public List<SecUser> getUsers(Company company) {
+		Query query = getCurrentSession().createQuery("select x from SecUser x where x.employee.establishment.company =:company");
+		query.setParameter("company", company);
+		return query.list();
 	}
    
 }

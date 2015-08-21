@@ -321,6 +321,8 @@ public interface AlmabaniFacade {
 			CommonDriverMap commonDriverMap);
 
 	String getApplicationDescription(String applicationKey);
+
+	List<SecUser> getCompanyUsers(Company company);
 	
 	
 }

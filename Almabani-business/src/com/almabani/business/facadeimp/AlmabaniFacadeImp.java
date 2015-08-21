@@ -1037,4 +1037,11 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 		return super.getApplicationDescription(applicationCode);
 	}
 
+
+
+	@Override
+	public List<SecUser> getCompanyUsers(Company company) {
+		return secUserService.getUsers(company);
+	}
+
 }

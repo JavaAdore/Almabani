@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.SecUserService;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.dataacceess.dao.adminsec.SecUserDAO;
 
@@ -55,6 +56,11 @@ public class SecUserServiceImp implements SecUserService {
 	@Override
 	public Integer getNumberOfUser(Map<String, Object> filters) {
 		return secUserDAO.getNumberOfUser(filters);
+	}
+
+	@Override
+	public List<SecUser> getUsers(Company company) {
+		return secUserDAO.getUsers( company) ;
 	}
 
 }
