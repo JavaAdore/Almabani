@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,6 @@ import javax.persistence.TemporalType;
 import com.almabani.common.entity.AbstractEntity;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.admincor.Project;
-import com.almabani.common.enumconverter.EmployeeContractTypeConverter;
 import com.almabani.common.enums.EmployeeContractType;
 
 /**
@@ -54,7 +54,8 @@ public class ProjectEmployee extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "COD_EMPLOYEE", referencedColumnName="COD_EMPLOYEE", nullable = false)
 	private Employee employee;
 	
-	@Convert(converter = EmployeeContractTypeConverter.class)
+//	@Convert(converter = EmployeeContractTypeConverter.class)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_TYPE_EMP_CONTR", nullable = false, length = 1)
 	private EmployeeContractType employeeContractType;
 	

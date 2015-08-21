@@ -81,6 +81,17 @@
 											<f:selectItems value="#{employeeBean.countries}"
 												var="country" itemLabel="#{country.countryName}" />
 										</p:selectOneMenu>
+										
+										<p:outputLabel for="documentTypes" value="Document Type: " />
+										<p:selectOneMenu id="documentTypes"
+											value="#{employeeBean.employee.indTypeDocument}"
+											style="width:250px">
+											<f:selectItem itemLabel="Select Document Type"
+												itemValue="#{null}" noSelectionOption="true" />
+											<f:selectItems value="#{employeeBean.documentTypes}"
+												var="documentType"
+												itemLabel="#{employeeBean.extractFromBundle(documentType.key)}" />
+										</p:selectOneMenu>
 									</h:panelGrid>
 								</p:panel>
 							</p:tab>
@@ -89,15 +100,25 @@
 								<p:panel header="Contact Information">
 									<p:messages />
 									<h:panelGrid columns="2" columnClasses="label, value">
+									
+										<p:outputLabel value="Email1:" for="email1" />
+										<p:inputText id="email1" maxlength="80" 
+											value="#{employeeBean.employee.email1Description}"
+											style="width:250px"> 
+											<f:validator validatorId="custom.emailValidator" />
+										</p:inputText>
+
+										<p:outputLabel value="Email2:" for="email2" />
+										<p:inputText id="email2" maxlength="80"
+											value="#{employeeBean.employee.email2Description}"
+											style="width:250px">
+											<f:validator validatorId="custom.emailValidator" />
+										</p:inputText>
+										
 										<p:outputLabel value="Telephone Number:" for="telephoneNumber" />
 										<p:inputText id="telephoneNumber" maxlength="10"
 											converter="longConverter"
 											value="#{employeeBean.employee.telephoneNumber}" />
-
-										<p:outputLabel value="DDI Telephone Number:"
-											for="ddiTelephoneNumber" />
-										<p:inputText id="ddiTelephoneNumber" maxlength="3"
-											value="#{employeeBean.employee.ddiTelephoneNumber}" />
 
 										<p:outputLabel value="DDD Telephone Number:"
 											for="dddTelephoneNumber" />
@@ -107,12 +128,6 @@
 										<p:outputLabel value="Mobile Number:" for="mobileNumber" />
 										<p:inputText id="mobileNumber" converter="longConverter"
 											maxlength="10" value="#{employeeBean.employee.mobileNumber}" />
-
-										<p:outputLabel value="DDD Mobile Number:"
-											for="ddiMobileNumber" />
-										<p:inputText id="ddiMobileNumber"
-											value="#{employeeBean.employee.ddiMobileNumber}"
-											maxlength="3" />
 
 										<p:outputLabel value="DDD Mobile Number:"
 											for="dddMobileNumber" />
@@ -180,8 +195,12 @@
 										<p:outputLabel value="Admission Date:" for="admissionDate" />
 										<p:calendar id="admissionDate"
 											value="#{employeeBean.employee.admissionDate}" />
-
-
+											
+										<p:outputLabel value="Observation Description:"
+											for="observationDescription" />
+										<p:inputTextarea id="observationDescription" rows="5" cols="33" maxlength="300"
+											value="#{employeeBean.employee.observationDescription}"
+											style="width:250px; resize: none;" />
 
 										<p:outputLabel for="active" value="Active: " />
 										<p:selectOneMenu id="active"
@@ -191,15 +210,9 @@
 												itemLabel="#{employeeBean.extractFromBundle(active.key)}" />
 										</p:selectOneMenu>
 
-										<p:outputLabel value="Observation Description:"
-											for="observationDescription" />
-										<p:inputText id="observationDescription" maxlength="300"
-											value="#{employeeBean.employee.observationDescription}"
-											style="width:250px" />
-
 										<p:outputLabel value="Inactivity Begin Date:"
 											for="admissionDate" />
-										<p:calendar id="inactivityBeginDate"
+										<p:calendar id="inactivityBeginDate" disabled="true"
 											value="#{employeeBean.employee.inactivityBeginDate}" />
 
 										<p:outputLabel for="employeeTypes" value="Employee Type: " />
@@ -212,42 +225,9 @@
 												var="employeeType"
 												itemLabel="#{employeeBean.extractFromBundle(employeeType.key)}" />
 										</p:selectOneMenu>
-
-										<p:outputLabel for="documentTypes" value="Document Type: " />
-										<p:selectOneMenu id="documentTypes"
-											value="#{employeeBean.employee.indTypeDocument}"
-											style="width:250px">
-											<f:selectItem itemLabel="Select Document Type"
-												itemValue="#{null}" noSelectionOption="true" />
-											<f:selectItems value="#{employeeBean.documentTypes}"
-												var="documentType"
-												itemLabel="#{employeeBean.extractFromBundle(documentType.key)}" />
-										</p:selectOneMenu>
 									</h:panelGrid>
 								</p:panel>
 							</p:tab>
-
-							<p:tab id="email" title="email">
-								<p:panel header="Email">
-									<p:messages />
-									<h:panelGrid columns="2" columnClasses="label, value">
-										<p:outputLabel value="Email1:" for="email1" />
-										<p:inputText id="email1" maxlength="80" 
-											value="#{employeeBean.employee.email1Description}"
-											style="width:250px"> 
-											<f:validator validatorId="custom.emailValidator" />
-										</p:inputText>
-
-										<p:outputLabel value="Email2:" for="email2" />
-										<p:inputText id="email2" maxlength="80"
-											value="#{employeeBean.employee.email2Description}"
-											style="width:250px">
-											<f:validator validatorId="custom.emailValidator" />
-										</p:inputText>
-									</h:panelGrid>
-								</p:panel>
-							</p:tab>
-
 
 							<p:tab id="imageTab" title="Image">
 								<p:panel header="Image">
