@@ -24,12 +24,12 @@ import com.almabani.common.entity.schema.admincor.Company;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_SUPPLIERS")
-@SequenceGenerator(name = "OamSuppliers_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_SUPPLIER", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamSuppliers_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_SUPPLIER",allocationSize=1 ,initialValue=1)
 public class OamSupplier extends AbstractEntity implements Serializable {
-
+ 
 	private static final long serialVersionUID = 4936711375291276209L;
-	
-	@Id   
+	   
+	@Id    
 	@Column(name = "NUM_SUPPLIER", unique = true, nullable = false,precision=0,scale=6)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamSuppliers_Id_Seq_Gen" )
 	private Long id;
@@ -65,6 +65,8 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
 	private String indActive;
 	
+	
+	
 	/**
 	 * modificationMakerName represent the user name who make the last modification
 	 */
@@ -74,6 +76,13 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false)
 	private Date lastModificationDate;
+	
+	
+	@Column(name="DES_EMAIL" , length=50)
+	private String email;
+	
+	@Column(name="IND_PROSPECT",nullable=false, length = 1)
+	private String indProspect;
 
 	public OamSupplier() {
 	}
@@ -248,5 +257,21 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 
 	public void setResponsibleName(String responsibleName) {
 		this.responsibleName = responsibleName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getIndProspect() {
+		return indProspect;
+	}
+
+	public void setIndProspect(String indProspect) {
+		this.indProspect = indProspect;
 	}  
 }

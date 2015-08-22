@@ -24,7 +24,7 @@ import com.almabani.common.entity.schema.adminoam.OamZoneDevice;
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_DAILY_OCURRENCES")
-@SequenceGenerator(name = "WokDailyOcurrences_Id_Seq_Gen", sequenceName = "WOK_DAILY_OCURRENCES_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "WokDailyOcurrences_Id_Seq_Gen", sequenceName = "WOK_DAILY_OCURRENCES_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -7318188634734742852L;

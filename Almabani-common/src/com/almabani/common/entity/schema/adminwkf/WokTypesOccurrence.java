@@ -24,7 +24,7 @@ import com.almabani.common.entity.schema.admincor.Company;
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_TYPES_OCCURRENCE")
-@SequenceGenerator(name = "WokTypesOccurrence_Id_Seq_Gen", sequenceName = "WOK_TYPES_OCCURRENCE_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "WokTypesOccurrence_Id_Seq_Gen", sequenceName = "WOK_TYPES_OCCURRENCE_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokTypesOccurrence extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -4410319788627362105L;

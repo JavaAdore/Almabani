@@ -11,158 +11,152 @@
 		<p:panel header="Confirmation">
 			<h:panelGrid id="confirmation" columns="3"
 				columnClasses="grid,grid,grid" style="width:100%">
-				<h:panelGrid columns="2" columnClasses="label, value">
+				<h:panelGrid columns="4" columnClasses="label, value"
+					>
+					<f:facet name="header">
+						<p:outputLabel value="Personal" />
+					</f:facet>
 
-					<h:outputText value="Employee Name:" />
-					<h:outputText value="#{employeeBean.employee.employeeName}"
+					<h:outputText style="font-weight:bold" value="employee Name:" />
+					<h:outputText style="font-weight:bold" value="#{employeeBean.employee.employeeName}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Federal Identity Code:" />
+					<h:outputText style="font-weight:bold" value="Federal Identity Code:" />
 					<h:outputText
 						value="#{employeeBean.employee.federalIdentityCode}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="State Identity Code:" />
-					<h:outputText
-						value="#{employeeBean.employee.stateIdentityCode}"
-						styleClass="outputLabel" />
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" columnClasses="label, value">
-
-					<h:outputText value="Date of Birth:" />
-					<h:outputText value="#{employeeBean.employee.birthDate}"
+					<h:outputText style="font-weight:bold" value="Date of Birth:" />
+					<h:outputText style="font-weight:bold" value="#{employeeBean.employee.birthDate}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Gender: " />
+					<h:outputText style="font-weight:bold" value="Gender: " />
 					<h:outputText
 						value="#{employeeBean.extractFromBundle(employeeBean.employee.gender.key)}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Marital Status: " />
+					<h:outputText style="font-weight:bold" value="Marital Status: " />
 					<h:outputText
 						value="#{employeeBean.extractFromBundle(employeeBean.employee.maritalStatus.key)}"
 						styleClass="outputLabel" />
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="Country: " />
+					<h:outputText style="font-weight:bold" value="Country: " />
 					<h:outputText
 						value="#{employeeBean.employee.country.countryName}"
 						styleClass="outputLabel" />
-
-					<h:outputText value="Telephone Number:" />
+					<h:outputText style="font-weight:bold" value="Document Type: " />
 					<h:outputText
-						value="#{employeeBean.employee.telephoneNumber}"
+						value="#{employeeBean.extractFromBundle(employeeBean.employee.indTypeDocument.key)}"
 						styleClass="outputLabel" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
 
-					<!-- <h:outputText value="DDI Telephone Number:" />
-					<h:outputText
-						value="#{employeeBean.employee.ddiTelephoneNumber}"
-						styleClass="outputLabel" /> -->
+
+
+
+
 				</h:panelGrid>
 
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="DDD Telephone Number:" />
-					<h:outputText
-						value="#{employeeBean.employee.dddTelephoneNumber}"
-						styleClass="outputLabel" />
-
-					<h:outputText value="Mobile Number:" />
-					<h:outputText value="#{employeeBean.employee.mobileNumber}"
-						styleClass="outputLabel" />
-
-					<!-- <h:outputText value="DDI Mobile Number:" />
-					<h:outputText
-						value="#{employeeBean.employee.ddiMobileNumber}"
-						styleClass="outputLabel" /> -->
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="DDD Mobile Number:" />
-					<h:outputText
-						value="#{employeeBean.employee.dddMobileNumber}"
-						styleClass="outputLabel" />
-
-					<h:outputText value="Email1:" />
+				<h:panelGrid columns="4" columnClasses="label, value">
+					<f:facet name="header">
+						<p:outputLabel value="Contact" />
+					</f:facet>
+					<h:outputText style="font-weight:bold" value="Email1:" />
 					<h:outputText
 						value="#{employeeBean.employee.email1Description}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Email2:" />
+					<h:outputText style="font-weight:bold" value="Email2:" />
 					<h:outputText
 						value="#{employeeBean.employee.email2Description}"
 						styleClass="outputLabel" />
+
+					<h:outputText style="font-weight:bold" value="Telephone Number:" />
+					<h:outputText
+						value="#{employeeBean.employee.telephoneNumber}"
+						styleClass="outputLabel" />
+					<h:outputText style="font-weight:bold" value="DDD Telephone Number:" />
+					<h:outputText
+						value="#{employeeBean.employee.dddTelephoneNumber}"
+						styleClass="outputLabel" />
+					<h:outputText style="font-weight:bold" value="DDD Mobile Number:" />
+					<h:outputText
+						value="#{employeeBean.employee.dddMobileNumber}"
+						styleClass="outputLabel" />
+					<h:outputText style="font-weight:bold" value="Mobile Number:" />
+					<h:outputText style="font-weight:bold" value="#{employeeBean.employee.mobileNumber}"
+						styleClass="outputLabel" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
+					<p:panel style="border:none" />
 				</h:panelGrid>
 
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="Department: " />
+				<h:panelGrid columns="4" columnClasses="label, value"
+					>
+					<f:facet name="header">
+						<p:outputLabel value="Company" />
+					</f:facet>
+
+					<h:outputText style="font-weight:bold" value="Department: " />
 					<h:outputText
 						value="#{employeeBean.employee.departmentSection.department.departmentName}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Department Section: " />
+					<h:outputText style="font-weight:bold" value="Department Section: " />
 					<h:outputText
 						value="#{employeeBean.employee.departmentSection.sectionName}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Establishment: " />
+					<h:outputText style="font-weight:bold" value="Establishment: " />
 					<h:outputText
 						value="#{employeeBean.employee.establishment.establishmentName}"
 						styleClass="outputLabel" />
-				</h:panelGrid>
 
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="Job Title Type: " />
+					<h:outputText style="font-weight:bold" value="Job Title Type: " />
 					<h:outputText
-						value="#{employeeBean.extractFromBundle(employeeBean.employee.jobTitleType)}"
+						value="#{employeeBean.extractFromBundle(employeeBean.employee.jobTitleType.jobTitle)}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Admission Date:" />
-					<h:outputText value="#{employeeBean.employee.admissionDate}"
+					<h:outputText style="font-weight:bold" value="Admission Date:" />
+					<h:outputText
+						value="#{employeeBean.employee.admissionDate}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Observation Description:" />
+					<h:outputText style="font-weight:bold" value="Observation Description:" />
 					<h:outputText
 						value="#{employeeBean.employee.observationDescription}"
 						styleClass="outputLabel" />
-				</h:panelGrid>
 
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="Active: " />
+					<h:outputText style="font-weight:bold" value="Status	:" />
 					<h:outputText
 						value="#{employeeBean.extractFromBundle(employeeBean.employee.active.key)}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Inactivity Begin Date:" />
+					<h:outputText style="font-weight:bold" value="Inactivity Begin Date:" />
 					<h:outputText
 						value="#{employeeBean.employee.inactivityBeginDate}"
 						styleClass="outputLabel" />
 
-					<h:outputText value="Employee Type: " />
+					<h:outputText style="font-weight:bold" value="employee Type: " />
 					<h:outputText
 						value="#{employeeBean.extractFromBundle(employeeBean.employee.employeeType.key)}"
 						styleClass="outputLabel" />
+
 				</h:panelGrid>
 
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="Document Type: " />
-					<h:outputText
-						value="#{employeeBean.extractFromBundle(employeeBean.employee.indTypeDocument.key)}"
-						styleClass="outputLabel" />
 
-					<h:outputText />
-					<h:outputText />
 
-					<h:outputText />
-					<h:outputText />
-				</h:panelGrid>
-
-			</h:panelGrid>
+			</h:panelGrid> 
 
 			<p:commandButton value="Submit" validateClient="true"
-				actionListener="#{employeeBean.saveOrUpdate(employeeBean.employee)}" update=":growl :employeeListForm"
-				process="@this"/>
+				actionListener="#{employeeBean.saveOrUpdate(employeeBean.employee)}"
+				update=":growl :employeeListForm" process="@this" />
 		</p:panel>
 	</p:tab>
 </ui:composition>

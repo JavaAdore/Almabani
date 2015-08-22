@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
  */
 
 @Embeddable
-@SequenceGenerator(name = "ComCalendar_Id_Seq_Gen", sequenceName = "COM_CALENDAR_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "ComCalendar_Id_Seq_Gen", sequenceName = "COM_CALENDAR_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class CalendarId implements java.io.Serializable {
 
 	private static final long serialVersionUID = -6562115790593004104L;

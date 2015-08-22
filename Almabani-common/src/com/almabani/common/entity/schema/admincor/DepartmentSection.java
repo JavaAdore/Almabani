@@ -23,7 +23,7 @@ import com.almabani.common.entity.AbstractEntity;
  */
 @Entity
 @Table( schema="ADMINCOR",name = "COM_DEP_SECTIONS")
-@SequenceGenerator(name = "ComDepSections_Id_Seq_Gen", sequenceName = "COM_DEP_SECTIONS_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "ComDepSections_Id_Seq_Gen", sequenceName = "COM_DEP_SECTIONS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class DepartmentSection extends AbstractEntity implements
 		Serializable {
 	

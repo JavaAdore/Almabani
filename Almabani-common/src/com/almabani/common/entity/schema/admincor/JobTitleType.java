@@ -24,7 +24,7 @@ import com.almabani.common.entity.AbstractEntity;
 @Entity
 @Table( schema="ADMINCOR",name = "COM_TYPES_JOB_TITLE")
 @SequenceGenerator(name = "ComTypesJobTitle_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_TYPE_JOB_TITLE",
-                   allocationSize = 50, initialValue = 50)
+                   allocationSize = 1, initialValue = 1)
 public class JobTitleType extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

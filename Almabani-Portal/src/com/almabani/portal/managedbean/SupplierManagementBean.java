@@ -1,6 +1,7 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,14 @@ public class SupplierManagementBean extends AbstractBeanHelper implements
 	}
 
 	private void loadInitialLists() {
-		companies = almabaniFacade.getAllCompanies();
+		if(WebUtils.getCurrentLoggedUser().isAdminUser())
+		{
+			companies = almabaniFacade.getAllCompanies();
+		}else
+		{
+			companies = new ArrayList();
+			companies.add(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany());
+		}
 		
 	}
 
@@ -120,7 +128,9 @@ public class SupplierManagementBean extends AbstractBeanHelper implements
 			
 			injcetParentQuotationIfExisit(filters);
 			injectCompanyInCaseOfNormalUser(filters);
+			
 			rowCount = almabaniFacade.getNumberOfOamSuppliers(filters);
+			
 			
 			result = (List<OamSupplier>) almabaniFacade.loadSuppliers(first,
 					pageSize, sortField, sortOrder == SortOrder.ASCENDING,

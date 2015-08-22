@@ -23,7 +23,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_QUOTATION_ACTIONS")
-@SequenceGenerator(name = "OamQuotationActions_Id_Seq_Gen", sequenceName = "adminoam.OAM_SEQ_NUM_QUOTATION_ACTION", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamQuotationActions_Id_Seq_Gen", sequenceName = "adminoam.OAM_SEQ_NUM_QUOTATION_ACTION", allocationSize = 1, initialValue = 1)
 public class OamQuotationAction extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -6649839838260967977L;

@@ -21,7 +21,7 @@ import com.almabani.common.entity.AbstractEntity;
  */
 @Entity
 @Table(schema = "ADMINCOR", name = "COM_COUNTRIES")
-@SequenceGenerator(name = "ComCountries_Id_Seq_Gen", sequenceName = "COM_COUNTRIES_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "ComCountries_Id_Seq_Gen", sequenceName = "COM_COUNTRIES_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class Country extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

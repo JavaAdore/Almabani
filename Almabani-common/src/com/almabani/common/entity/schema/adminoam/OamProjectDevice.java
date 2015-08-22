@@ -22,7 +22,7 @@ import com.almabani.common.entity.schema.adminwkf.WokConfigurationItem;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_PROJECT_DEVICES")
-@SequenceGenerator(name = "OamProjectDevices_Id_Seq_Gen", sequenceName = "OAM_PROJECT_DEVICES_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamProjectDevices_Id_Seq_Gen", sequenceName = "OAM_PROJECT_DEVICES_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class OamProjectDevice implements Serializable {
 	
 	private static final long serialVersionUID = -2834931858810448899L;

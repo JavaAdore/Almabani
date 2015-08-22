@@ -22,7 +22,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINSEC", name = "SEC_TYPES_APPLICATION")
-@SequenceGenerator(name = "SecTypesApplication_Id_Seq_Gen", sequenceName = "SEC_TYPES_APPLICATION_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "SecTypesApplication_Id_Seq_Gen", sequenceName = "SEC_TYPES_APPLICATION_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class ApplicationType extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -6912851314863919976L;

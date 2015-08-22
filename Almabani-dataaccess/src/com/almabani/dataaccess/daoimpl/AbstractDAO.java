@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.almabani.common.util.Utils;
 
 @Repository
-@Transactional (propagation=Propagation.REQUIRED)
+@Transactional()
 public class AbstractDAO implements Serializable {
 
 	private static final long serialVersionUID = -8668330372929475449L;

@@ -27,7 +27,7 @@ import com.almabani.common.enums.Active;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_PROJECT_JOB_TITLES")
-@SequenceGenerator(name = "OamProjectJobTitles_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_PROJECT_JOB_TITLE", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamProjectJobTitles_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_PROJECT_JOB_TITLE", allocationSize = 1, initialValue = 1)
 public class ProjectJobTitle extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = -1684308762515128512L;

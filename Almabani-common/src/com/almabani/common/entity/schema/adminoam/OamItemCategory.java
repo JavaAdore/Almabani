@@ -24,7 +24,7 @@ import com.almabani.common.entity.schema.admincor.DepartmentSection;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_ITEMS_CATEGORY")
-@SequenceGenerator(name = "OamItemsCategory_Id_Seq_Gen", sequenceName = "OAM_ITEMS_CATEGORY_ID_SEQ_GEN", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "OamItemsCategory_Id_Seq_Gen", sequenceName = "OAM_ITEMS_CATEGORY_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class OamItemCategory extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 7915713742837390252L;

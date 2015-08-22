@@ -22,7 +22,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINCOR" ,name = "COM_PROJECTS")
-@SequenceGenerator(name = "ComProjects_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_PROJECT", allocationSize = 50, initialValue = 50)
+@SequenceGenerator(name = "ComProjects_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_PROJECT", allocationSize = 1, initialValue = 1)
 public class Project extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 4194076262956779284L;

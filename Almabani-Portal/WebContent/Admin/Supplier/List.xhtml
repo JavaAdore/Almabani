@@ -39,28 +39,34 @@
 					filterBy="#{item.company.companyName}">
 					<p:outputLabel value="#{item.company.companyName}" />
 				</p:column>
-				<p:column headerText="#{loc.ListOamSupplierTitle_address}"
-					sortBy="#{item.address}" filterBy="#{item.address}">
-					<h:outputText value="#{item.address}" />
-				</p:column>
-				<p:column headerText="#{loc.ListOamSupplierTitle_addComplementName}"
-					sortBy="#{item.addComplementName}"
-					filterBy="#{item.addComplementName}">
-					<h:outputText value="#{item.addComplementName}" />
-				</p:column>
-				<p:column headerText="#{loc.ListOamSupplierTitle_responsibleNumber}"
+				
+				<p:column headerText="#{loc.ListOamSupplierTitle_responsibleName}"
 					sortBy="#{item.responsibleName}"
 					filterBy="#{item.responsibleName}">
 					<h:outputText value="#{item.responsibleName}" />
 				</p:column>
-
-				<p:column
-					headerText="#{loc.ListOamSupplierTitle_observationDescription}"
-					sortBy="#{item.observationDescription}"
-					filterBy="#{item.observationDescription}">
-
-					<h:outputText value="#{item.observationDescription}" />
+				
+				<p:column headerText="#{loc.ListOamSupplierTitle_phone_number}"
+					sortBy="#{item.telephoneNumber}"
+					filterBy="#{item.telephoneNumber}">
+					<h:outputText value="#{item.telephoneNumber}" />
 				</p:column>
+				
+				<p:column headerText="#{loc.ListOamSupplierTitle_mobileNumber}"
+					sortBy="#{item.mobileNumber}"
+					filterBy="#{item.mobileNumber}">
+					<h:outputText value="#{item.mobileNumber}" />
+				</p:column>
+				
+				
+				
+				<p:column headerText="#{loc.ALMABANI_GENERAL_EMAIL}"
+					sortBy="#{item.email}"
+					filterBy="#{item.email}">
+					<h:outputText value="#{item.email}" />
+				</p:column>
+
+				
 				<p:column headerText="#{loc.ListOamSupplierTitle_indActive}"
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
