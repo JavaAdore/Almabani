@@ -15,8 +15,8 @@
 		modal="true" onShow="updateForm()" dynamic="true" resizable="false"
 		appendToBody="true" header="Edit Employee" width="90%">
 
-		<p:ajax event="close"
-			oncomplete="PF('wizard').loadStep('first',false)" update=":growl" />
+		<p:ajax event="close" immediate="true" update=":growl"
+   				oncomplete="PF('wizard').loadStep('first',false)" />
 		<h:form id="editEmployeeForm">
 			<p:growl id="growl4Edit" sticky="true" showDetail="true" />
 			<h:panelGroup id="display" style="width:90%">
@@ -27,6 +27,7 @@
 
 						<p:wizard flowListener="#{employeeBean.onFlowProcess}"
 							widgetVar="wizard" step="#{employeeBean.step}">
+							
 							<p:tab id="first" title="Personal">
 								<p:panel header="Personal Details">
 
@@ -215,11 +216,14 @@
 											style="width:250px">
 											<f:selectItems value="#{employeeBean.active}" var="active"
 												itemLabel="#{employeeBean.extractFromBundle(active.key)}" />
+											<p:ajax event="valueChange" process="@this"
+												listener="#{employeeBean.onActiveChanged(employeeBean.selectedEmployee)}"
+												update="inactivityBeginDate" />
 										</p:selectOneMenu>
 
 										<p:outputLabel value="Inactivity Begin Date:"
-											for="admissionDate" />
-										<p:calendar id="inactivityBeginDate" disabled="true"
+											for="inactivityBeginDate" />
+										<p:calendar id="inactivityBeginDate" disabled="true" pattern="dd/MM/yyyy"
 											value="#{employeeBean.selectedEmployee.inactivityBeginDate}" />
 
 										<p:outputLabel for="employeeTypes" value="Employee Type: " />

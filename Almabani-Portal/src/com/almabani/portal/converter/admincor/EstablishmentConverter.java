@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 import com.almabani.common.entity.schema.admincor.Establishment;
+import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 
 @ManagedBean
@@ -16,8 +17,8 @@ public class EstablishmentConverter extends AbstractBeanHelper implements
 
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
 			String value) {
-		if (value == null|| value.equals("")) {
-			return null;
+		if (Utils.isEmptyStringOrNotNumericValue(value)) {
+			return null; 
 		}
 
 		return almabaniFacade.getEstablishment(getKey(value));

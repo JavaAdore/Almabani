@@ -107,6 +107,13 @@ private static final long serialVersionUID = 1L;
 			departmentSections = null;
 	}
 	
+	public void onActiveChanged(Employee emp){
+		if(emp.getActive()==Active.Y){
+			emp.setInactivityBeginDate(null);
+		} else if(emp.getActive()==Active.N){
+			emp.setInactivityBeginDate(new Date());
+		}
+	}
 	public String extractFromBundle(String key){
 		return WebUtils.extractFromBundle(key);
 	}
