@@ -16,9 +16,9 @@ import com.almabani.dataaccess.dao.AbstractDAOInt;
 @Repository
 public interface ProjectEmployeeDAO extends AbstractDAOInt{
 	
-	void persist(ProjectEmployee projectEmployee);
+	ProjectEmployee persist(ProjectEmployee projectEmployee);
 	
-	void update(ProjectEmployee projectEmployee);
+	ProjectEmployee update(ProjectEmployee projectEmployee);
 	
 	List<ProjectEmployee> getAllProjectEmployee();
 	

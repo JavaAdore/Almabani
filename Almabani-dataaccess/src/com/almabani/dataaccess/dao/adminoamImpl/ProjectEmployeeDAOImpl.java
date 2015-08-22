@@ -26,13 +26,14 @@ public class ProjectEmployeeDAOImpl extends AbstractDAO implements ProjectEmploy
 	private static final long serialVersionUID = -3079238949955229595L;
 
 	@Override
-	public void persist(ProjectEmployee projectEmployee) {
-		super.persist(projectEmployee);
+	public ProjectEmployee persist(ProjectEmployee projectEmployee) {
+		return (ProjectEmployee) super.persist(projectEmployee);
 	}
 
 	@Override
-	public void update(ProjectEmployee projectEmployee) {
+	public ProjectEmployee update(ProjectEmployee projectEmployee) {
 		getCurrentSession().merge(projectEmployee);
+		return projectEmployee;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -72,6 +73,7 @@ public class ProjectEmployeeDAOImpl extends AbstractDAO implements ProjectEmploy
 		return super.getCountOfResults(ProjectEmployee.class, filters);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProjectEmployee> loadProjectsAllocationEmployee(int first,
 			int pageSize, String sortField, boolean ascending,

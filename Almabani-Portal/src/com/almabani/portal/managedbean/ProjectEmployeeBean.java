@@ -87,8 +87,9 @@ public class ProjectEmployeeBean extends AbstractBeanHelper implements
 	
 	private class ProjectEmployeeLazyModel extends
 			LazyDataModel<ProjectEmployee> implements Serializable {
+		
+		private static final long serialVersionUID = -8494541206575721109L;
 
-		private static final long serialVersionUID = 1L;
 		private Integer rowCount;
 
 		List<ProjectEmployee> result;
@@ -120,10 +121,10 @@ public class ProjectEmployeeBean extends AbstractBeanHelper implements
 		@Override
 		public ProjectEmployee getRowData(String rowKey) {
 
-			for (ProjectEmployee qoutation : result) {
-				if (qoutation.getId().toString().equals(rowKey)) {
-					selectedProjectEmployee = qoutation;
-					return qoutation;
+			for (ProjectEmployee projectEmployee : result) {
+				if (projectEmployee.getId().toString().equals(rowKey)) {
+					selectedProjectEmployee = projectEmployee;
+					return projectEmployee;
 				}
 			}
 

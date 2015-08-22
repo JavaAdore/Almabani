@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import oracle.jdbc.proxy.annotation.Post;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -88,6 +86,8 @@ import com.almabani.common.util.Utils;
 @Service
 @EnableTransactionManagement
 public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
+	
+	private static final long serialVersionUID = 2497936510976318040L;
 
 	@Autowired
 	private EmployeeService employeeService;
@@ -802,8 +802,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	public SecUser getSecUser(String userLoginCode) {
 		return secUserService.getUser(userLoginCode);
 	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	
 	@Override
 	public List<UserApplicationGrant> getGrantedApplication(SecUser secUser,
 			Company company) {
@@ -1007,6 +1006,7 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 		return oamQuotationActionTypeService.getOamQuotationActionType( id);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<UserApplicationGrant> getGrantedApplication(
 			CommonDriverMap commonDriverMap) {
