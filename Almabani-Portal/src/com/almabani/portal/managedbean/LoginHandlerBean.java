@@ -91,24 +91,30 @@ public class LoginHandlerBean implements Serializable {
 
 	public void login() throws AlmabaniException {
 
-		Authentication request = new UsernamePasswordAuthenticationToken(
-				this.getUserName(), this.getPassword());
-		Authentication result = authenticationManager.authenticate(request);
-		SecurityContextHolder.getContext().setAuthentication(result);
-		WebUtils.injectIntoSession("SPRING_SECURITY_CONTEXT",
-				SecurityContextHolder.getContext());
-		SecUser secUser = ((CustomUserDetails) result.getPrincipal()).getUser();
-		WebUtils.setCurrentlyLoggenUser(secUser);
-		userSessionBean.constructUserMenu((CustomUserDetails) result
-				.getPrincipal());  
-		WebUtils.setCookie("log", "log", 1000000000);
-		SessionCapturerListener.getSessionmap().put(secUser,
-				WebUtils.prepareCurrentSessionDetailsHolder());
-		String allowedAppsGsonMap = new Gson().toJson(secUser
-				.getAlllowedApps());
-		WebUtils.setCookie("allowedApps", allowedAppsGsonMap, 1000000000);
-		WebUtils.redirectTo(PortalConstants.HOME_PAGE); 
-   
+		try {
+			Authentication request = new UsernamePasswordAuthenticationToken(
+					this.getUserName(), this.getPassword());
+			Authentication result = authenticationManager.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
+			WebUtils.injectIntoSession("SPRING_SECURITY_CONTEXT",
+					SecurityContextHolder.getContext());
+			SecUser secUser = ((CustomUserDetails) result.getPrincipal())
+					.getUser();
+			WebUtils.setCurrentlyLoggenUser(secUser);
+			userSessionBean.constructUserMenu((CustomUserDetails) result
+					.getPrincipal());
+			WebUtils.setCookie("log", "log", 1000000000);
+			SessionCapturerListener.getSessionmap().put(secUser,
+					WebUtils.prepareCurrentSessionDetailsHolder());
+			String allowedAppsGsonMap = new Gson().toJson(secUser
+					.getAlllowedApps());
+			WebUtils.setCookie("allowedApps", allowedAppsGsonMap, 1000000000);
+			WebUtils.redirectTo(PortalConstants.HOME_PAGE);
+		} 
+
+		catch (Exception ex) {
+			WebUtils.displayAlmabanyExceptionErrorMessage(new AlmabaniException(ex.getMessage()));
+		}  
 	}
 
 	public void checkChanged(AjaxBehaviorEvent e) {

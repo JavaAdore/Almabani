@@ -3,6 +3,18 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<display-name>Almabani</display-name>
+
+<!--  Initialize the logger Logger -->
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>Log4JInitServlet</servlet-name> -->
+<!-- 		<servlet-class>com.almabani.portal.logging.Log4JInitServlet</servlet-class> -->
+<!-- 	  	<init-param> -->
+<!-- 			<param-name>log4j-properties-location</param-name> -->
+<!-- 			<param-value>WEB-INF/log4j.properties</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/database/database.xml,
@@ -15,16 +27,8 @@
 		<param-name>primefaces.UPLOADER</param-name>
 		<param-value>auto</param-value>
 	</context-param>
-	
-	<servlet>
-		<servlet-name>Log4JInitServlet</servlet-name>
-		<servlet-class>com.almabani.portal.logging.Log4JInitServlet</servlet-class>
-		<init-param>   
-			<param-name>log4j-properties-location</param-name>
-			<param-value>WEB-INF/log4j.properties</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+
+
 
 
 
@@ -32,10 +36,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-  
-<!-- 	<listener> -->
-<!-- 		<listener-class>com.almabani.portal.listener.SessionCapturerListener</listener-class> -->
-<!-- 	</listener> -->
+
+	<!-- <listener> -->
+	<!-- <listener-class>com.almabani.portal.listener.SessionCapturerListener</listener-class> -->
+	<!-- </listener> -->
 
 	<filter>
 		<filter-name>logoutFilter</filter-name>

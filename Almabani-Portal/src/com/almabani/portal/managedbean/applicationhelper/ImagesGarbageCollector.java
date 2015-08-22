@@ -20,7 +20,7 @@ public class ImagesGarbageCollector extends Thread implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final long IMAGE_GARBAGE_COLLETOR_SLEEP_PERIOD = 60000;
+	private static final long IMAGE_GARBAGE_COLLETOR_SLEEP_PERIOD = 120000;
 
 	private Collection<String> imagePathesToBeRemoved = new ConcurrentLinkedDeque<>();
  

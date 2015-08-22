@@ -23,13 +23,14 @@ public class MyAccessDescionManager implements AccessDecisionManager {
 
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		
+
 		FilterInvocation filterInvocation = (FilterInvocation) object;
 
-		 
 		String path = WebUtils.trimSlashs(filterInvocation.getRequestUrl());
-	   //	WebUtils.isAllowedURL(authentication , path); 
-	}  
+		if (path.contains(".png.xhtml") == false) {
+			WebUtils.isAllowedURL(authentication, path);
+		}
+	}
 
 	@Override
 	public boolean supports(ConfigAttribute attribute) {
