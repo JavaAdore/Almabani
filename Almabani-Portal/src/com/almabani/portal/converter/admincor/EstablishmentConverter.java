@@ -18,7 +18,7 @@ public class EstablishmentConverter extends AbstractBeanHelper implements
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
 			String value) {
 		if (Utils.isEmptyStringOrNotNumericValue(value)) {
-			return null;
+			return null; 
 		}
  
 		return almabaniFacade.getEstablishment(getKey(value));
