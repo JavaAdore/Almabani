@@ -30,9 +30,9 @@ public class ProjectEmployeeServiceImp implements ProjectEmployeeService {
 	@Override
 	public ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee) {
 		if(projectEmployee.getId() == null){
-			projectEmployeeDAO.persist(projectEmployee);
+			projectEmployee = projectEmployeeDAO.persist(projectEmployee);
 		} else{
-			projectEmployeeDAO.update(projectEmployee);
+			projectEmployee = projectEmployeeDAO.update(projectEmployee);
 		}
 		return projectEmployee;
 	}
