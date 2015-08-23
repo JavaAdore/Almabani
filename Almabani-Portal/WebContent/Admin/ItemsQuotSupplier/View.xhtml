@@ -78,7 +78,7 @@
 					<h:outputText
 						value="#{loc.ViewOamItemsQuotSupplierLabel_indSelected}" />
 					<h:outputText
-						value="#{oamItemsQuotSupplierManagementBean.selected.indSelected}"
+						value="#{applicationScopeStore.getYesNoValue(oamItemsQuotSupplierManagementBean.selected.indSelected)}"
 						title="#{loc.ViewOamItemsQuotSupplierTitle_indSelected}" />
 					<h:outputText
 						value="#{loc.ViewOamItemsQuotSupplierLabel_datSelection}" />

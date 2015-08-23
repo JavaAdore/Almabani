@@ -75,7 +75,16 @@
 				<p:column
 					headerText="#{loc.ListOamItemsQuotSupplierTitle_indSelected}"
 					sortBy="#{item.indSelected}" filterBy="#{item.indSelected}">
-					<h:outputText value="#{item.indSelected}" />
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(item.indSelected)}" />
 				</p:column>
 
 
