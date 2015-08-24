@@ -47,10 +47,10 @@
 				rowsPerPageTemplate="10,20,30">
 				<f:facet name="header">
 				</f:facet>
-				<p:column headerText="#{loc.ALMABANI_GRANT_ACCESS_GRANTED}">
+				<p:column width="70" headerText="#{loc.ALMABANI_GRANT_ACCESS_GRANTED}">
 					<p:selectBooleanCheckbox value="#{app.granted}" />
 				</p:column>
-				<p:column headerText="#{loc.ALMABANI_GENERAL_STATUS}">
+				<p:column width="80" headerText="#{loc.ALMABANI_GENERAL_STATUS}">
 
 					<p:selectOneMenu value="#{app.indActive}" required="true"
 						styleClass="fullWith"
@@ -61,7 +61,7 @@
 
 				</p:column>
 
-				<p:column headerText="#{loc.ALMABANI_GRANT_APPLICATION}">
+				<p:column width="100" headerText="#{loc.ALMABANI_GRANT_APPLICATION}">
 					<p:outputLabel value="#{app.application.codApplication}" />
 				</p:column>
 

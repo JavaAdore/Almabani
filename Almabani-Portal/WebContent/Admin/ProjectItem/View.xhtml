@@ -43,7 +43,7 @@
 					<h:outputText
 						value="#{projectItemManagementBean.selected.lastModificationDate}"
 						title="#{loc.ViewOamProjectItemTitle_lastModificationDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy" />
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:panelGrid>
 				<p:commandButton value="#{loc.Close}" onclick="viewDialog.hide()" />

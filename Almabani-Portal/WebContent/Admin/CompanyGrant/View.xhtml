@@ -22,11 +22,11 @@
                         <h:outputText value="#{secApplicationGrantsController.selected.userLoginCode}" title="#{bundle.ViewSecApplicationGrantsTitle_userLoginCode}"/>
                         <h:outputText value="#{bundle.ViewSecApplicationGrantsLabel_validityBeginDate}"/>
                         <h:outputText value="#{secApplicationGrantsController.selected.validityBeginDate}" title="#{bundle.ViewSecApplicationGrantsTitle_validityBeginDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewSecApplicationGrantsLabel_validityEndDate}"/>
                         <h:outputText value="#{secApplicationGrantsController.selected.validityEndDate}" title="#{bundle.ViewSecApplicationGrantsTitle_validityEndDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewSecApplicationGrantsLabel_observationDescription}"/>
                         <h:outputText value="#{secApplicationGrantsController.selected.observationDescription}" title="#{bundle.ViewSecApplicationGrantsTitle_observationDescription}"/>
@@ -34,7 +34,7 @@
                         <h:outputText value="#{secApplicationGrantsController.selected.modificationMakerName}" title="#{bundle.ViewSecApplicationGrantsTitle_modificationMakerName}"/>
                         <h:outputText value="#{bundle.ViewSecApplicationGrantsLabel_lastModificationDate}"/>
                         <h:outputText value="#{secApplicationGrantsController.selected.lastModificationDate}" title="#{bundle.ViewSecApplicationGrantsTitle_lastModificationDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="viewDialog.hide()"/>

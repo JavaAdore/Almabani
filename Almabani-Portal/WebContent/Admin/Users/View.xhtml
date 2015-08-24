@@ -23,7 +23,7 @@
 					<h:outputText
 						value="#{userManagementBean.selected.registrationDate}"
 						title="#{loc.ViewSecUserTitle_registrationDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy" />
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 					<h:outputText value="#{loc.ViewSecUserLabel_indActive}" />
 					<h:outputText
@@ -33,7 +33,7 @@
 					<h:outputText
 						value="#{userManagementBean.selected.beginInactivityDate}"
 						title="#{loc.ViewSecUserTitle_beginInactivityDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy" />
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 					<h:outputText value="#{loc.ViewSecUserLabel_motiveInactivityDate}" />
 					<h:outputText
@@ -47,7 +47,7 @@
 					<h:outputText
 						value="#{userManagementBean.selected.lastModificationDate}"
 						title="#{loc.ViewSecUserTitle_lastModificationDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy" />
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 
 					<h:outputText value="#{loc.ViewSecUserTitle_employee}" />

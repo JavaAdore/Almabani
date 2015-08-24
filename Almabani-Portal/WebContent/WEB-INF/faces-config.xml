@@ -18,6 +18,11 @@
         <exception-handler-factory>
            com.almabani.portal.webutils.exceptionhandling.CustomExceptionHandlerFactory
         </exception-handler-factory>
-	</factory>          
+	</factory>
+	
+	
+	<lifecycle>
+    <phase-listener id="nocache">com.almabani.portal.listener.CacheControlPhaseListener</phase-listener>
+</lifecycle>          
 </faces-config>
  

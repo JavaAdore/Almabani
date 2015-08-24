@@ -57,7 +57,7 @@
 					<h:outputText
 						value="#{quotationItemManagementBean.selected.lastModificationDate}"
 						title="#{loc.ViewOamItemQuotationTitle_lastModificationDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy" />
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:panelGrid>
 				<p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()" />

@@ -1,56 +1,91 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="viewDlg" widgetVar="viewDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.ViewOamSupplierTitle}" dynamic="true">
+	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ViewOamSupplierTitle}" dynamic="true">
 
-            <h:form id="viewForm">
+		<h:form id="viewForm">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{supplierManagementBean.selected != null}">
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_id}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.id}" title="#{loc.ViewOamSupplierTitle_id}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_supplierName}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.supplierName}" title="#{loc.ViewOamSupplierTitle_supplierName}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_company}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.company.companyName}" title="#{loc.ViewOamSupplierLabel_company}"/>
-                        
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_address}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.address}" title="#{loc.ViewOamSupplierTitle_address}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_addComplementName}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.addComplementName}" title="#{loc.ViewOamSupplierTitle_addComplementName}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_responsibleName}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.responsibleName}" title="#{loc.ViewOamSupplierTitle_responsibleName}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_telephoneNumber}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.telephoneNumber}" title="#{loc.ViewOamSupplierTitle_telephoneNumber}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_mobileNumber}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.mobileNumber}" title="#{loc.ViewOamSupplierTitle_mobileNumber}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_faxNumber}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.faxNumber}" title="#{loc.ViewOamSupplierTitle_faxNumber}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_observationDescription}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.observationDescription}" title="#{loc.ViewOamSupplierTitle_observationDescription}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_indActive}"/>
-                        <h:outputText value="#{applicationScopeStore.getYesNoValue(supplierManagementBean.selected.indActive)}" title="#{loc.ViewOamSupplierTitle_indActive}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_modificationMakerName}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.modificationMakerName}" title="#{loc.ViewOamSupplierTitle_modificationMakerName}"/>
-                        <h:outputText value="#{loc.ViewOamSupplierLabel_lastModificationDate}"/>
-                        <h:outputText value="#{supplierManagementBean.selected.lastModificationDate}" title="#{loc.ViewOamSupplierTitle_lastModificationDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:panelGrid>
-                    <p:commandButton value="#{loc.Close}" immediate="true" onclick="PF('viewDialog').hide()"/>
-                </h:panelGroup>
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{supplierManagementBean.selected != null}">
+					<h:outputText value="#{loc.ViewOamSupplierLabel_id}" />
+					<h:outputText value="#{supplierManagementBean.selected.id}"
+						title="#{loc.ViewOamSupplierTitle_id}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_supplierName}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.supplierName}"
+						title="#{loc.ViewOamSupplierTitle_supplierName}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_company}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.company.companyName}"
+						title="#{loc.ViewOamSupplierLabel_company}" />
 
-            </h:form> 
+					<h:outputText value="#{loc.ViewOamSupplierLabel_address}" />
+					<h:outputText value="#{supplierManagementBean.selected.address}"
+						title="#{loc.ViewOamSupplierTitle_address}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_addComplementName}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.addComplementName}"
+						title="#{loc.ViewOamSupplierTitle_addComplementName}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_responsibleName}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.responsibleName}"
+						title="#{loc.ViewOamSupplierTitle_responsibleName}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_telephoneNumber}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.telephoneNumber}"
+						title="#{loc.ViewOamSupplierTitle_telephoneNumber}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_mobileNumber}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.mobileNumber}"
+						title="#{loc.ViewOamSupplierTitle_mobileNumber}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_faxNumber}" />
+					<h:outputText value="#{supplierManagementBean.selected.faxNumber}"
+						title="#{loc.ViewOamSupplierTitle_faxNumber}" />
+					<h:outputText
+						value="#{loc.ViewOamSupplierLabel_observationDescription}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.observationDescription}"
+						title="#{loc.ViewOamSupplierTitle_observationDescription}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_indActive}" />
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(supplierManagementBean.selected.indActive)}"
+						title="#{loc.ViewOamSupplierTitle_indActive}" />
+					<h:outputText value="#{loc.ViewOamSupplierLabel_indProspective}" />
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(supplierManagementBean.selected.indProspect)}"
+						title="#{loc.ViewOamSupplierTitle_indActive}" />
 
-        </p:dialog>
+					<h:outputText
+						value="#{loc.ViewOamSupplierLabel_modificationMakerName}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.modificationMakerName}"
+						title="#{loc.ViewOamSupplierTitle_modificationMakerName}" />
+					<h:outputText
+						value="#{loc.ViewOamSupplierLabel_lastModificationDate}" />
+					<h:outputText
+						value="#{supplierManagementBean.selected.lastModificationDate}"
+						title="#{loc.ViewOamSupplierTitle_lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:panelGrid>
+				<p:commandButton value="#{loc.Close}" immediate="true"
+					onclick="PF('viewDialog').hide()" />
+			</h:panelGroup>
 
-    </ui:composition>
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
 
 </html>

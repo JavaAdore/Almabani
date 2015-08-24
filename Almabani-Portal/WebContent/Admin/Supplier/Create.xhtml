@@ -83,10 +83,6 @@
 					<p:inputTextarea maxlength="300" styleClass="fullWith"
 						value="#{supplierManagementBean.selected.observationDescription}" />
 
-					<h:outputText value="#{loc.ListOamSupplierTitle_addComplementName}" />
-
-					<p:inputText maxlength="50" styleClass="fullWith"
-						value="#{supplierManagementBean.selected.addComplementName}" />
 
 
 					<p:outputLabel value="#{loc.ALMABANI_GENERAL_EMAIL}" />
@@ -101,6 +97,12 @@
 					<p:inputTextarea value="#{supplierManagementBean.selected.address}"
 						required="true" maxlength="50" styleClass="fullWith"
 						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_address}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_addComplementName}" />
+
+					<p:inputText maxlength="50" styleClass="fullWith"
+						value="#{supplierManagementBean.selected.addComplementName}" />
+
 				</p:panelGrid>
 				<p:commandButton actionListener="#{supplierManagementBean.saveNew}"
 					value="#{loc.Save}" update="display,:growl,:listForm:datalist"

@@ -40,37 +40,14 @@
 
 					<h:outputText value="#{item.federalIdentityCode}" />
 				</p:column>
-				<p:column filterBy="#{item.lastModificationDate}"
-					sortBy="#{item.lastModificationDate}"
-					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
-					<f:facet name="filter">
-						<p:calendar onclick="PF('datalist').filter()"
-							onblur="PF('datalist').filter()"
-							onchange="PF('datalist').filter()" />
-					</f:facet>
-					<h:outputText value="#{item.lastModificationDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy" timeZone="GMT+2	" />
-					</h:outputText>
-				</p:column>
+				
 
 				<p:column headerText="#{loc.ListComCompanyTitle_name}"
 					filterBy="#{item.companyName}" sortBy="#{item.companyName}">
 
 					<h:outputText value="#{item.companyName}" />
 				</p:column>
-				<p:column
-					headerText="#{loc.ListComCompanyTitle_companyNameAlternative}"
-					filterBy="#{item.alternativeCompanyName}"
-					sortBy="#{item.alternativeCompanyName}">
-
-					<h:outputText value="#{item.alternativeCompanyName}" />
-				</p:column>
-				<p:column headerText="#{loc.ListComCompanyTitle_modifiedByUserName}"
-					filterBy="#{item.modificationMakerName}"
-					sortBy="#{item.modificationMakerName}">
-
-					<h:outputText value="#{item.modificationMakerName}" />
-				</p:column>
+				
 				<p:column headerText="#{loc.ListComCompanyTitle_comState}"
 					filterBy="#{item.state.stateName}" sortBy="#{item.state.stateName}">
 					<h:outputText value="#{item.state.stateName}" />
