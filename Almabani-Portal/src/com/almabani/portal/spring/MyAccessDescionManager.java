@@ -27,9 +27,9 @@ public class MyAccessDescionManager implements AccessDecisionManager {
 		FilterInvocation filterInvocation = (FilterInvocation) object;
 
 		String path = WebUtils.trimSlashs(filterInvocation.getRequestUrl());
-		if (path.contains(".png.xhtml") == false) {
-			WebUtils.isAllowedURL(authentication, path);
-		}
+//		if (path.contains(".png.xhtml") == false) {
+//			WebUtils.isAllowedURL(authentication, path);
+//		}
 	}
 
 	@Override

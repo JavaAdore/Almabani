@@ -9,7 +9,7 @@
 	<h:form id="listForm">
 
 		<p:panel header="#{loc.ListOamSupplierTitle}"
-			style="margin-left:auto; margin-right:auto ; width:85%">
+			style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" value="#{supplierManagementBean.items}"
 				resizableColumns="true" var="item" selectionMode="single" widgetVar="datalist"
 				draggableColumns="true" draggableRows="true"
@@ -26,9 +26,9 @@
 
 				<p:ajax event="rowSelect" update="viewButton editButton" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
-				<p:column headerText="#{loc.ListOamSupplierTitle_id}"
-					sortBy="#{item.id}" filterBy="#{item.id}">
-					<h:outputText value="#{item.id}" />
+				<p:column headerText="#{loc.ListOamSupplierTitle_company}"
+					sortBy="#{item.company.companyName}" filterBy="#{item.company.companyName}">
+					<h:outputText value="#{item.company.companyName}" />
 				</p:column>
 				<p:column headerText="#{loc.ListOamSupplierTitle_supplierName}"
 					sortBy="#{item.supplierName}" filterBy="#{item.supplierName}">

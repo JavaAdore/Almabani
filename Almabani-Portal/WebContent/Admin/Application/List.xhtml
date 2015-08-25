@@ -8,7 +8,7 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListSecApplicationTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+		<p:panel header="#{loc.ListSecApplicationTitle}" style="margin-left:auto; margin-right:auto ;">
 			<p:dataTable id="datalist" value="#{applicationManagementBean.items}" resizableColumns="true"
 				var="item" widgetVar="datalist" selectionMode="single" draggableColumns="true" draggableRows="true"
 				selection="#{applicationManagementBean.selected}"
@@ -27,6 +27,14 @@
 					sortBy="#{item.codApplication}" filterBy="#{item.codApplication}">
 					<h:outputText value="#{item.codApplication}" />
 				</p:column>
+				
+				<p:column headerText="#{loc.ListSecApplicationTitle_secModule}"
+					sortBy="#{item.secSubModule.module.moduleCode}"
+					filterBy="#{item.secSubModule.module.moduleCode}">
+					<p:outputLabel value="#{item.secSubModule.module.moduleCode}" />
+				</p:column>
+				
+				
 				<p:column headerText="#{loc.ListSecApplicationTitle_secSubModule}"
 					sortBy="#{item.secSubModule.subModuleDescription}"
 					filterBy="#{item.secSubModule.subModuleDescription}">
@@ -57,6 +65,23 @@
 					</f:facet>
 					<h:outputText
 						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+				</p:column>
+				
+				
+					<p:column headerText="#{loc.EditSecApplicationTitle_isDisplayInMenu}"
+					sortBy="#{item.displayInMenu}" filterBy="#{item.displayInMenu}">
+
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.displayInMenu)}" />
 				</p:column>
 
 				<p:column

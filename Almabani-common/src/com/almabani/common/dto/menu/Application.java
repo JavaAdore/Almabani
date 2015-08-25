@@ -2,6 +2,9 @@ package com.almabani.common.dto.menu;
 
 import java.io.Serializable;
 
+import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.util.Utils;
+
 public class Application implements Serializable{
 
 	/**
@@ -20,6 +23,9 @@ public class Application implements Serializable{
 	private String perfilCode ;
 	
 	private String url;
+	
+	public String display;
+	
 
 	
 	
@@ -65,9 +71,23 @@ public class Application implements Serializable{
 	public void setApplicationDescription(String applicationDescription) {
 		this.applicationDescription = applicationDescription;
 	}
+
+
 	
-	
-	
-	
+
+	public boolean isDisplayInMenu() {
+		return Utils.isNotEmptyString(display)
+				&& display
+						.equalsIgnoreCase(DataAccessConstant.IND_ACTIVE);
+	}
+
+	public String getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(String display) {
+		this.display = display;
+	}
+
 	
 }

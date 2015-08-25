@@ -85,7 +85,7 @@ public interface AlmabaniFacade {
 	
 	List<Company> loadCompanies(Integer first, Integer pageSize, String sortField, boolean assending, Map<String, Object> filters);
 	
-	Company addCompany(Company company) throws AlmabaniException;
+	Company addCompany(Company company, CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	List<Country> getAllCountries();
 

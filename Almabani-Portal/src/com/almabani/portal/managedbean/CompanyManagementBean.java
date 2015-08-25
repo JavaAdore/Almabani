@@ -15,6 +15,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
+import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Country;
 import com.almabani.common.entity.schema.admincor.State;
@@ -96,10 +97,11 @@ public class CompanyManagementBean extends AbstractBeanHelper implements
 
 	public void saveNew() throws AlmabaniException {
 
-		operationFaild();
+		operationFaild(); 
 		boolean isAlreadyExisitEntity = Utils.hasID(selected);
-
-		selected = almabaniFacade.addCompany(selected);
+		CommonDriverMap commonDriverMap = new CommonDriverMap();
+		commonDriverMap.appendTargetUser(commonDriverMap, WebUtils.getCurrentLoggedUser());
+		selected = almabaniFacade.addCompany(selected,commonDriverMap);
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,

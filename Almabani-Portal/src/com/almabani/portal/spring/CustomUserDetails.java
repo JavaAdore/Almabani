@@ -29,8 +29,7 @@ public class CustomUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, ApplicationAccess> allowedURLs = new HashMap<String, ApplicationAccess>();
-	
-	
+
 	MenuModel menuModel = new DefaultMenuModel();
 
 	private SecUser user;
@@ -86,6 +85,7 @@ public class CustomUserDetails implements UserDetails {
 		if (Utils.isNotEmptyList(modules)) {
 
 			for (Module module : modules) {
+
 				Submenu submenu = new DefaultSubMenu(module.getModuleName());
 
 				for (SubModule subModule : module.getSubModules()) {
@@ -97,33 +97,40 @@ public class CustomUserDetails implements UserDetails {
 
 						DefaultMenuItem menuItem = new DefaultMenuItem(
 								application.getApplicationName());
-					
-							menuItem.setUrl("/" + application.getUrl());
-							if(Utils.isNotEmptyString(application.getUrl()))
-							{
+
+						menuItem.setUrl("/" + application.getUrl());
+						if (Utils.isNotEmptyString(application.getUrl())) {
 							String abstractAppURL = WebUtils
 									.trimSlashs(application.getUrl());
-							
+
 							allowedURLs
 									.put(abstractAppURL,
-					 						new ApplicationAccess(
+											new ApplicationAccess(
 													abstractAppURL,
 													application
 															.getPerfilCode()
 															.equals(Access.FULL
 																	.toString()) ? Access.FULL
-															: Access.READ));
-							menuItem.setStyleClass(String.format("app app-%s" ,application.getApplicationCode()));
-							
-							user.getAlllowedApps().add(application); 
-							innerSubMenu.getElements().add(menuItem); 
- 
-						} 
-					}
+															: Access.READ,
+													application
+															.isDisplayInMenu()));
+							menuItem.setStyleClass(String.format("app app-%s",
+									application.getApplicationCode()));
 
-					submenu.getElements().add(innerSubMenu);
+							user.getAlllowedApps().add(application);
+							if (application.isDisplayInMenu()) {
+								innerSubMenu.getElements().add(menuItem);
+							} 
+
+						}
+					}
+					if (Utils.isNotEmptyList(innerSubMenu.getElements())) {
+						submenu.getElements().add(innerSubMenu);
+					} 
 				}
-				menuModel.getElements().add(submenu);
+				if (Utils.isNotEmptyList(submenu.getElements())) {
+					menuModel.getElements().add(submenu);
+				}
 
 			}
 		}
@@ -132,7 +139,7 @@ public class CustomUserDetails implements UserDetails {
 
 	public MenuModel getMenuModel() {
 		return menuModel;
-	}	
+	}
 
 	public void setMenuModel(MenuModel menuModel) {
 		this.menuModel = menuModel;

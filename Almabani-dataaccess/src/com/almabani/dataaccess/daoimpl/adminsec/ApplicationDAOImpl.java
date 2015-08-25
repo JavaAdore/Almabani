@@ -18,6 +18,7 @@ import com.almabani.common.entity.schema.adminsec.ApplicationType;
 import com.almabani.common.entity.schema.adminsec.SecApplication;
 import com.almabani.common.entity.schema.adminsec.SecApplicationGrants;
 import com.almabani.common.entity.schema.adminsec.SecApplicationsCompany;
+import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.util.Utils;
 import com.almabani.dataacceess.dao.adminsec.ApplicationDAO;
@@ -127,7 +128,8 @@ public class ApplicationDAOImpl extends AbstractDAO implements ApplicationDAO {
 	}
 
 	@Override
-	public void revokeOldAccess(SecUser secUser, Company company) {
+	public void revokeOldAccess(SecUser secUser, Company company,SecModule module) {
+		if(Utils.isNull(module)){
 		Query query = super
 				.getCurrentSession()
 				.createQuery(
@@ -135,6 +137,18 @@ public class ApplicationDAOImpl extends AbstractDAO implements ApplicationDAO {
 		query.setParameter("company", company);
 		query.setParameter("userLoginCode", secUser.getUserLoginCode());
 		query.executeUpdate();
+		}else
+		{
+			
+			Query query = super
+					.getCurrentSession()
+					.createQuery(
+							"delete  from SecApplicationGrants  where applicationsCompany in (select x from SecApplicationsCompany x where x.company =:company and x.application.secSubModule.module=:module )  and userLoginCode =:userLoginCode");
+			query.setParameter("company", company);
+			query.setParameter("userLoginCode", secUser.getUserLoginCode());
+			query.setParameter("module", module);
+			query.executeUpdate(); 
+		}
 	}
 
 	@Override
@@ -267,4 +281,7 @@ public class ApplicationDAOImpl extends AbstractDAO implements ApplicationDAO {
 		}
 		return mapToReturn; 
 	}
+
+	
+
 }

@@ -12,6 +12,7 @@ import com.almabani.common.entity.schema.adminsec.ApplicationType;
 import com.almabani.common.entity.schema.adminsec.SecApplication;
 import com.almabani.common.entity.schema.adminsec.SecApplicationGrants;
 import com.almabani.common.entity.schema.adminsec.SecApplicationsCompany;
+import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -40,7 +41,7 @@ public interface ApplicationDAO extends AbstractDAOInt{
 
 	Map<SecApplication, SecApplicationGrants> getGrantedApplication(SecUser secUser, Company company);
 
-	void revokeOldAccess(SecUser secUser , Company company);
+	void revokeOldAccess(SecUser secUser , Company company, SecModule secModule);
 
 	SecApplicationGrants addApplicationGrant(SecApplicationGrants secApplicationGrants);
 

@@ -23,7 +23,7 @@
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         <h:outputText value="#{loc.ViewComCompanyLabel_systemLanguageInd}"/>
-                        <h:outputText value="#{companyManagementBean.selected.indSystemLanguage}" title="#{loc.ViewComCompanyTitle_systemLanguageInd}"/>
+                        <h:outputText value="#{applicationScopeStore.getLanguage(companyManagementBean.selected.indSystemLanguage)}" title="#{loc.ViewComCompanyTitle_systemLanguageInd}"/>
                         <h:outputText value="#{loc.ViewComCompanyLabel_name}"/>
                         <h:outputText value="#{companyManagementBean.selected.companyName}" title="#{loc.ViewComCompanyTitle_name}"/>
                         <h:outputText value="#{loc.ViewComCompanyLabel_companyNameAlternative}"/>

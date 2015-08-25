@@ -11,58 +11,65 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.util.Utils;
+
 /**
  * @author Mohamed_Ibrahim
  */
 
 @Entity
-@Table(schema="ADMINSEC", name = "SEC_APPLICATIONS")
+@Table(schema = "ADMINSEC", name = "SEC_APPLICATIONS")
 public class SecApplication implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = -1606184417699823437L;
 
 	@Id
 	@Column(name = "COD_APPLICATION", unique = true, nullable = false, length = 8)
 	private String codApplication;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_SUB_MODULE", referencedColumnName="NUM_SUB_MODULE", nullable = false)
+	@JoinColumn(name = "NUM_SUB_MODULE", referencedColumnName = "NUM_SUB_MODULE", nullable = false)
 	private SecSubModule secSubModule;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_TYPE_APPLICATION", referencedColumnName="NUM_TYPE_APPLICATION", nullable = false)
+	@JoinColumn(name = "NUM_TYPE_APPLICATION", referencedColumnName = "NUM_TYPE_APPLICATION", nullable = false)
 	private ApplicationType typesApplication;
-	
+
 	@Column(name = "DES_APPLICATION", nullable = false, length = 50)
 	private String applicationDescription;
-	
+
 	@Column(name = "NUM_ORDER_MENU", nullable = false, precision = 2, scale = 0)
 	private Integer orderMenuNumber = 1;
-	 
+
 	@Column(name = "DES_LABEL_PORTUGUESE", length = 25)
 	private String portugueseLabel;
-	
+
 	@Column(name = "DES_LABEL_ENGLISH", length = 25)
 	private String englishLabelDescription;
-	
+
 	@Column(name = "DES_LABEL_SPANISH", length = 25)
 	private String spanishLabelDescription;
-	
+
 	@Column(name = "IND_ACTIVE", length = 1)
 	private String indActive;
-	
+
 	/**
-	 * modificationMakerName represent the user name who make the last modification
+	 * modificationMakerName represent the user name who make the last
+	 * modification
 	 */
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
-	
+
 	@Column(name = "DES_LINK_CODE", length = 100)
 	private String linkCodeDescription;
+
+	@Column(name = "ind_display_menu", length = 1)
+	private String displayInMenu;
 
 	public SecApplication() {
 	}
@@ -83,7 +90,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param secSubModule the secSubModule to set
+	 * @param secSubModule
+	 *            the secSubModule to set
 	 */
 	public void setSecSubModule(SecSubModule secSubModule) {
 		this.secSubModule = secSubModule;
@@ -97,7 +105,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param typesApplication the typesApplication to set
+	 * @param typesApplication
+	 *            the typesApplication to set
 	 */
 	public void setTypesApplication(ApplicationType typesApplication) {
 		this.typesApplication = typesApplication;
@@ -111,7 +120,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param applicationDescription the applicationDescription to set
+	 * @param applicationDescription
+	 *            the applicationDescription to set
 	 */
 	public void setApplicationDescription(String applicationDescription) {
 		this.applicationDescription = applicationDescription;
@@ -125,7 +135,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param orderMenuNumber the orderMenuNumber to set
+	 * @param orderMenuNumber
+	 *            the orderMenuNumber to set
 	 */
 	public void setOrderMenuNumber(Integer orderMenuNumber) {
 		this.orderMenuNumber = orderMenuNumber;
@@ -139,7 +150,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param portugueseLabel the portugueseLabel to set
+	 * @param portugueseLabel
+	 *            the portugueseLabel to set
 	 */
 	public void setPortugueseLabel(String portugueseLabel) {
 		this.portugueseLabel = portugueseLabel;
@@ -153,7 +165,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param englishLabelDescription the englishLabelDescription to set
+	 * @param englishLabelDescription
+	 *            the englishLabelDescription to set
 	 */
 	public void setEnglishLabelDescription(String englishLabelDescription) {
 		this.englishLabelDescription = englishLabelDescription;
@@ -167,7 +180,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param spanishLabelDescription the spanishLabelDescription to set
+	 * @param spanishLabelDescription
+	 *            the spanishLabelDescription to set
 	 */
 	public void setSpanishLabelDescription(String spanishLabelDescription) {
 		this.spanishLabelDescription = spanishLabelDescription;
@@ -181,7 +195,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param indActive the indActive to set
+	 * @param indActive
+	 *            the indActive to set
 	 */
 	public void setIndActive(String indActive) {
 		this.indActive = indActive;
@@ -195,7 +210,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param modificationMakerName the modificationMakerName to set
+	 * @param modificationMakerName
+	 *            the modificationMakerName to set
 	 */
 	public void setModificationMakerName(String modificationMakerName) {
 		this.modificationMakerName = modificationMakerName;
@@ -209,7 +225,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param lastModificationDate the lastModificationDate to set
+	 * @param lastModificationDate
+	 *            the lastModificationDate to set
 	 */
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
@@ -223,7 +240,8 @@ public class SecApplication implements java.io.Serializable {
 	}
 
 	/**
-	 * @param linkCodeDescription the linkCodeDescription to set
+	 * @param linkCodeDescription
+	 *            the linkCodeDescription to set
 	 */
 	public void setLinkCodeDescription(String linkCodeDescription) {
 		this.linkCodeDescription = linkCodeDescription;
@@ -254,5 +272,13 @@ public class SecApplication implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
+
+	public String getDisplayInMenu() {
+		return displayInMenu;
+	}
+
+	public void setDisplayInMenu(String displayInMenu) {
+		this.displayInMenu = displayInMenu;
+	}
+
 }

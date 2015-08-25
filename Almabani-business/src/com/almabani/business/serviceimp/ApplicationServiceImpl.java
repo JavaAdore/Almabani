@@ -115,8 +115,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 			CommonDriverMap commonDriverMap) {
 
 		applicationDAO.revokeOldAccess(commonDriverMap.getTargetUser(),
-				commonDriverMap.getAttachedCompany());
-
+				commonDriverMap.getAttachedCompany() , commonDriverMap.getTargetModule());
+  
 		List<SecApplicationGrants> grants = new ArrayList<SecApplicationGrants>();
 		Date date = new Date();
 		String modifiedByUserName = commonDriverMap.getCurrentUserCode();

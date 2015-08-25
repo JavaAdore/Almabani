@@ -8,7 +8,7 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListOamItemTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+		<p:panel header="#{loc.ListOamItemTitle}" style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" value="#{itemManagementBean.items}" draggableColumns="true" draggableRows="true" resizableColumns="true"
 				widgetVar="datalist" var="item" selectionMode="single"
 				selection="#{itemManagementBean.selected}" rowKey="#{item.id}"

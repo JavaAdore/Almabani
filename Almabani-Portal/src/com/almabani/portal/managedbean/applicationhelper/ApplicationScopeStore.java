@@ -53,6 +53,9 @@ public class ApplicationScopeStore implements Serializable {
 
 	private Map<String, String> yesNoMap = new LinkedHashMap();
 
+	private Map<String,String> languagesMap = new LinkedHashMap();
+	
+	
 	@PostConstruct
 	public void init() {
 		loadCountries();
@@ -61,6 +64,16 @@ public class ApplicationScopeStore implements Serializable {
 		constructQoutationTypeMap();
 		constructUnitTypesMap();
 		constructYesNoMap();
+		constructLangaugesMap();
+	}
+
+	private void constructLangaugesMap() {
+
+		
+		languagesMap.put("E", "LANGUAGE_ENGLISH");
+		languagesMap.put("P", "LANGUAGE_PORTUGUESE");
+		languagesMap.put("S", "LANGUAGE_SPANSIH");
+		
 	}
 
 	private void constructYesNoMap() {
@@ -187,6 +200,32 @@ public class ApplicationScopeStore implements Serializable {
 		}
 		return "";
 	}
+	
+	
+
+	public String getLanguage(String languageCode) {
+		if (Utils.isNotEmptyString(languageCode)) {
+			String langaugeKey = languagesMap
+					.get(languageCode);
+			if (Utils.isNotEmptyString(langaugeKey)) {
+				String languageValue = WebUtils
+						.extractFromBundle(langaugeKey);
+				if (Utils
+						.isNotEmptyString(languageValue)) {
+					return languageValue;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
+	}
+	
 
 	public String getQuotationType(String quotationType) {
 
@@ -296,6 +335,18 @@ public class ApplicationScopeStore implements Serializable {
 
 		return yesNoList;
 	}
+	
+	
+	
+	
+	public List<KeyValueHolder<String, String>> getLangaugesList() {
+		List<KeyValueHolder<String, String>> langaugesList = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : languagesMap.keySet()) {
+			langaugesList.add(new KeyValueHolder<String, String>(key,
+					getLanguage(key)));
+		}
+		return langaugesList;
+	}
 
 	public boolean isAdminUser() {
 		return WebUtils.isAdminUser();
@@ -362,5 +413,14 @@ public class ApplicationScopeStore implements Serializable {
 		}
 		return Utils.getAbsoluteStringValue(val);
 	}
+	
+	public void logout()
+	{
+		WebUtils.redirectTo("/logout.xhtml");
+	}
 
+	
+	
+	
+	
 }

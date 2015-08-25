@@ -16,7 +16,7 @@
 				<p:panelGrid columns="4"
 					rendered="#{companyManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_NAME}" />
-					<p:inputText id="name" maxlength="80"
+					<p:inputText id="name" maxlength="80" styleClass="fullWith"
 						value="#{companyManagementBean.selected.companyName}"
 						title="#{loc.CreateComCompanyTitle_name}" required="true"
 						requiredMessage="#{loc.CreateComCompanyRequiredMessage_name}" />
@@ -24,21 +24,21 @@
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_FEDRAL_IDENTITY_CODE}" />
 
-					<p:inputText id="fedralIdentityCode" maxlength="30"
+					<p:inputText id="fedralIdentityCode" maxlength="30" styleClass="fullWith"
 						value="#{companyManagementBean.selected.federalIdentityCode}"
 						title="#{loc.CreateComCompanyTitle_fedralIdentityCode}"
 						required="true"
 						requiredMessage="#{loc.CreateComCompanyRequiredMessage_fedralIdentityCode}" />
 					<p:outputLabel
-						value="#{loc.ALMABANI_COMPANY_CREATE_ALTERNATIVE_COMPANY_NAME}" />
-					<p:inputText id="companyNameAlternative" maxlength="100"
+						value="#{loc.ALMABANI_COMPANY_CREATE_ALTERNATIVE_COMPANY_NAME}"  />
+					<p:inputText id="companyNameAlternative" maxlength="100" styleClass="fullWith"
 						value="#{companyManagementBean.selected.alternativeCompanyName}"
 						title="#{loc.CreateComCompanyTitle_companyNameAlternative}" />
 
 
 					<p:outputLabel
 						value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_COUNTRY}" />
-					<p:selectOneMenu converter="#{countryConverter}">
+					<p:selectOneMenu converter="#{countryConverter}" styleClass="fullWith">
 						<p:ajax listener="#{companyManagementBean.countryChanged}"
 							update="states" />
 
@@ -51,7 +51,7 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="#{loc.ALMABANI_COMPANY_CREATE_COMPANY_STATE}" />
-					<p:selectOneMenu id="states"
+					<p:selectOneMenu id="states" styleClass="fullWith"
 						value="#{companyManagementBean.selected.state}"
 						converter="#{stateConverter}">
 						<f:selectItem itemValue=""
@@ -63,11 +63,10 @@
 
 					<p:outputLabel value="#{loc.ALMABANI_COMPANY_SYSTEM_LANGUAGE_IND}" />
 
-					<p:selectOneMenu
+					<p:selectOneMenu styleClass="fullWith"
 						value="#{companyManagementBean.selected.indSystemLanguage}">
-						<f:selectItem itemValue="E" itemLabel="English" />
-						<f:selectItem itemValue="P" itemLabel="Portoges" />
-						<f:selectItem itemValue="S" itemLabel="Spanish" />
+						<f:selectItems value="#{applicationScopeStore.langaugesList}" var="language" itemValue="#{language.key}" itemLabel="#{language.value}" />
+						
 					</p:selectOneMenu>  
 
 
@@ -78,7 +77,7 @@
 					value="#{loc.Save}" update=":growl :listForm"
 					oncomplete="if(!args.validationFailed ){PF('createDialog').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
-					onclick="PF('createDialog').hide()" />
+					onclick="PF('createDialog').hide()" immediate="true" />
 			</h:panelGroup>
 
 		</h:form>

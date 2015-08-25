@@ -1,6 +1,6 @@
 .ui-growl
 {
-	top:100px !important;
+	top:50px !important;
 	
 }
 
@@ -76,3 +76,7 @@ body {
 	width: 70% !important;
 }
 
+.ui-menuitem ui-state-hover
+{
+	background-color:transparent !important;
+}

@@ -8,7 +8,7 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListSecSubModuleTitle}" style="margin-left:auto; margin-right:auto ; width:85%">
+		<p:panel header="#{loc.ListSecSubModuleTitle}" style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" value="#{subModuleManagementBean.items}" resizableColumns="true"
 				var="item" widgetVar="datalist" selectionMode="single" draggableColumns="true" draggableRows="true"
 				selection="#{subModuleManagementBean.selected}" rowKey="#{item.id}"

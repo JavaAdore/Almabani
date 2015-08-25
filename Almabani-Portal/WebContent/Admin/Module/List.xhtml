@@ -8,7 +8,7 @@
 
 	<h:form id="listForm"> 
 
-		<p:panel header="#{loc.ListSecModuleTitle}" style="margin-left:auto; margin-right:auto ; width:85%" >
+		<p:panel header="#{loc.ListSecModuleTitle}" style="margin-left:auto; margin-right:auto ; " >
 			<p:dataTable id="datalist" value="#{moduleManagementBean.items}" resizableColumns="true" 
 				var="item" selectionMode="single" widgetVar="datalist" draggableColumns="true" draggableRows="true"
 				selection="#{moduleManagementBean.selected}" rowKey="#{item.id}"
@@ -27,6 +27,13 @@
 					sortBy="#{item.id}" filterBy="#{item.id}">
 					<h:outputText value="#{item.id}" />
 				</p:column>
+				
+				<p:column headerText="#{loc.ListSecModuleTitle}"
+					sortBy="#{item.moduleCode}" filterBy="#{item.moduleCode}">
+					<h:outputText value="#{item.moduleCode}" />
+				</p:column>
+				
+				
 				<p:column headerText="#{loc.ListSecModuleTitle_system}"
 					sortBy="#{item.system.systemCode}"
 					filterBy="#{item.system.systemCode}">
@@ -34,11 +41,7 @@
 					<h:outputText value="#{item.system.systemCode}" />
 				</p:column>
 
-				<p:column headerText="#{loc.ListSecModuleTitle_moduleDescription}"
-					sortBy="#{item.moduleDescription}"
-					filterBy="#{item.moduleDescription}">
-					<h:outputText value="#{item.moduleDescription}" />
-				</p:column>
+				
 				<p:column headerText="#{loc.ListSecModuleTitle_orderMenuNumber}"
 					sortBy="#{item.orderMenuNumber}" filterBy="#{item.orderMenuNumber}">
 					<h:outputText value="#{item.orderMenuNumber}" />

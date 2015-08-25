@@ -11,7 +11,7 @@
 	<h:form id="listForm">
 
 		<p:panel header="#{loc.ListComCompanyTitle}"
-			style="margin-left:auto; margin-right:auto ; width:85%">
+			style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" value="#{companyManagementBean.items}" resizableColumns="true"
 				filterEvent="blur" var="item" paginator="true" rows="10" draggableColumns="true" draggableRows="true"
 				widgetVar="datalist" selectionMode="single"
@@ -32,31 +32,31 @@
 				<p:column headerText="#{loc.ListComCompanyTitle_id}"
 					filterBy="#{item.id}" sortBy="#{item.id}">
 
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{item.id}" styleClass="fullWith" />
 				</p:column>
 				<p:column headerText="#{loc.ListComCompanyTitle_fedralIdentityCode}"
 					sortBy="#{item.federalIdentityCode}"
 					filterBy="#{item.federalIdentityCode}">
 
-					<h:outputText value="#{item.federalIdentityCode}" />
+					<h:outputText value="#{item.federalIdentityCode}" styleClass="fullWith" />
 				</p:column>
 				
 
 				<p:column headerText="#{loc.ListComCompanyTitle_name}"
 					filterBy="#{item.companyName}" sortBy="#{item.companyName}">
 
-					<h:outputText value="#{item.companyName}" />
+					<h:outputText value="#{item.companyName}" styleClass="fullWith" />
 				</p:column>
 				
 				<p:column headerText="#{loc.ListComCompanyTitle_comState}"
 					filterBy="#{item.state.stateName}" sortBy="#{item.state.stateName}">
-					<h:outputText value="#{item.state.stateName}" />
+					<h:outputText value="#{item.state.stateName}"  styleClass="fullWith" />
 
 				</p:column>
 				<p:column headerText="#{loc.ListComCompanyTitle_comCountry}"
 					filterBy="#{item.state.stateId.country.countryName}"
 					sortBy="#{item.state.stateId.country.countryName}">
-					<h:outputText value="#{item.state.stateId.country.countryName}" />
+					<h:outputText value="#{item.state.stateId.country.countryName}" styleClass="fullWith" />
 				</p:column>
 
 

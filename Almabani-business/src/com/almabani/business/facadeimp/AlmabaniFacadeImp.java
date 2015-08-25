@@ -297,9 +297,12 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public Company addCompany(Company company) throws AlmabaniException {
+	public Company addCompany(Company company, CommonDriverMap commonDriverMap) throws AlmabaniException {
+		 
+
 		company.assignLastModificationDate();
-		company.setModificationMakerName("test");
+		
+		company.setModificationMakerName(commonDriverMap.getTargetUser().getUserLoginCode());
 		if (Utils.hasID(company)) {
 			return companyService.updateCompany(company);
 

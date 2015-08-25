@@ -12,8 +12,15 @@ public class ApplicationAccess implements Serializable{
 	
 	private Access access;
 	
+	private boolean displayInMenu;
 	
-	
+
+	public ApplicationAccess(String url, Access access, boolean displayInMenu) {
+		super();
+		this.url = url;
+		this.access = access;
+		this.displayInMenu = displayInMenu;
+	}
 
 	public ApplicationAccess() {
 		super();
@@ -39,6 +46,14 @@ public class ApplicationAccess implements Serializable{
 
 	public void setAccess(Access access) {
 		this.access = access;
+	}
+
+	public boolean isDisplayInMenu() {
+		return displayInMenu;
+	}
+
+	public void setDisplayInMenu(boolean displayInMenu) {
+		this.displayInMenu = displayInMenu;
 	} 
 	
 	

@@ -75,6 +75,9 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 					activeUser);
 			commonDriverMap = commonDriverMap.appendCompany(commonDriverMap,
 					activeCompany);
+			commonDriverMap = commonDriverMap.appendCurrentModule(commonDriverMap,
+					activeModule);
+			
 			almabaniFacade.grantAccess(allApplications, commonDriverMap);
 
 			WebUtils.fireInfoMessage(MessagesKeyStore.ALMABANI_GRANT_ACCESS_GRANTED_SUCCESSFULLY);

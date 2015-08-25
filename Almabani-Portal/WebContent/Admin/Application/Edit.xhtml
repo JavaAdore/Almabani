@@ -17,38 +17,53 @@
 
 
 			<h:panelGroup id="display">
-				<p:panelGrid columns="2"
+				<p:panelGrid columns="4"
 					rendered="#{applicationManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.EditSecApplicationTitle_secModule}" />
-					<p:selectOneMenu  styleClass="fullWith" value="#{applicationManagementBean.tempModule}"
-						required="true" immediate="true" converter="#{moduleConverter}"
-				 		requiredMessage="#{loc.EditSecApplicationRequiredMessage_secModule}" >
-				 		<p:ajax immediate="true" process="@this" update="secSubModule" listener="#{applicationManagementBean.moduleChanged}" ></p:ajax>
+					<p:selectOneMenu styleClass="fullWith"
+						value="#{applicationManagementBean.tempModule}" required="true"
+						immediate="true" converter="#{moduleConverter}"
+						requiredMessage="#{loc.EditSecApplicationRequiredMessage_secModule}">
+						<p:ajax immediate="true" process="@this" update="secSubModule"
+							listener="#{applicationManagementBean.moduleChanged}"></p:ajax>
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{applicationManagementBean.modules}"
-							var="secSubModuleItem" itemValue="#{secSubModuleItem}"  itemLabel="#{secSubModuleItem.moduleCode}"/>
+							var="secSubModuleItem" itemValue="#{secSubModuleItem}"
+							itemLabel="#{secSubModuleItem.moduleCode}" />
 					</p:selectOneMenu>
-					
-					
+
+
 					<p:outputLabel value="#{loc.EditSecApplicationTitle_secSubModule}" />
 					<p:selectOneMenu id="secSubModule" styleClass="fullWith"
 						value="#{applicationManagementBean.selected.secSubModule}"
-						required="true"  converter="#{subModuleConverter}"
-				 		requiredMessage="#{loc.EditSecApplicationRequiredMessage_secSubModule}">
+						required="true" converter="#{subModuleConverter}"
+						requiredMessage="#{loc.EditSecApplicationRequiredMessage_secSubModule}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{applicationManagementBean.subModules}"
-							var="secSubModuleItem" itemValue="#{secSubModuleItem}"  itemLabel="#{secSubModuleItem.subModuleDescription}"/>
+							var="secSubModuleItem" itemValue="#{secSubModuleItem}"
+							itemLabel="#{secSubModuleItem.subModuleDescription}" />
 					</p:selectOneMenu>
-					
-					<p:outputLabel
-						value="#{loc.CreateSecApplicationTitle_indActive}" />
-					<p:selectOneMenu value="#{applicationManagementBean.selected.indActive}"
+
+					<p:outputLabel value="#{loc.CreateSecApplicationTitle_indActive}" />
+					<p:selectOneMenu
+						value="#{applicationManagementBean.selected.indActive}"
 						required="true" styleClass="fullWith"
 						requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
+
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
-					</p:selectOneMenu>  
-					
+					</p:selectOneMenu>
+
+					<p:outputLabel
+						value="#{loc.EditSecApplicationTitle_isDisplayInMenu}" />
+
+					<p:selectOneMenu styleClass="fullWith"
+						value="#{applicationManagementBean.selected.displayInMenu}"
+						required="true"
+						requiredMessage="#{loc.ALMABANI_GENERAL_STATAUS_REQUIRED}">
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
 
 					<p:outputLabel
 						value="#{loc.EditSecApplicationTitle_typesApplication}" />
@@ -57,18 +72,20 @@
 						required="true" converter="#{applicationTypeConverter}"
 						requiredMessage="#{loc.EditSecApplicationRequiredMessage_typesApplication}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{applicationManagementBean.applicationTypes}"
+						<f:selectItems
+							value="#{applicationManagementBean.applicationTypes}"
 							var="typesApplicationItem" itemValue="#{typesApplicationItem}"
 							itemLabel="#{typesApplicationItem.applicationTypedescription}" />
 					</p:selectOneMenu>
-					
-						<p:outputLabel
+
+
+					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_orderMenuNumber}" />
 					<p:spinner id="orderMenuNumber"
 						value="#{applicationManagementBean.selected.orderMenuNumber}"
 						required="true" min="1" max="1000"
 						requiredMessage="#{loc.CreateSecApplicationRequiredMessage_orderMenuNumber}" />
-					
+
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_codApplication}" />
 					<p:inputText id="codApplication" maxlength="8"
@@ -78,45 +95,46 @@
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_applicationDescription}" />
-					<p:inputTextarea id="applicationDescription" maxlength="50"
+					<p:inputText id="applicationDescription" maxlength="50"
 						value="#{applicationManagementBean.selected.applicationDescription}"
 						title="#{loc.CreateSecApplicationTitle_applicationDescription}"
 						required="true"
 						requiredMessage="#{loc.CreateSecApplicationRequiredMessage_applicationDescription}" />
 
-				
-					
+
+
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_portugueseLabel}" />
-					<p:inputTextarea id="portugueseLabel" maxlength="25"
+					<p:inputText id="portugueseLabel" maxlength="25"
 						value="#{applicationManagementBean.selected.portugueseLabel}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_englishLabelDescription}" />
-					<p:inputTextarea id="englishLabelDescription"  maxlength="25"
+					<p:inputText id="englishLabelDescription" maxlength="25"
+						required="true"
+						requiredMessage="#{loc.CreateSecApplicationRequiredMessage_englishLabelDescription}"
 						value="#{applicationManagementBean.selected.englishLabelDescription}" />
 
 					<p:outputLabel
 						value="#{loc.CreateSecApplicationTitle_spanishLabelDescription}" />
-					<p:inputTextarea id="spanishLabelDescription"  maxlength="25"
-						value="#{applicationManagementBean.selected.spanishLabelDescription}"
-						 />
+					<p:inputText id="spanishLabelDescription" maxlength="25"
+						value="#{applicationManagementBean.selected.spanishLabelDescription}" />
 
-					
-					
-					<p:outputLabel value="#{loc.CreateSecApplicationTitle_linkCodeDescription}" />
+
+
+					<p:outputLabel
+						value="#{loc.CreateSecApplicationTitle_linkCodeDescription}" />
 					<p:inputTextarea id="linkCodeDescription" maxlength="100"
-						value="#{applicationManagementBean.selected.linkCodeDescription}"
-						 />
-						
-				</p:panelGrid>
-				<p:commandButton actionListener="#{applicationManagementBean.saveNew}"
-					value="#{loc.Save}"
-					update="display,:growl,:listForm:datalist"
+						value="#{applicationManagementBean.selected.linkCodeDescription}" />
+
+				</p:panelGrid> 
+				<p:commandButton
+					actionListener="#{applicationManagementBean.saveNew}"
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
 					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
-					onclick="PF('editDialog').hide()"  immediate="true"/>
+					onclick="PF('editDialog').hide()" immediate="true" />
 			</h:panelGroup>
 
 		</h:form>
