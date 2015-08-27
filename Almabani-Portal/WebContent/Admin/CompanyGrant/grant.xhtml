@@ -16,7 +16,7 @@
 		<h:form id="companyUserForm">
 
 			<p:panelGrid columns="5"
-				style="margin-left:auto; margin-right:auto ;">
+				style="margin-left:auto; margin-right:auto;width:100% ;">
 
 
 				<h:outputText value="#{loc.ListOamSupplierTitle_company}" />
@@ -40,7 +40,7 @@
 		</h:form>
 		<h:form id="grantForm">
 			<p:dataTable widgetVar="grantsTable" id="grantsTable"
-				style="margin-left:auto; margin-right:auto ; 
+				style="margin-left:auto; margin-right:auto ; "
 				value="#{companyGrantsManagementBean.grantableApplications}"
 				var="app" draggableColumns="true" draggableRows="true"
 				paginator="true" lazy="true" rows="10"

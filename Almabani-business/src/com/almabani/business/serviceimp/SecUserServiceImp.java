@@ -49,7 +49,8 @@ public class SecUserServiceImp implements SecUserService {
 		Date date = new Date();
 		user.setLastModificationDate(date);
 		user.setModificationMakerName(commonDriverMap.getCurrentUserCode());
-		user.setRegistrationDate(date); 
+		user.setRegistrationDate(date);
+    
 		return secUserDAO.saveOrUpdate(user);
 	}
 
@@ -60,7 +61,7 @@ public class SecUserServiceImp implements SecUserService {
 
 	@Override
 	public List<SecUser> getUsers(Company company) {
-		return secUserDAO.getUsers( company) ;
+		return secUserDAO.getUsers(company);
 	}
 
 }

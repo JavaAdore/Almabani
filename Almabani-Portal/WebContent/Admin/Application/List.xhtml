@@ -8,9 +8,11 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListSecApplicationTitle}" style="margin-left:auto; margin-right:auto ;">
-			<p:dataTable id="datalist" value="#{applicationManagementBean.items}" resizableColumns="true"
-				var="item" widgetVar="datalist" selectionMode="single" draggableColumns="true" draggableRows="true"
+		<p:panel header="#{loc.ListSecApplicationTitle}"
+			style="margin-left:auto; margin-right:auto ;">
+			<p:dataTable id="datalist" value="#{applicationManagementBean.items}"
+				resizableColumns="true" var="item" widgetVar="datalist"
+				selectionMode="single" draggableColumns="true" draggableRows="true"
 				selection="#{applicationManagementBean.selected}"
 				rowKey="#{item.codApplication}" paginator="true" lazy="true"
 				rows="10" rowsPerPageTemplate="10,20,30">
@@ -27,18 +29,25 @@
 					sortBy="#{item.codApplication}" filterBy="#{item.codApplication}">
 					<h:outputText value="#{item.codApplication}" />
 				</p:column>
-				
+
 				<p:column headerText="#{loc.ListSecApplicationTitle_secModule}"
 					sortBy="#{item.secSubModule.module.moduleCode}"
 					filterBy="#{item.secSubModule.module.moduleCode}">
 					<p:outputLabel value="#{item.secSubModule.module.moduleCode}" />
 				</p:column>
-				
-				
+
+
 				<p:column headerText="#{loc.ListSecApplicationTitle_secSubModule}"
 					sortBy="#{item.secSubModule.subModuleDescription}"
 					filterBy="#{item.secSubModule.subModuleDescription}">
 					<p:outputLabel value="#{item.secSubModule.subModuleDescription}" />
+				</p:column>
+
+				<p:column
+					headerText="#{loc.ListSecApplicationTitle_applicationDescription}"
+					sortBy="#{item.applicationDescription}"
+					filterBy="#{item.applicationDescription}">
+					<h:outputText value="#{item.applicationDescription}" />
 				</p:column>
 
 				<p:column
@@ -50,7 +59,7 @@
 				</p:column>
 
 
-				
+
 				<p:column headerText="#{loc.ListSecApplicationTitle_indActive}"
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
@@ -66,9 +75,10 @@
 					<h:outputText
 						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
 				</p:column>
-				
-				
-					<p:column headerText="#{loc.EditSecApplicationTitle_isDisplayInMenu}"
+
+
+				<p:column
+					headerText="#{loc.EditSecApplicationTitle_isDisplayInMenu}"
 					sortBy="#{item.displayInMenu}" filterBy="#{item.displayInMenu}">
 
 
@@ -89,11 +99,13 @@
 					sortBy="#{item.linkCodeDescription}"
 					filterBy="#{item.linkCodeDescription}">
 
-					<h:inputText readonly="true" value="#{item.linkCodeDescription}"   styleClass="fullWith"/>
+					<h:inputText readonly="true" value="#{item.linkCodeDescription}"
+						styleClass="fullWith" />
 				</p:column>
 				<f:facet name="footer">
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{applicationManagementBean.prepareCreate}"
 						update=":createForm:display"
 						oncomplete="PF('createDialog').show()" />
@@ -101,8 +113,9 @@
 						value="#{loc.View}" update=":viewForm:display"
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty applicationManagementBean.selected}" />
-					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}"
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
 						actionListener="#{applicationManagementBean.loadApproperateModule()}"
 						update=":editForm:display" oncomplete="PF('editDialog').show()"
 						disabled="#{empty applicationManagementBean.selected}" />

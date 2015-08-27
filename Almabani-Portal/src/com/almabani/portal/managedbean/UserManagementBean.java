@@ -7,13 +7,17 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.constant.DataAccessConstant;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
@@ -30,12 +34,16 @@ public class UserManagementBean extends AbstractBeanHelper implements
 		Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private SelectOneMenu employeeSelectMenu;
+
+	private SelectOneMenu employeeSelectMenuForEdit;
+
 	private LazyDataModel<SecUser> items;
 
 	private List<Employee> employees;
 
 	private List<Company> companies;
-	
+
 	public List<Company> getCompanies() {
 		return companies;
 	}
@@ -57,7 +65,7 @@ public class UserManagementBean extends AbstractBeanHelper implements
 	}
 
 	private void initializeCompaniesList() {
-		companies = almabaniFacade.getAllCompanies();		
+		companies = almabaniFacade.getAllCompanies();
 	}
 
 	private void initializeEmployeesList() {
@@ -165,15 +173,15 @@ public class UserManagementBean extends AbstractBeanHelper implements
 	public void setOperationSuccess(boolean operationSuccess) {
 		this.operationSuccess = operationSuccess;
 	}
- 
+
 	public void onRowEdit(RowEditEvent event) throws AlmabaniException {
 		try {
-			saveNew(); 
+			saveNew();
 		} catch (AlmabaniException ex) {
 			initializeEmployeesList();
-			 
-			throw ex;   
-		} 
+
+			throw ex;
+		}
 	}
 
 	public void onRowCancel(RowEditEvent event) {
@@ -185,7 +193,7 @@ public class UserManagementBean extends AbstractBeanHelper implements
 	public void onCellEdit(CellEditEvent event) {
 		System.out.println();
 
-	} 
+	}
 
 	public List<Employee> getEmployees() {
 		return employees;
@@ -195,4 +203,35 @@ public class UserManagementBean extends AbstractBeanHelper implements
 		this.employees = employees;
 	}
 
+	public void adminIdentifierChaged(ValueChangeEvent e) {
+		String value = (String) e.getNewValue();
+		if (Utils.isNotEmptyString(value)) {
+			if (value.equalsIgnoreCase(DataAccessConstant.YES)) {
+				employeeSelectMenu.setRequired(false);
+				employeeSelectMenuForEdit.setRequired(false);
+			} else {
+				employeeSelectMenu.setRequired(true);
+				employeeSelectMenuForEdit.setRequired(true);
+
+
+			}
+		}
+
+	}
+
+	public SelectOneMenu getEmployeeSelectMenu() {
+		return employeeSelectMenu;
+	}
+
+	public void setEmployeeSelectMenu(SelectOneMenu employeeSelectMenu) {
+		this.employeeSelectMenu = employeeSelectMenu;
+	}
+
+	public SelectOneMenu getEmployeeSelectMenuForEdit() {
+		return employeeSelectMenuForEdit;
+	}
+
+	public void setEmployeeSelectMenuForEdit(SelectOneMenu employeeSelectMenuForEdit) {
+		this.employeeSelectMenuForEdit = employeeSelectMenuForEdit;
+	}
 }

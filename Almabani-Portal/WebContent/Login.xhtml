@@ -34,9 +34,9 @@
 </h:head>
 
 <h:body>
-<h:form id="growl">
-	<p:growl></p:growl>
-</h:form>
+	<h:form id="growl">
+		<p:growl></p:growl>
+	</h:form>
 	<p:panel
 		rendered="#{applicationScopeStore.getCurrentlyLoggedUser()!=null}">
 		<script>
@@ -56,8 +56,8 @@
 			<article id="content">
 			<div class="ic"></div>
 			<ul>
-				<li id="page_Home">
-					<p:graphicImage name="images/logo.png" style="float:right; right:20px; position:absolute;"></p:graphicImage>
+				<li id="page_Home"><p:graphicImage name="images/logo.png"
+						style="float:right; right:20px; position:absolute;"></p:graphicImage>
 					<div class="box1">
 						<div class="inner">
 							<a href="#" class="close" data-type="close"><span></span></a>
@@ -84,18 +84,8 @@
 												<br />
 
 												<p:commandButton id="login" value="Login" ajax="true"
-													update=":growl" actionListener="#{loginHandlerBean.login()}" />
-
-												<p:selectBooleanCheckbox itemLabel="AWS database"
-													value="#{loginHandlerBean.awsdb}">
-													<p:ajax event="change"
-														listener="#{loginHandlerBean.checkChanged}" />
-												</p:selectBooleanCheckbox>
-												<!-- 										<p:commandLink id="user" actionListener="#" -->
-												<!-- 											style="text-decoration: underline; padding-left: 85px; margin-left: 85px; float: right;"> -->
-												<!-- 											<h:outputText value="Forget Password" style="color: #098DB1;" /> -->
-												<!-- 										</p:commandLink> -->
-
+													update=":growl"
+													actionListener="#{loginHandlerBean.login()}" />
 
 											</h:form>
 										</div>
@@ -106,8 +96,7 @@
 
 
 						</div>
-					</div>
-				</li>
+					</div></li>
 
 
 			</ul>

@@ -18,8 +18,8 @@
 				selection="#{userManagementBean.selected}" editable="true"
 				rowKey="#{item.userLoginCode}" paginator="true" rows="10"
 				lazy="true" rowsPerPageTemplate="10,20,30">
-				<p:ajax event="rowSelect" update="viewButton " />
-				<p:ajax event="rowUnselect" update="viewButton " />
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
 				<p:ajax event="rowEdit" listener="#{userManagementBean.onRowEdit}"
 					update=":growl  " oncomplete="updateForm()" />
 				<p:ajax event="rowEditCancel"
@@ -48,11 +48,13 @@
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{userManagementBean.companies}"
-								var="company" itemValue="#{company}" itemLabel="#{company.companyName}" />
+								var="company" itemValue="#{company}"
+								itemLabel="#{company.companyName}" />
 						</p:selectOneMenu>
 					</f:facet>
 
-					<p:outputLabel value="#{item.employee.establishment.company.companyName}" />
+					<p:outputLabel
+						value="#{item.employee.establishment.company.companyName}" />
 
 
 				</p:column>
@@ -129,7 +131,7 @@
 								value="#{applicationScopeStore.getYesNoValue(item.indAdminSystem)}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectOneMenu value="#{item.indAdminSystem}"
+							<p:selectOneMenu value="#{item.indAdminSystem}" 
 								styleClass="fullWith">
 								<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 									var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
@@ -167,7 +169,11 @@
 						value="#{loc.View}" update=":viewForm:display"
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty userManagementBean.selected}" />
-
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						update=":editForm:display" oncomplete="PF('editDialog').show()"
+						disabled="#{empty userManagementBean.selected}" />
 				</f:facet>
 
 			</p:dataTable>

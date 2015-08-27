@@ -14,12 +14,10 @@
 
 		<h:form id="editForm">
 
-			<h:panelGroup id="messagePanel">
-				<p:messages id="editMessages" />
-			</h:panelGroup>
+			
 
 			<h:panelGroup id="display">
-				<p:panelGrid columns="2"
+					<p:panelGrid columns="2" id="createPanel"
 					rendered="#{userManagementBean.selected != null}">
 					<h:outputText value="#{loc.EditSecUserLabel_userLoginCode}" />
 					<p:inputText id="userLoginCode" styleClass="fullWith"
@@ -29,7 +27,7 @@
 
 					<h:outputText value="#{loc.EditSecUserTitle_password}" />
 					<p:password required="true" styleClass="fullWith" maxlength="100"
-						requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}"
+						requiredMessage="#{loc.ALMABANI_GENERAL_PASSWORD_IS_REQUIRED}" redisplay="true"
 						value="#{userManagementBean.selected.password}" feedback="true"
 						promptLabel="#{loc.ALMABANI_GENERAL_ENTER_PASSWORD}"
 						weakLabel="#{loc.ALMABANI_GENERAL_WEAK_PASSWORD}"
@@ -37,8 +35,8 @@
 						strongLabel="#{loc.ALMABANI_GENERAL_STRONG_PASSWORD}" />
 
 					<h:outputText value="#{loc.EditSecUserTitle_employee}" />
-					<p:selectOneMenu value="#{userManagementBean.selected.employee}"
-						required="true" converter="#{employeeConverter}"
+					<p:selectOneMenu value="#{userManagementBean.selected.employee}" id="employee"
+						required="true" converter="#{employeeConverter}" binding="#{userManagementBean.employeeSelectMenuForEdit}"
 						requiredMessage="#{loc.EditSecUserRequiredMessage_employee}">
 						<f:selectItem itemLabel="" itemValue="#{null}"
 							noSelectionOption="true" />
@@ -54,27 +52,25 @@
 					<p:selectOneMenu value="#{userManagementBean.selected.indActive}"
 						styleClass="fullWith" required="true"
 						requiredMessage="#{loc.CreateSecUserRequiredMessageIsActive}">
-					
+						
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
 					<h:outputText value="#{loc.EditSecUserTitle_indAdminSystem}" />
-					<p:selectOneMenu
+					<p:selectOneMenu immediate="true"   valueChangeListener="#{userManagementBean.adminIdentifierChaged}"
 						value="#{userManagementBean.selected.indAdminSystem}"
-						styleClass="fullWith" required="true"
+						styleClass="fullWith" required="true" 
 						requiredMessage="#{loc.CreateSecUserRequiredMessageIsAdmin}">
-						<f:selectItem itemLabel="" itemValue="#{null}"
-							noSelectionOption="true" />
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
 
-				</p:panelGrid>
+				</p:panelGrid>  
 				<p:commandButton actionListener="#{userManagementBean.saveNew}"
 					value="#{loc.Save}"
-					update="display,messagePanel,:listForm:datalist"
+					update="display,:growl,:listForm:datalist"
 					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
 					onclick="PF('editDialog').hide()" />
