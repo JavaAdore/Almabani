@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.exception.AlmabaniException;
 
@@ -22,6 +23,8 @@ public interface MaterialTypeService {
 	OamTypeMaterial updateMaterialType(OamTypeMaterial company) throws AlmabaniException;
 	
 	List<OamTypeMaterial> getAllMaterialTypes();
+
+	List<OamTypeMaterial> getAllMaterialTypes(Company company);
 
 
 }

@@ -8,8 +8,10 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListOamItemTitle}" style="margin-left:auto; margin-right:auto ; ">
-			<p:dataTable id="datalist" value="#{itemManagementBean.items}" draggableColumns="true" draggableRows="true" resizableColumns="true"
+		<p:panel header="#{loc.ListOamItemTitle}"
+			style="margin-left:auto; margin-right:auto ; ">
+			<p:dataTable id="datalist" value="#{itemManagementBean.items}"
+				draggableColumns="true" draggableRows="true" resizableColumns="true"
 				widgetVar="datalist" var="item" selectionMode="single"
 				selection="#{itemManagementBean.selected}" rowKey="#{item.id}"
 				paginator="true" lazy="true" rows="10"
@@ -23,16 +25,12 @@
 				<p:ajax event="rowSelect" update="viewButton editButton" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
-				<p:column headerText="#{loc.ListOamItemTitle_id}"
-					sortBy="#{item.id}" filterBy="#{item.id}">
+				<p:column headerText="#{loc.ListOamItemTitle_department}"
+					sortBy="#{item.itemCategory.comDepartmentSection.department}"
+					filterBy="#{item.itemCategory.comDepartmentSection.department}">
 
-					<h:outputText value="#{item.id}" />
-				</p:column>
-
-				<p:column headerText="#{loc.ListOamItemTitle_itemDescription}"
-					sortBy="#{item.itemDescription}" filterBy="#{item.itemDescription}">
-
-					<h:outputText value="#{item.itemDescription}" />
+					<h:outputText
+						value="#{item.itemCategory.comDepartmentSection.department}" />
 				</p:column>
 
 				<p:column headerText="#{loc.ListOamItemTitle_itemCode}"
@@ -40,6 +38,14 @@
 
 					<h:outputText value="#{item.itemCode}" />
 				</p:column>
+
+
+				<p:column headerText="#{loc.ListOamItemTitle_itemDescription}"
+					sortBy="#{item.itemDescription}" filterBy="#{item.itemDescription}">
+
+					<h:outputText value="#{item.itemDescription}" />
+				</p:column>
+
 
 				<p:column headerText="#{loc.ListOamItemTitle_itemCategory}"
 					sortBy="#{item.itemCategory}" filterBy="#{item.itemCategory}">
@@ -94,8 +100,9 @@
 
 
 				<f:facet name="footer">
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{itemManagementBean.prepareCreate}"
 						update=":createForm:display"
 						oncomplete="PF('createDialog').show()" />
@@ -103,9 +110,10 @@
 						value="#{loc.View}" update=":viewForm:display"
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty itemManagementBean.selected}" />
-					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}" update=":editForm:display"
-						oncomplete="PF('editDialog').show()"
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						update=":editForm:display" oncomplete="PF('editDialog').show()"
 						disabled="#{empty itemManagementBean.selected}" />
 				</f:facet>
 

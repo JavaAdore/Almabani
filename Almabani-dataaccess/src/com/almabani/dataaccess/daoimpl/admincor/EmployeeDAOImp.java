@@ -6,6 +6,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.DepartmentSection;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.dataaccess.dao.admincor.EmployeeDAO;
@@ -63,6 +64,13 @@ public class EmployeeDAOImp extends AbstractDAO implements EmployeeDAO {
 	public List<Employee> loadEmployees(int first, int pageSize,
 			String sortField, boolean ascending, Map<String, Object> filters) {
 		return super.lazyLoadEntities(Employee.class, first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public List<Employee> getCompanyEmployees(Company company) {
+		Query query = getCurrentSession().createQuery("select e from Employee e where e.establishment.company =:company");
+		query.setParameter("company", company);
+		return query.list();
 	}
 	
 }

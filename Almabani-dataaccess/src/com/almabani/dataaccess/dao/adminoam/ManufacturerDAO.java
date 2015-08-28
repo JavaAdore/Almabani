@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -17,11 +18,13 @@ public interface ManufacturerDAO extends AbstractDAOInt{
 
 	List<OamManufacturer> loadManufacturers(Integer first, Integer pageSize, String sortField, boolean assending, Map<String, Object> filters);
 
-	OamManufacturer addOamManufacturer(OamManufacturer company);
+	OamManufacturer addOamManufacturer(OamManufacturer manufacturer);
 
 	OamManufacturer getManufacturer(Long id);
 
 	
 	List<OamManufacturer> getAllManufacturers();
+
+	List<OamManufacturer> getAllManufacturers(Company company);
 	
 }

@@ -14,28 +14,39 @@
 
 		<h:form id="createForm">
 
-		
+
 
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
 					rendered="#{itemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCode}" />
-					<p:inputText   value="#{itemManagementBean.selected.itemCode}" maxlength="20" style="width:177px" required="true" requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
+					<p:inputText value="#{itemManagementBean.selected.itemCode}"
+						maxlength="20" style="width:177px" required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
-					<p:selectOneMenu converter="#{manufacturerConverter}" styleClass="fullWith"
-						value="#{itemManagementBean.selected.manufacturer}"
-						required="true"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{itemManagementBean.manufacturers}"
-							var="manufacturerItem" itemValue="#{manufacturerItem}" itemLabel="#{manufacturerItem.manufacturerName}"/>
-					</p:selectOneMenu>
-
+					<p:panelGrid columns="2" styleClass="fullWith">
+						<p:selectOneMenu converter="#{manufacturerConverter}"
+							id="manufacturer" widgetVar="manufacturer" styleClass="fullWith"
+							value="#{itemManagementBean.selected.manufacturer}"
+							required="true"
+							requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
+							<f:selectItem itemValue="#{loc.ALMABANI_GENERAL_NO_SELECT}"
+								itemLabel="#{loc.SelectOneMessage}" noSelectionOption="true" />
+							<f:selectItems value="#{itemManagementBean.manufacturers}"
+								var="manufacturerItem" itemValue="#{manufacturerItem}"
+								itemLabel="#{manufacturerItem.manufacturerName}" />
+						</p:selectOneMenu>
+						<p:commandButton value="+" immediate="true"
+							actionListener="#{itemManagementBean.initializeNewManufacturer()}"
+							update=":createManufacturerForm"
+							onclick="PF('new_manufacturer').show()" />
+					</p:panelGrid>
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
 					<p:selectOneMenu
-						value="#{itemManagementBean.selected.itemCategory}" styleClass="fullWith"
-						required="true" converter="#{itemCategoryConverter}"
+						value="#{itemManagementBean.selected.itemCategory}"
+						styleClass="fullWith" required="true"
+						converter="#{itemCategoryConverter}"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCategory}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{itemManagementBean.itemCategories}"
@@ -45,8 +56,9 @@
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_materialType}" />
 					<p:selectOneMenu
-						value="#{itemManagementBean.selected.materialType}" styleClass="fullWith"
-						required="true" converter="#{materialTypeConverter}"
+						value="#{itemManagementBean.selected.materialType}"
+						styleClass="fullWith" required="true"
+						converter="#{materialTypeConverter}"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_materialType}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{itemManagementBean.materialTypes}"
@@ -56,8 +68,8 @@
 
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_indUnitType}" />
-					<p:selectOneMenu value="#{itemManagementBean.selected.indUnitType}" styleClass="fullWith"
-						required="true"
+					<p:selectOneMenu value="#{itemManagementBean.selected.indUnitType}"
+						styleClass="fullWith" required="true"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_indUnitType}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{applicationScopeStore.getUnitTypesList()}"
@@ -66,8 +78,8 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_indActive}" />
-					<p:selectOneMenu value="#{itemManagementBean.selected.indActive}" styleClass="fullWith"
-						required="true"
+					<p:selectOneMenu value="#{itemManagementBean.selected.indActive}"
+						styleClass="fullWith" required="true"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_indActive}">
 						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 							var="yesNoItem" itemValue="#{yesNoItem.key}"
@@ -76,23 +88,73 @@
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemDescription}" />
 
 					<p:inputTextarea
-						value="#{itemManagementBean.selected.itemDescription}" 
-						required="true" 
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}" maxlength="150" />
+						value="#{itemManagementBean.selected.itemDescription}"
+						required="true"
+						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}"
+						maxlength="150" />
 
 
 
 				</p:panelGrid>
 				<p:commandButton actionListener="#{itemManagementBean.saveNew}"
-					value="#{loc.Save}"
-					update="display,:growl,:listForm:datalist"
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
 					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}" immediate="true" onclick="PF('createDialog').hide()" />
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
+					onclick="PF('createDialog').hide()" />
 			</h:panelGroup>
 
 		</h:form>
 
 	</p:dialog>
+
+
+
+
+	<p:dialog id="new_manufacturer" widgetVar="new_manufacturer"
+		modal="true" resizable="false" appendToBody="true"
+		header="#{loc.CreateOamManufacturerTitle}">
+
+		<h:form id="createManufacturerForm">
+
+
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{itemManagementBean.manufacturer != null}">
+					<p:outputLabel
+						value="#{loc.CreateOamManufacturerTitle_manufacturerName}" />
+					<p:inputText id="manufacturerName"
+						value="#{itemManagementBean.manufacturer.manufacturerName}"
+						title="#{loc.CreateOamManufacturerTitle_manufacturerName}"
+						required="true"
+						requiredMessage="#{loc.CreateOamManufacturerRequiredMessage_manufacturerName}" />
+					<p:outputLabel value="#{loc.EditOamManufacturerTitle_company}" />
+					<p:selectOneMenu id="company"
+						disabled="#{!applicationScopeStore. getCurrentlyLoggedUser().isAdminUser()}"
+						value="#{itemManagementBean.manufacturer.company}"
+						styleClass="fullWith"
+						title="#{loc.EditOamManufacturerTitle_company}" required="true"
+						converter="#{companyConverter}"
+						requiredMessage="#{loc.EditOamManufacturerRequiredMessage_company}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{itemManagementBean.companies}"
+							var="companyItem" itemValue="#{companyItem}"
+							itemLabel="#{companyItem.companyName}" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+				<p:commandButton
+					actionListener="#{itemManagementBean.addNewManufacturer()}"
+					value="#{loc.Save}" update=":growl :createForm:manufacturer :editForm:manufacturer"
+					oncomplete="if(!args.validationFailed){PF('new_manufacturer').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('new_manufacturer').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
 
 </ui:composition>
 

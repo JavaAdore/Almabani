@@ -36,7 +36,7 @@
 
 					<h:outputText value="#{loc.EditSecUserTitle_employee}" />
 					<p:selectOneMenu value="#{userManagementBean.selected.employee}" id="employee"
-						required="true" converter="#{employeeConverter}" binding="#{userManagementBean.employeeSelectMenuForEdit}"
+						required="true" converter="#{employeeConverter}" 
 						requiredMessage="#{loc.EditSecUserRequiredMessage_employee}">
 						<f:selectItem itemLabel="" itemValue="#{null}"
 							noSelectionOption="true" />
@@ -58,7 +58,7 @@
 					</p:selectOneMenu>
 
 					<h:outputText value="#{loc.EditSecUserTitle_indAdminSystem}" />
-					<p:selectOneMenu immediate="true"   valueChangeListener="#{userManagementBean.adminIdentifierChaged}"
+					<p:selectOneMenu immediate="true"   
 						value="#{userManagementBean.selected.indAdminSystem}"
 						styleClass="fullWith" required="true" 
 						requiredMessage="#{loc.CreateSecUserRequiredMessageIsAdmin}">

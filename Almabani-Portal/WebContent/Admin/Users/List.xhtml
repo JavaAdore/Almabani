@@ -10,7 +10,7 @@
 		<p:remoteCommand name="updateForm" update=":listForm"></p:remoteCommand>
 	</h:form>
 	<h:form id="listForm" prependId="false">
-
+  
 		<p:panel header="#{loc.ListSecUserTitle}"
 			style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" value="#{userManagementBean.items}"
@@ -18,8 +18,8 @@
 				selection="#{userManagementBean.selected}" editable="true"
 				rowKey="#{item.userLoginCode}" paginator="true" rows="10"
 				lazy="true" rowsPerPageTemplate="10,20,30">
-				<p:ajax event="rowSelect" update="viewButton editButton" />
-				<p:ajax event="rowUnselect" update="viewButton editButton" />
+				<p:ajax event="rowSelect" update="viewButton " />
+				<p:ajax event="rowUnselect" update="viewButton " />
 				<p:ajax event="rowEdit" listener="#{userManagementBean.onRowEdit}"
 					update=":growl  " oncomplete="updateForm()" />
 				<p:ajax event="rowEditCancel"
@@ -39,7 +39,7 @@
 				</p:column>
 
 				<p:column headerText="#{loc.ALMABANI_GENERAL_COMPANY}"
-					sortBy="#{item.employee.establishment.company}"
+					sortBy="#{item.employee.establishment.company}" rendered="#{applicationScopeStore.getCurrentlyLoggedUser().isAdminUser()}"
 					filterBy="#{item.employee.establishment.company}">
 
 					<f:facet name="filter">
@@ -48,13 +48,11 @@
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{userManagementBean.companies}"
-								var="company" itemValue="#{company}"
-								itemLabel="#{company.companyName}" />
+								var="company" itemValue="#{company}" itemLabel="#{company.companyName}" />
 						</p:selectOneMenu>
 					</f:facet>
 
-					<p:outputLabel
-						value="#{item.employee.establishment.company.companyName}" />
+					<p:outputLabel value="#{item.employee.establishment.company.companyName}" />
 
 
 				</p:column>
@@ -131,7 +129,7 @@
 								value="#{applicationScopeStore.getYesNoValue(item.indAdminSystem)}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectOneMenu value="#{item.indAdminSystem}" 
+							<p:selectOneMenu value="#{item.indAdminSystem}"
 								styleClass="fullWith">
 								<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 									var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
@@ -144,7 +142,7 @@
 						<h:outputText value="#{loc.ListSecUserTitle_password}" />
 					</f:facet>
 
-					<p:inplace id="event" effectSpeed="fast" event="click"
+					<p:inplace id="event" effectSpeed="fast" event="click" 
 						label="#{loc.ALMABANO_GENERAL_CLICK_HERE_TO_DISPLAY_PASSWORD}"
 						editor="true">
 						<p:ajax event="save" update=":growl" />
@@ -154,7 +152,7 @@
 					</p:inplace>
 				</p:column>
 				<p:column style="width:32px">
-					<p:rowEditor>
+					<p:rowEditor rendered="#{applicationScopeStore.hasFullAccess()}">
 					</p:rowEditor>
 
 				</p:column>
@@ -169,11 +167,7 @@
 						value="#{loc.View}" update=":viewForm:display"
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty userManagementBean.selected}" />
-					<p:commandButton id="editButton"
-						rendered="#{applicationScopeStore.hasFullAccess()}"
-						icon="ui-icon-pencil" value="#{loc.Edit}"
-						update=":editForm:display" oncomplete="PF('editDialog').show()"
-						disabled="#{empty userManagementBean.selected}" />
+
 				</f:facet>
 
 			</p:dataTable>

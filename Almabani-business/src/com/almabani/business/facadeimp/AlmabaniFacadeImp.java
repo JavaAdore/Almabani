@@ -86,7 +86,7 @@ import com.almabani.common.util.Utils;
 @Service
 @EnableTransactionManagement
 public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
-	
+
 	private static final long serialVersionUID = 2497936510976318040L;
 
 	@Autowired
@@ -178,23 +178,19 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Autowired
 	ProjectJobTitleService projectJobTitleService;
-	
+
 	@Autowired
 	OamQuotationActionTypeService oamQuotationActionTypeService;
 
-	
 	@PostConstruct
-	public void cacheApplications()
-	{
-		if(Utils.isEmptyMap(getApplicationsDescriptions()))
-		{
-			Map<String,String> applicationDescription = applicationService.getApplicationDescriptionMap();
+	public void cacheApplications() {
+		if (Utils.isEmptyMap(getApplicationsDescriptions())) {
+			Map<String, String> applicationDescription = applicationService
+					.getApplicationDescriptionMap();
 			setApplicationsDescriptions(applicationDescription);
 		}
 	}
-	
-	
-	
+
 	@Override
 	public Company getCompany(Long id) {
 
@@ -222,12 +218,12 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 			DepartmentSection selectedDepartmentSection) {
 		return employeeService.getEmployees(selectedDepartmentSection);
 	}
-	
+
 	@Override
 	public boolean isFederalIdentityCodeExist(String federalIdentityCode) {
 		return employeeService.isFederalIdentityCodeExist(federalIdentityCode);
 	}
-	
+
 	@Override
 	public Integer getNumberOfEmployees(Map<String, Object> filters) {
 		return employeeService.getNumberOfEmployees(filters);
@@ -273,12 +269,12 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 		return jobTitleTypeService.getJobTitle(id);
 	}
-	
+
 	@Override
 	public List<JobTitleType> getJobTitleTypes(Company company) {
 		return jobTitleTypeService.getJobTitleTypes(company);
 	}
-	
+
 	@Override
 	public List<JobTitleType> getAllJobTitleTypes() {
 		return jobTitleTypeService.getAllJobTitleTypes();
@@ -297,12 +293,13 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public Company addCompany(Company company, CommonDriverMap commonDriverMap) throws AlmabaniException {
-		 
+	public Company addCompany(Company company, CommonDriverMap commonDriverMap)
+			throws AlmabaniException {
 
 		company.assignLastModificationDate();
-		
-		company.setModificationMakerName(commonDriverMap.getTargetUser().getUserLoginCode());
+
+		company.setModificationMakerName(commonDriverMap.getTargetUser()
+				.getUserLoginCode());
 		if (Utils.hasID(company)) {
 			return companyService.updateCompany(company);
 
@@ -365,7 +362,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	public Establishment getEstablishment(Long key) {
 		return establishmentService.getEstablishment(key);
 	}
-	
+
 	@Override
 	public List<Establishment> getEstablishments(Company company) {
 		return establishmentService.getEstablishments(company);
@@ -599,35 +596,35 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public Project saveOrUpdate(Project project) throws AlmabaniException {
-		
-		if(project.getId() == null){
-			
+
+		if (project.getId() == null) {
+
 			if (projectService.isProjectCodeExist(project.getProjectCode())) {
 				throw new AlmabaniException(
 						MessagesKeyStore.DUPLICATE_PROJECT_CODE);
 			}
-			
+
 			projectService.persist(project);
-		} else{
-			
+		} else {
+
 			if (!projectService.getProject(project.getId()).getProjectCode()
 					.equals(project.getProjectCode()))
 				if (projectService.isProjectCodeExist(project.getProjectCode())) {
 					throw new AlmabaniException(
 							MessagesKeyStore.DUPLICATE_PROJECT_CODE);
 				}
-			
+
 			projectService.update(project);
 		}
-		
+
 		return project;
 	}
-	
+
 	@Override
 	public Project getProject(Long id) {
 		return projectService.getProject(id);
 	}
-	
+
 	@Override
 	public List<Project> getProjects(Company company) {
 		return projectService.getProjects(company);
@@ -739,7 +736,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 			CommonDriverMap appendCurrentUserCode) throws AlmabaniException {
 
 		if (Utils.isNotNull(secApplication.getLastModificationDate())) {
-  
+
 			SecApplication application = applicationService
 					.getApplication(secApplication.getCodApplication());
 
@@ -805,16 +802,15 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	public SecUser getSecUser(String userLoginCode) {
 		return secUserService.getUser(userLoginCode);
 	}
-	
+
 	@Override
 	public List<UserApplicationGrant> getGrantedApplication(SecUser secUser,
 			Company company) {
 		CommonDriverMap commonDriverMap = new CommonDriverMap();
 		commonDriverMap.appendCompany(commonDriverMap, company);
 		commonDriverMap.appendTargetUser(commonDriverMap, secUser);
-		return getGrantedApplication(commonDriverMap); 
+		return getGrantedApplication(commonDriverMap);
 
-		
 	}
 
 	@Override
@@ -841,8 +837,8 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 				.getAllApplications();
 
 		List<SecApplicationsCompany> result = new ArrayList<SecApplicationsCompany>();
-CommonDriverMap commonDriverMap   = new CommonDriverMap();
-commonDriverMap.appendCompany(commonDriverMap, company);
+		CommonDriverMap commonDriverMap = new CommonDriverMap();
+		commonDriverMap.appendCompany(commonDriverMap, company);
 		Map<SecApplication, UserApplicationGrant> appsGrantedToCompany = applicationService
 				.getCompanyGrantedApps(commonDriverMap);
 
@@ -906,7 +902,7 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 		}
 
 	}
-	
+
 	@Override
 	public List<AllocationType> getAllocationTypes(Company company) {
 		return allocationTypeService.getAllocationTypes(company);
@@ -926,7 +922,7 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 	public ProjectJobTitle saveOrUpdate(ProjectJobTitle projectJobTitle) {
 		return projectJobTitleService.saveOrUpdate(projectJobTitle);
 	}
-	
+
 	@Override
 	public ProjectJobTitle getProjectJobTitle(Long id) {
 		return projectJobTitleService.getProjectJobTitle(id);
@@ -936,7 +932,7 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 	public List<ProjectJobTitle> getProjectJobTitles(Company company) {
 		return projectJobTitleService.getProjectJobTitles(company);
 	}
-	
+
 	@Override
 	public List<ProjectJobTitle> getAllProjectJobTitles() {
 		return projectJobTitleService.getAllProjectJobTitles();
@@ -992,21 +988,22 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 	@Override
 	public List<Employee> loadEmployees(int first, int pageSize,
 			String sortField, boolean assending, Map<String, Object> filters) {
-		return employeeService.loadEmployees(first, pageSize,
-				sortField, assending, filters);
+		return employeeService.loadEmployees(first, pageSize, sortField,
+				assending, filters);
 	}
 
 	@Override
 	public List<OamQuotationActionType> getAvailableQuotationActionTypes(
 			OamQuotation selected) {
-		
-		return oamQuotationActionTypeService.getAvailableQuotationActionTypes( selected) ;
-				
+
+		return oamQuotationActionTypeService
+				.getAvailableQuotationActionTypes(selected);
+
 	}
 
 	@Override
 	public OamQuotationActionType getOamQuotationActionType(Long id) {
-		return oamQuotationActionTypeService.getOamQuotationActionType( id);
+		return oamQuotationActionTypeService.getOamQuotationActionType(id);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1035,16 +1032,43 @@ commonDriverMap.appendCompany(commonDriverMap, company);
 	}
 
 	@Override
-	public String getApplicationDescription(String applicationCode)
-	{
+	public String getApplicationDescription(String applicationCode) {
 		return super.getApplicationDescription(applicationCode);
 	}
-
-
 
 	@Override
 	public List<SecUser> getCompanyUsers(Company company) {
 		return secUserService.getUsers(company);
+	}
+
+	@Override
+	public List<Employee> getCompanyEmployees(Company company) {
+		return employeeService.getCompanyEmployees(company);
+	}
+
+	@Override
+	public List<OamManufacturer> getAllManufacturers(Company company) {
+
+		return manufacturerService.getAllManufacturers(company);
+	}
+
+	@Override
+	public List<OamTypeMaterial> getAllMaterialTypes(Company company) {
+		return materialTypeService.getAllMaterialTypes(company);
+	}  
+
+	@Override
+	public OamManufacturer addOrUpdateManufacturer(OamManufacturer manufacturer,
+			CommonDriverMap commonDriverMap) throws AlmabaniException { 
+
+		if (Utils.hasID(manufacturer)) {
+			return manufacturerService.updateManufacturer(manufacturer,
+					commonDriverMap);
+		} else {
+			return manufacturerService.addManufacturer(manufacturer,
+					commonDriverMap);
+
+		}
 	}
 
 }

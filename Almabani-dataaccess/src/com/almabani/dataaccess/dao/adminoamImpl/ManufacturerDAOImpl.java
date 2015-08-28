@@ -3,9 +3,11 @@ package com.almabani.dataaccess.dao.adminoamImpl;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.dataaccess.dao.adminoam.ManufacturerDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -50,6 +52,13 @@ public class ManufacturerDAOImpl extends AbstractDAO implements ManufacturerDAO 
 	@Override
 	public List<OamManufacturer> getAllManufacturers() {
 		return super.getAllEntities(OamManufacturer.class);
+	}
+
+	@Override
+	public List<OamManufacturer> getAllManufacturers(Company company) {
+		Query query = getCurrentSession().createQuery("select x from OamManufacturer x where x.company =:company ");
+		query.setParameter("company", company);
+		return query.list();  
 	}
 
 }

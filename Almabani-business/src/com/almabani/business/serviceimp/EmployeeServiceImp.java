@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.EmployeeService;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.DepartmentSection;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.dataaccess.dao.admincor.EmployeeDAO;
@@ -58,6 +59,11 @@ public class EmployeeServiceImp implements EmployeeService {
 			String sortField, boolean ascending, Map<String, Object> filters) {
 		return employeeDAO.loadEmployees(first, pageSize,
 				sortField, ascending, filters);
+	}
+
+	@Override
+	public List<Employee> getCompanyEmployees(Company company){
+		return employeeDAO.getCompanyEmployees( company);
 	}
 
 }

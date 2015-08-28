@@ -7,17 +7,13 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 
-import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.almabani.common.constant.DataAccessConstant;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
@@ -33,10 +29,6 @@ import com.almabani.portal.webutils.WebUtils;
 public class UserManagementBean extends AbstractBeanHelper implements
 		Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private SelectOneMenu employeeSelectMenu;
-
-	private SelectOneMenu employeeSelectMenuForEdit;
 
 	private LazyDataModel<SecUser> items;
 
@@ -59,17 +51,28 @@ public class UserManagementBean extends AbstractBeanHelper implements
 	@PostConstruct
 	public void init() {
 		initializeUsersLazyList();
+
 		initializeEmployeesList();
+
 		initializeCompaniesList();
 
 	}
 
 	private void initializeCompaniesList() {
-		companies = almabaniFacade.getAllCompanies();
+		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
+
+			companies = almabaniFacade.getAllCompanies();
+		}
 	}
 
 	private void initializeEmployeesList() {
-		employees = almabaniFacade.getAllEmployees();
+		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
+			employees = almabaniFacade.getAllEmployees();
+		} else {
+			employees = almabaniFacade.getCompanyEmployees(WebUtils
+					.getCurrentLoggedUser().getEmployee().getEstablishment()
+					.getCompany());
+		}
 	}
 
 	private void initializeUsersLazyList() {
@@ -112,6 +115,10 @@ public class UserManagementBean extends AbstractBeanHelper implements
 		@Override
 		public List<SecUser> load(int first, int pageSize, String sortField,
 				SortOrder sortOrder, Map<String, Object> filters) {
+
+			attachCompanyInCaseOfNotAdmin(WebUtils.getCurrentLoggedUser()
+					.getEmployee().getEstablishment().getCompany(), filters);
+
 			rowCount = almabaniFacade.getCountOfUsers(filters);
 
 			result = (List<SecUser>) almabaniFacade.loadUsers(first, pageSize,
@@ -120,6 +127,13 @@ public class UserManagementBean extends AbstractBeanHelper implements
 			setRowCount(this.rowCount);
 
 			return result;
+		}
+
+		private void attachCompanyInCaseOfNotAdmin(Company company,
+				Map<String, Object> filters) {
+			if (WebUtils.getCurrentLoggedUser().isAdminUser() == false) {
+				filters.put("employee.establishment.company", company);
+			}
 		}
 
 		@Override
@@ -203,35 +217,4 @@ public class UserManagementBean extends AbstractBeanHelper implements
 		this.employees = employees;
 	}
 
-	public void adminIdentifierChaged(ValueChangeEvent e) {
-		String value = (String) e.getNewValue();
-		if (Utils.isNotEmptyString(value)) {
-			if (value.equalsIgnoreCase(DataAccessConstant.YES)) {
-				employeeSelectMenu.setRequired(false);
-				employeeSelectMenuForEdit.setRequired(false);
-			} else {
-				employeeSelectMenu.setRequired(true);
-				employeeSelectMenuForEdit.setRequired(true);
-
-
-			}
-		}
-
-	}
-
-	public SelectOneMenu getEmployeeSelectMenu() {
-		return employeeSelectMenu;
-	}
-
-	public void setEmployeeSelectMenu(SelectOneMenu employeeSelectMenu) {
-		this.employeeSelectMenu = employeeSelectMenu;
-	}
-
-	public SelectOneMenu getEmployeeSelectMenuForEdit() {
-		return employeeSelectMenuForEdit;
-	}
-
-	public void setEmployeeSelectMenuForEdit(SelectOneMenu employeeSelectMenuForEdit) {
-		this.employeeSelectMenuForEdit = employeeSelectMenuForEdit;
-	}
 }

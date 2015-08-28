@@ -21,21 +21,27 @@
 					rendered="#{itemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCode}" />
 					<p:inputText value="#{itemManagementBean.selected.itemCode}"
-						style="width:177px" required="true" maxlength="20"
+						maxlength="20" style="width:177px" required="true"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
-					<p:selectOneMenu converter="#{manufacturerConverter}"
-						styleClass="fullWith"
-						value="#{itemManagementBean.selected.manufacturer}"
-						required="true"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{itemManagementBean.manufacturers}"
-							var="manufacturerItem" itemValue="#{manufacturerItem}"
-							itemLabel="#{manufacturerItem.manufacturerName}" />
-					</p:selectOneMenu>
-
+					<p:panelGrid columns="2" styleClass="fullWith">
+						<p:selectOneMenu converter="#{manufacturerConverter}"
+							id="manufacturer" widgetVar="manufacturer" 
+							value="#{itemManagementBean.selected.manufacturer}"
+							required="true"
+							requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
+							<f:selectItem itemValue="#{loc.ALMABANI_GENERAL_NO_SELECT}"
+								itemLabel="#{loc.SelectOneMessage}" noSelectionOption="true" />
+							<f:selectItems value="#{itemManagementBean.manufacturers}"
+								var="manufacturerItem" itemValue="#{manufacturerItem}"
+								itemLabel="#{manufacturerItem.manufacturerName}" />
+						</p:selectOneMenu>
+						<p:commandButton value="+" immediate="true"
+							actionListener="#{itemManagementBean.initializeNewManufacturer()}"
+							update=":createManufacturerForm"
+							onclick="PF('new_manufacturer').show()" />
+					</p:panelGrid>
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
 					<p:selectOneMenu
 						value="#{itemManagementBean.selected.itemCategory}"

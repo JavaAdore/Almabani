@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.almabani.business.service.MaterialTypeService;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.dataaccess.dao.adminoam.MaterialTypeDAO;
@@ -51,6 +52,11 @@ public class MaterialTypeServiceImpl implements MaterialTypeService {
 	@Override
 	public List<OamTypeMaterial> getAllMaterialTypes() {
 		return materialTypeDAO.getAllMaterialTypes();
+	}
+
+	@Override
+	public List<OamTypeMaterial> getAllMaterialTypes(Company company) {
+		return materialTypeDAO.getAllMaterialTypes( company);
 	}
 
 	

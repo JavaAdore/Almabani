@@ -323,6 +323,15 @@ public interface AlmabaniFacade {
 	String getApplicationDescription(String applicationKey);
 
 	List<SecUser> getCompanyUsers(Company company);
+
+	List<Employee> getCompanyEmployees(Company company);
+
+	List<OamManufacturer> getAllManufacturers(Company company);
+
+	List<OamTypeMaterial> getAllMaterialTypes(Company company);
+
+	OamManufacturer addOrUpdateManufacturer(OamManufacturer manufacturer,
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
 	
 	
 }

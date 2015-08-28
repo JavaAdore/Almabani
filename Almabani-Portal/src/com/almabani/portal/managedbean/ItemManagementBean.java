@@ -3,7 +3,7 @@ package com.almabani.portal.managedbean;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -14,6 +14,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
@@ -25,7 +26,8 @@ import com.almabani.portal.webutils.WebUtils;
 
 @ManagedBean
 @ViewScoped
-public class ItemManagementBean  extends AbstractBeanHelper implements Serializable {
+public class ItemManagementBean extends AbstractBeanHelper implements
+		Serializable {
 
 	/**
 	 * 
@@ -33,19 +35,36 @@ public class ItemManagementBean  extends AbstractBeanHelper implements Serializa
 	private static final long serialVersionUID = 1L;
 
 	private LazyDataModel<OamItem> items;
-	
-	private List<OamManufacturer>manufacturers;
-	
-	private List<OamItemCategory>itemCategories;
 
-	private List<OamTypeMaterial>materialTypes;
-	
+	private List<OamManufacturer> manufacturers;
+
+	private List<OamItemCategory> itemCategories;
+
+	private List<OamTypeMaterial> materialTypes;
+
 	private boolean operationSuccess = false;
 
+	OamManufacturer manufacturer;
+
+	private List<Company> companies;
+
+	public List<Company> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(List<Company> companies) {
+		this.companies = companies;
+	}
+
+	public OamManufacturer getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(OamManufacturer manufacturer) {
+		this.manufacturer = manufacturer;
+	}
 
 	private OamItem selected;
-
-	
 
 	@PostConstruct
 	public void init() {
@@ -53,33 +72,59 @@ public class ItemManagementBean  extends AbstractBeanHelper implements Serializa
 		loadInitialLists();
 	}
 
+	public void addNewManufacturer() throws AlmabaniException {
+		CommonDriverMap commonDriverMap = new CommonDriverMap();
+		commonDriverMap = commonDriverMap.appendCurrentUserCode(
+				commonDriverMap, WebUtils.getCurrentUserCode());
+		manufacturer = almabaniFacade.addOrUpdateManufacturer(manufacturer, commonDriverMap);
+		manufacturers.add(manufacturer);
+		selected.setManufacturer(manufacturer);
+		WebUtils.fireInfoMessage(
+		MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY, WebUtils
+				.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_MANUFACTURER));
+	}
+
 	private void loadInitialLists() {
-		manufacturers = almabaniFacade.getAllManufacturers();
+
 		itemCategories = almabaniFacade.getAllItemCategories();
-		materialTypes = almabaniFacade.getAllMaterialTypes();
-		
+
+		if (WebUtils.isAdminUser()) {
+			manufacturers = almabaniFacade.getAllManufacturers();
+			materialTypes = almabaniFacade.getAllMaterialTypes();
+			companies = almabaniFacade.getAllCompanies();
+		} else {
+			Company company = WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany();
+			manufacturers = almabaniFacade.getAllManufacturers(company);
+			materialTypes = almabaniFacade.getAllMaterialTypes(company);
+			companies = new ArrayList<Company>();
+			companies.add(WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany());
+		}
+
 	}
 
 	private void initializeItemsLazyList() {
 		items = new ItemsLazyList();
 	}
 
-	
 	public void prepareCreate() {
-		   selected = new OamItem();
+		selected = new OamItem();
 	}
 
 	public void saveNew() throws AlmabaniException {
 
 		operationFaild();
 		boolean isAlreadyExisitEntity = Utils.hasID(selected);
-		
-		selected = almabaniFacade.addOrUpdateItem(selected, CommonDriverMap.appendCurrentUserCode(null, WebUtils.getCurrentUserCode()));
+
+		selected = almabaniFacade.addOrUpdateItem(
+				selected,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_ITEM));
-	
 		operationSucceded();
 
 	}
@@ -99,9 +144,8 @@ public class ItemManagementBean  extends AbstractBeanHelper implements Serializa
 				SortOrder sortOrder, Map<String, Object> filters) {
 			rowCount = almabaniFacade.getnumberOfItems(filters);
 
-			result = (List<OamItem>) almabaniFacade.loadItems(first,
-					pageSize, sortField, sortOrder == SortOrder.ASCENDING,
-					filters);
+			result = (List<OamItem>) almabaniFacade.loadItems(first, pageSize,
+					sortField, sortOrder == SortOrder.ASCENDING, filters);
 
 			setRowCount(this.rowCount);
 
@@ -122,8 +166,6 @@ public class ItemManagementBean  extends AbstractBeanHelper implements Serializa
 		}
 
 	}
-	
-	
 
 	public LazyDataModel<OamItem> getItems() {
 		return items;
@@ -186,7 +228,10 @@ public class ItemManagementBean  extends AbstractBeanHelper implements Serializa
 		this.materialTypes = materialTypes;
 	}
 
-	
-	
+	public void initializeNewManufacturer() { 
+		manufacturer = new OamManufacturer();
+		manufacturer.setIndActive(com.almabani.common.constant.DataAccessConstant.IND_ACTIVE);
+		manufacturer.setCompany(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany()); 
+	}
 
 }

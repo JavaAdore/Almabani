@@ -1,5 +1,6 @@
 package com.almabani.business.serviceimp;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.almabani.business.service.ManufacturerService;
+import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.dataaccess.dao.adminoam.ManufacturerDAO;
@@ -25,26 +28,14 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 		return manufacturerDAO.loadManufacturers(first,pageSize,sortField,assending,filters);
 	}
 
-	@Transactional
-	@Override 
-	public OamManufacturer addManufacturer(OamManufacturer company) throws AlmabaniException {
-		return null;
-	}
+
 
 	@Override
 	public OamManufacturer getManufacturer(Long id) {
 		return manufacturerDAO.getManufacturer(id);
 	}
 
-	@Transactional
-	@Override
-	public OamManufacturer updateManufacturer(OamManufacturer company) throws AlmabaniException {
 	
-		return null;
-		
-		
-	}
-
 	@Override
 	public Integer getCountOfManufacturers(Map<String, Object> filters) {
 		return manufacturerDAO.getCountOfOamManufacturer( filters);
@@ -53,6 +44,33 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	@Override
 	public List<OamManufacturer> getAllManufacturers() {
 		return manufacturerDAO.getAllManufacturers();
+	}
+
+	@Override
+	public List<OamManufacturer> getAllManufacturers(Company company) {
+		return manufacturerDAO.getAllManufacturers( company);
+	}
+
+
+
+	@Override
+	public OamManufacturer addManufacturer(OamManufacturer manufacturer,
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
+		Date date = new Date();
+		manufacturer.setLastModificationDate(date);
+		manufacturer.setModificationMakerName(commonDriverMap.getCurrentUserCode());
+		return manufacturerDAO.addOamManufacturer(manufacturer);
+	}
+
+
+
+	@Override
+	public OamManufacturer updateManufacturer(OamManufacturer manufacturer ,CommonDriverMap commonDriverMap)
+			throws AlmabaniException {
+		Date date = new Date();
+		manufacturer.setLastModificationDate(date);
+		manufacturer.setModificationMakerName(commonDriverMap.getCurrentUserCode());
+		return manufacturerDAO.addOamManufacturer(manufacturer);
 	}
 
 	
