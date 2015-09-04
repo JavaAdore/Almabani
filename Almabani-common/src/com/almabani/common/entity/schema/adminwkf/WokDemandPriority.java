@@ -40,7 +40,7 @@ public class WokDemandPriority extends AbstractEntity implements Serializable {
 	@Column(name = "DES_PRIORITY", nullable = false, length = 80)
 	private String priorityDescription;
 	
-	@Column(name = "QUT_HOURS_VIOLATION_SLA", nullable = false, precision = 5, scale = 0)
+	@Column(name = "QUT_HOURS_VIOLATION_SLA_INC", nullable = false, precision = 5, scale = 0)
 	private int qutHoursViolationSla;
 	
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
