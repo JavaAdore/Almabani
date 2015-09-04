@@ -25,14 +25,14 @@ import com.almabani.common.entity.schema.admincor.Project;
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_WORKING_GROUPS", uniqueConstraints = @UniqueConstraint(columnNames = "COD_WORKING_GROUP"))
-@SequenceGenerator(name = "WokWorkingGroups_Id_Seq_Gen", sequenceName = "WOK_WORKING_GROUPS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+//@SequenceGenerator(name = "WokWorkingGroups_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_WORKING_GROUPS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokWorkingGroup extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -5964225776479051957L;
 
 	@Id
 	@Column(name = "NUM_WORKING_GROUP", unique = true, nullable = false, precision = 5, scale = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokWorkingGroups_Id_Seq_Gen")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokWorkingGroups_Id_Seq_Gen")
 	private Long id;
 	
 	@Column(name = "COD_WORKING_GROUP", unique = true, nullable = false, length = 15)

@@ -24,7 +24,7 @@ import com.almabani.common.entity.schema.admincor.Company;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_TYPES_QUOT_ACTIONS")
-@SequenceGenerator(name = "OamTypesQuotActions_Id_Seq_Gen", sequenceName = "OAM_TYPES_QUOT_ACTIONS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "OamTypesQuotActions_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_TYPE_QUOT_ACTION", allocationSize = 1, initialValue = 1)
 public class OamQuotationActionType extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 7544673398792503287L;

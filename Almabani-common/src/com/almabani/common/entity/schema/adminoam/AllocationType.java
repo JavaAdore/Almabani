@@ -24,7 +24,7 @@ import com.almabani.common.entity.schema.admincor.Project;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_TYPES_ALLOCATIONS")
-@SequenceGenerator(name = "OamTypesAllocations_Id_Seq_Gen", sequenceName = "OAM_TYPES_ALLOCATIONS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "OamTypesAllocations_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_TYPE_ALLOCATION", allocationSize = 1, initialValue = 1)
 public class AllocationType extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -715235308395274041L;

@@ -23,15 +23,11 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_ITEMS")
-@SequenceGenerator(name = "OamItems_Id_Seq_Gen", sequenceName = "adminoam.OAM_SEQ_NUM_ITEM", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "OamItems_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_ITEM", allocationSize = 1, initialValue = 1)
 public class OamItem extends AbstractEntity implements Serializable {  
-	  
+	
+	private static final long serialVersionUID = 1611168614758417632L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-  
 	@Id
 	@Column(name = "NUM_ITEM", unique = true, nullable = false, precision = 9, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamItems_Id_Seq_Gen")

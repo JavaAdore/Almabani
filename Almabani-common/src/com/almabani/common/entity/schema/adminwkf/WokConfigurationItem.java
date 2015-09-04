@@ -23,14 +23,14 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_CONFIGURATIONS_ITEM")
-@SequenceGenerator(name = "WokConfigurationsItem_Id_Seq_Gen", sequenceName = "WOK_CONFIGURATIONS_ITEM_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+//@SequenceGenerator(name = "WokConfigurationsItem_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_CONFIGURATIONS_ITEM_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokConfigurationItem extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -3396753552647742778L;
 
 	@Id
 	@Column(name = "NUM_CONFIGURATION_ITEM", unique = true, nullable = false, precision = 5, scale = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokConfigurationsItem_Id_Seq_Gen")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokConfigurationsItem_Id_Seq_Gen")
 	private Long id;
 	
 	@ManyToOne

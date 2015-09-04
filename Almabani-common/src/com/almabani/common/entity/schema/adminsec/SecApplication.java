@@ -11,9 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.almabani.common.constant.DataAccessConstant;
-import com.almabani.common.util.Utils;
-
 /**
  * @author Mohamed_Ibrahim
  */

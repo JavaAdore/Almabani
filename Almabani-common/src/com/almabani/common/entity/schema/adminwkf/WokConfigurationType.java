@@ -24,14 +24,14 @@ import com.almabani.common.entity.schema.admincor.Company;
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_CONFIGURATIONS_TYPES")
-@SequenceGenerator(name = "WokConfigurationsTypes_Id_Seq_Gen", sequenceName = "WOK_CONFIGURATIONS_TYPES_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+//@SequenceGenerator(name = "WokConfigurationsTypes_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_CONFIGURATIONS_TYPES_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokConfigurationType extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 3303596609993145985L;
 
 	@Id
 	@Column(name = "NUM_CONFIGURATION_TYPE", unique = true, nullable = false, precision = 4, scale = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokConfigurationsTypes_Id_Seq_Gen")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokConfigurationsTypes_Id_Seq_Gen")
 	private Long id;
 	
 	@Column(name = "DES_CONFIGURATION_TYPE", nullable = false, length = 80)

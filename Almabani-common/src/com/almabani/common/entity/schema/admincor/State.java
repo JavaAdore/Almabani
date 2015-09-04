@@ -16,7 +16,6 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(schema="ADMINCOR", name = "COM_STATES")
-
 public class State  implements Serializable {
        
 	private static final long serialVersionUID = -1658552753618443682L;

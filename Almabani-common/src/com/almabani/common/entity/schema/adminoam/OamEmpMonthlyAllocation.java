@@ -22,7 +22,7 @@ import com.almabani.common.entity.AbstractEntity;
  */
 
 @Entity
-@Table(schema="ADMINOAM", name = "OAM_EMP_MONTHLY_ALLOCATION")
+@Table(schema="ADMINOAM", name = "ADMINOAM.OAM_SEQ_NUM_EMP_MON_ALLOCATION")
 @SequenceGenerator(name = "OamEmpMonthlyAllocation_Id_Seq_Gen", sequenceName = "OAM_EMP_MONTHLY_ALLOCATION_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class OamEmpMonthlyAllocation extends AbstractEntity implements Serializable {
 	
