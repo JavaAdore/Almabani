@@ -24,14 +24,14 @@ import com.almabani.common.entity.schema.admincor.Establishment;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_STOCK_ITEMS")
-@SequenceGenerator(name = "OamStockItems_Id_Seq_Gen", sequenceName = "OAM_STOCK_ITEMS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+//@SequenceGenerator(name = "OamStockItems_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_STOCK_ITEMS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class OamStockItem extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 6832336132373271576L;
 
 	@Id
 	@Column(name = "NUM_STOCK_ITEM", unique = true, nullable = false, precision = 15, scale = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamStockItems_Id_Seq_Gen")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamStockItems_Id_Seq_Gen")
 	private Long id;
 	
 	@ManyToOne

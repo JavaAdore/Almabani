@@ -28,7 +28,7 @@ import com.almabani.common.entity.schema.adminwkf.WokDemand;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_QUOTATIONS")
-@SequenceGenerator(name = "OamQuotations_Id_Seq_Gen", sequenceName = "adminoam.OAM_SEQ_NUM_QUOTATION", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "OamQuotations_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_QUOTATION", allocationSize = 1, initialValue = 1)
 public class OamQuotation extends AbstractEntity implements 
 		Serializable {
 	  

@@ -24,7 +24,7 @@ import com.almabani.common.entity.schema.admincor.Project;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_SITES")
-@SequenceGenerator(name = "OamSites_Id_Seq_Gen", sequenceName = "OAM_SITES_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "OamSites_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_SITE", allocationSize = 1, initialValue = 1)
 public class OamSite extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 9137002054165392535L;

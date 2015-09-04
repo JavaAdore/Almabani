@@ -130,7 +130,7 @@
 						requiredMessage="#{loc.CreateOamManufacturerRequiredMessage_manufacturerName}" />
 					<p:outputLabel value="#{loc.EditOamManufacturerTitle_company}" />
 					<p:selectOneMenu id="company"
-						disabled="#{!applicationScopeStore. getCurrentlyLoggedUser().isAdminUser()}"
+						disabled="#{applicationScopeStore. getCurrentlyLoggedUser().isAdminUser() == false}"
 						value="#{itemManagementBean.manufacturer.company}"
 						styleClass="fullWith"
 						title="#{loc.EditOamManufacturerTitle_company}" required="true"

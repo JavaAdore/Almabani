@@ -23,7 +23,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINOAM", name = "OAM_ZONE_DEVICES")
-@SequenceGenerator(name = "OamZoneDevices_Id_Seq_Gen", sequenceName = "OAM_ZONE_DEVICES_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "OamZoneDevices_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_ZONE_DEVICE", allocationSize = 1, initialValue = 1)
 public class OamZoneDevice extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 5580091354043445039L;

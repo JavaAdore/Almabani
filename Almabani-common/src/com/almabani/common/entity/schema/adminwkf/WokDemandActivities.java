@@ -23,7 +23,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_DEMANDS_ACTIVITIES")
-@SequenceGenerator(name = "WokDemandsActivities_Id_Seq_Gen", sequenceName = "WOK_DEMANDS_ACTIVITIES_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "WokDemandsActivities_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_SEQ_NUM_ACTIVITY", allocationSize = 1, initialValue = 1)
 public class WokDemandActivities extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 5809514804715304008L;

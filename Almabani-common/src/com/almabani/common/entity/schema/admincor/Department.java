@@ -26,7 +26,7 @@ import com.almabani.common.enums.Active;
  */
 @Entity
 @Table(schema="ADMINCOR",name = "COM_DEPARTMENTS")
-@SequenceGenerator(name = "ComDepartments_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_DEPARTMENTS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "ComDepartments_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_DEPARTMENT", allocationSize = 1, initialValue = 1)
 public class Department extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

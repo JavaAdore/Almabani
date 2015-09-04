@@ -26,7 +26,7 @@ import com.almabani.common.entity.schema.admincor.Company;
 @Entity
 @Table(schema="ADMINSEC", name = "SEC_SYSTEMS", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"COD_SYSTEM", "NUM_COMPANY" }))
-@SequenceGenerator(name = "SecSystems_Id_Seq_Gen", sequenceName = "SEC_SYSTEMS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "SecSystems_Id_Seq_Gen", sequenceName = "ADMINSEC.SEC_SEQ_NUM_SYSTEM", allocationSize = 1, initialValue = 1)
 public class SecSystem extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 795292475234878365L;

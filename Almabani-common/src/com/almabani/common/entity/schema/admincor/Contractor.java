@@ -21,7 +21,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 @Entity
 @Table(schema="ADMINCOR" ,name = "COM_CONTRACTORS")
-@SequenceGenerator(name = "ComContractors_Id_Seq_Gen", sequenceName = "COM_CONTRACTORS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "ComContractors_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_CONTRACTOR", allocationSize = 1, initialValue = 1)
 public class Contractor extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = -2851871687239799754L;

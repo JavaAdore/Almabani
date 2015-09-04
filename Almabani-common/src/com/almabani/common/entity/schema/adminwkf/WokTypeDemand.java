@@ -26,14 +26,14 @@ import com.almabani.common.entity.schema.admincor.Company;
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_TYPES_DEMAND", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"NUM_COMPANY", "IND_CATEGORY" }))
-@SequenceGenerator(name = "WokTypesDemand_Id_Seq_Gen", sequenceName = "WOK_TYPES_DEMAND_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+//@SequenceGenerator(name = "WokTypesDemand_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_TYPES_DEMAND_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokTypeDemand extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -8176905469413603637L;
 
 	@Id
 	@Column(name = "NUM_TYPE_DEMAND", unique = true, nullable = false, precision = 3, scale = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokTypesDemand_Id_Seq_Gen")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokTypesDemand_Id_Seq_Gen")
 	private Long id;
 	
 	@Column(name = "DES_TYPE_DEMAND", nullable = false, length = 80)

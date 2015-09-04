@@ -25,7 +25,7 @@ import com.almabani.common.entity.AbstractEntity;
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_PROFILES_ACTIONS", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"NUM_TYPE_ACTION", "NUM_TYPE_PROFILE", "DAT_BEGIN_VALIDITY" }))
-@SequenceGenerator(name = "WokProfilesActions_Id_Seq_Gen", sequenceName = "WOK_PROFILES_ACTIONS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "WokProfilesActions_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_SEQ_NUM_PROFILE_ACTION", allocationSize = 1, initialValue = 1)
 public class WokProfileActions extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -4276068268456651666L;

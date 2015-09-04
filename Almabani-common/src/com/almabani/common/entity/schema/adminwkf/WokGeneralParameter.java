@@ -18,7 +18,7 @@ import com.almabani.common.entity.schema.admincor.Company;
  */
 
 @Entity
-@Table(schema="ADMINWKF", name = "WOK_GENERAL_PARAMETERS")
+@Table(schema="ADMINWKF", name = "ADMINWKF.WOK_GENERAL_PARAMETERS")
 public class WokGeneralParameter implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -126402615279719370L;

@@ -26,14 +26,14 @@ import com.almabani.common.entity.schema.adminsec.SecUser;
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_USERS_GROUP", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"COD_USER_LOGIN", "NUM_WORKING_GROUP" }))
-@SequenceGenerator(name = "WokUsersGroup_Id_Seq_Gen", sequenceName = "WOK_USERS_GROUP_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
+//@SequenceGenerator(name = "WokUsersGroup_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_USERS_GROUP_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokUserGroup extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = -7465052548278372040L;
 
 	@Id
 	@Column(name = "NUM_USER_GROUP", unique = true, nullable = false, precision = 5, scale = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokUsersGroup_Id_Seq_Gen")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokUsersGroup_Id_Seq_Gen")
 	private Long id;
 	
 	@ManyToOne
