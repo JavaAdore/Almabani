@@ -1,13 +1,14 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 import java.util.*;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -15,6 +16,7 @@ import org.primefaces.model.SortOrder;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
@@ -46,47 +48,42 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 
 	OamManufacturer manufacturer;
 
+	Department department;
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	private List<Company> companies;
 
-	public List<Company> getCompanies() {
-		return companies;
-	}
-
-	public void setCompanies(List<Company> companies) {
-		this.companies = companies;
-	}
-
-	public OamManufacturer getManufacturer() {
-		return manufacturer;
-	}
-
-	public void setManufacturer(OamManufacturer manufacturer) {
-		this.manufacturer = manufacturer;
-	}
+	private List<Department> departments;
 
 	private OamItem selected;
 
 	@PostConstruct
 	public void init() {
 		initializeItemsLazyList();
-		loadInitialLists();
+
 	}
 
 	public void addNewManufacturer() throws AlmabaniException {
 		CommonDriverMap commonDriverMap = new CommonDriverMap();
 		commonDriverMap = commonDriverMap.appendCurrentUserCode(
 				commonDriverMap, WebUtils.getCurrentUserCode());
-		manufacturer = almabaniFacade.addOrUpdateManufacturer(manufacturer, commonDriverMap);
+		manufacturer = almabaniFacade.addOrUpdateManufacturer(manufacturer,
+				commonDriverMap);
 		manufacturers.add(manufacturer);
 		selected.setManufacturer(manufacturer);
 		WebUtils.fireInfoMessage(
-		MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY, WebUtils
-				.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_MANUFACTURER));
+				MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_MANUFACTURER));
 	}
 
 	private void loadInitialLists() {
-
-		itemCategories = almabaniFacade.getAllItemCategories();
 
 		if (WebUtils.isAdminUser()) {
 			manufacturers = almabaniFacade.getAllManufacturers();
@@ -104,12 +101,59 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 
 	}
 
+	public void loadItemCategoriesOfDepartment(Department department) {
+		if (Utils.isNull(department)) {
+			itemCategories = almabaniFacade.getAllItemCategories();
+		} else {
+			itemCategories = almabaniFacade.getAllItemCategories(department);
+
+		}
+	}
+
+	public void departmentChanged(AjaxBehaviorEvent event) {
+		department = (Department) ((SelectOneMenu) event.getSource())
+				.getValue();
+		if (Utils.isNotNull(department)) {
+			loadItemCategoriesOfDepartment(department);
+		} else {
+			initializeNewitemCategoriesList();
+		}
+	}
+
+	public void initializeDepartmentAndDepartmentsList() {
+		loadInitialLists();
+		department = selected.getItemCategory().getComDepartmentSection()
+				.getDepartment();
+		initializeDepartmentsList();
+
+		loadItemCategoriesOfDepartment(department);
+	}
+
+	private void initializeNewitemCategoriesList() {
+		itemCategories = new ArrayList();
+	}
+
 	private void initializeItemsLazyList() {
 		items = new ItemsLazyList();
 	}
 
 	public void prepareCreate() {
 		selected = new OamItem();
+		initializeDepartmentsList();
+		loadInitialLists();
+	}
+
+	private void initializeDepartmentsList() {
+		if (Utils.isNull(departments)) {
+			if (WebUtils.isAdminUser()) {
+				departments = almabaniFacade.getDepartments();
+			} else {
+				departments = almabaniFacade.getDepartments(WebUtils
+						.getCurrentLoggedUser().getEmployee()
+						.getEstablishment().getCompany());
+			}
+		}
+
 	}
 
 	public void saveNew() throws AlmabaniException {
@@ -142,6 +186,9 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 		@Override
 		public List<OamItem> load(int first, int pageSize, String sortField,
 				SortOrder sortOrder, Map<String, Object> filters) {
+
+			filterByCompanyInCaseOnNoneAdminUser(filters);
+
 			rowCount = almabaniFacade.getnumberOfItems(filters);
 
 			result = (List<OamItem>) almabaniFacade.loadItems(first, pageSize,
@@ -150,6 +197,17 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 			setRowCount(this.rowCount);
 
 			return result;
+		}
+
+		private void filterByCompanyInCaseOnNoneAdminUser(
+				Map<String, Object> filters) {
+			if (WebUtils.isAdminUser() == false) {
+				filters.put(
+						"itemCategory.comDepartmentSection.department.company",
+						WebUtils.getCurrentLoggedUser().getEmployee()
+								.getEstablishment().getCompany());
+			}
+
 		}
 
 		@Override
@@ -185,6 +243,10 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 
 	public void onRowSelect(SelectEvent event) {
 		selected = (OamItem) event.getObject();
+		department = selected.getItemCategory().getComDepartmentSection()
+				.getDepartment();
+
+		loadItemCategoriesOfDepartment(department);
 	}
 
 	public void operationFaild() {
@@ -228,10 +290,36 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 		this.materialTypes = materialTypes;
 	}
 
-	public void initializeNewManufacturer() { 
+	public void initializeNewManufacturer() {
 		manufacturer = new OamManufacturer();
-		manufacturer.setIndActive(com.almabani.common.constant.DataAccessConstant.IND_ACTIVE);
-		manufacturer.setCompany(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany()); 
+		manufacturer
+				.setIndActive(com.almabani.common.constant.DataAccessConstants.IND_ACTIVE);
+		manufacturer.setCompany(WebUtils.getCurrentLoggedUser().getEmployee()
+				.getEstablishment().getCompany());
+	}
+
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
+	}
+
+	public List<Company> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(List<Company> companies) {
+		this.companies = companies;
+	}
+
+	public OamManufacturer getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(OamManufacturer manufacturer) {
+		this.manufacturer = manufacturer;
 	}
 
 }

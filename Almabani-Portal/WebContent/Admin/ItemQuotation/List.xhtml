@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form>
-		<p:remoteCommand  name="updateListForm"  update=":listForm" ></p:remoteCommand>
+		<p:remoteCommand  name="updateListForm"  update=":tabs:listForm" ></p:remoteCommand>
 	</h:form>
 
 	<h:form id="listForm">
@@ -60,17 +60,20 @@
 
 
 				<f:facet name="footer">
+										
+				
 					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+						value="#{loc.Create}" update=":tabs:createForm:display"
 						actionListener="#{quotationItemManagementBean.prepareCreate}"
-						update=":createForm:display"
 						oncomplete="PF('createDialog').show()" />
+					
 					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{loc.View}" update=":viewForm:display"
+						value="#{loc.View}" update=":tabs:viewForm:display" 
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty quotationItemManagementBean.selected}" />
+					
 					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}" update=":editForm:display"
+						value="#{loc.Edit}"  update=":tabs:editForm:display"
 						oncomplete="PF('editDialog').show()"
 						disabled="#{empty quotationItemManagementBean.selected}" />
 				</f:facet>

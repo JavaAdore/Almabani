@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.exception.AlmabaniException;
 
@@ -22,6 +23,8 @@ public interface SystemService {
 	SecSystem updateSystem(SecSystem SecSystem) throws AlmabaniException;
 	
 	List<SecSystem> getAllSystems();
+
+	List<SecSystem> getAllSystems(Company company);
 
 
 }

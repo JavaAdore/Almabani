@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.almabani.business.service.SystemService;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.dataacceess.dao.adminsec.SystemDAO;
@@ -17,12 +18,12 @@ public class SystemServiceImpl implements SystemService {
 	
 	
 	@Autowired
-	private SystemDAO moduleDAO;
+	private SystemDAO systemDAO;
 
 
 	@Override
 	public List<SecSystem> loadSystems(Integer first, Integer pageSize, String sortField, boolean assending, Map<String, Object> filters){
-		return moduleDAO.loadSystems(first,pageSize,sortField,assending,filters);
+		return systemDAO.loadSystems(first,pageSize,sortField,assending,filters);
 	}
 
 	@Transactional
@@ -33,7 +34,7 @@ public class SystemServiceImpl implements SystemService {
 
 	@Override
 	public SecSystem getSystem(Long id) {
-		return moduleDAO.getSystem(id);
+		return systemDAO.getSystem(id);
 	}
 
 	@Transactional
@@ -47,12 +48,17 @@ public class SystemServiceImpl implements SystemService {
 
 	@Override
 	public Integer getCountOfSystems(Map<String, Object> filters) {
-		return moduleDAO.getCountOfSystem( filters);
+		return systemDAO.getCountOfSystem( filters);
 	}
 
 	@Override
 	public List<SecSystem> getAllSystems() {
-		return moduleDAO.getAllSystems();
+		return systemDAO.getAllSystems();
+	}
+
+	@Override
+	public List<SecSystem> getAllSystems(Company company) {
+		return systemDAO.getAllSystems( company);
 	}
 
 	

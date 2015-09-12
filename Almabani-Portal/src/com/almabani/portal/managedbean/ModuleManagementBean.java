@@ -14,6 +14,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.exception.AlmabaniException;
@@ -23,7 +24,8 @@ import com.almabani.portal.webutils.WebUtils;
 
 @ManagedBean
 @ViewScoped
-public class ModuleManagementBean  extends AbstractBeanHelper implements Serializable {
+public class ModuleManagementBean extends AbstractBeanHelper implements
+		Serializable {
 
 	/**
 	 * 
@@ -31,15 +33,12 @@ public class ModuleManagementBean  extends AbstractBeanHelper implements Seriali
 	private static final long serialVersionUID = 1L;
 
 	private LazyDataModel<SecModule> items;
-	
+
 	private List<SecSystem> sytems;
-	
+
 	private boolean operationSuccess = false;
 
-
 	private SecModule selected;
-
-	
 
 	@PostConstruct
 	public void init() {
@@ -48,30 +47,36 @@ public class ModuleManagementBean  extends AbstractBeanHelper implements Seriali
 	}
 
 	private void loadInitialLists() {
-		
-		sytems = almabaniFacade.getAllSystems();
+		if (WebUtils.isAdminUser()) {
+			sytems = almabaniFacade.getAllSystems();
+		} else {
+			Company company = WebUtils.getCurrentLoggedUserCompany();
+			sytems = almabaniFacade.getAllSystems(company);
+		}
 	}
 
 	private void initializeItemsLazyList() {
 		items = new ItemsLazyList();
 	}
 
-	
 	public void prepareCreate() {
-		   selected = new SecModule();
+		selected = new SecModule();
 	}
 
 	public void saveNew() throws AlmabaniException {
 
 		operationFaild();
 		boolean isAlreadyExisitEntity = Utils.hasID(selected);
-		
-		selected = almabaniFacade.addOrUpdateModule(selected, CommonDriverMap.appendCurrentUserCode(null, WebUtils.getCurrentUserCode()));
+
+		selected = almabaniFacade.addOrUpdateModule(
+				selected,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_MODULE));
-		
+
 		operationSucceded();
 
 	}
@@ -89,6 +94,8 @@ public class ModuleManagementBean  extends AbstractBeanHelper implements Seriali
 		@Override
 		public List<SecModule> load(int first, int pageSize, String sortField,
 				SortOrder sortOrder, Map<String, Object> filters) {
+
+			attachCompanyFiltrationInCaseOnNoneAdmin(filters);
 			rowCount = almabaniFacade.getNumberOfModules(filters);
 
 			result = (List<SecModule>) almabaniFacade.loadModules(first,
@@ -98,6 +105,15 @@ public class ModuleManagementBean  extends AbstractBeanHelper implements Seriali
 			setRowCount(this.rowCount);
 
 			return result;
+		}
+
+		private void attachCompanyFiltrationInCaseOnNoneAdmin(
+				Map<String, Object> filters) {
+			if (WebUtils.isAdminUser() == false) {
+				filters.put("system.company",
+						WebUtils.getCurrentLoggedUserCompany());
+			}
+
 		}
 
 		@Override
@@ -114,8 +130,6 @@ public class ModuleManagementBean  extends AbstractBeanHelper implements Seriali
 		}
 
 	}
-	
-	
 
 	public LazyDataModel<SecModule> getItems() {
 		return items;
@@ -161,6 +175,5 @@ public class ModuleManagementBean  extends AbstractBeanHelper implements Seriali
 	public void setSytems(List<SecSystem> sytems) {
 		this.sytems = sytems;
 	}
-
 
 }

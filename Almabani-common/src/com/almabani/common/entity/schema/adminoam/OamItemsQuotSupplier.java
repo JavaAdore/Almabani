@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.almabani.common.entity.AbstractEntity;
 import com.almabani.common.interfaces.ByteArrayHolder;
@@ -80,7 +81,8 @@ public class OamItemsQuotSupplier extends AbstractEntity implements ByteArrayHol
 	@Column(name = "NAM_USER_SELECTION", length = 10)
 	private String selectionUserName;
 	
-	@Column(name = "IMG_QUOTATION")
+	//@Column(name = "IMG_QUOTATION")
+	@Transient  
 	private byte[] imgQuotation;
 	
 	public OamItemsQuotSupplier() {

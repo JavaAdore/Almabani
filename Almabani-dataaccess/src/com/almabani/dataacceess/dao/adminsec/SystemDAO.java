@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -23,5 +24,7 @@ public interface SystemDAO extends AbstractDAOInt{
 
 	
 	List<SecSystem> getAllSystems();
+
+	List<SecSystem> getAllSystems(Company company);
 	
 }

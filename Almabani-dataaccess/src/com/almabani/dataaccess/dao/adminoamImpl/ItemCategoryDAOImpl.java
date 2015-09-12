@@ -3,9 +3,11 @@ package com.almabani.dataaccess.dao.adminoamImpl;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.dataaccess.dao.adminoam.ItemCategoryDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -49,6 +51,14 @@ public class ItemCategoryDAOImpl extends AbstractDAO implements ItemCategoryDAO 
 	@Override
 	public List<OamItemCategory> getAllItemCategories() {
 		return (List<OamItemCategory>)super.getAllEntities(OamItemCategory.class);
+	}
+
+	@Override
+	public List<OamItemCategory> getAllItemCategories(Department department) {
+	
+		Query query = super.getCurrentSession().createQuery("select x from OamItemCategory x where x.comDepartmentSection.department =:department");
+		query.setParameter("department", department);
+		return query.list(); 
 	}
 
 }

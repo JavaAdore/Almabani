@@ -1,63 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="editDlg" widgetVar="editDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditOamItemQuotationTitle}">
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{bundle.EditOamItemQuotationTitle}">
 
-            <h:form id="editForm">
+		<h:form id="editForm">
 
-                <h:panelGroup id="display">
+			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
 					rendered="#{quotationItemManagementBean.selected != null}">
-					<p:outputLabel rendered="#{quotationItemManagementBean.parentQuotation ==null}" value="#{loc.EditOamItemQuotationTitle_quotation}" />
-					<p:selectOneMenu id="quotation" styleClass="fullWith" rendered="#{quotationItemManagementBean.parentQuotation ==null}"
-						value="#{quotationItemManagementBean.selected.quotation}" converter="#{quotationConverter}"
-						required="true"
+					<p:outputLabel
+						rendered="#{quotationItemManagementBean.parentQuotation ==null}"
+						value="#{loc.EditOamItemQuotationTitle_quotation}" />
+					<p:selectOneMenu id="quotation" styleClass="fullWith"
+						rendered="#{quotationItemManagementBean.parentQuotation ==null}"
+						value="#{quotationItemManagementBean.selected.quotation}"
+						converter="#{quotationConverter}" required="true"
 						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_quotation}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{quotationItemManagementBean.oamQuotataions}"
-							var="quotation" itemValue="#{quotation}" itemLabel="#{quotation.quotationDescription}" />
+						<f:selectItems
+							value="#{quotationItemManagementBean.oamQuotataions}"
+							var="quotation" itemValue="#{quotation}"
+							itemLabel="#{quotation.quotationDescription}" />
 					</p:selectOneMenu>
 					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}" />
-					<p:selectOneMenu id="projectItem"  styleClass="fullWith"
-						value="#{quotationItemManagementBean.selected.projectItem}"
+					<p:autoComplete styleClass="fullWith" dropdown="true"
+					  	value="#{quotationItemManagementBean.selected.projectItem}"
 						required="true" converter="#{projectItemConverter}"
-						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{quotationItemManagementBean.projectItems}"
-							var="projectItemItem" itemValue="#{projectItemItem}" itemLabel="#{projectItemItem.item.itemDescription}" />
-					</p:selectOneMenu>
+						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}"
+						completeMethod="#{quotationItemManagementBean.autoCompleteProjectItemList}"
+						var="projectItemItem" itemValue="#{projectItemItem}" scrollHeight="450" 
+						itemLabel=" #{projectItemItem.item.itemCode}"
+						forceSelection="true">
+
+						<f:facet name="itemtip">
+							<h:panelGrid width="400" columns="2" cellpadding="5">
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_PROJECT}" />
+								<h:inputText readonly="true" value="#{projectItemItem.project.projectCode}" />
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_CODE}" />
+								<h:inputText  readonly="true"   value="#{projectItemItem.item.itemCode}" />
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_DESCRIPTION}" />
+								<h:inputTextarea  readonly="true"  cols="20" value="#{projectItemItem.item.itemDescription}" />
+							</h:panelGrid>
+						</f:facet>
+
+					</p:autoComplete>
+
+
+
 					<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_qutItem}" />
 
-					<p:spinner id="qutItem"  styleClass="fullWith" min="1" max="999"
+					<p:spinner id="qutItem" styleClass="fullWith" min="1" max="999"
 						value="#{quotationItemManagementBean.selected.qutItem}"
-						 required="true"
+						required="true"
 						requiredMessage="#{loc.CreateOamItemQuotationRequiredMessage_qutItem}" />
-						
-						<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_observationDescription}"/>
-					<p:inputTextarea id="observationDescription" styleClass="fullWith" maxlength="80"
-						value="#{quotationItemManagementBean.selected.observationDescription}"
-						 />
-					
+
+					<p:outputLabel
+						value="#{loc.CreateOamItemQuotationTitle_observationDescription}" />
+					<p:inputTextarea id="observationDescription" styleClass="fullWith"
+						maxlength="80"
+						value="#{quotationItemManagementBean.selected.observationDescription}" />
+
 				</p:panelGrid>
+
+
 				<p:commandButton
 					actionListener="#{quotationItemManagementBean.saveNew}"
-					value="#{loc.Save}"
-					update="display,:growl,:listForm:datalist"
+					value="#{loc.Save}" update="display,:growl,:tabs:listForm:datalist"
 					oncomplete="if(!args.validationFailed){PF('editDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}" immediate="true" onclick="PF('editDialog').hide()" />
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
+					onclick="PF('editDialog').hide()" />
 			</h:panelGroup>
 
-            </h:form>
+		</h:form>
 
-        </p:dialog>
+	</p:dialog>
 
-    </ui:composition>
+</ui:composition>
 
 </html>

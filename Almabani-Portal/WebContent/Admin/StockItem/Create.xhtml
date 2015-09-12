@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateOamStockItemTitle}">
+
+		<h:form id="createForm">
+
+			<h:panelGroup id="messagePanel">
+				<p:messages />
+			</h:panelGroup>
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{stockItemManagementBean.selected != null}">
+					<p:outputLabel
+						value="#{loc.EditOamStockItemRequiredMessage_projectItem}" />
+
+					<p:autoComplete styleClass="fullWith" dropdown="true"
+						value="#{stockItemManagementBean.selected.projectItem}"
+						required="true" converter="#{projectItemConverter}"
+						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}"
+						completeMethod="#{stockItemManagementBean.autoCompleteProjectItemList}"
+						var="projectItemItem" itemValue="#{projectItemItem}"
+						scrollHeight="450" itemLabel=" #{projectItemItem.item.itemCode}"
+						forceSelection="true">
+
+						<f:facet name="itemtip">
+							<h:panelGrid width="400" columns="2" cellpadding="5">
+								<h:outputText value="#{loc.ALMABANI_GENERAL_PROJECT}" />
+								<h:inputText readonly="true"
+									value="#{projectItemItem.project.projectCode}" />
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_CODE}" />
+								<h:inputText readonly="true"
+									value="#{projectItemItem.item.itemCode}" />
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_DESCRIPTION}" />
+								<h:inputTextarea readonly="true" cols="20"
+									value="#{projectItemItem.item.itemDescription}" />
+							</h:panelGrid>
+						</f:facet>
+
+					</p:autoComplete>
+
+					<p:outputLabel  value="#{loc.EditOamStockItemTitle_itemQuotation}"/>
+					<p:selectOneMenu id="itemQuotation"
+						value="#{stockItemManagementBean.selected.itemQuotation}"
+						 required="true"
+						requiredMessage="#{loc.EditOamStockItemRequiredMessage_itemQuotation}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{oamItemQuotationController.items}"
+							var="itemQuotationItem" itemValue="#{itemQuotationItem}" />
+					</p:selectOneMenu>
+					
+					
+					<p:outputLabel value="#{loc.EditOamStockItemTitle_establishment}" />
+					<p:selectOneMenu id="establishments"
+						converter="#{establishmentConverter}" required="true"
+						value="#{stockItemManagementBean.selected.establishment}"
+						styleClass="fullWith">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{stockItemManagementBean.establishments}"
+							var="establishment"
+							itemLabel="#{establishment.establishmentName}" />
+					</p:selectOneMenu>
+
+					<p:inputText id="indInOut"
+						value="#{stockItemManagementBean.selected.indInOut}"
+						title="#{loc.CreateOamStockItemTitle_indInOut}" required="true"
+						requiredMessage="#{loc.CreateOamStockItemRequiredMessage_indInOut}" />
+
+					<p:inputText id="entryValue"
+						value="#{stockItemManagementBean.selected.entryValue}"
+						title="#{loc.CreateOamStockItemTitle_entryValue}" />
+
+					<p:inputText id="modificationMakerName"
+						value="#{stockItemManagementBean.selected.modificationMakerName}"
+						title="#{loc.CreateOamStockItemTitle_modificationMakerName}"
+						required="true"
+						requiredMessage="#{loc.CreateOamStockItemRequiredMessage_modificationMakerName}" />
+					<p:calendar id="lastModificationDate" pattern="MM/dd/yyyy"
+						value="#{stockItemManagementBean.selected.lastModificationDate}"
+						title="#{loc.EditOamStockItemTitle_lastModificationDate}"
+						required="true"
+						requiredMessage="#{loc.EditOamStockItemRequiredMessage_lastModificationDate}"
+						showOn="button" />
+				</p:panelGrid>
+				<p:commandButton actionListener="#{stockItemManagementBean.saveNew}"
+					value="#{loc.Save}"
+					update="display,messagePanel,:listForm:datalist"
+					oncomplete="if(!args.validationFailed){createDialog.hide();}" />
+				<p:commandButton value="#{loc.Cancel}" onclick="createDialog.hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

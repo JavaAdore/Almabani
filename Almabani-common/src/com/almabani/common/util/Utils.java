@@ -19,7 +19,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.almabani.common.entity.AbstractEntity;
-import com.almabani.common.entity.schema.adminsec.SecApplication;
 
 public class Utils {
 

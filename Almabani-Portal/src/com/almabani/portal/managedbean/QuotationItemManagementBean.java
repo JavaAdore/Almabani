@@ -14,6 +14,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
@@ -22,7 +23,7 @@ import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
 
-@ManagedBean
+@ManagedBean(eager = true)
 @ViewScoped
 public class QuotationItemManagementBean extends AbstractBeanHelper implements
 		Serializable {
@@ -37,66 +38,85 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 	private OamQuotation parentQuotation;
 
 	private boolean operationSuccess = false;
-	
+
 	private OamItemQuotation selected;
 	private List<OamQuotation> oamQuotataions;
 	private List<OamProjectItem> projectItems;
-	
-	@ManagedProperty(value = "#{quotationQuotationItemManagementBean}")
-	QuotationQuotationItemManagementBean quotationQuotationItemManagementBean;
-	
+
+	QuotationApplicationController quotationApplicationController;
 
 	@PostConstruct
 	public void init() {
-		initializeCompaniesLazyList();
+		loadQuotationItemLazyList();
 		loadInitialLists();
-		prepareStatesList();
-		quotationQuotationItemManagementBean.setQuotationItemManagementBean(this);
 	}
 
-	public	 void prepareCreate() {
+	public void prepareCreate() {
 
-		selected = new OamItemQuotation();  
+		selected = new OamItemQuotation();
+		selected.setQuotation(parentQuotation);
 	}
 
 	private void loadInitialLists() {
+		if (WebUtils.isAdminUser()) {
+			oamQuotataions = almabaniFacade.getAllQuotations();
+		} else {
+			Company company = WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany();
+			oamQuotataions = almabaniFacade.getAllQuotations(company);
+		}
+	}
+
+	private void loadQuotationItemLazyList() {
 		items = new QuotationItemLazyModel();
-		oamQuotataions = almabaniFacade.getAllQuotations();
-		projectItems = almabaniFacade.getAllProjectItems();
-	}
-
-	private void initializeCompaniesLazyList() {
 
 	}
 
-	private void prepareStatesList() {
+	public List<OamProjectItem> autoCompleteProjectItemList(
+			String projectItemNameOrDescription) {
+
+		projectItemNameOrDescription = Utils
+				.isNotEmptyString(projectItemNameOrDescription) ? projectItemNameOrDescription 
+				: "";
+		if (WebUtils.isAdminUser()) {
+			projectItems = almabaniFacade.getAllProjectItems(
+					projectItemNameOrDescription, null);
+		} else {
+			projectItems = almabaniFacade.getAllProjectItems(
+					projectItemNameOrDescription, WebUtils
+							.getCurrentLoggedUser().getEmployee()
+							.getEstablishment().getCompany());
+
+		}
+		return projectItems;
 
 	}
 
 	public void saveNew() throws AlmabaniException {
 
-		 operationFaild();
-		 boolean isAlreadyExisitEntity = Utils.hasID(selected);
+		operationFaild();
+		boolean isAlreadyExisitEntity = Utils.hasID(selected);
 
-		 selected = almabaniFacade.addOrUpdateQuotationItem(selected,
-		 CommonDriverMap.appendCurrentUserCode(null,
-		 WebUtils.getCurrentUserCode()));
-		 WebUtils.fireInfoMessage(
-		 (isAlreadyExisitEntity) ?
-		 MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
-		 : MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
-		 WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_QUOTATION));
-		
-		 operationSuccess();
+		selected = almabaniFacade.addOrUpdateQuotationItem(
+				selected,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
+		WebUtils.fireInfoMessage(
+				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_QUOTATION));
+		quotationApplicationController.setOamItemQuotation(selected);
+
+		operationSuccess();
 
 	}
 
 	private void operationSuccess() {
-		operationSuccess = true;		
+		operationSuccess = true;
 	}
 
 	private void operationFaild() {
-		operationSuccess=false;
+		operationSuccess = false;
 	}
 
 	public OamQuotation getParentQuotation() {
@@ -105,15 +125,16 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 
 	public void setParentQuotation(OamQuotation parentQuotation) {
 		this.parentQuotation = parentQuotation;
-		selected.setQuotation(parentQuotation); 
-		
+		if (Utils.isNull(selected)) {
+			selected = new OamItemQuotation();
+		}
+		selected.setQuotation(parentQuotation);
+
 	}
 
-	private class QuotationItemLazyModel extends LazyDataModel<OamItemQuotation>
-			implements Serializable {
-		/**
- * 
- */
+	private class QuotationItemLazyModel extends
+			LazyDataModel<OamItemQuotation> implements Serializable {
+
 		private static final long serialVersionUID = 1L;
 		private Integer rowCount;
 
@@ -123,23 +144,32 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 		public List<OamItemQuotation> load(int first, int pageSize,
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
-			
+
 			injcetParentQuotationIfExisit(filters);
+			injectCompanyInCaseOfNoneAdminUser(filters);
 			rowCount = almabaniFacade.getNumberOfOamItemQuotations(filters);
-			result = (List<OamItemQuotation>) almabaniFacade.loadItemQuotataions(first,
-					pageSize, sortField, sortOrder == SortOrder.ASCENDING,
-					filters);
+			result = (List<OamItemQuotation>) almabaniFacade
+					.loadItemQuotataions(first, pageSize, sortField,
+							sortOrder == SortOrder.ASCENDING, filters);
 
 			setRowCount(this.rowCount);
 
 			return result;
 		}
 
+		private void injectCompanyInCaseOfNoneAdminUser(
+				Map<String, Object> filters) {
+			if (WebUtils.isAdminUser() == false) {
+				filters.put("quotation.department.company", WebUtils
+						.getCurrentLoggedUser().getEmployee()
+						.getEstablishment().getCompany());
+			}
+
+		}
+
 		private void injcetParentQuotationIfExisit(Map<String, Object> filters) {
 
-
-			if(Utils.isNotNull(parentQuotation))
-			{
+			if (Utils.isNotNull(parentQuotation)) {
 				filters.put("quotation", parentQuotation);
 			}
 		}
@@ -147,9 +177,10 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 		@Override
 		public OamItemQuotation getRowData(String rowKey) {
 
-			for (OamItemQuotation  qoutation : result) {
+			for (OamItemQuotation qoutation : result) {
 				if (qoutation.getId().toString().equals(rowKey)) {
 					selected = qoutation;
+
 					return qoutation;
 				}
 			}
@@ -173,6 +204,8 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 
 	public void setSelected(OamItemQuotation selected) {
 		this.selected = selected;
+		quotationApplicationController.setOamItemQuotation(selected);
+
 	}
 
 	public List<OamQuotation> getOamQuotataions() {
@@ -191,13 +224,13 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 		this.projectItems = projectItems;
 	}
 
-	public QuotationQuotationItemManagementBean getQuotationQuotationItemManagementBean() {
-		return quotationQuotationItemManagementBean;
+	public QuotationApplicationController getQuotationApplicationController() {
+		return quotationApplicationController;
 	}
 
-	public void setQuotationQuotationItemManagementBean(
-			QuotationQuotationItemManagementBean quotationQuotationItemManagementBean) {
-		this.quotationQuotationItemManagementBean = quotationQuotationItemManagementBean;
+	public void setQuotationApplicationController(
+			QuotationApplicationController quotationApplicationController) {
+		this.quotationApplicationController = quotationApplicationController;
 	}
 
 }

@@ -14,6 +14,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.entity.schema.adminsec.SecSubModule;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
@@ -24,7 +25,8 @@ import com.almabani.portal.webutils.WebUtils;
 
 @ManagedBean
 @ViewScoped
-public class SubModuleManagementBean  extends AbstractBeanHelper implements Serializable {
+public class SubModuleManagementBean extends AbstractBeanHelper implements
+		Serializable {
 
 	/**
 	 * 
@@ -32,16 +34,14 @@ public class SubModuleManagementBean  extends AbstractBeanHelper implements Seri
 	private static final long serialVersionUID = 1L;
 
 	private LazyDataModel<SecSubModule> items;
-	
-	private List<SecSystem> sytems;
-	
-	private boolean operationSuccess = false;
-	
-	private List<SecModule> modules;
-  
-	private SecSubModule selected;
 
-	
+	private List<SecSystem> sytems;
+
+	private boolean operationSuccess = false;
+
+	private List<SecModule> modules;
+
+	private SecSubModule selected;
 
 	@PostConstruct
 	public void init() {
@@ -50,31 +50,39 @@ public class SubModuleManagementBean  extends AbstractBeanHelper implements Seri
 	}
 
 	private void loadInitialLists() {
-		
-		sytems = almabaniFacade.getAllSystems();
-		modules = almabaniFacade.getAllModules();
+		if(WebUtils.isAdminUser()){
+			sytems = almabaniFacade.getAllSystems();
+			modules = almabaniFacade.getAllModules();
+		}else
+		{
+			Company company = WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany();
+			sytems = almabaniFacade.getAllSystems(company);
+			modules = almabaniFacade.getAllModules(company) ; 
+		}
 	}
 
 	private void initializeItemsLazyList() {
 		items = new ItemsLazyList();
 	}
 
-	
 	public void prepareCreate() {
-		   selected = new SecSubModule();
+		selected = new SecSubModule();
 	}
 
 	public void saveNew() throws AlmabaniException {
 
 		operationFaild();
 		boolean isAlreadyExisitEntity = Utils.hasID(selected);
-		
-		selected = almabaniFacade.addOrUpdateSubModule(selected, CommonDriverMap.appendCurrentUserCode(null, WebUtils.getCurrentUserCode()));
+
+		selected = almabaniFacade.addOrUpdateSubModule(
+				selected,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_SUB_MODULE));
-		
+
 		operationSucceded();
 
 	}
@@ -90,8 +98,12 @@ public class SubModuleManagementBean  extends AbstractBeanHelper implements Seri
 		List<SecSubModule> result;
 
 		@Override
-		public List<SecSubModule> load(int first, int pageSize, String sortField,
-				SortOrder sortOrder, Map<String, Object> filters) {
+		public List<SecSubModule> load(int first, int pageSize,
+				String sortField, SortOrder sortOrder,
+				Map<String, Object> filters) {
+
+			attachCompanyFiltrationInCaseOfNoneAdmin(filters);
+
 			rowCount = almabaniFacade.getNumberOfSubModules(filters);
 
 			result = (List<SecSubModule>) almabaniFacade.loadSubModules(first,
@@ -101,6 +113,16 @@ public class SubModuleManagementBean  extends AbstractBeanHelper implements Seri
 			setRowCount(this.rowCount);
 
 			return result;
+		}
+
+		private void attachCompanyFiltrationInCaseOfNoneAdmin(
+				Map<String, Object> filters) {
+			if (WebUtils.isAdminUser() == false) {
+				filters.put("module.system.company", WebUtils
+						.getCurrentLoggedUser().getEmployee()
+						.getEstablishment().getCompany());
+			}
+
 		}
 
 		@Override
@@ -117,8 +139,6 @@ public class SubModuleManagementBean  extends AbstractBeanHelper implements Seri
 		}
 
 	}
-	
-	
 
 	public LazyDataModel<SecSubModule> getItems() {
 		return items;
@@ -172,6 +192,5 @@ public class SubModuleManagementBean  extends AbstractBeanHelper implements Seri
 	public void setModules(List<SecModule> modules) {
 		this.modules = modules;
 	}
-
 
 }

@@ -13,47 +13,73 @@
 		header="#{loc.CreateOamItemQuotationTitle}">
 
 		<h:form id="createForm">
-			
+
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
 					rendered="#{quotationItemManagementBean.selected != null}">
-					<p:outputLabel   value="#{loc.EditOamItemQuotationTitle_quotation}" />
-					<p:selectOneMenu id="quotation" styleClass="fullWith" disabled="#{ quotationItemManagementBean.parentQuotation  != null}"
-						value="#{quotationItemManagementBean.selected.quotation}" converter="#{quotationConverter}"
-						required="true"
+					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_quotation}" />
+					<p:selectOneMenu id="quotation" styleClass="fullWith"
+						disabled="#{ quotationItemManagementBean.parentQuotation  != null}"
+						value="#{quotationItemManagementBean.selected.quotation}"
+						converter="#{quotationConverter}"
 						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_quotation}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{quotationItemManagementBean.oamQuotataions}"
-							var="quotation" itemValue="#{quotation}" itemLabel="#{quotation.quotationDescription}" />
+						<f:selectItems
+							value="#{quotationItemManagementBean.oamQuotataions}"
+							var="quotation" itemValue="#{quotation}"
+							itemLabel="#{quotation.quotationDescription}" />
 					</p:selectOneMenu>
 					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}" />
-					<p:selectOneMenu id="projectItem"  styleClass="fullWith"
+
+					<p:autoComplete styleClass="fullWith" dropdown="true"
 						value="#{quotationItemManagementBean.selected.projectItem}"
 						required="true" converter="#{projectItemConverter}"
-						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{quotationItemManagementBean.projectItems}"
-							var="projectItemItem" itemValue="#{projectItemItem}" itemLabel="#{projectItemItem.item.itemDescription}" />
-					</p:selectOneMenu>
+						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}"
+						completeMethod="#{quotationItemManagementBean.autoCompleteProjectItemList}"
+						var="projectItemItem" itemValue="#{projectItemItem}" scrollHeight="450" 
+						itemLabel=" #{projectItemItem.item.itemCode}"
+						forceSelection="true">
+
+						<f:facet name="itemtip">
+							<h:panelGrid width="400" columns="2" cellpadding="5">
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_PROJECT}" />
+								<h:inputText readonly="true" value="#{projectItemItem.project.projectCode}" />
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_CODE}" />
+								<h:inputText  readonly="true"   value="#{projectItemItem.item.itemCode}" />
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_DESCRIPTION}" />
+								<h:inputTextarea  readonly="true"  cols="20" value="#{projectItemItem.item.itemDescription}" />
+							</h:panelGrid>
+						</f:facet>
+
+					</p:autoComplete>
+
+
+
 					<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_qutItem}" />
 
-					<p:spinner id="qutItem"  styleClass="fullWith" min="1" max="999"
+					<p:spinner id="qutItem" styleClass="fullWith" min="1" max="999"
 						value="#{quotationItemManagementBean.selected.qutItem}"
-						 required="true"
+						required="true"
 						requiredMessage="#{loc.CreateOamItemQuotationRequiredMessage_qutItem}" />
-						
-						<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_observationDescription}"/>
+
+					<p:outputLabel
+						value="#{loc.CreateOamItemQuotationTitle_observationDescription}" />
 					<p:inputTextarea id="observationDescription" styleClass="fullWith"
-						value="#{quotationItemManagementBean.selected.observationDescription}" maxlength="80"
-						 />
-					
+						value="#{quotationItemManagementBean.selected.observationDescription}"
+						maxlength="80" />
+
 				</p:panelGrid>
+
+
 				<p:commandButton
 					actionListener="#{quotationItemManagementBean.saveNew}"
-					value="#{loc.Save}"
-					update="display,:growl,:listForm:datalist"
+					value="#{loc.Save}" update="display,:growl,:tabs:listForm:datalist"
 					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}" immediate="true" onclick="PF('createDialog').hide()" />
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
+					onclick="PF('createDialog').hide()" />
 			</h:panelGroup>
 
 		</h:form>

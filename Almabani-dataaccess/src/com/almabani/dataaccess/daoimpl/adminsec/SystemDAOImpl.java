@@ -3,9 +3,11 @@ package com.almabani.dataaccess.daoimpl.adminsec;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.dataacceess.dao.adminsec.SystemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -50,6 +52,13 @@ public class SystemDAOImpl extends AbstractDAO implements SystemDAO {
 	@Override
 	public List<SecSystem> getAllSystems() {
 		return super.getAllEntities(SecSystem.class);
+	}
+
+	@Override
+	public List<SecSystem> getAllSystems(Company company) {
+		Query query = super.getCurrentSession().createQuery("select x from SecSystem x where x.company =:company");
+		query.setParameter("company", company);
+		return query.list();
 	}
 
 }

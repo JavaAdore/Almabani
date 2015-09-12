@@ -8,11 +8,11 @@
 
 <ui:composition xmlns:customComponents="http://java.sun.com/jsf/composite/components">
 
-	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+	<p:dialog id="editQuotationItemSupplierDlg" widgetVar="editQuotationItemSupplierDialog" modal="true"
 		resizable="false" appendToBody="true" dynamic="true"
 		header="#{loc.EditOamItemsQuotSupplierTitle}">
 		<p:panelGrid columns="2">
-				<h:form id="editForm">
+				<h:form id="editQuotationItemSupplierForm">
 
 					<h:panelGroup id="display">
 						<p:panelGrid columns="4"
@@ -93,10 +93,11 @@
 						</p:panelGrid>
 						<p:commandButton
 							actionListener="#{oamItemsQuotSupplierManagementBean.saveNew}"
-							value="#{loc.Save}" update="display,:growl,:listForm:datalist"
-							oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
-						<p:commandButton value="#{loc.Cancel}"
-							onclick="PF('editDialog').hide()" />
+							value="#{loc.Save}" update="display,:growl,:tabs:QuotationItemSupplierlistForm:datalist"
+							oncomplete="if(!args.validationFailed) {PF('editQuotationItemSupplierDialog').hide();}" />
+						
+						<p:commandButton value="#{loc.Cancel}" immediate="true"
+							onclick="PF('editQuotationItemSupplierDialog').hide()" />
 					</h:panelGroup>
 
 				</h:form>

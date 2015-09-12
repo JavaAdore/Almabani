@@ -12,14 +12,14 @@
 <ui:composition
 	xmlns:customComponents="http://java.sun.com/jsf/composite/components">
 
-	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+	<p:dialog id="createQoutItemSupplierDlg" widgetVar="createQoutItemSupplierDiaolg" modal="true"
 		dynamic="true" resizable="false" appendToBody="true"
 		header="#{loc.CreateOamItemQuotationTitle}">
 
 		<h:panelGrid columns="2">
 			<h:panelGrid>
 
-				<h:form id="createForm">
+				<h:form id="createQuotItemSupplierForm">
 
 
 					<h:panelGroup id="display">
@@ -104,10 +104,10 @@
 
 						<p:commandButton
 							actionListener="#{oamItemsQuotSupplierManagementBean.saveNew}"
-							value="#{loc.Save}" update=":growl :listForm"
-							oncomplete="if(!args.validationFailed ){PF('createDialog').hide();}" />
-						<p:commandButton value="#{loc.Cancel}"
-							onclick="PF('createDialog').hide()" />
+							value="#{loc.Save}" update=":growl :tabs:QuotationItemSupplierlistForm"
+							oncomplete="if(!args.validationFailed ){PF('createQoutItemSupplierDiaolg').hide();}" />
+						<p:commandButton value="#{loc.Cancel}" immediate="true"
+							onclick="PF('createQoutItemSupplierDiaolg').hide()" />
 					</h:panelGroup>
 
 				</h:form>

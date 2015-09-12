@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.almabani.common.entity.AbstractEntity;
 import com.almabani.common.enums.Active;
@@ -140,7 +141,8 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	@Column(name = "IND_TYPE_DOCUMENT", length = 1)
 	private DocumentType indTypeDocument;
 	
-	@Column(name = "IMG_EMPLOYEE")
+	//@Column(name = "IMG_EMPLOYEE")
+	@Transient   
 	private byte[] employeeImage;
 
 	public Employee() {

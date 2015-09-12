@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -22,6 +24,13 @@ public interface SupplierDAO extends AbstractDAOInt{
 	OamSupplier getSupplier(Long id);
 
 	List<OamSupplier> getAllSuppliers();
+
+	List<OamSupplier> getAllSuppliers(Company company);
+
+	List<OamProjectItem> getAllProjectItems(String projectItemNameOrDescription);
+
+	List<OamProjectItem> getAllProjectItems(
+			String projectItemNameOrDescription, Company company);
 
 
 	

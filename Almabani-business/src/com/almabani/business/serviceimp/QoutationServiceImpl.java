@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.QoutationService;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
@@ -124,6 +125,11 @@ public class QoutationServiceImpl implements QoutationService {
 	@Override
 	public OamQuotation getQuotataion(Long quotationID) {
 		return qoutationDAO.getQuotataion(quotationID);
+	}
+
+	@Override
+	public List<OamQuotation> getAllQuotations(Company company) {
+		return qoutationDAO.getAllQuotations(company);
 	}
 
 }

@@ -27,6 +27,7 @@ import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
+import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
@@ -332,6 +333,39 @@ public interface AlmabaniFacade {
 
 	OamManufacturer addOrUpdateManufacturer(OamManufacturer manufacturer,
 			CommonDriverMap commonDriverMap) throws AlmabaniException;
+
+	List<OamItemCategory> getAllItemCategories(Department department);
+
+	List<OamItem> getAllItems(Company company);
+
+	List<Project> getAllProjects(Company company);
+
+	List<OamQuotation> getAllQuotations(Company company);
+
+	List<OamProjectItem> getAllProjectItems(Company company);
+
+	List<WokDemand> getWokDemands(Company company);
+
+	List<OamItemQuotation> getAllQuotationItems(Company company);
+
+	List<OamSupplier> getAllSuppliers(Company company);
+
+	List<OamProjectItem> getAllProjectItems(
+			String projectItemNameOrDescription, Company company);
+
+	List<SecSystem> getAllSystems(Company company);
+
+	List<SecModule> getAllModules(Company company);
+
+	List<OamItem> getAllItems(String itemNameOrDescription, Company company);
+
+	Integer getNumberOfOamStockItems(Map<String, Object> filters);
+
+	List<OamStockItem> loadOamStockItems(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters);
+
+	OamStockItem addorUpdateOamStockItem(OamStockItem selected,
+			CommonDriverMap appendCurrentUserCode);
 	
 	
 }

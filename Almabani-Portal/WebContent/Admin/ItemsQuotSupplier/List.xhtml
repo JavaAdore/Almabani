@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	
-	<h:form id="listForm">
+	<h:form id="QuotationItemSupplierlistForm">
 
 		<p:panel header="#{loc.ListOamItemsQuotSupplierTitle}" style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" draggableColumns="true" draggableRows="true" resizableColumns="true"
@@ -23,8 +23,8 @@
 						icon="ui-icon-calculator" />
 					<p:columnToggler datasource="datalist" trigger="toggler" />
 				</f:facet>
-				<p:ajax event="rowSelect" update="viewButton editButton" />
-				<p:ajax event="rowUnselect" update="viewButton editButton" /> 
+				<p:ajax event="rowSelect" update="viewQuotItemSupplierButton editQuotItemSupplierButton" />
+				<p:ajax event="rowUnselect" update="viewQuotItemSupplierButton editQuotItemSupplierButton" /> 
 				
 				<p:column headerText="#{loc.ListOamItemsQuotSupplierTitle_id}"
 					sortBy="#{item.id}" filterBy="#{item.id}">
@@ -106,18 +106,20 @@
 
 
 				<f:facet name="footer">
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+					<p:commandButton id="createQuotationItemSupplierButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
 						value="#{loc.Create}"
 						actionListener="#{oamItemsQuotSupplierManagementBean.prepareCreate}"
-						update=":createForm:display"
-						oncomplete="PF('createDialog').show()" />
-					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{loc.View}" update=":viewForm:display"
-						oncomplete="PF('viewDialog').show()"
+						update=":tabs:createQuotItemSupplierForm:display"
+						oncomplete="PF('createQoutItemSupplierDiaolg').show()" />
+					
+					<p:commandButton id="viewQuotItemSupplierButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":tabs:viewQuotationItemSupplierForm:display"
+						oncomplete="PF('viewQuoItemSupplierDialog').show()"
 						disabled="#{empty oamItemsQuotSupplierManagementBean.selected}" />
-					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}" update=":editForm:display"
-						oncomplete="PF('editDialog').show()"
+					
+					<p:commandButton id="editQuotItemSupplierButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
+						value="#{loc.Edit}" update=":tabs:editQuotationItemSupplierForm:display"
+						oncomplete="PF('editQuotationItemSupplierDialog').show()" 
 						disabled="#{empty oamItemsQuotSupplierManagementBean.selected}" />
 				</f:facet>
 

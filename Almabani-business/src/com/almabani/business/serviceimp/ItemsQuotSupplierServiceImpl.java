@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.ItemsQuotSupplierService;
-import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
 import com.almabani.common.util.Utils;
@@ -44,7 +44,7 @@ public class ItemsQuotSupplierServiceImpl implements ItemsQuotSupplierService {
 		if (Utils.isNotNull(oamItemsQuotSupplier.getSelectionDate())) {
 			oamItemsQuotSupplier.setSelectionUserName(commonDriverMap
 					.getCurrentUserCode());
-			oamItemsQuotSupplier.setIndSelected(DataAccessConstant.YES);
+			oamItemsQuotSupplier.setIndSelected(DataAccessConstants.YES);
 		} else {
 			oamItemsQuotSupplier.setIndSelected(null);
 
@@ -63,7 +63,7 @@ public class ItemsQuotSupplierServiceImpl implements ItemsQuotSupplierService {
 		if (Utils.isNotNull(oamItemsQuotSupplier.getSelectionDate())) {
 			oamItemsQuotSupplier.setSelectionUserName(commonDriverMap
 					.getCurrentUserCode());
-			oamItemsQuotSupplier.setIndSelected(DataAccessConstant.YES);
+			oamItemsQuotSupplier.setIndSelected(DataAccessConstants.YES);
 		} else {
 			oamItemsQuotSupplier.setIndSelected(null);
 

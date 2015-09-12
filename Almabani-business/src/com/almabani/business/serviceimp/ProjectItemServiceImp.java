@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.ProjectItemService;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.dataaccess.dao.adminoam.ProjectItemDAO;
 
@@ -58,6 +59,11 @@ public class ProjectItemServiceImp implements ProjectItemService {
 		oamProjectItem.setLastModificationDate(date);
 		oamProjectItem.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return projectItemDAO.persist(oamProjectItem);
+	}
+
+	@Override
+	public List<OamProjectItem> getAllProjectItems(Company company) {
+		return projectItemDAO.getAllProjectItems(company);
 	}
 	
 

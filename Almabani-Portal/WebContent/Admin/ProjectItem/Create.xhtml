@@ -8,23 +8,36 @@
 
 <ui:composition>
 
-	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"  
 		resizable="false" appendToBody="true"
 		header="#{loc.CreateOamProjectItemTitle}">
 
 		<h:form id="createForm">
-			<h:panelGroup id="display">
-				<p:panelGrid columns="2"
+			<h:panelGroup id="display"  >
+				<p:panelGrid columns="2"  style="width:300px"
 					rendered="#{projectItemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.EditOamProjectItemTitle_item}" />
-					<p:selectOneMenu id="item" 
+					<p:autoComplete styleClass="fullWith" dropdown="true" 
 						value="#{projectItemManagementBean.selected.item}"
-						required="true"  converter="#{itemConverter}"
-						requiredMessage="#{loc.EditOamProjectItemRequiredMessage_item}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{projectItemManagementBean.oamItems}" var="item"
-							itemValue="#{item}" itemLabel="#{item.itemDescription}" />
-					</p:selectOneMenu>
+						required="true" converter="#{itemConverter}"
+						requiredMessage="#{loc.EditOamProjectItemRequiredMessage_item}"
+						completeMethod="#{projectItemManagementBean.autoCompleteItemList}"
+						var="item" itemValue="#{item}" scrollHeight="450" 
+						itemLabel=" #{item.itemCode}"
+						forceSelection="true">
+
+						<f:facet name="itemtip">
+							<h:panelGrid width="400" columns="2" cellpadding="5">
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_CODE}" />
+								<h:inputText  readonly="true"   value="#{item.itemCode}" />
+
+								<h:outputText value="#{loc.ALMABANI_GENERAL_ITEM_DESCRIPTION}" />
+								<h:inputTextarea  readonly="true"  cols="20" value="#{item.itemDescription}" />
+							</h:panelGrid>
+						</f:facet>
+
+					</p:autoComplete>
 				
 					<p:outputLabel value="#{loc.EditOamProjectItemTitle_project}" />
 					<p:selectOneMenu id="project" styleClass="fullWith"
@@ -52,7 +65,7 @@
 					value="#{loc.Save}"
 					update="display,:growl,:listForm:datalist"
 					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}"
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('createDialog').hide()" />
 			</h:panelGroup>
 

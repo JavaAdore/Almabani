@@ -2,7 +2,7 @@ package com.almabani.common.dto.menu;
 
 import java.io.Serializable;
 
-import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.util.Utils;
 
 public class Application implements Serializable{
@@ -78,7 +78,7 @@ public class Application implements Serializable{
 	public boolean isDisplayInMenu() {
 		return Utils.isNotEmptyString(display)
 				&& display
-						.equalsIgnoreCase(DataAccessConstant.IND_ACTIVE);
+						.equalsIgnoreCase(DataAccessConstants.IND_ACTIVE);
 	}
 
 	public String getDisplay() {

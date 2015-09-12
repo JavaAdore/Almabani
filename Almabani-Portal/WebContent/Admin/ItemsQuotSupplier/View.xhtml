@@ -9,11 +9,11 @@
 
 <ui:composition xmlns:customComponents="http://java.sun.com/jsf/composite/components">
 
-	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+	<p:dialog id="viewQuoItemSupplierDlg" widgetVar="viewQuoItemSupplierDialog" modal="true"
 		resizable="false" appendToBody="true" dynamic="true"
 		header="#{loc.ViewOamItemsQuotSupplierTitle}">
 	
-		<h:form id="viewForm">
+		<h:form id="viewQuotationItemSupplierForm">
 
 			<h:panelGroup id="display">
 			<p:panelGrid columns="2">
@@ -95,7 +95,7 @@
 				</p:panelGrid>
 				<customComponents:ByteImageViewer objectImplementsByteArrayHolder="#{oamItemsQuotSupplierManagementBean.selected}"></customComponents:ByteImageViewer>
 				</p:panelGrid>
-				<p:commandButton value="#{loc.Close}" onclick="viewDialog.hide()" />
+				<p:commandButton immediate="true" value="#{loc.Close}" onclick="PF('viewQuoItemSupplierDialog').hide()" />
 			</h:panelGroup>
 
 		</h:form>

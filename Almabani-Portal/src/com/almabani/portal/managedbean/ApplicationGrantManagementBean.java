@@ -44,9 +44,10 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 	private SecUser activeUser;
 
 	private List<SecTypesPerfil> prefelTypes;
-	private List<SecModule> modules ;
-	
+	private List<SecModule> modules;
+
 	private SecModule activeModule;
+
 	@PostConstruct
 	public void init() {
 		initializeInitialLists();
@@ -62,7 +63,7 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 	}
 
 	private void initializeModulesList() {
-		modules = almabaniFacade.getAllModules();		
+		modules = almabaniFacade.getAllModules();
 	}
 
 	public void grantAccess() throws AlmabaniException {
@@ -75,9 +76,9 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 					activeUser);
 			commonDriverMap = commonDriverMap.appendCompany(commonDriverMap,
 					activeCompany);
-			commonDriverMap = commonDriverMap.appendCurrentModule(commonDriverMap,
-					activeModule);
-			
+			commonDriverMap = commonDriverMap.appendCurrentModule(
+					commonDriverMap, activeModule);
+
 			almabaniFacade.grantAccess(allApplications, commonDriverMap);
 
 			WebUtils.fireInfoMessage(MessagesKeyStore.ALMABANI_GRANT_ACCESS_GRANTED_SUCCESSFULLY);
@@ -92,9 +93,11 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 	public void displayGrants() {
 		if (Utils.isNotNull(activeCompany) && Utils.isNotNull(activeUser)) {
 			CommonDriverMap commonDriverMap = new CommonDriverMap();
-			commonDriverMap.appendTargetUser(commonDriverMap, activeUser); 
-			commonDriverMap = commonDriverMap.appendCompany(commonDriverMap, activeCompany);
-			commonDriverMap = commonDriverMap.appendCurrentModule(commonDriverMap,activeModule);
+			commonDriverMap.appendTargetUser(commonDriverMap, activeUser);
+			commonDriverMap = commonDriverMap.appendCompany(commonDriverMap,
+					activeCompany);
+			commonDriverMap = commonDriverMap.appendCurrentModule(
+					commonDriverMap, activeModule);
 			initializeAllApplicationsList(commonDriverMap);
 		} else {
 			allApplications = new ArrayList();
@@ -103,36 +106,34 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 	}
 
 	private void initializeAllApplicationsList(CommonDriverMap commonDriverMap) {
-		allApplications = almabaniFacade.getGrantedApplication(commonDriverMap);	
-				if (Utils.isEmptyList(allApplications)) {
-					WebUtils.fireInfoMessage(MessagesKeyStore.ALMABANI_GRANTS_NO_RESULT_FOUND);
-				}
+		allApplications = almabaniFacade.getGrantedApplication(commonDriverMap);
+		if (Utils.isEmptyList(allApplications)) {
+			WebUtils.fireInfoMessage(MessagesKeyStore.ALMABANI_GRANTS_NO_RESULT_FOUND);
+		}
 	}
 
 	private void initializeCompanyList() {
-		if(WebUtils.getCurrentLoggedUser().isAdminUser())
-		{
+		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
 			companies = almabaniFacade.getAllCompanies();
-		}else
-		{
+		} else {
 			companies = new ArrayList();
-			companies.add(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany());
+			companies.add(WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany());
 		}
 	}
 
 	private void initializeUsersList() {
-		if(WebUtils.getCurrentLoggedUser().isAdminUser())
-		{
+		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
 			users = almabaniFacade.getAllUsers();
-		}else
-		{
-	        
-			users = almabaniFacade.getCompanyUsers(WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany());
+		} else {
+
+			users = almabaniFacade.getCompanyUsers(WebUtils
+					.getCurrentLoggedUser().getEmployee().getEstablishment()
+					.getCompany());
 		}
-	   
+
 	}
 
-	
 	public List<UserApplicationGrant> getAllApplications() {
 		return allApplications;
 	}

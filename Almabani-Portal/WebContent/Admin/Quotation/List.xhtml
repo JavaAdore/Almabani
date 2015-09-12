@@ -28,7 +28,7 @@
 
 				<p:ajax event="rowSelect"
 					listener="#{quotationManagementBean.onRowSelect}"
-					update=" viewButton editButton" />
+					update=" viewButton editButton :tabs:listForm" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
 				<p:column headerText="#{loc.ListOamQuotationCompany_number}"
@@ -93,32 +93,32 @@
 					filterBy="#{item.demand.maximoNumber}">
 					<h:outputText value="#{item.demand.maximoNumber}" />
 				</p:column>
-				
+
 				<p:column headerText="#{loc.ListOamQuotationTitle_maximum}"
-					sortBy="#{item.demand.maximoNumber}" 
+					sortBy="#{item.demand.maximoNumber}"
 					filterBy="#{item.demand.maximoNumber}">
-					<h:outputText rendered="#{not empty item.quotataionActions}"  value="#{item.quotataionActions.get(item.quotataionActions.size()-1).oamTypesQuotActions.typeQuotActionDescription}" />
+					<h:outputText rendered="#{not empty item.quotataionActions}"
+						value="#{item.quotataionActions.get(item.quotataionActions.size()-1).oamTypesQuotActions.typeQuotActionDescription}" />
 				</p:column>
 
-			
-			
+
 
 				<f:facet name="footer">
 					<p:commandButton id="createButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{quotationManagementBean.prepareCreate}"
-						update=":QuotataionCreateForm:quotationDisplay"
+						update=":tabs:QuotataionCreateForm"
 						oncomplete="PF('createQuotationDialog').show()" />
 					<p:commandButton id="viewButton" icon="ui-icon-search"
 						value="#{loc.View}"
-						update=":quotationquotationViewForm:quotationDisplay"
+						update=":tabs:quotationquotationViewForm:quotationDisplay"
 						oncomplete="PF('viewQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 					<p:commandButton id="editButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-pencil" value="#{loc.Edit}"
-						update=":editQuotataionForm:quotationDisplay"
+						update=":tabs:editQuotataionForm:quotationDisplay"
 						oncomplete="PF('editQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 				</f:facet>

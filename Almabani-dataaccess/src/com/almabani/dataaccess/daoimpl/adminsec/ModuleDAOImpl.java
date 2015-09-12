@@ -3,9 +3,11 @@ package com.almabani.dataaccess.daoimpl.adminsec;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.dataacceess.dao.adminsec.ModuleDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -50,6 +52,13 @@ public class ModuleDAOImpl extends AbstractDAO implements ModuleDAO {
 	@Override
 	public List<SecModule> getAllModules() {
 		return super.getAllEntities(SecModule.class);
+	}
+
+	@Override
+	public List<SecModule> getAllModules(Company company) {
+		Query query = super.getCurrentSession().createQuery("select x from SecModule x where x.system.company =:company ");
+		query.setParameter("company", company);
+		return query.list(); 
 	}
 
 }

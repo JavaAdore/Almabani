@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="listForm">
+
+		<p:panel header="#{loc.ListOamStockItemTitle}">
+			<p:dataTable id="datalist" value="#{stockItemManagementBean.items}"
+				var="item" selectionMode="single"
+				selection="#{stockItemManagementBean.selected}" rowKey="#{item.id}"
+				paginator="true" rows="10" rowsPerPageTemplate="10,20,30">
+
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
+
+				<p:column sortBy="#{item.id}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamStockItemTitle_id}" />
+					</f:facet>
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column sortBy="#{item.projectItem}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamStockItemTitle_projectItem}" />
+					</f:facet>
+				</p:column>
+				<p:column sortBy="#{item.establishment}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamStockItemTitle_establishment}" />
+					</f:facet>
+				</p:column>
+				<p:column sortBy="#{item.indInOut}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamStockItemTitle_indInOut}" />
+					</f:facet>
+					<h:outputText value="#{item.indInOut}" />
+				</p:column>
+				<p:column sortBy="#{item.entryValue}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamStockItemTitle_entryValue}" />
+					</f:facet>
+					<h:outputText value="#{item.entryValue}" />
+				</p:column>
+				<p:column sortBy="#{item.itemQuotation}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamStockItemTitle_itemQuotation}" />
+					</f:facet>
+				</p:column>
+				<p:column sortBy="#{item.modificationMakerName}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListOamStockItemTitle_modificationMakerName}" />
+					</f:facet>
+					<h:outputText value="#{item.modificationMakerName}" />
+				</p:column>
+				<p:column sortBy="#{item.lastModificationDate}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListOamStockItemTitle_lastModificationDate}" />
+					</f:facet>
+					<h:outputText value="#{item.lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton id="createButton" icon="ui-icon-plus"
+						value="#{loc.Create}"
+						actionListener="#{stockItemManagementBean.prepareCreate}"
+						update=":createForm:display" oncomplete="createDialog.show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="viewDialog.show()"
+						disabled="#{empty stockItemManagementBean.selected}" />
+					<p:commandButton id="editButton" icon="ui-icon-pencil"
+						value="#{loc.Edit}" update=":editForm:display"
+						oncomplete="editDialog.show()"
+						disabled="#{empty stockItemManagementBean.selected}" />
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

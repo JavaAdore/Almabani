@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.dto.menu.Application;
 import com.almabani.common.entity.schema.admincor.Employee;
 
@@ -68,7 +68,7 @@ public class SecUser implements java.io.Serializable {
 	private String password;
 	
 	@Transient
-	private List<Application> alllowedApps= new ArrayList();
+	private List<Application> alllowedApps= new ArrayList<Application>();
 	
 
 	public SecUser() {
@@ -222,7 +222,7 @@ public class SecUser implements java.io.Serializable {
 
 	public boolean isActive() {
 		return indActive != null
-				&& indActive.equalsIgnoreCase(DataAccessConstant.IND_ACTIVE) == true;
+				&& indActive.equalsIgnoreCase(DataAccessConstants.IND_ACTIVE) == true;
 	}
 
 	@Override

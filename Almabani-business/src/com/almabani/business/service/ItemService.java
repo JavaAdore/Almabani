@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 
 @Service
@@ -24,6 +25,10 @@ public interface ItemService {
 
 	List<OamItem> getAllItems();
 
-	OamItem getItem(Long itemID); 
+	OamItem getItem(Long itemID);
+
+	List<OamItem> getAllItems(Company company);
+
+	List<OamItem> getAllItems(String itemNameOrDescription, Company company); 
 
 }

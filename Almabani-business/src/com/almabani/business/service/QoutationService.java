@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 
 @Service
@@ -24,6 +25,8 @@ public interface QoutationService {
 
 	List<OamQuotation> getAllQuotations();
 
-	OamQuotation getQuotataion(Long quotationID); 
+	OamQuotation getQuotataion(Long quotationID);
+
+	List<OamQuotation> getAllQuotations(Company company); 
 
 }

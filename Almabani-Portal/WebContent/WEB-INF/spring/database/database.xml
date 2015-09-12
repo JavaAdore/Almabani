@@ -19,12 +19,36 @@
 
 		</property>
 	</bean>
- 
 
-		<bean id="local" class="org.apache.commons.dbcp.BasicDataSource">
+<!-- 	<bean id="local" class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
+<!-- 		<property name="url" -->
+<!-- 			value="jdbc:oracle:thin:@172.16.1.19:1521:orcl"></property> -->
+<!-- 		<property name="username" value="useronline"> -->
+<!-- 		</property> -->
+<!-- 		<property name="password" value="braegy#2015"> -->
+
+<!-- 		</property> -->
+<!-- 	</bean>   -->
+
+
+
+<!-- 	<bean id="local" class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
+<!-- 		<property name="url" -->
+<!-- 			value="jdbc:oracle:thin:@localhost:1521:XE"></property> -->
+<!-- 		<property name="username" value="USERONLINE"> -->
+<!-- 		</property> -->
+<!-- 		<property name="password" value="a"> -->
+
+<!-- 		</property> -->
+<!-- 	</bean>   -->
+	
+	
+	<bean id="local" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url"  
-			value="jdbc:oracle:thin:@dbinst.cx3b8roehzzr.sa-east-1.rds.amazonaws.com:1521:db4cred"></property>  
+		<property name="url"
+			value="jdbc:oracle:thin:@dbinst.cx3b8roehzzr.sa-east-1.rds.amazonaws.com:1521:db4cred"></property>
 		<property name="username" value="USERONLINE">
 		</property>
 		<property name="password" value="braegy#2015">
@@ -32,6 +56,7 @@
 		</property>
 	</bean>  
 
+ 
 
 	<bean id="dataSource" class="com.almabani.portal.spring.CustomDataSourceRouter">
 		<property name="targetDataSources">

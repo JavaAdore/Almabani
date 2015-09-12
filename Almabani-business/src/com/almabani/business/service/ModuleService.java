@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.exception.AlmabaniException;
 
@@ -23,6 +24,8 @@ public interface ModuleService {
 	SecModule updateModule(SecModule SecModule, CommonDriverMap commonDriverMap) throws AlmabaniException;
 	
 	List<SecModule> getAllModules();
+
+	List<SecModule> getAllModules(Company company);
 
 
 }

@@ -82,12 +82,13 @@
 
 
 				</p:panelGrid>
+									
+				
 				<p:commandButton
 					actionListener="#{quotationManagementBean.saveNew()}"
-					value="#{loc.Save}"
-					update="quotationDisplay,:growl,:quotationListForm:datalist"
+					value="#{loc.Save}" update="quotationDisplay,:growl,:tabs:quotationListForm:datalist"
 					oncomplete="if(!args.validationFailed) {PF('editQuotationDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}"
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('editQuotationDialog').hide()" />
 			</h:panelGroup>
 

@@ -25,7 +25,7 @@
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
-					<p:panelGrid columns="2" styleClass="fullWith">
+					<p:panelGrid columns="2" styleClass="fullWith" style="border:none">
 						<p:selectOneMenu converter="#{manufacturerConverter}"
 							id="manufacturer" widgetVar="manufacturer" styleClass="fullWith"
 							value="#{itemManagementBean.selected.manufacturer}"
@@ -42,8 +42,22 @@
 							update=":createManufacturerForm"
 							onclick="PF('new_manufacturer').show()" />
 					</p:panelGrid>
+
+					<p:outputLabel value="#{loc.ALMABANI_GENERAL_DEPARTMENT}" />
+
+					<p:selectOneMenu id="department" styleClass="fullWith"
+						converter="#{departmentConverter}">
+						<p:ajax event="change" process="@this" update="itemCategories"
+							listener="#{itemManagementBean.departmentChanged}" />
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{itemManagementBean.departments}"
+							var="departmentItem" itemValue="#{departmentItem}"
+							itemLabel="#{departmentItem.departmentName}" />
+					</p:selectOneMenu>
+
+
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
-					<p:selectOneMenu
+					<p:selectOneMenu id="itemCategories"
 						value="#{itemManagementBean.selected.itemCategory}"
 						styleClass="fullWith" required="true"
 						converter="#{itemCategoryConverter}"
@@ -145,7 +159,8 @@
 				</p:panelGrid>
 				<p:commandButton
 					actionListener="#{itemManagementBean.addNewManufacturer()}"
-					value="#{loc.Save}" update=":growl :createForm:manufacturer :editForm:manufacturer"
+					value="#{loc.Save}"
+					update=":growl :createForm:manufacturer :editForm:manufacturer"
 					oncomplete="if(!args.validationFailed){PF('new_manufacturer').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
 					onclick="PF('new_manufacturer').hide()" />

@@ -60,7 +60,7 @@
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:panelGrid>
-				<p:commandButton value="#{loc.Close}" onclick="PF('viewDialog').hide()" />
+				<p:commandButton value="#{loc.Close}" immediate="true" onclick="PF('viewDialog').hide()" />
 			</h:panelGroup>
 
 		</h:form>

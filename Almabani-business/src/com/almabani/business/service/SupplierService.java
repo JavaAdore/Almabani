@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.exception.AlmabaniException;
 
@@ -23,6 +25,11 @@ public interface SupplierService {
 	OamSupplier updateSupplier(OamSupplier supplier, CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	List<OamSupplier> getAllSuppliers();
+
+	List<OamSupplier> getAllSuppliers(Company company);
+
+	List<OamProjectItem> getAllProjectItems(
+			String projectItemNameOrDescription, Company company);
 
 
 

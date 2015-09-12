@@ -8,9 +8,8 @@
 
 <ui:composition>
 
-	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
-		resizable="false" appendToBody="true"
-		header="#{loc.EditOamItemTitle}">
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true" dynamic="true" appendToBody="true"
+		resizable="false"  header="#{loc.EditOamItemTitle}">
 
 		<h:form id="editForm">
 
@@ -25,9 +24,9 @@
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCode}" />
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_manufacturer}" />
-					<p:panelGrid columns="2" styleClass="fullWith">
+					<p:panelGrid columns="2" styleClass="fullWith" style="border:none">
 						<p:selectOneMenu converter="#{manufacturerConverter}"
-							id="manufacturer" widgetVar="manufacturer" 
+							id="manufacturer" widgetVar="manufacturer" styleClass="fullWith"
 							value="#{itemManagementBean.selected.manufacturer}"
 							required="true"
 							requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
@@ -42,8 +41,22 @@
 							update=":createManufacturerForm"
 							onclick="PF('new_manufacturer').show()" />
 					</p:panelGrid>
+
+					<p:outputLabel value="#{loc.ALMABANI_GENERAL_DEPARTMENT}" />
+
+					<p:selectOneMenu id="department" styleClass="fullWith" value="#{itemManagementBean.department}"
+						converter="#{departmentConverter}">
+						<p:ajax event="change" process="@this" update="itemCategories"
+							listener="#{itemManagementBean.departmentChanged}" />
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{itemManagementBean.departments}"
+							var="departmentItem" itemValue="#{departmentItem}"
+							itemLabel="#{departmentItem.departmentName}" />
+					</p:selectOneMenu>
+
+
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
-					<p:selectOneMenu
+					<p:selectOneMenu id="itemCategories"
 						value="#{itemManagementBean.selected.itemCategory}"
 						styleClass="fullWith" required="true"
 						converter="#{itemCategoryConverter}"
@@ -85,6 +98,7 @@
 							var="yesNoItem" itemValue="#{yesNoItem.key}"
 							itemLabel="#{yesNoItem.value}" />
 					</p:selectOneMenu>
+			  
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemDescription}" />
 
 					<p:inputTextarea
@@ -93,15 +107,11 @@
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}"
 						maxlength="150" />
 
-
-
 				</p:panelGrid>
 				<p:commandButton actionListener="#{itemManagementBean.saveNew}"
-					value="#{loc.Save}"
-					update="display,:growl,:listForm:datalist"
-					oncomplete="if(!args.validationFailed) {PF'(editDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}"
-					onclick="editDialog.hide()" />
+					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}" onclick="PF('editDialog').hide()" immediate="true" />
 			</h:panelGroup>
 
 		</h:form>

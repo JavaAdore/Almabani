@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="viewDlg" widgetVar="viewDialog" modal="true" resizable="false" appendToBody="true" header="#{loc.ViewOamStockItemTitle}">
+
+            <h:form id="viewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{stockItemManagementBean.selected != null}">
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_id}"/>
+                        <h:outputText value="#{stockItemManagementBean.selected.id}" title="#{loc.ViewOamStockItemTitle_id}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_projectItem}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_establishment}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_indInOut}"/>
+                        <h:outputText value="#{stockItemManagementBean.selected.indInOut}" title="#{loc.ViewOamStockItemTitle_indInOut}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_entryValue}"/>
+                        <h:outputText value="#{stockItemManagementBean.selected.entryValue}" title="#{loc.ViewOamStockItemTitle_entryValue}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_itemQuotation}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_modificationMakerName}"/>
+                        <h:outputText value="#{stockItemManagementBean.selected.modificationMakerName}" title="#{loc.ViewOamStockItemTitle_modificationMakerName}"/>
+                        <h:outputText value="#{loc.ViewOamStockItemLabel_lastModificationDate}"/>
+                        <h:outputText value="#{stockItemManagementBean.selected.lastModificationDate}" title="#{loc.ViewOamStockItemTitle_lastModificationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{loc.Close}" onclick="viewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

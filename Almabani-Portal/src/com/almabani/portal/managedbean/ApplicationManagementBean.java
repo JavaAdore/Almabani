@@ -17,6 +17,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.ApplicationType;
 import com.almabani.common.entity.schema.adminsec.SecApplication;
 import com.almabani.common.entity.schema.adminsec.SecModule;
@@ -29,7 +30,8 @@ import com.almabani.portal.webutils.WebUtils;
 
 @ManagedBean
 @ViewScoped
-public class ApplicationManagementBean  extends AbstractBeanHelper implements Serializable {
+public class ApplicationManagementBean extends AbstractBeanHelper implements
+		Serializable {
 
 	/**
 	 * 
@@ -37,15 +39,14 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 	private static final long serialVersionUID = 1L;
 
 	private LazyDataModel<SecApplication> items;
-	
+
 	private List<SecSystem> sytems;
-	
+
 	private boolean operationSuccess = false;
 
-		
 	private List<SecModule> modules;
 	private List<SecSubModule> subModules;
-	private List<ApplicationType> applicationTypes; 
+	private List<ApplicationType> applicationTypes;
 	private SecApplication selected;
 
 	private SecModule tempModule;
@@ -57,11 +58,19 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 	}
 
 	private void loadInitialLists() {
-		modules = almabaniFacade.getAllModules();
-		if(Utils.isNotEmptyList(modules))
-		{
+		if (WebUtils.isAdminUser()) {
+			modules = almabaniFacade.getAllModules();
+
+		} else {
+			Company company = WebUtils.getCurrentLoggedUserCompany();
+			modules = almabaniFacade.getAllModules(company);
+
+		}
+
+		if (Utils.isNotEmptyList(modules)) {
 			tempModule = modules.get(0);
 		}
+
 		applicationTypes = almabaniFacade.getAllApplicationTypes();
 	}
 
@@ -69,43 +78,42 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 		items = new ItemsLazyList();
 	}
 
-	
 	public void prepareCreate() {
-		   selected = new SecApplication();
-		   tempModule = null;
+		selected = new SecApplication();
+		tempModule = null;
 	}
 
 	public void saveNew() throws AlmabaniException {
 
 		operationFaild();
-		boolean isAlreadyExisitEntity = Utils.isNotEmptyString(selected.getCodApplication());
-		
-		selected = almabaniFacade.addOrUpdateApplication(selected, CommonDriverMap.appendCurrentUserCode(null, WebUtils.getCurrentUserCode()));
+		boolean isAlreadyExisitEntity = Utils.isNotEmptyString(selected
+				.getCodApplication());
+
+		selected = almabaniFacade.addOrUpdateApplication(
+				selected,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_MODULE));
-		
+
 		operationSucceded();
 
 	}
-	
-	
-	public void moduleChanged(AjaxBehaviorEvent event)
-	{
-		tempModule = (SecModule) ((SelectOneMenu)event.getSource()).getValue();
-		
+
+	public void moduleChanged(AjaxBehaviorEvent event) {
+		tempModule = (SecModule) ((SelectOneMenu) event.getSource()).getValue();
+
 		loadSubModules();
 	}
 
 	private void loadSubModules() {
-		if(Utils.isNotNull(tempModule))
-	 	{ 
+		if (Utils.isNotNull(tempModule)) {
 			subModules = almabaniFacade.getSubModules(tempModule);
-		}else
-		{
-			subModules = new ArrayList(); 
-		}		
+		} else {
+			subModules = new ArrayList();
+		}
 	}
 
 	private class ItemsLazyList extends LazyDataModel<SecApplication> implements
@@ -119,13 +127,14 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 		List<SecApplication> result;
 
 		@Override
-		public List<SecApplication> load(int first, int pageSize, String sortField,
-				SortOrder sortOrder, Map<String, Object> filters) {
+		public List<SecApplication> load(int first, int pageSize,
+				String sortField, SortOrder sortOrder,
+				Map<String, Object> filters) {
 			rowCount = almabaniFacade.getNumberOfApplications(filters);
 
-			result = (List<SecApplication>) almabaniFacade.loadApplications(first,
-					pageSize, sortField, sortOrder == SortOrder.ASCENDING,
-					filters);
+			result = (List<SecApplication>) almabaniFacade.loadApplications(
+					first, pageSize, sortField,
+					sortOrder == SortOrder.ASCENDING, filters);
 
 			setRowCount(this.rowCount);
 
@@ -142,21 +151,17 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 				}
 			}
 
-			return null; 
+			return null;
 		}
 
 	}
-	
-	public void loadApproperateModule()
-	{
-		if(Utils.isNotNull(selected.getSecSubModule()))
-		{
-			tempModule = selected.getSecSubModule().getModule(); 
-			loadSubModules(); 
+
+	public void loadApproperateModule() {
+		if (Utils.isNotNull(selected.getSecSubModule())) {
+			tempModule = selected.getSecSubModule().getModule();
+			loadSubModules();
 		}
 	}
-	
-	
 
 	public LazyDataModel<SecApplication> getItems() {
 		return items;
@@ -234,6 +239,5 @@ public class ApplicationManagementBean  extends AbstractBeanHelper implements Se
 	public void setTempModule(SecModule tempModule) {
 		this.tempModule = tempModule;
 	}
-
 
 }

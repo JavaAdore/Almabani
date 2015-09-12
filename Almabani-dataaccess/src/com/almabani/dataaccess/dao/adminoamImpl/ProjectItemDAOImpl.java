@@ -3,8 +3,10 @@ package com.almabani.dataaccess.dao.adminoamImpl;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.dataaccess.dao.adminoam.ProjectItemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -38,6 +40,13 @@ public class ProjectItemDAOImpl extends AbstractDAO implements ProjectItemDAO {
 	@Override
 	public OamProjectItem persist(OamProjectItem oamProjectItem) {
 		return (OamProjectItem) super.persist(oamProjectItem);
+	}
+
+	@Override
+	public List<OamProjectItem> getAllProjectItems(Company company) {
+		Query query = super.getCurrentSession().createQuery("select x from OamProjectItem x where x.project.company =:company ");
+		query.setParameter("company", company);
+		return query.list();  
 	}
 	
 	

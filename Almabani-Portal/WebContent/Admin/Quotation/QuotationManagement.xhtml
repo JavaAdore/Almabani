@@ -9,27 +9,91 @@
 		#{loc.QUOTATION_QUOTATION_MANAGEMENT_TITLE}
 	</ui:define>
 
+	<ui:define name="head">
+		<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 24%;
+}
+
+.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 30px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+</style>
+
+	</ui:define>
+
 	<ui:define name="content">
+		<h:form id="stepsForm">
+			<p:steps 
+				activeIndex="#{quotationApplicationController.activeTabIndex}">
+				<p:menuitem value="#{loc.CreateOamItemQuotationLabel_quotation}" />
+				<p:menuitem value="#{loc.GENERAL_ALMABANI_QUOTATION_ITEM}" />
+				<p:menuitem value="#{loc.GENERAL_ALMABANI_ITEM_QUOTATION_SUPPLER}" />
+			</p:steps>
+		</h:form>
 
-		<ui:include src="List.xhtml" />
+		<p:tabView id="tabs"  
+			>
+			<p:ajax event="tabChange" update=":stepsForm"
+				listener="#{quotationApplicationController.onTabChange}" />
 
-		<ui:include src="View.xhtml" />
+			<p:tab id="quotationTab"
+				title="#{loc.CreateOamItemQuotationLabel_quotation}">
 
-		<ui:include src="Edit.xhtml" />
+				<ui:include src="List.xhtml" />
 
-		<ui:include src="Create.xhtml" />
+				<ui:include src="View.xhtml" />
 
+				<ui:include src="Edit.xhtml" />
 
-		<ui:include src="/Admin/ItemQuotation/List.xhtml" />
-
-		<ui:include src="/Admin/ItemQuotation/View.xhtml" />
-
-		<ui:include src="/Admin/ItemQuotation/Edit.xhtml" />
-
-		<ui:include src="/Admin/ItemQuotation/Create.xhtml" />
-
+				<ui:include src="Create.xhtml" />
+			</p:tab>
+			<p:tab id="quotationItemTab"
+				title="#{loc.GENERAL_ALMABANI_QUOTATION_ITEM}">
 
 
+				<ui:include src="/Admin/ItemQuotation/List.xhtml" />
+
+				<ui:include src="/Admin/ItemQuotation/View.xhtml" />
+
+				<ui:include src="/Admin/ItemQuotation/Edit.xhtml" />
+
+				<ui:include src="/Admin/ItemQuotation/Create.xhtml" />
+			</p:tab>
+
+			<p:tab id="quotationItemSupplierTab"
+				title="#{loc.GENERAL_ALMABANI_ITEM_QUOTATION_SUPPLER}">
+
+				<ui:include src="/Admin/ItemsQuotSupplier/List.xhtml" />
+
+				<ui:include src="/Admin/ItemsQuotSupplier/View.xhtml" />
+
+				<ui:include src="/Admin/ItemsQuotSupplier/Edit.xhtml" />
+
+				<ui:include src="/Admin/ItemsQuotSupplier/Create.xhtml" />
+
+			</p:tab>
+
+		</p:tabView>
 	</ui:define>
 
 </ui:composition>

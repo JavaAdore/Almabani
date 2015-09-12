@@ -33,6 +33,7 @@ import org.springframework.security.core.context.SecurityContext;
 import com.almabani.common.annotataion.Bundle;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.menu.ApplicationAccess;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
@@ -268,8 +269,9 @@ public class WebUtils {
 	}
 
 	public static Object extractFromRequest(String key) {
-		return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
-	} 
+		return FacesContext.getCurrentInstance().getExternalContext()
+				.getRequestParameterMap().get(key);
+	}
 
 	public static void injectIntoRequest(String key, Object value) {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -339,6 +341,17 @@ public class WebUtils {
 
 	public static SecUser getCurrentLoggedUser() {
 		return (SecUser) extractFromSession(PortalConstants.CURRENTLY_LOGGIN_USER);
+
+	}
+
+	public static Company getCurrentLoggedUserCompany() {
+		SecUser secUser = getCurrentLoggedUser();
+		if (Utils.isNotNull(secUser)) {
+			return secUser.getEmployee().getEstablishment().getCompany();
+
+		}
+
+		return null;
 
 	}
 
@@ -510,7 +523,7 @@ public class WebUtils {
 					cookie = userCookies[i];
 					break;
 				}
-			} 
+			}
 		}
 
 		if (cookie != null) {
@@ -520,7 +533,6 @@ public class WebUtils {
 			cookie.setPath(request.getContextPath());
 		}
 
-  
 		HttpServletResponse response = (HttpServletResponse) facesContext
 				.getExternalContext().getResponse();
 		response.addCookie(cookie);

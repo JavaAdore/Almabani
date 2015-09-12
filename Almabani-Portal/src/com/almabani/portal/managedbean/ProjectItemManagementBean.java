@@ -33,7 +33,6 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 
 	private LazyDataModel<OamProjectItem> items;
 
-
 	private boolean operationSuccess = false;
 	private List<Project> projects;
 	private List<OamItem> oamItems;
@@ -44,7 +43,7 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	public void init() {
 		initializeCompaniesLazyList();
 		loadInitialLists();
-		
+
 		prepareStatesList();
 	}
 
@@ -54,8 +53,19 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	}
 
 	private void loadInitialLists() {
-		projects = almabaniFacade.getAllProjects();
-		oamItems = almabaniFacade.getAllItems();
+		if (WebUtils.isAdminUser()) {
+			projects = almabaniFacade.getAllProjects();
+		} else {
+			projects = almabaniFacade.getAllProjects(WebUtils
+					.getCurrentLoggedUserCompany());
+
+		}
+		if (WebUtils.isAdminUser()) {
+			oamItems = almabaniFacade.getAllItems();
+		} else {
+			oamItems = almabaniFacade.getAllItems(WebUtils
+					.getCurrentLoggedUserCompany());
+		}
 	}
 
 	private void initializeCompaniesLazyList() {
@@ -74,16 +84,39 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 
 		selected = almabaniFacade.addOrUpdateProjectItem(
 				selected,
-				CommonDriverMap.appendCurrentUserCode(null, 
+				CommonDriverMap.appendCurrentUserCode(null,
 						WebUtils.getCurrentUserCode()));
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_PROJECT_ITEM));
-		
+
 		operationSuccess();
 
 	}
+	
+	
+	public List<OamItem> autoCompleteItemList(
+			String itemNameOrDescription) {
+
+		itemNameOrDescription = Utils
+				.isNotEmptyString(itemNameOrDescription) ? itemNameOrDescription 
+				: "";
+		if (WebUtils.isAdminUser()) {
+			oamItems = almabaniFacade.getAllItems(
+					itemNameOrDescription, null);
+		} else {
+			oamItems = almabaniFacade.getAllItems(
+					itemNameOrDescription, WebUtils
+							.getCurrentLoggedUser().getEmployee()
+							.getEstablishment().getCompany());
+
+		}
+		return oamItems;
+
+	}
+	
+	
 
 	private void operationSuccess() {
 		operationSuccess = true;
@@ -92,7 +125,6 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	private void operationFaild() {
 		operationSuccess = false;
 	}
-
 
 	private class QuotationItemLazyModel extends LazyDataModel<OamProjectItem>
 			implements Serializable {
@@ -108,6 +140,8 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 		public List<OamProjectItem> load(int first, int pageSize,
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
+
+			attachCompanyFiltrataionInCaseOnNoneAdmin(filters);
 			rowCount = almabaniFacade.getNumberOfProjectItems(filters);
 			result = (List<OamProjectItem>) almabaniFacade.loadProjectItems(
 					first, pageSize, sortField,
@@ -118,7 +152,14 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 			return result;
 		}
 
-		
+		private void attachCompanyFiltrataionInCaseOnNoneAdmin(
+				Map<String, Object> filters) {
+			if (WebUtils.isAdminUser() == false) {
+				filters.put("project.company",
+						WebUtils.getCurrentLoggedUserCompany());
+			}
+
+		}
 
 		@Override
 		public OamProjectItem getRowData(String rowKey) {
@@ -166,7 +207,5 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	public void setOamItems(List<OamItem> oamItems) {
 		this.oamItems = oamItems;
 	}
-
-	
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.exception.AlmabaniException;
 
@@ -22,6 +23,8 @@ public interface ItemCategoryService {
 	OamItemCategory updateItemCategory(OamItemCategory company) throws AlmabaniException;
 	
 	List<OamItemCategory> getAllItemCategories();
+
+	List<OamItemCategory> getAllItemCategories(Department department);
 
 
 }

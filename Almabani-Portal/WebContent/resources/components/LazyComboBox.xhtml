@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+
+
+
+	<composite:interface>
+
+		<composite:attribute name="required" type="java.lang.Boolean"
+			required="false" default="false" />
+		<composite:attribute name="requiredMessage" required="false"
+			default="required" />
+		<composite:attribute name="converter" required="true" />
+		<composite:attribute name="value" required="true"
+			type="java.lang.Object" />
+
+	</composite:interface>
+
+	<composite:implementation>
+
+		<h:selectOneMenu converter="#{cc.attrs.converter}" 
+			onclick="PF('lazyComboBoxDataTable').show();"
+			required="#{cc.attrs.required}" value="#{cc.attrs.value}"
+			requiredMessage="#{cc.attrs.requiredMessage}">
+			
+		</h:selectOneMenu>
+		<p:overlayPanel widgetVar="lazyComboBoxDataTable">
+			<composite:insertChildren />
+			
+			<p:dataTable id="datalist" value="#{applicationManagementBean.items}"
+				resizableColumns="true" var="item" widgetVar="datalist"
+				selectionMode="single" draggableColumns="true" draggableRows="true"
+				selection="#{applicationManagementBean.selected}"
+				rowKey="#{item.codApplication}" paginator="true" lazy="true"
+				rows="10" rowsPerPageTemplate="10,20,30">
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
+
+				<p:column headerText="#{loc.ListSecApplicationTitle_codApplication}"
+					sortBy="#{item.codApplication}" filterBy="#{item.codApplication}">
+					<h:outputText value="#{item.codApplication}" />
+				</p:column>
+
+				<p:column headerText="#{loc.ListSecApplicationTitle_secModule}"
+					sortBy="#{item.secSubModule.module.moduleCode}"
+					filterBy="#{item.secSubModule.module.moduleCode}">
+					<p:outputLabel value="#{item.secSubModule.module.moduleCode}" />
+				</p:column>
+
+
+				<p:column headerText="#{loc.ListSecApplicationTitle_secSubModule}"
+					sortBy="#{item.secSubModule.subModuleDescription}"
+					filterBy="#{item.secSubModule.subModuleDescription}">
+					<p:outputLabel value="#{item.secSubModule.subModuleDescription}" />
+				</p:column>
+
+				<p:column
+					headerText="#{loc.ListSecApplicationTitle_applicationDescription}"
+					sortBy="#{item.applicationDescription}"
+					filterBy="#{item.applicationDescription}">
+					<h:outputText value="#{item.applicationDescription}" />
+				</p:column>
+
+				<p:column
+					headerText="#{loc.ListSecApplicationTitle_typesApplication}"
+					sortBy="#{item.typesApplication.applicationTypedescription}"
+					filterBy="#{item.typesApplication.applicationTypedescription}">
+					<h:outputText
+						value="#{item.typesApplication.applicationTypedescription}" />
+				</p:column>
+
+
+
+				<p:column headerText="#{loc.ListSecApplicationTitle_indActive}"
+					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+				</p:column>
+
+
+				<p:column
+					headerText="#{loc.EditSecApplicationTitle_isDisplayInMenu}"
+					sortBy="#{item.displayInMenu}" filterBy="#{item.displayInMenu}">
+
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.displayInMenu)}" />
+				</p:column>
+
+				<p:column
+					headerText="#{loc.ListSecApplicationTitle_linkCodeDescription}"
+					sortBy="#{item.linkCodeDescription}"
+					filterBy="#{item.linkCodeDescription}">
+
+					<h:inputText readonly="true" value="#{item.linkCodeDescription}"
+						styleClass="fullWith" />
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
+						actionListener="#{applicationManagementBean.prepareCreate}"
+						update=":createForm:display"
+						oncomplete="PF('createDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":viewForm:display"
+						oncomplete="PF('viewDialog').show()"
+						disabled="#{empty applicationManagementBean.selected}" />
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						actionListener="#{applicationManagementBean.loadApproperateModule()}"
+						update=":editForm:display" oncomplete="PF('editDialog').show()"
+						disabled="#{empty applicationManagementBean.selected}" />
+				</f:facet>
+
+			</p:dataTable>
+		</p:overlayPanel>
+
+	</composite:implementation>
+
+</ui:component>

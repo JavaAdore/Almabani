@@ -69,9 +69,12 @@
 
 
 				</p:panelGrid>
+				
+				
+				
 				<p:commandButton actionListener="#{quotationManagementBean.saveNew}"
 					value="#{loc.Save}"
-					update="quotationDisplay,:growl,:quotationListForm:datalist"
+					update="quotationDisplay,:growl,:tabs:quotationListForm:datalist"
 					oncomplete="if(!args.validationFailed){PF('createQuotationDialog').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
 					onclick="PF('createQuotationDialog').hide()" immediate="true" />

@@ -42,7 +42,7 @@ import com.almabani.business.service.SubModuleService;
 import com.almabani.business.service.SupplierService;
 import com.almabani.business.service.SystemService;
 import com.almabani.business.service.WokDemandService;
-import com.almabani.common.constant.DataAccessConstant;
+import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.dto.UserApplicationGrant;
@@ -66,6 +66,7 @@ import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
+import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
@@ -852,7 +853,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 			} else {
 				SecApplicationsCompany secApplicationsCompany = new SecApplicationsCompany();
 				secApplicationsCompany
-						.setIndActive(DataAccessConstant.IND_ACTIVE);
+						.setIndActive(DataAccessConstants.IND_ACTIVE);
 				secApplicationsCompany.setApplication(secApplication);
 				secApplicationsCompany.setCompany(company);
 				result.add(secApplicationsCompany);
@@ -1055,11 +1056,12 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	@Override
 	public List<OamTypeMaterial> getAllMaterialTypes(Company company) {
 		return materialTypeService.getAllMaterialTypes(company);
-	}  
+	}
 
 	@Override
-	public OamManufacturer addOrUpdateManufacturer(OamManufacturer manufacturer,
-			CommonDriverMap commonDriverMap) throws AlmabaniException { 
+	public OamManufacturer addOrUpdateManufacturer(
+			OamManufacturer manufacturer, CommonDriverMap commonDriverMap)
+			throws AlmabaniException {
 
 		if (Utils.hasID(manufacturer)) {
 			return manufacturerService.updateManufacturer(manufacturer,
@@ -1069,6 +1071,93 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 					commonDriverMap);
 
 		}
+	}
+
+	@Override
+	public List<OamItemCategory> getAllItemCategories(Department department) {
+
+		return itemCategoryService.getAllItemCategories(department);
+	}
+
+	@Override
+	public List<OamItem> getAllItems(Company company) {
+
+		return itemService.getAllItems(company);
+	}
+
+	@Override
+	public List<Project> getAllProjects(Company company) {
+		return projectService.getProjects(company);
+	}
+
+	@Override
+	public List<OamQuotation> getAllQuotations(Company company) {
+		return qoutationService.getAllQuotations(company);
+	}
+
+	@Override
+	public List<OamProjectItem> getAllProjectItems(Company company) {
+
+		return projectItemService.getAllProjectItems(company);
+	}
+
+	@Override
+	public List<WokDemand> getWokDemands(Company company) {
+		return wokDemandService.getWokDemands(company);
+	}
+
+	@Override
+	public List<OamItemQuotation> getAllQuotationItems(Company company) {
+		return quotationItemService.getAllQuotationItems(company);
+	}
+
+	@Override
+	public List<OamSupplier> getAllSuppliers(Company company) {
+		return supplierService.getAllSuppliers(company);
+	}
+
+	@Override
+	public List<OamProjectItem> getAllProjectItems(
+			String projectItemNameOrDescription, Company company) {
+		return supplierService.getAllProjectItems(projectItemNameOrDescription,
+				company);
+	}
+
+	@Override
+	public List<SecSystem> getAllSystems(Company company) {
+		return systemService.getAllSystems( company);
+	}
+
+	@Override
+	public List<SecModule> getAllModules(Company company) {
+		return moduleService.getAllModules( company);
+	}
+
+	@Override
+	public List<OamItem> getAllItems(String itemNameOrDescription,
+			Company company) {
+		return itemService. getAllItems( itemNameOrDescription,
+				 company);
+	}
+
+	@Override
+	public Integer getNumberOfOamStockItems(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OamStockItem> loadOamStockItems(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OamStockItem addorUpdateOamStockItem(OamStockItem selected,
+			CommonDriverMap appendCurrentUserCode) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

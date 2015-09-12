@@ -118,7 +118,8 @@ public class UserManagementBean extends AbstractBeanHelper implements
 
 			attachCompanyInCaseOfNotAdmin(WebUtils.getCurrentLoggedUser()
 					.getEmployee().getEstablishment().getCompany(), filters);
-
+				
+			
 			rowCount = almabaniFacade.getCountOfUsers(filters);
 
 			result = (List<SecUser>) almabaniFacade.loadUsers(first, pageSize,

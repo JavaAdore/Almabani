@@ -75,7 +75,7 @@
 				</p:column>
 				
 				<f:facet name="footer">
-					<p:commandButton value="#{loc.ALMABANI_GRANT_GRANT_ACCESS}" disabled="#{empty companyGrantsManagementBean.grantableApplications}"
+					<p:commandButton rendered="#{applicationScopeStore.hasFullAccess()}" value="#{loc.ALMABANI_GRANT_GRANT_ACCESS}" disabled="#{empty companyGrantsManagementBean.grantableApplications}"
 						actionListener="#{companyGrantsManagementBean.updateAccess()}"
 						update=":growl" />  
 				</f:facet>

@@ -3,8 +3,10 @@ package com.almabani.dataaccess.dao.adminoamImpl;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.dataaccess.dao.adminoam.QoutationDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -41,6 +43,13 @@ public class QoutationDAOImpl extends AbstractDAO implements QoutationDAO {
 	@Override
 	public OamQuotation getQuotataion(Long quotationID) {
 		return (OamQuotation) super.getEntity(OamQuotation.class , quotationID);
+	}
+
+	@Override
+	public List<OamQuotation> getAllQuotations(Company company) {
+		Query query = super.getCurrentSession().createQuery("select x from OamQuotation x where x.department.company=:company");
+		query.setParameter("company", company);
+		return query.list();
 	}
      
 }

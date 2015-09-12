@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -22,5 +23,7 @@ public interface ItemCategoryDAO extends AbstractDAOInt{
 	OamItemCategory getItemCategory(Long id);
 
 	List<OamItemCategory> getAllItemCategories();
+
+	List<OamItemCategory> getAllItemCategories(Department department);
 	
 }

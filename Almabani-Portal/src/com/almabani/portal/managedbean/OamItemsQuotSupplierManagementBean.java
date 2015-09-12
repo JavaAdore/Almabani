@@ -14,6 +14,7 @@ import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
@@ -41,7 +42,30 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper imple
 	private OamItemsQuotSupplier selected;
 
 	private List<State> states;
+	
+	private QuotationApplicationController quotationApplicationController;
+	
+	private OamItemQuotation parentQuotationItem;
 
+	public OamItemQuotation getParentQuotationItem() {
+		return parentQuotationItem;
+	}
+
+	public void setParentQuotationItem(OamItemQuotation parentQuotationItem) {
+		
+		this.parentQuotationItem = parentQuotationItem;
+	}
+
+	public QuotationApplicationController getQuotationApplicationController() {
+		return quotationApplicationController;
+	}
+
+	public void setQuotationApplicationController(
+			QuotationApplicationController quotationApplicationController) {
+		this.quotationApplicationController = quotationApplicationController;
+	}
+	
+	
 	@PostConstruct
 	public void init() {
 		initializeCompaniesLazyList();
@@ -53,11 +77,16 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper imple
 	}
 
 	private void prepareInitialLists() {
-		
+		if(WebUtils.isAdminUser()){
 		quotataionItems = almabaniFacade.getAllQuotationItems();
 		suppliers = almabaniFacade.getAllSuppliers();
-
-	}
+		}else
+		{
+			Company company = WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany();
+			quotataionItems = almabaniFacade.getAllQuotationItems(company);
+			suppliers = almabaniFacade.getAllSuppliers(company);
+		}
+	} 
 
 	
 
@@ -72,7 +101,7 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper imple
 
 	public void prepareCreate() {
 		selected = new OamItemsQuotSupplier();
-		
+		selected.setItemQuotation(parentQuotationItem); 
 	}
 
 	public void saveNew() throws AlmabaniException {
@@ -103,8 +132,11 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper imple
 		@Override
 		public List<OamItemsQuotSupplier> load(int first, int pageSize, String sortField,
 				SortOrder sortOrder, Map<String, Object> filters) {
+			
+			injectCompanyIncaseOfNoneAdminUser(filters);
+			
 			rowCount = almabaniFacade.getCountOfOamItemsQuotSupplier(filters);
-
+			
 			result = (List<OamItemsQuotSupplier>) almabaniFacade.loadOamItemsQuotSuppliers(first,
 					pageSize, sortField, sortOrder == SortOrder.ASCENDING,
 					filters);
@@ -112,6 +144,15 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper imple
 			setRowCount(this.rowCount);
 
 			return result;
+		}
+
+		private void injectCompanyIncaseOfNoneAdminUser(
+				Map<String, Object> filters) {
+			if(WebUtils.isAdminUser()==false)
+			{
+				filters.put("supplier.company", WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany()); 
+			}
+			
 		}
 
 		@Override

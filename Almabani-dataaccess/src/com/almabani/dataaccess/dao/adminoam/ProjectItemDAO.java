@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 @Repository
@@ -20,6 +21,8 @@ public interface ProjectItemDAO extends AbstractDAOInt{
 			String sortField, boolean ascending, Map<String, Object> filters);
 
 	OamProjectItem persist(OamProjectItem oamProjectItem);
+
+	List<OamProjectItem> getAllProjectItems(Company company);
 
 	
 	

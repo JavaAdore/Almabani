@@ -2,7 +2,7 @@ package com.almabani.common.constant;
 
 import java.io.Serializable;
 
-public class DataAccessConstant implements Serializable{
+public class DataAccessConstants implements Serializable{
 
 	/**
 	 * 
