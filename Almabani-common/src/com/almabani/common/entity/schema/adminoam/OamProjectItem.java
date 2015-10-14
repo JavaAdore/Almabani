@@ -14,6 +14,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
 
 import com.almabani.common.entity.AbstractEntity;
 import com.almabani.common.entity.schema.admincor.Project;
@@ -23,37 +26,49 @@ import com.almabani.common.entity.schema.admincor.Project;
  */
 
 @Entity
-@Table(schema="ADMINOAM", name = "OAM_PROJECT_ITEMS")
+@Table(schema = "ADMINOAM", name = "OAM_PROJECT_ITEMS")
 @SequenceGenerator(name = "OamProjectItems_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_PROJECT_ITEM", allocationSize = 1, initialValue = 1)
 public class OamProjectItem extends AbstractEntity implements Serializable {
-	
+
 	private static final long serialVersionUID = 5167822432796921685L;
 
 	@Id
 	@Column(name = "NUM_PROJECT_ITEM", unique = true, nullable = false, precision = 12, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamProjectItems_Id_Seq_Gen")
 	private Long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_ITEM", referencedColumnName="NUM_ITEM")
+	@JoinColumn(name = "NUM_ITEM", referencedColumnName = "NUM_ITEM")
 	private OamItem item;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_PROJECT", referencedColumnName="NUM_PROJECT", nullable = false)
+	@JoinColumn(name = "NUM_PROJECT", referencedColumnName = "NUM_PROJECT", nullable = false)
 	private Project project;
-	
+
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
 	private String indActive;
-	
+
 	/**
-	 * modificationMakerName represent the user name who make the last modification
+	 * modificationMakerName represent the user name who make the last
+	 * modification
 	 */
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
+
+	@Formula("( select sum(decode(t1.IND_IN_OUT,'I',nvl(t1.VAL_ENTRY,0),'O',-1*nvl(t1.VAL_ENTRY,0))) from adminoam.OAM_STOCK_ITEMS    t1 group by t1.NUM_PROJECT_ITEM having  t1.NUM_PROJECT_ITEM = NUM_PROJECT_ITEM) -0")
+	private Long remainingAmount;
+
+	public Long getRemainingAmount() {
+		return remainingAmount;
+	}
+
+	public void setRemainingAmount(Long remainingAmount) {
+		this.remainingAmount = remainingAmount;
+	}
 
 	public OamProjectItem() {
 	}
@@ -74,7 +89,8 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param item the item to set
+	 * @param item
+	 *            the item to set
 	 */
 	public void setItem(OamItem item) {
 		this.item = item;
@@ -88,7 +104,8 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param project the project to set
+	 * @param project
+	 *            the project to set
 	 */
 	public void setProject(Project project) {
 		this.project = project;
@@ -102,7 +119,8 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param indActive the indActive to set
+	 * @param indActive
+	 *            the indActive to set
 	 */
 	public void setIndActive(String indActive) {
 		this.indActive = indActive;
@@ -116,7 +134,8 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param modificationMakerName the modificationMakerName to set
+	 * @param modificationMakerName
+	 *            the modificationMakerName to set
 	 */
 	public void setModificationMakerName(String modificationMakerName) {
 		this.modificationMakerName = modificationMakerName;
@@ -130,10 +149,17 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param lastModificationDate the lastModificationDate to set
+	 * @param lastModificationDate
+	 *            the lastModificationDate to set
 	 */
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
 	}
-	
+
+	public void deductAmount(Integer entryValue) {
+		if (remainingAmount != null) {
+			remainingAmount -= entryValue;
+		}
+	}
+
 }

@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.ItemsQuotSupplierService;
 import com.almabani.common.constant.DataAccessConstants;
+import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
+import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.ItemsQuotSupplierDAO;
 
@@ -41,10 +44,11 @@ public class ItemsQuotSupplierServiceImpl implements ItemsQuotSupplierService {
 		oamItemsQuotSupplier.setLastModificationDate(date);
 		oamItemsQuotSupplier.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
-		if (Utils.isNotNull(oamItemsQuotSupplier.getSelectionDate())) {
+		if (Utils.isNotNull(oamItemsQuotSupplier.getIndSelected()) && oamItemsQuotSupplier.getIndSelected().equals(DataAccessConstants.YES)) {
 			oamItemsQuotSupplier.setSelectionUserName(commonDriverMap
 					.getCurrentUserCode());
-			oamItemsQuotSupplier.setIndSelected(DataAccessConstants.YES);
+			oamItemsQuotSupplier.setSelectionDate(null);
+
 		} else {
 			oamItemsQuotSupplier.setIndSelected(null);
 
@@ -60,15 +64,28 @@ public class ItemsQuotSupplierServiceImpl implements ItemsQuotSupplierService {
 		oamItemsQuotSupplier.setLastModificationDate(date);
 		oamItemsQuotSupplier.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
-		if (Utils.isNotNull(oamItemsQuotSupplier.getSelectionDate())) {
-			oamItemsQuotSupplier.setSelectionUserName(commonDriverMap
-					.getCurrentUserCode());
-			oamItemsQuotSupplier.setIndSelected(DataAccessConstants.YES);
-		} else {
-			oamItemsQuotSupplier.setIndSelected(null);
 
-		}
 		return itemsQuotSupplierDAO.addOrUpdate(oamItemsQuotSupplier);
+	}
+
+	@Override
+	public void checkQuotationItemSupplierSelectionAvailability(
+			OamItemQuotation oamItemQuotation) throws AlmabaniException {
+		OamItemsQuotSupplier itemQuotationSupplier = itemsQuotSupplierDAO
+				.getSelectedSupplier(oamItemQuotation);
+		if (Utils.isNotNull(itemQuotationSupplier)
+				&& itemQuotationSupplier.equals(oamItemQuotation) == false) {
+			AlmabaniException almabaniException =  new AlmabaniException(MessagesKeyStore.ALMABANI_QUOTATION_ITEM_SUPPLIER_QUOTAION_ISTEM_SUPPLIER_HAS_BEEN_SELECTED ,itemQuotationSupplier );
+			almabaniException.attachParameter(itemQuotationSupplier.getSupplier().getSupplierName());
+			throw almabaniException;
+		}
+	}
+
+	@Override
+	public void unselectOldSupplierOfQuotationItem(
+			OamItemQuotation itemQuotation) {
+		itemsQuotSupplierDAO.unselectOldSupplierOfQuotationItem(itemQuotation);
+
 	}
 
 }

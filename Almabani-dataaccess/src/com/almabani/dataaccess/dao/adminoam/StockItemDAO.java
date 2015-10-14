@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
+import com.almabani.common.virtual.entity.StockItemView;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
 
@@ -25,6 +26,11 @@ public interface StockItemDAO extends AbstractDAOInt{
 	List<OamStockItem> getAllStockItems();
 
 	List<OamStockItem> getAllStockItems(Company company);
+
+	List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters);
+
+	Integer getNumberOfOamStockItemsView(Map<String, Object> filters);
 
 	
 	

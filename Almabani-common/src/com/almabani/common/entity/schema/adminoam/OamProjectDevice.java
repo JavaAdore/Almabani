@@ -13,7 +13,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.almabani.common.entity.schema.admincor.Project;
-import com.almabani.common.entity.schema.adminwkf.WokConfigurationItem;
 
 /**
  * @author Mohamed_Ibrahim
@@ -53,9 +52,9 @@ public class OamProjectDevice implements Serializable {
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "NUM_CONFIGURATION_ITEM", referencedColumnName="NUM_CONFIGURATION_ITEM", nullable = false)
-	private WokConfigurationItem configurationItem;
+//	@ManyToOne
+//	@JoinColumn(name = "NUM_CONFIGURATION_ITEM", referencedColumnName="NUM_CONFIGURATION_ITEM", nullable = false)
+//	private WokConfigurationItem configurationItem;
 	
 	@Column(name = "COD_IP_DEVICE", length = 30)
 	private String deviceIpCode;
@@ -161,19 +160,19 @@ public class OamProjectDevice implements Serializable {
 		this.lastModificationDate = lastModificationDate;
 	}
 
-	/**
-	 * @return the configurationItem
-	 */
-	public WokConfigurationItem getConfigurationItem() {
-		return configurationItem;
-	}
-
-	/**
-	 * @param configurationItem the configurationItem to set
-	 */
-	public void setConfigurationItem(WokConfigurationItem configurationItem) {
-		this.configurationItem = configurationItem;
-	}
+//	/**
+//	 * @return the configurationItem
+//	 */
+//	public WokConfigurationItem getConfigurationItem() {
+//		return configurationItem;
+//	}
+//
+//	/**
+//	 * @param configurationItem the configurationItem to set
+//	 */
+//	public void setConfigurationItem(WokConfigurationItem configurationItem) {
+//		this.configurationItem = configurationItem;
+//	}
 
 	/**
 	 * @return the deviceIpCode

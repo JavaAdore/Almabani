@@ -16,7 +16,7 @@ import com.almabani.common.entity.AbstractEntity;
 
 /**
  * @author Mohamed_Ibrahim
- */
+ */ 
 
 @Entity
 @Table(schema="ADMINWKF", name = "WOK_CONFIGURATIONS_ITEM")

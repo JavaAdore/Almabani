@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.almabani.common.entity.AbstractEntity;
+import com.almabani.common.entity.schema.admincor.Establishment;
 
 /**
  * @author Mohamed_Ibrahim
@@ -57,6 +58,11 @@ public class OamItemQuotation extends AbstractEntity implements Serializable {
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 
+	@ManyToOne
+	@JoinColumn(name = "NUM_ESTABLISHMENT", referencedColumnName="NUM_ESTABLISHMENT")
+	private Establishment establishment; 
+	
+ 
 	public OamItemQuotation() {
 	}
 
@@ -114,6 +120,14 @@ public class OamItemQuotation extends AbstractEntity implements Serializable {
 
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
+	}
+
+	public Establishment getEstablishment() {
+		return establishment;
+	}
+
+	public void setEstablishment(Establishment establishment) {
+		this.establishment = establishment;
 	}
 	
 }

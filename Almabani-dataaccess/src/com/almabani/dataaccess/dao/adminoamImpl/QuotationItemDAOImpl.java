@@ -8,12 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
+import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.dataaccess.dao.adminoam.QuotationItemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
 
 @Repository
-public class QuotationItemDAOImpl extends AbstractDAO implements QuotationItemDAO {
-	
+public class QuotationItemDAOImpl extends AbstractDAO implements
+		QuotationItemDAO {
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -24,7 +26,8 @@ public class QuotationItemDAOImpl extends AbstractDAO implements QuotationItemDA
 	@Override
 	public List<OamItemQuotation> loadItemQuotataions(int first, int pageSize,
 			String sortField, boolean ascending, Map<String, Object> filters) {
-		return super.lazyLoadEntities(OamItemQuotation.class, first, pageSize, sortField, ascending, filters);
+		return super.lazyLoadEntities(OamItemQuotation.class, first, pageSize,
+				sortField, ascending, filters);
 	}
 
 	@Override
@@ -35,22 +38,33 @@ public class QuotationItemDAOImpl extends AbstractDAO implements QuotationItemDA
 
 	@Override
 	public OamItemQuotation getItemQuotation(Long itemQuotationId) {
-		return (OamItemQuotation) super.getEntity(OamItemQuotation.class, itemQuotationId);
+		return (OamItemQuotation) super.getEntity(OamItemQuotation.class,
+				itemQuotationId);
 	}
- 
+
 	@Override
 	public List<OamItemQuotation> getAllQuotationItems() {
 		return super.getAllEntities(OamItemQuotation.class);
-	} 
+	}
 
 	@Override
 	public List<OamItemQuotation> getAllQuotationItems(Company company) {
-		Query query = super.getCurrentSession().createQuery("select x from OamItemQuotation x where x.quotation.department.company =:company");
+		Query query = super
+				.getCurrentSession()
+				.createQuery(
+						"select x from OamItemQuotation x where x.quotation.department.company =:company");
 		query.setParameter("company", company);
 		return query.list();
 	}
-	
-	
-	
+
+	@Override
+	public List<OamItemQuotation> getItemQuotataion(OamProjectItem projectItem) {
+		Query query = super
+				.getCurrentSession()
+				.createQuery(
+						"select x from OamItemQuotation x where x.projectItem =:projectItem");
+		query.setParameter("projectItem", projectItem);
+		return query.list();
+	}
 
 }

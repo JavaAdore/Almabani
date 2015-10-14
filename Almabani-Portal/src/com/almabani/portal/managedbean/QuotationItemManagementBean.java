@@ -6,15 +6,18 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Department;
+import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
@@ -45,6 +48,8 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 
 	QuotationApplicationController quotationApplicationController;
 
+	private List<Establishment> establishments;
+
 	@PostConstruct
 	public void init() {
 		loadQuotationItemLazyList();
@@ -58,6 +63,21 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 	}
 
 	private void loadInitialLists() {
+		loadQuotationList();
+		loadEstablishmentsList();
+	}
+
+	private void loadEstablishmentsList() {
+		if (WebUtils.isAdminUser()) {
+			establishments = almabaniFacade.getAllEstablishments();
+		} else {
+			establishments = almabaniFacade.getAllEstablishments(WebUtils
+					.getCurrentLoggedUserCompany());
+
+		}
+	}
+
+	private void loadQuotationList() {
 		if (WebUtils.isAdminUser()) {
 			oamQuotataions = almabaniFacade.getAllQuotations();
 		} else {
@@ -65,6 +85,7 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 					.getEstablishment().getCompany();
 			oamQuotataions = almabaniFacade.getAllQuotations(company);
 		}
+
 	}
 
 	private void loadQuotationItemLazyList() {
@@ -76,18 +97,11 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 			String projectItemNameOrDescription) {
 
 		projectItemNameOrDescription = Utils
-				.isNotEmptyString(projectItemNameOrDescription) ? projectItemNameOrDescription 
+				.isNotEmptyString(projectItemNameOrDescription) ? projectItemNameOrDescription
 				: "";
-		if (WebUtils.isAdminUser()) {
-			projectItems = almabaniFacade.getAllProjectItems(
-					projectItemNameOrDescription, null);
-		} else {
-			projectItems = almabaniFacade.getAllProjectItems(
-					projectItemNameOrDescription, WebUtils
-							.getCurrentLoggedUser().getEmployee()
-							.getEstablishment().getCompany());
-
-		}
+		projectItems = almabaniFacade.getAllProjectItems(
+				projectItemNameOrDescription, selected.getQuotation()
+						.getDepartment());
 		return projectItems;
 
 	}
@@ -106,7 +120,7 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_QUOTATION));
 		quotationApplicationController.setOamItemQuotation(selected);
-
+		quotationApplicationController.refreshQuotationItemList();
 		operationSuccess();
 
 	}
@@ -233,4 +247,32 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 		this.quotationApplicationController = quotationApplicationController;
 	}
 
+	public void selectedQuotationChanged(AjaxBehaviorEvent event) {
+		parentQuotation = (OamQuotation) ((SelectOneMenu) event.getSource())
+				.getValue();
+		if (Utils.isNotNull(parentQuotation)
+				&& Utils.isNotNull(selected.getQuotation())
+				&& Utils.isNotNull(selected.getProjectItem())) {
+			Department selectedProjectItemDepartment = selected
+					.getProjectItem().getItem().getItemCategory()
+					.getComDepartmentSection().getDepartment();
+			if (selectedProjectItemDepartment.equals(parentQuotation
+					.getDepartment()) == false) {
+				selected.setProjectItem(null);
+			}
+		}
+	}
+
+	public void refreshQuotationList() {
+		loadQuotationList();
+
+	}
+
+	public List<Establishment> getEstablishments() {
+		return establishments;
+	}
+
+	public void setEstablishments(List<Establishment> establishments) {
+		this.establishments = establishments;
+	}
 }

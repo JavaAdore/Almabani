@@ -8,19 +8,19 @@
 	xmlns:customComponents="http://java.sun.com/jsf/composite/components">
 
 
-  
+
 <ui:composition
 	xmlns:customComponents="http://java.sun.com/jsf/composite/components">
 
-	<p:dialog id="createQoutItemSupplierDlg" widgetVar="createQoutItemSupplierDiaolg" modal="true"
-		dynamic="true" resizable="false" appendToBody="true"
-		header="#{loc.CreateOamItemQuotationTitle}">
+	<p:dialog id="createQoutItemSupplierDlg"
+		widgetVar="createQoutItemSupplierDiaolg" modal="true" dynamic="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ListOamItemsQuotSupplierCreateLink}">
 
 		<h:panelGrid columns="2">
 			<h:panelGrid>
 
 				<h:form id="createQuotItemSupplierForm">
-
 
 					<h:panelGroup id="display">
 
@@ -28,13 +28,10 @@
 							rendered="#{oamItemsQuotSupplierManagementBean.selected != null}">
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME}" />
-
-							<p:selectOneMenu
+							<p:selectOneMenu id="supplier" widgetVar="supplier"
 								value="#{oamItemsQuotSupplierManagementBean.selected.itemQuotation}"
 								converter="#{itemQuotataionConverter}" required="true"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME_IS_REQUIRED}">
-
-
 								<f:selectItem itemValue=""
 									itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_OAM_ITEM_QUOTATION}" />
 								<f:selectItems
@@ -46,17 +43,23 @@
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SUPPLIER}" />
-							<p:selectOneMenu
-								value="#{oamItemsQuotSupplierManagementBean.selected.supplier}"
-								converter="#{supplierConverter}" required="true"
-								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SUPPLIER_REQUIRED}">
-								<f:selectItem itemValue=""
-									itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_SUPPLIER}" />
-								<f:selectItems
-									value="#{oamItemsQuotSupplierManagementBean.suppliers}"
-									var="supplier" itemLabel="#{supplier.supplierName} "
-									itemValue="#{supplier}" />
-							</p:selectOneMenu>
+							<p:panelGrid columns="2">
+								<p:selectOneMenu
+									value="#{oamItemsQuotSupplierManagementBean.selected.supplier}"
+									converter="#{supplierConverter}" required="true"
+									requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SUPPLIER_REQUIRED}">
+									<f:selectItem itemValue=""
+										itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_SUPPLIER}" />
+									<f:selectItems
+										value="#{oamItemsQuotSupplierManagementBean.suppliers}"
+										var="supplier" itemLabel="#{supplier.supplierName} "
+										itemValue="#{supplier}" />
+								</p:selectOneMenu>
+								<p:commandButton value="+" immediate="true"
+									actionListener="#{oamItemsQuotSupplierManagementBean.initializeNewSupplier()}"
+									update="tabs:createSupplierForm"
+									oncomplete="PF('new_supplier').show()" />
+							</p:panelGrid>
 
 
 							<p:outputLabel
@@ -87,10 +90,7 @@
 								min="1" required="true" max="9999"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_NUMBER_OF_WDELIVERY_DAYS_IS_REQUIRED}" />
 
-							<p:outputLabel
-								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SELECTION_DATE}" />
-							<p:calendar
-								value="#{oamItemsQuotSupplierManagementBean.selected.selectionDate}" />
+							
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OBSERVATION_DESCRIPTION}" />
@@ -98,13 +98,15 @@
 								value="#{oamItemsQuotSupplierManagementBean.selected.observationDescription}"
 								required="true"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OBSERVATION_DESCRIPTION_IS_REQUIRED}" />
-
+							<p:spacer></p:spacer>							<p:spacer></p:spacer>
+							
 						</p:panelGrid>
 
 
 						<p:commandButton
 							actionListener="#{oamItemsQuotSupplierManagementBean.saveNew}"
-							value="#{loc.Save}" update=":growl :tabs:QuotationItemSupplierlistForm"
+							value="#{loc.Save}"
+							update=":growl tabs:QuotationItemSupplierlistForm"
 							oncomplete="if(!args.validationFailed ){PF('createQoutItemSupplierDiaolg').hide();}" />
 						<p:commandButton value="#{loc.Cancel}" immediate="true"
 							onclick="PF('createQoutItemSupplierDiaolg').hide()" />
@@ -112,12 +114,69 @@
 
 				</h:form>
 			</h:panelGrid>
-				
-<customComponents:ImageUploader objectImplementsByteArrayHolder="#{oamItemsQuotSupplierManagementBean.selected}"></customComponents:ImageUploader>					
+
+			<customComponents:ImageUploader
+				objectImplementsByteArrayHolder="#{oamItemsQuotSupplierManagementBean.selected}"></customComponents:ImageUploader>
 		</h:panelGrid>
 
 
 	</p:dialog>
+
+
+	<p:dialog id="new_supplier" widgetVar="new_supplier" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateOamManufacturerTitle}">
+		<h:form id="createSupplierForm">
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{oamItemsQuotSupplierManagementBean.supplier != null}">
+					<h:outputText value="#{loc.ListOamSupplierTitle_supplierName}" />
+					<p:inputText maxlength="50" styleClass="fullWith"
+						value="#{oamItemsQuotSupplierManagementBean.supplier.supplierName}"
+						required="true"
+						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_supplierName}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_telephoneNumber}" />
+
+					<p:inputText maxlength="10" styleClass="fullWith"
+						value="#{oamItemsQuotSupplierManagementBean.supplier.telephoneNumber}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_mobileNumber}" />
+					<p:inputText maxlength="10" styleClass="fullWith"
+						value="#{oamItemsQuotSupplierManagementBean.supplier.mobileNumber}" />
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_faxNumber}" />
+					<p:inputText
+						value="#{oamItemsQuotSupplierManagementBean.supplier.faxNumber}"
+						styleClass="fullWith" maxlength="10" />
+
+					<p:outputLabel value="#{loc.ALMABANI_GENERAL_EMAIL}" />
+					<p:inputText id="email" maxlength="50" styleClass="fullWith"
+						value="#{oamItemsQuotSupplierManagementBean.supplier.email}">
+						<f:validator validatorId="custom.emailValidator" />
+					</p:inputText>
+
+					<h:outputText value="#{loc.ListOamSupplierTitle_address}" />
+
+					<p:inputTextarea
+						value="#{oamItemsQuotSupplierManagementBean.supplier.address}"
+						required="true" maxlength="50" styleClass="fullWith"
+						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_address}" />
+
+				</p:panelGrid>
+				<p:commandButton
+					actionListener="#{oamItemsQuotSupplierManagementBean.addSupplier()}"
+					value="#{loc.Save}" update=":growl tabs:createQuotItemSupplierForm tabs:editQuotationItemSupplierForm"
+					oncomplete="if(!args.validationFailed){PF('new_supplier').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"  update=":growl tabs:createQuotItemSupplierForm tabs:editQuotationItemSupplierForm" 
+					onclick="PF('new_supplier').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+
 
 </ui:composition>
 

@@ -42,6 +42,7 @@ import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.virtual.entity.StockItemView;
 
 @Service
 public interface AlmabaniFacade {
@@ -49,31 +50,31 @@ public interface AlmabaniFacade {
 	Company getCompany(Long id);
 
 	Country getCountry(Long id);
-	
+
 	Department saveOrUpdate(Department department);
 
 	Department getDepartment(Long id);
-	
+
 	List<Department> getDepartments();
-	
-	List<Department> getDepartments(Company company);	
-	
+
+	List<Department> getDepartments(Company company);
+
 	DepartmentSection saveOrUpdate(DepartmentSection departmentSection);
 
 	DepartmentSection getDepartmentSection(Long id);
-	
+
 	List<DepartmentSection> getDepartmentSections(Department department);
 
 	Employee saveOrUpdate(Employee employee);
-	
+
 	Employee getEmployee(Long id);
-	
+
 	boolean isFederalIdentityCodeExist(String federalIdentityCode);
-	
+
 	Integer getNumberOfEmployees(Map<String, Object> filters);
 
 	JobTitleType getJobTitle(Long id);
-	
+
 	List<JobTitleType> getJobTitleTypes(Company company);
 
 	OamQuotation getQuotataion(Long key);
@@ -81,12 +82,14 @@ public interface AlmabaniFacade {
 	State getState(Long key);
 
 	Integer getCountOfCompany(Map<String, Object> filters);
-	
+
 	List<Company> getAllCompanies();
-	
-	List<Company> loadCompanies(Integer first, Integer pageSize, String sortField, boolean assending, Map<String, Object> filters);
-	
-	Company addCompany(Company company, CommonDriverMap commonDriverMap) throws AlmabaniException;
+
+	List<Company> loadCompanies(Integer first, Integer pageSize,
+			String sortField, boolean assending, Map<String, Object> filters);
+
+	Company addCompany(Company company, CommonDriverMap commonDriverMap)
+			throws AlmabaniException;
 
 	List<Country> getAllCountries();
 
@@ -103,12 +106,13 @@ public interface AlmabaniFacade {
 	Integer getNumberOfQoutations(Map<String, Object> filters);
 
 	Establishment getEstablishment(Long key);
-	
+
 	List<Establishment> getEstablishments(Company company);
-	
+
 	List<Establishment> getEstablishments();
-	
+
 	List<JobTitleType> getAllJobTitleTypes();
+
 	List<OamQuotation> loadQoutations(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
 
@@ -140,7 +144,8 @@ public interface AlmabaniFacade {
 			Map<String, Object> filters);
 
 	OamItemsQuotSupplier addOrUpdateOamItemsQuotSupplier(
-			OamItemsQuotSupplier selected, CommonDriverMap commonDriverMap);
+			OamItemsQuotSupplier selected, CommonDriverMap commonDriverMap)
+			throws AlmabaniException;
 
 	OamItemQuotation getItemQuotation(Long itemQuotationId);
 
@@ -159,7 +164,7 @@ public interface AlmabaniFacade {
 			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
 
 	List<ProjectEmployee> getProjectEmployee(Employee employee);
-	
+
 	List<ProjectEmployee> getProjectEmployee(List<Employee> employees);
 
 	List<OamItem> loadItems(int first, int pageSize, String sortField,
@@ -191,23 +196,24 @@ public interface AlmabaniFacade {
 			String sortField, boolean b, Map<String, Object> filters);
 
 	Project getProject(Long id);
-	
+
 	List<Project> getProjects(Company company);
-	
+
 	List<Project> getAllProjects();
-	
+
 	List<OamItem> getAllItems();
 
 	OamItem getItem(Long id);
 
 	Contractor getContractor(Long contractorID);
-	
+
 	List<Contractor> getAllContractors();
+
 	SecModule addOrUpdateModule(SecModule selected,
 			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
 
-	Project saveOrUpdate(Project project)  throws AlmabaniException;
-	
+	Project saveOrUpdate(Project project) throws AlmabaniException;
+
 	List<SecModule> loadModules(int first, int pageSize, String sortField,
 			boolean b, Map<String, Object> filters);
 
@@ -237,7 +243,6 @@ public interface AlmabaniFacade {
 	SecApplication addOrUpdateApplication(SecApplication selected,
 			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
 
-
 	SecSubModule getSubModule(Long subModuleId);
 
 	List<SecSubModule> getAllSubModules();
@@ -248,12 +253,12 @@ public interface AlmabaniFacade {
 
 	ApplicationType getApplicationType(Long id);
 
-
 	List<UserApplicationGrant> getAllUserApplications();
 
 	List<SecUser> getAllUsers();
 
-	List<UserApplicationGrant> getGrantedApplication(SecUser secUser, Company company);
+	List<UserApplicationGrant> getGrantedApplication(SecUser secUser,
+			Company company);
 
 	SecUser getSecUser(String userLoginCode);
 
@@ -262,34 +267,34 @@ public interface AlmabaniFacade {
 	SecTypesPerfil getPrefilType(String profileCode);
 
 	void grantAccess(List<UserApplicationGrant> allApplications,
-			CommonDriverMap appendCurrentUserCode)throws AlmabaniException;
+			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
 
 	List<SecApplicationsCompany> getGrantableApplications(Company company);
 
 	void grantCompanyAccess(List<SecApplicationsCompany> grantableApplications,
 			CommonDriverMap commonDriverMap);
-	
+
 	List<AllocationType> getAllocationTypes(Company company);
 
 	List<AllocationType> getAllAllocationTypes();
-	
+
 	AllocationType getAllocationType(Long id);
-	
+
 	ProjectJobTitle saveOrUpdate(ProjectJobTitle projectJobTitle);
-	
+
 	List<ProjectJobTitle> getProjectJobTitles(Company company);
-	
+
 	List<ProjectJobTitle> getAllProjectJobTitles();
 
 	ProjectJobTitle getProjectJobTitle(Long id);
 
 	ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee);
-	
+
 	List<SecUser> loadUsers(int first, int pageSize, String sortField,
 			boolean ascending, Map<String, Object> filters);
 
-	SecUser addorUpdateUser(SecUser selected,
-			CommonDriverMap commonDriverMap) throws AlmabaniException;
+	SecUser addorUpdateUser(SecUser selected, CommonDriverMap commonDriverMap)
+			throws AlmabaniException;
 
 	Integer getCountOfUsers(Map<String, Object> filters);
 
@@ -311,7 +316,6 @@ public interface AlmabaniFacade {
 
 	List<Employee> loadEmployees(int first, int pageSize, String sortField,
 			boolean b, Map<String, Object> filters);
-
 
 	List<OamQuotationActionType> getAvailableQuotationActionTypes(
 			OamQuotation selected);
@@ -350,7 +354,7 @@ public interface AlmabaniFacade {
 
 	List<OamSupplier> getAllSuppliers(Company company);
 
-	List<OamProjectItem> getAllProjectItems(
+	List<OamProjectItem> getAllCompanyProjectItems(
 			String projectItemNameOrDescription, Company company);
 
 	List<SecSystem> getAllSystems(Company company);
@@ -365,7 +369,29 @@ public interface AlmabaniFacade {
 			String sortField, boolean b, Map<String, Object> filters);
 
 	OamStockItem addorUpdateOamStockItem(OamStockItem selected,
-			CommonDriverMap appendCurrentUserCode);
+			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
+
+	List<OamProjectItem> getAllProjectItems(
+			String projectItemNameOrDescription, Department department);
+
+	void checkQuotationItemSupplierSelectionAvailability(
+			OamItemQuotation oamItemQuotation) throws AlmabaniException;
+
+	void unselectOldSupplierOfQuotationItem(OamItemQuotation itemQuotation);
+
+	List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters);
+
+	Integer getNumberOfOamStockItemsView(Map<String, Object> filters);
+
+	List<OamStockItem> getAllStockItems();
+
+	Integer getNumberOfStockItems(Map<String, Object> filters);
+
+	List<Establishment> getAllEstablishments();
+
+	List<Establishment> getAllEstablishments(Company currentLoggedUserCompany);
 	
-	
+	List<OamItemQuotation> getItemQuotataion(OamProjectItem oamProjectItem);
+
 }

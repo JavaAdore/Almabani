@@ -34,7 +34,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<springframework.version>4.1.6.RELEASE</springframework.version>
-		<hibernate.version>4.1.6.Final</hibernate.version>
+		<hibernate.version>4.3.2.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.0.13</logback.version>

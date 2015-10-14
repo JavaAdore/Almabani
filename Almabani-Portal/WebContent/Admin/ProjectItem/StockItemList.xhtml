@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="stockItemlistForm">
+
+		<p:panel header="#{loc.ListOamStockItemTitle}">
+			<p:dataTable id="stockItemDataList"
+				value="#{projectItemManagementBean.stockItems}" var="item"
+				selectionMode="single" lazy="true" widgetVar="stockItemDataList"
+				selection="#{stockItemManagementBean.selected}" rowKey="#{item.id}"
+				paginator="true" rows="10" rowsPerPageTemplate="10,20,30">
+
+				<!-- 				<p:ajax event="rowSelect" update="viewButton editButton" /> -->
+				<!-- 				<p:ajax event="rowUnselect" update="viewButton editButton" /> -->
+
+
+				<p:column headerText="#{loc.ListOamStockItemTitle_establishment}"
+					sortBy="#{item.establishment.establishmentName}"
+					filterBy="#{item.establishment.establishmentName}">
+
+					<h:outputText value="#{item.establishment.establishmentName}" />
+				</p:column>
+				<p:column sortBy="#{item.indInOut}" fil="#{item.indInOut}"
+					headerText="#{loc.ListOamStockItemTitle_indInOut}">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('stockItemDataList').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getInOutList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText
+						value="#{applicationScopeStore.getInOutValue(item.indInOut)}" />
+				</p:column>
+				<p:column headerText="#{loc.ListOamStockItemTitle_entryValue}"
+					sortBy="#{item.entryValue}" filterBy="#{item.entryValue}">
+
+					<h:outputText value="#{item.entryValue}"
+						styleClass="#{ (item.indInOut.equalsIgnoreCase('O'))?'red':'green'  }" />
+				</p:column>
+
+
+				<f:facet name="footer">
+					<p:graphicImage id="itemRemaining" name="/images/icons/help-icon.png" width="25" 
+						disabled="#{projectItemManagementBean.selected.remainingAmount>=1}"
+						rendered="#{ projectItemManagementBean.selected.remainingAmount lt 1}" height="25"
+						onmouseover="PF('noRemainingItem').show()"
+						onmouseout="PF('noRemainingItem').hide()" />
+					<p:overlayPanel widgetVar="noRemainingItem">
+						<p:outputLabel
+							value="#{loc.ALMABANI_ADMIN_STOCK_ITEM_NO_ITEM_TO_WITHDRAWL}" />
+					</p:overlayPanel>
+
+				
+					<p:commandButton id="withdraw" widgetVar="withdraw"
+						disabled="#{projectItemManagementBean.selected.remainingAmount ==null || projectItemManagementBean.selected.remainingAmount lt 1}"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.ALMABANI_STOCK_ITEM_WITHDRAWL}"
+						actionListener="#{projectItemManagementBean.prepareCreateStockItem()}"
+						update=":WithdrawalItemForm itemRemaining"
+						oncomplete="PF('withdrawlDialog').show()" />
+
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

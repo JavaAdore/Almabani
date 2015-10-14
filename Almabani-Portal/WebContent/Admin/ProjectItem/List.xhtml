@@ -8,11 +8,14 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListOamProjectItemTitle}" style="margin-left:auto; margin-right:auto ; ">
+		<p:panel header="#{loc.ListOamProjectItemTitle}"
+			style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" value="#{projectItemManagementBean.items}"
-				widgetVar="datalist" var="item" selectionMode="single" resizableColumns="true"
-				selection="#{projectItemManagementBean.selected}" draggableColumns="true" draggableRows="true"
-				rowKey="#{item.id}" paginator="true" lazy="true" rows="10"
+				widgetVar="datalist" var="item" selectionMode="single"
+				resizableColumns="true"
+				selection="#{projectItemManagementBean.selected}"
+				draggableColumns="true" draggableRows="true" rowKey="#{item.id}"
+				paginator="true" lazy="true" rows="10"
 				rowsPerPageTemplate="10,20,30">
 
 				<f:facet name="header">
@@ -21,18 +24,54 @@
 						icon="ui-icon-calculator" />
 					<p:columnToggler datasource="datalist" trigger="toggler" />
 				</f:facet>
-				<p:ajax event="rowSelect" update="viewButton editButton" />
-				<p:ajax event="rowUnselect" update="viewButton editButton" />
+				<p:ajax event="rowSelect" update="viewButton editButton 	:stockItemlistForm" />
+				<p:ajax event="rowUnselect" update="viewButton editButton :stockItemlistForm" />
 
-				<p:column headerText="#{loc.ListOamProjectItemTitle_id}"
-					sortBy="#{item.id}" filterBy="#{item.id}">
-					<h:outputText value="#{item.id}" />
+				<p:column headerText="#{loc.ViewOamItemLabel_itemCode}"
+					sortBy="#{item.item.itemCode}" filterBy="#{item.item.itemCode}">
+					<h:outputText value="#{item.item.itemCode}" />
 				</p:column>
+
 				<p:column headerText="#{loc.ListOamProjectItemTitle_item}"
 					sortBy="#{item.item.itemDescription}"
 					filterBy="#{item.item.itemDescription}">
 					<h:outputText value="#{item.item.itemDescription}" />
 				</p:column>
+
+				<p:column
+					headerText="#{loc.EditComDepartmentSectionLabel_sectionCode}"
+					sortBy="#{item.item.itemCategory.comDepartmentSection.sectionCode}"
+					filterBy="#{item.item.itemCategory.comDepartmentSection.sectionCode }">
+					<h:outputText
+						value="#{ item.item.itemCategory.comDepartmentSection.sectionCode}" />
+				</p:column>
+
+				<p:column headerText="#{loc.EditOamItemLabel_materialType}"
+					sortBy="#{item.item.materialType.materialTypeDescription}"
+					filterBy="#{item.item.materialType.materialTypeDescription}">
+					<h:outputText
+						value="#{item.item.materialType.materialTypeDescription}" />
+				</p:column>
+
+				<p:column headerText="#{loc.CreateOamItemTitle_indUnitType}"
+					sortBy="#{item.item.indUnitType}"
+					filterBy="#{item.item.indUnitType}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems
+								value="#{applicationScopeStore.getUnitTypesList()}" var="unit"
+								itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText
+						value="#{ applicationScopeStore.getUnitType(item.item.indUnitType)}" />
+				</p:column>
+
+
+
+
 				<p:column headerText="#{loc.ListOamProjectItemTitle_project}"
 					sortBy="#{item.project.projectCode}" filterBy="#{item.project}">
 					<f:facet name="filter">
@@ -65,9 +104,16 @@
 						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
 				</p:column>
 
+				<p:column headerText="#{loc.ListOamItemTitle_Remaining_amount}"
+					sortBy="#{item.remainingAmount}" filterBy="#{item.remainingAmount}">
+
+					<h:outputText
+						value="#{item.remainingAmount}" />
+				</p:column>
 				<f:facet name="footer">
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{projectItemManagementBean.prepareCreate}"
 						update=":createForm:display"
 						oncomplete="PF('createDialog').show()" />
@@ -75,9 +121,10 @@
 						value="#{loc.View}" update=":viewForm:display"
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty projectItemManagementBean.selected}" />
-					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}" update=":editForm:display"
-						oncomplete="PF('editDialog').show()"
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						update=":editForm:display" oncomplete="PF('editDialog').show()"
 						disabled="#{empty projectItemManagementBean.selected}" />
 				</f:facet>
 

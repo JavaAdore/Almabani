@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="withdrawlDialog" widgetVar="withdrawlDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.ALMABANI_STOCK_ITEM_WITHDRAWL}">
+
+		<h:form id="WithdrawalItemForm">
+
+
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{projectItemManagementBean.selectedStockItem != null}">
+
+
+
+					<p:outputLabel value="#{loc.ALMABANI_PROJECT}" />
+					<p:outputLabel
+						value="#{projectItemManagementBean.selected.project.projectCode}" />
+
+
+					<p:outputLabel value="#{loc.CreateOamItemLabel_materialType}" />
+					<p:outputLabel
+						value="#{projectItemManagementBean.selected.item.materialType.materialTypeDescription}" />
+
+					<p:outputLabel value="#{loc.CreateOamQuotationLabel_comDepartment}" />
+					<p:outputLabel
+						value=" (#{ projectItemManagementBean.selected.item.itemCategory.comDepartmentSection.department.departmentCode  } ) #{projectItemManagementBean.selected.item.itemCategory.comDepartmentSection.department.departmentName}" />
+
+					<p:outputLabel value="#{loc.EditOamItemTitle_itemCategory}" />
+					<p:outputLabel
+						value="#{projectItemManagementBean.selected.item.itemCategory.categoryItemName}" />
+
+					<p:outputLabel value="#{loc.ListOamItemTitle_Remaining_amount}" />
+					<p:outputLabel
+						value="#{projectItemManagementBean.selected.remainingAmount}" />
+
+					<p:outputLabel value="#{loc.ALMABANI_GENERAL_QUOTATION_ITEM} " />
+
+					<p:selectOneMenu
+						value="#{projectItemManagementBean.selectedStockItem.itemQuotation}"
+						converter="#{itemQuotataionConverter}" required="true"
+						requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME_IS_REQUIRED}">
+						<f:selectItem itemValue=""
+							itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_OAM_ITEM_QUOTATION}" />
+						<f:selectItems
+							value="#{projectItemManagementBean.quotataionItems}"
+							var="quotataionItem"
+							itemLabel="#{quotataionItem.observationDescription} "
+							itemValue="#{quotataionItem}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel for="establishments"
+						value="#{loc.CreateOamStockItemLabel_establishment} " />
+					<p:selectOneMenu id="establishments"
+						converter="#{establishmentConverter}" required="true"
+						requiredMessage="#{loc.CreateOamStockItemRequiredMessage_establishment}"
+						value="#{projectItemManagementBean.selectedStockItem.establishment}"
+						styleClass="fullWith">
+						<f:selectItem itemLabel="#{loc.SelectOneMessage}" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{projectItemManagementBean.establishments}"
+							var="establishment"
+							itemLabel="#{establishment.establishmentName}" />
+					</p:selectOneMenu>
+					<p:outputLabel
+						value="#{loc.ALMABANI_ITEM_STOCK_QUANTITY_TO_WITHDRAWL}" />
+					<p:spinner min="1" required="true" requiredMessage="#{loc.ALMABANI_ITEM_STOCK_QUANTITY_IS_REQUIRED}"
+						max="#{projectItemManagementBean.selected.remainingAmount}"
+						value="#{projectItemManagementBean.selectedStockItem.entryValue}" />
+				</p:panelGrid>
+				<p:commandButton 
+					
+					actionListener="#{projectItemManagementBean.withdrawal()}"
+					value="#{loc.Save}" update="@form :growl :stockItemlistForm :listForm "
+					oncomplete="if(!args.validationFailed){PF('withdrawlDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('withdrawlDialog').hide()" />
+			</h:panelGroup>
+
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

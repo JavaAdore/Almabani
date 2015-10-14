@@ -12,6 +12,7 @@ import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.virtual.entity.StockItemView;
 import com.almabani.dataaccess.dao.adminoam.StockItemDAO;
 
 @Service
@@ -67,6 +68,18 @@ public class StockItemServiceImpl implements StockItemService {
 	@Override
 	public List<OamStockItem> getAllStockItems(Company company) {
 		return stockItemDAO.getAllStockItems(company);
+	}
+
+	@Override
+	public List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		return stockItemDAO.loadOamStockItemsView(first, pageSize, sortField,
+				ascending, filters);
+	}
+
+	@Override
+	public Integer getNumberOfOamStockItemsView(Map<String, Object> filters) {
+		return stockItemDAO.getNumberOfOamStockItemsView(filters);
 	}
 
 }

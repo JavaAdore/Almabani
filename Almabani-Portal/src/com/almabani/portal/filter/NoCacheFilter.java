@@ -25,10 +25,11 @@ public class NoCacheFilter implements Filter {
 																					// JSF
 																					// resources
 																					// (CSS/JS/Images/etc)
-			response.setHeader("Cache-Control",
-					"no-cache, no-store, must-revalidate"); // HTTP 1.1.
+			response.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0, proxy-revalidate, s-maxage=0 "); // HTTP 1.1.
 			response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-			response.setDateHeader("Expires", 0); // Proxies.
+			response.setHeader("Expires", "0"); // Proxies. 
+			response.setHeader("Vary", "0"); // Proxies.   
+
 		}
 
 		chain.doFilter(req, res);

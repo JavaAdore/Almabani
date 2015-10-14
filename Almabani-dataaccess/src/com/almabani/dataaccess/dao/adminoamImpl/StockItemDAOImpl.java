@@ -7,10 +7,9 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.almabani.common.constant.DataAccessConfig;
 import com.almabani.common.entity.schema.admincor.Company;
-import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
+import com.almabani.common.virtual.entity.StockItemView;
 import com.almabani.dataaccess.dao.adminoam.StockItemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
 
@@ -59,6 +58,19 @@ public class StockItemDAOImpl extends AbstractDAO implements StockItemDAO {
 		Query query = super.getCurrentSession().createQuery("select x from OamStockItem x where x.itemQuotation.quotation.department.company =:company");
 		query.setParameter("company", company);
 		return query.list(); 
+	}
+
+	@Override
+	public List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+			String sortField, boolean assending, Map<String, Object> filters) {
+		String queryString = "select projectItem , coalesce(indInOut , 0)   from OamStockItem ";
+		return super.lazyLoadEntities(queryString, first, pageSize, sortField, assending, filters);
+	}
+
+	@Override
+	public Integer getNumberOfOamStockItemsView(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return super.getCountOfResults(OamStockItem.class, filters); 
 	}
 
 

@@ -6,7 +6,9 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamItemsQuotSupplier;
+import com.almabani.common.exception.AlmabaniException;
 
 @Service
 public interface ItemsQuotSupplierService {
@@ -24,6 +26,11 @@ public interface ItemsQuotSupplierService {
 	OamItemsQuotSupplier addOamItemsQuotSupplier(
 			OamItemsQuotSupplier oamItemsQuotSupplier,
 			CommonDriverMap commonDriverMap);
+
+	void checkQuotationItemSupplierSelectionAvailability(
+			OamItemQuotation oamItemQuotation) throws AlmabaniException;
+
+	void unselectOldSupplierOfQuotationItem(OamItemQuotation itemQuotation);
 
 	
 

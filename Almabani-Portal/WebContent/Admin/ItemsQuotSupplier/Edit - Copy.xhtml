@@ -1,18 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+ xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
 
 <ui:composition
 	xmlns:customComponents="http://java.sun.com/jsf/composite/components">
-	<h:form>
-		<p:remoteCommand name="displayDublicationForm"
-			update="tabs:dublicationSelectionForm"
-			oncomplete="PF('dublicatedSelectionSupplierException').show();" />
-	</h:form>
+	<!-- 	<h:form> -->
+	<!-- 		<p:remoteCommand name="displayDublicationForm" -->
+	<!-- 			update=":dublicationSelectionForm" -->
+	<!-- 			oncomplete="PF('dublicatedSelectionSupplierException').show();" /> -->
+	<!-- 	</h:form> -->
 	<p:dialog id="editQuotationItemSupplierDlg"
 		widgetVar="editQuotationItemSupplierDialog" modal="true"
 		resizable="false" appendToBody="true" dynamic="true"
@@ -92,12 +88,12 @@
 
 						<p:outputLabel value="#{loc.CreateSecApplicationTitle_indActive}" />
 						<p:selectOneMenu
-							value="#{oamItemsQuotSupplierManagementBean.selected.indSelected}"
+							value="#{oamItemsQuotSupplierManagementBean.selected.indActive}"
 							required="true" styleClass="fullWith"
 							requiredMessage="#{loc.CreateOamProjectItemRequiredMessage_indActive}">
 							<p:ajax
 								listener="#{oamItemsQuotSupplierManagementBean.statusChanged}"
-								process="@this" />
+								immediate="true" process="@thisd" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 						</p:selectOneMenu>
@@ -127,52 +123,10 @@
 				objectImplementsByteArrayHolder="#{oamItemsQuotSupplierManagementBean.selected}" />
 
 		</p:panelGrid>
-
+  
 
 	</p:dialog>
-	<p:dialog id="dublicatedSelectionSupplierException"
-		widgetVar="dublicatedSelectionSupplierException" modal="true"
-		resizable="false" appendToBody="true" dynamic="true"
-		header="#{loc.ALMABANI_GENERAL_DUBLICATION_SELECTION_SUPPLIER}">
-
-		<h:form id="dublicationSelectionForm">
-			<p:panelGrid columns="1" styleClass="fullWith noBorder">
-
-				<p:outputLabel
-					value="#{loc.ALMABANI_DUBLICATED_QUOTATION_ITEM_SUPPLER_SELECTION}" />
-				<p:panelGrid columns="2" styleClass="fullWith noBorder">
-					<p:outputLabel
-						value="#{loc.ALMABANI_QUOTATION_ITEM_SUPPLIER_SUPPLIER_NAME}" />
-					<p:outputLabel
-						value="#{oamItemsQuotSupplierManagementBean.alreadySelectedQuotaionItem.supplier.supplierName}" />
-					<p:outputLabel
-						value="#{loc.ALMABANI_QUOTATION_ITEM_SUPPLIER_SUPPLIER_SELECTED_BY}" />
-					<p:outputLabel
-						value="#{oamItemsQuotSupplierManagementBean.alreadySelectedQuotaionItem.selectionUserName}" />
-					<p:outputLabel
-						value="#{loc.ALMABANI_QUOTATION_ITEM_SUPPLIER_SUPPLIER_SELECTION_DATE}" />
-					<p:outputLabel
-						value="#{oamItemsQuotSupplierManagementBean.alreadySelectedQuotaionItem.selectionDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-					</p:outputLabel>
-
-				</p:panelGrid>
-				<p:panelGrid columns="2" styleClass="fullWith noBorder">
-					<p:commandButton
-						actionListener="#{oamItemsQuotSupplierManagementBean.unselectOldSupplierOfQuotationItem()}"
-						update="tabs:editQuotationItemSupplierForm"
-						oncomplete="PF('dublicatedSelectionSupplierException').hide()"
-						value="#{loc.ALMABANI_QUOTATION_ITEM_SUPPLIER_UNSELECT_OLD_AND_SELECT_CURRENT}" />
-					<p:commandButton update="tabs:editQuotationItemSupplierForm"
-						oncomplete="PF('dublicatedSelectionSupplierException').hide()"
-					 	actionListener="#{oamItemsQuotSupplierManagementBean.cancelSelectingCurrentSupplier()}"
-						value="#{loc.ALMABANI_QUOTATION_ITEM_SUPPLIER_CANCEL_SELECTION}" />
-				</p:panelGrid>
-			</p:panelGrid>
-		</h:form>
-	</p:dialog>
-
-
+	
 
 </ui:composition>
 

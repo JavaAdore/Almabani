@@ -98,11 +98,7 @@
 						required="true" maxlength="50" styleClass="fullWith"
 						requiredMessage="#{loc.CreateOamSupplierRequiredMessage_address}" />
 
-					<h:outputText value="#{loc.ListOamSupplierTitle_addComplementName}" />
-
-					<p:inputText maxlength="50" styleClass="fullWith"
-						value="#{supplierManagementBean.selected.addComplementName}" />
-
+				  
 				</p:panelGrid>
 				<p:commandButton actionListener="#{supplierManagementBean.saveNew}"
 					value="#{loc.Save}" update="display,:growl,:listForm:datalist"

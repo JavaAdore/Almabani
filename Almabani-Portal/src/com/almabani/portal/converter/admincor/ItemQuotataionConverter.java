@@ -19,7 +19,6 @@ public class ItemQuotataionConverter extends AbstractBeanHelper implements Conve
 		if (Utils.isEmptyStringOrNotNumericValue(value)) {
 			return null;
 		}
-	
 		return almabaniFacade.getItemQuotation(Long.parseLong(value));
 	}
 

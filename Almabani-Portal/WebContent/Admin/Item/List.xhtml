@@ -25,7 +25,7 @@
 				<p:ajax event="rowSelect" update="viewButton editButton" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
-				<p:column headerText="#{loc.ListOamItemTitle_department}" width="200"
+				<p:column headerText="#{loc.ListOamItemTitle_department}" width="200" 
 					sortBy="#{item.itemCategory.comDepartmentSection.department.departmentName}"
 					filterBy="#{item.itemCategory.comDepartmentSection.department.departmentName}">
 

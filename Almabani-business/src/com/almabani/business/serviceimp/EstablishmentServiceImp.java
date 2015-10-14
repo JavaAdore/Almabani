@@ -32,4 +32,6 @@ public class EstablishmentServiceImp implements EstablishmentService {
 		return establishmentDAO.getEstablishments(company);
 	}
 
+	
+
 }

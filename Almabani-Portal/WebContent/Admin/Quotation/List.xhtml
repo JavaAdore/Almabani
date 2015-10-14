@@ -28,7 +28,7 @@
 
 				<p:ajax event="rowSelect"
 					listener="#{quotationManagementBean.onRowSelect}"
-					update=" viewButton editButton :tabs:listForm" />
+					update=" viewButton editButton tabs:listForm" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
 				<p:column headerText="#{loc.ListOamQuotationCompany_number}"
@@ -108,17 +108,16 @@
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{quotationManagementBean.prepareCreate}"
-						update=":tabs:QuotataionCreateForm"
 						oncomplete="PF('createQuotationDialog').show()" />
 					<p:commandButton id="viewButton" icon="ui-icon-search"
 						value="#{loc.View}"
-						update=":tabs:quotationquotationViewForm:quotationDisplay"
+						update="tabs:quotationquotationViewForm:quotationDisplay"
 						oncomplete="PF('viewQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 					<p:commandButton id="editButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-pencil" value="#{loc.Edit}"
-						update=":tabs:editQuotataionForm:quotationDisplay"
+						update="tabs:editQuotataionForm:quotationDisplay"
 						oncomplete="PF('editQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 				</f:facet>

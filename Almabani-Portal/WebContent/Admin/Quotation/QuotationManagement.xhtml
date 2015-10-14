@@ -43,7 +43,7 @@
 
 	<ui:define name="content">
 		<h:form id="stepsForm">
-			<p:steps 
+			<p:steps
 				activeIndex="#{quotationApplicationController.activeTabIndex}">
 				<p:menuitem value="#{loc.CreateOamItemQuotationLabel_quotation}" />
 				<p:menuitem value="#{loc.GENERAL_ALMABANI_QUOTATION_ITEM}" />
@@ -51,8 +51,7 @@
 			</p:steps>
 		</h:form>
 
-		<p:tabView id="tabs"  
-			>
+		<p:tabView id="tabs"  >
 			<p:ajax event="tabChange" update=":stepsForm"
 				listener="#{quotationApplicationController.onTabChange}" />
 
@@ -94,6 +93,8 @@
 			</p:tab>
 
 		</p:tabView>
-	</ui:define>
+ 
+  
+  	</ui:define>
 
 </ui:composition>

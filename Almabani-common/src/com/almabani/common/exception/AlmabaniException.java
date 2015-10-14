@@ -6,6 +6,21 @@ import java.util.Set;
 
 public class AlmabaniException extends Exception implements Serializable {
 
+
+	public AlmabaniException(String key, Object wrappedObject) {
+		super();
+		this.key = key;
+		this.wrappedObject = wrappedObject;
+	}
+
+	public AlmabaniException(String key, Object wrappedObject,
+			Set<String> parameters) {
+		super();
+		this.key = key;
+		this.wrappedObject = wrappedObject;
+		this.parameters = parameters;
+	}
+
 	/**
 	 * 
 	 */
@@ -13,6 +28,16 @@ public class AlmabaniException extends Exception implements Serializable {
 
 	private String key;
 	
+	private Object wrappedObject;
+	
+	public Object getWrappedObject() {
+		return wrappedObject;
+	}
+
+	public void setWrappedObject(Object wrappedObject) {
+		this.wrappedObject = wrappedObject;
+	}
+
 	public Set<String> getParameters() {
 		return parameters;
 	}
@@ -28,6 +53,12 @@ public class AlmabaniException extends Exception implements Serializable {
 
 	public AlmabaniException(String key) {
 		this.key = key;
+	}
+
+	
+	public AlmabaniException(Object wrappedObject) {
+		super();
+		this.wrappedObject = wrappedObject;
 	}
 
 	public AlmabaniException(Throwable cause, String key) {

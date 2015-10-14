@@ -38,6 +38,7 @@ import com.almabani.business.service.QoutationService;
 import com.almabani.business.service.QuotationItemService;
 import com.almabani.business.service.SecUserService;
 import com.almabani.business.service.StateService;
+import com.almabani.business.service.StockItemService;
 import com.almabani.business.service.SubModuleService;
 import com.almabani.business.service.SupplierService;
 import com.almabani.business.service.SystemService;
@@ -83,6 +84,7 @@ import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
+import com.almabani.common.virtual.entity.StockItemView;
 
 @Service
 @EnableTransactionManagement
@@ -182,6 +184,9 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Autowired
 	OamQuotationActionTypeService oamQuotationActionTypeService;
+
+	@Autowired
+	StockItemService stockItemService;
 
 	@PostConstruct
 	public void cacheApplications() {
@@ -471,8 +476,11 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	@Override
 	public OamItemsQuotSupplier addOrUpdateOamItemsQuotSupplier(
 			OamItemsQuotSupplier oamItemsQuotSupplier,
-			CommonDriverMap commonDriverMap) {
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
 		if (Utils.hasID(oamItemsQuotSupplier)) {
+			itemsQuotSupplierService
+					.checkQuotationItemSupplierSelectionAvailability(oamItemsQuotSupplier
+							.getItemQuotation());
 			return itemsQuotSupplierService.updateOamItemsQuotSupplier(
 					oamItemsQuotSupplier, commonDriverMap);
 		} else {
@@ -1117,7 +1125,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public List<OamProjectItem> getAllProjectItems(
+	public List<OamProjectItem> getAllCompanyProjectItems(
 			String projectItemNameOrDescription, Company company) {
 		return supplierService.getAllProjectItems(projectItemNameOrDescription,
 				company);
@@ -1125,19 +1133,18 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public List<SecSystem> getAllSystems(Company company) {
-		return systemService.getAllSystems( company);
+		return systemService.getAllSystems(company);
 	}
 
 	@Override
 	public List<SecModule> getAllModules(Company company) {
-		return moduleService.getAllModules( company);
+		return moduleService.getAllModules(company);
 	}
 
 	@Override
 	public List<OamItem> getAllItems(String itemNameOrDescription,
 			Company company) {
-		return itemService. getAllItems( itemNameOrDescription,
-				 company);
+		return itemService.getAllItems(itemNameOrDescription, company);
 	}
 
 	@Override
@@ -1148,16 +1155,90 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public List<OamStockItem> loadOamStockItems(int first, int pageSize,
-			String sortField, boolean b, Map<String, Object> filters) {
-		// TODO Auto-generated method stub
-		return null;
+			String sortField, boolean assending, Map<String, Object> filters) {
+		return stockItemService.loadStockItems(first, pageSize, sortField,
+				assending, filters);
 	}
 
 	@Override
-	public OamStockItem addorUpdateOamStockItem(OamStockItem selected,
-			CommonDriverMap appendCurrentUserCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public OamStockItem addorUpdateOamStockItem(OamStockItem oamStockItem,
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
+
+		if (Utils.hasID(oamStockItem)) {
+
+			return stockItemService.updateStockItem(oamStockItem,
+					commonDriverMap);
+		} else {
+			Long numberOfRemainingItems = projectItemService
+					.getNumberofRemainingItems(oamStockItem.getProjectItem());
+			if (numberOfRemainingItems<oamStockItem.getEntryValue())
+			{
+				throw new AlmabaniException(MessagesKeyStore.ALMABANI_GENERAL_REQUESTED_AMOUNT_IS_GRATER_THAN_EXIST_AMOUNT);
+			}
+			return stockItemService.addStockItem(oamStockItem, commonDriverMap);
+		}
+	}
+
+	@Override
+	public List<OamProjectItem> getAllProjectItems(
+			String projectItemNameOrDescription, Department department) {
+		return projectItemService.getAllProjectItems(
+				projectItemNameOrDescription, department);
+	}
+
+	@Override
+	public void checkQuotationItemSupplierSelectionAvailability(
+			OamItemQuotation oamItemQuotation) throws AlmabaniException {
+
+		itemsQuotSupplierService
+				.checkQuotationItemSupplierSelectionAvailability(oamItemQuotation);
+
+	}
+
+	@Override
+	public void unselectOldSupplierOfQuotationItem(
+			OamItemQuotation itemQuotation) {
+		itemsQuotSupplierService
+				.unselectOldSupplierOfQuotationItem(itemQuotation);
+	}
+
+	@Override
+	public List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+
+		return stockItemService.loadOamStockItemsView(first, pageSize,
+				sortField, ascending, filters);
+	}
+
+	@Override
+	public Integer getNumberOfOamStockItemsView(Map<String, Object> filters) {
+		return stockItemService.getNumberOfOamStockItemsView(filters);
+	}
+
+	@Override
+	public List<OamStockItem> getAllStockItems() {
+		return stockItemService.getAllStockItems();
+	}
+
+	@Override
+	public Integer getNumberOfStockItems(Map<String, Object> filters) {
+		return stockItemService.getNumberOfOamStockItemsView(filters);
+	}
+
+	@Override
+	public List<Establishment> getAllEstablishments() {
+		return establishmentService.getEstablishments();
+	}
+
+	@Override
+	public List<Establishment> getAllEstablishments(Company company) {
+		return establishmentService.getEstablishments(company);
+	}
+
+	@Override
+	public List<OamItemQuotation> getItemQuotataion(
+			OamProjectItem oamProjectItem) {
+		return quotationItemService.getItemQuotataion(oamProjectItem);
 	}
 
 }

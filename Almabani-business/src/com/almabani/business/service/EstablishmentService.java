@@ -15,5 +15,6 @@ public interface EstablishmentService {
 	Establishment getEstablishment(Long key);
 
 	List<Establishment> getEstablishments(Company company);
+
 	
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
@@ -125,6 +124,7 @@ public class QuotationManagementBean extends AbstractBeanHelper implements
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_QUOTATION));
 		quotationApplicationController.setQuotation(selected);
+		quotationApplicationController.refreshQuotaionList();
 		attachAvailableActionTypes();
 		operationSucceded();
 

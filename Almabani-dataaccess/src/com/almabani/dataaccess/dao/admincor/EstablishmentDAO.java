@@ -16,5 +16,6 @@ public interface EstablishmentDAO extends AbstractDAOInt {
 	List<Establishment> getEstablishments();
 
 	List<Establishment> getEstablishments(Company company);
+
 	
 }

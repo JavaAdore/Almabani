@@ -6,26 +6,31 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	
+
 	<h:form id="QuotationItemSupplierlistForm">
 
-		<p:panel header="#{loc.ListOamItemsQuotSupplierTitle}" style="margin-left:auto; margin-right:auto ; ">
-			<p:dataTable id="datalist" draggableColumns="true" draggableRows="true" resizableColumns="true"
+		<p:panel header="#{loc.ListOamItemsQuotSupplierTitle}"
+			style="margin-left:auto; margin-right:auto ; ">
+			<p:dataTable id="quotationItemSupplierDataList"
+				draggableColumns="true" draggableRows="true" resizableColumns="true"
 				value="#{oamItemsQuotSupplierManagementBean.items}" var="item"
-				selectionMode="single"
+				selectionMode="single" widgetVar="quotationItemSupplierDataList"
 				selection="#{oamItemsQuotSupplierManagementBean.selected}"
 				rowKey="#{item.id}" paginator="true" lazy="true" rows="10"
 				rowsPerPageTemplate="10,20,30">
-				
+
 				<f:facet name="header">
 					<p:commandButton id="toggler" type="button"
 						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
 						icon="ui-icon-calculator" />
-					<p:columnToggler datasource="datalist" trigger="toggler" />
+					<p:columnToggler datasource="quotationItemSupplierDataList"
+						trigger="toggler" />
 				</f:facet>
-				<p:ajax event="rowSelect" update="viewQuotItemSupplierButton editQuotItemSupplierButton" />
-				<p:ajax event="rowUnselect" update="viewQuotItemSupplierButton editQuotItemSupplierButton" /> 
-				
+				<p:ajax event="rowSelect"
+					update="viewQuotItemSupplierButton editQuotItemSupplierButton" />
+				<p:ajax event="rowUnselect"
+					update="viewQuotItemSupplierButton editQuotItemSupplierButton" />
+
 				<p:column headerText="#{loc.ListOamItemsQuotSupplierTitle_id}"
 					sortBy="#{item.id}" filterBy="#{item.id}">
 
@@ -43,7 +48,10 @@
 					headerText="#{loc.ListOamItemsQuotSupplierTitle_itemValue}"
 					sortBy="#{item.itemValue}" filterBy="#{item.itemValue}">
 
-					<h:outputText value="#{item.itemValue}" />
+					<h:outputText value="#{item.itemValue}">
+						<f:convertNumber locale="en-US" />
+
+					</h:outputText>
 				</p:column>
 
 				<p:column
@@ -67,7 +75,10 @@
 					headerText="#{loc.ListOamItemsQuotSupplierTitle_perPaymentPo}"
 					sortBy="#{item.perPaymentPo}" filterBy="#{item.perPaymentPo}">
 
-					<h:outputText value="#{item.perPaymentPo}" />
+					<h:outputText value="#{item.perPaymentPo}">
+						<f:convertNumber type="percent" />
+
+					</h:outputText>
 				</p:column>
 
 
@@ -76,15 +87,17 @@
 					headerText="#{loc.ListOamItemsQuotSupplierTitle_indSelected}"
 					sortBy="#{item.indSelected}" filterBy="#{item.indSelected}">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
+						<p:selectOneMenu
+							onchange="PF('quotationItemSupplierDataList').filter()">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
 								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 						</p:selectOneMenu>
 					</f:facet>
-					
-					<h:outputText value="#{applicationScopeStore.getYesNoValue(item.indSelected)}" />
+
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.indSelected)}" />
 				</p:column>
 
 
@@ -106,20 +119,24 @@
 
 
 				<f:facet name="footer">
-					<p:commandButton id="createQuotationItemSupplierButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}"
+					<p:commandButton id="createQuotationItemSupplierButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
 						actionListener="#{oamItemsQuotSupplierManagementBean.prepareCreate}"
-						update=":tabs:createQuotItemSupplierForm:display"
+						update="tabs:createQuotItemSupplierForm:display"
 						oncomplete="PF('createQoutItemSupplierDiaolg').show()" />
-					
-					<p:commandButton id="viewQuotItemSupplierButton" icon="ui-icon-search"
-						value="#{loc.View}" update=":tabs:viewQuotationItemSupplierForm:display"
+
+					<p:commandButton id="viewQuotItemSupplierButton"
+						icon="ui-icon-search" value="#{loc.View}"
+						update="tabs:viewQuotationItemSupplierForm:display"
 						oncomplete="PF('viewQuoItemSupplierDialog').show()"
 						disabled="#{empty oamItemsQuotSupplierManagementBean.selected}" />
-					
-					<p:commandButton id="editQuotItemSupplierButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}" update=":tabs:editQuotationItemSupplierForm:display"
-						oncomplete="PF('editQuotationItemSupplierDialog').show()" 
+
+					<p:commandButton id="editQuotItemSupplierButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						update="tabs:editQuotationItemSupplierForm:display"
+						oncomplete="PF('editQuotationItemSupplierDialog').show()"
 						disabled="#{empty oamItemsQuotSupplierManagementBean.selected}" />
 				</f:facet>
 

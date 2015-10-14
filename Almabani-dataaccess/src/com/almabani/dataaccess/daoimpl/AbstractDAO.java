@@ -184,6 +184,17 @@ public class AbstractDAO implements Serializable {
 		List result = query.list();  
 		return result;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public List lazyLoadEntities(String queryString, Integer first, Integer pageSize,
+			String sortField, boolean assending, Map<String, Object> filters) {
+		Query query = prepareLazyLoadingQuery(queryString, first, pageSize, sortField,
+				assending, filters, false);
+		query.setFetchSize(pageSize);
+		query.setFirstResult(first);
+		List result = query.list();  
+		return result;
+	}
 
 	@SuppressWarnings("rawtypes")
 	public Integer getCountOfResults(Class clz, Map<String, Object> filters) {
@@ -192,6 +203,13 @@ public class AbstractDAO implements Serializable {
 		return ((Long) Utils.getFirstResult(query.list())).intValue();
 	}  
 
+	@SuppressWarnings("rawtypes")
+	public Integer getCountOfResults(String queryString, Map<String, Object> filters) {
+		Query query = prepareLazyLoadingQuery(queryString, null, null, null, false,
+				filters, true);
+		return ((Long) Utils.getFirstResult(query.list())).intValue();
+	}  
+	
 	@SuppressWarnings("rawtypes")
 	private Query prepareLazyLoadingQuery(Class clz, Integer first,
 			Integer pageSize, String sortField, boolean assending,
@@ -211,6 +229,76 @@ public class AbstractDAO implements Serializable {
 		for (String field : filters.keySet()) {
 			Object filterValue = filters.get(field);
 			Class fieldClass = Utils.getFilterClass(field, clz);
+			String alias = null;
+			alias = Utils.dublicate(ALIAS, counter++);
+
+			
+				if (fieldClass == String.class) {
+					stringBuilder.append(String.format("and lower( o.%s ) like lower( CONCAT(  :%s ,'%s')   ) ",
+							field, alias,"%"));
+  
+					queryParams.put(alias, ((String) filterValue ).trim() );
+
+				} else if (Utils.isPrimitiveDataType(fieldClass)) {
+					if (Utils.isAString(filterValue)) {
+						Object object = Utils.initiatePrimitiveObject(
+								fieldClass, (String) filterValue);
+						stringBuilder.append(String.format(" and o.%s =:%s ",
+								field, alias));
+						queryParams.put(alias, object);
+					}
+				} else if (fieldClass == Date.class) {
+					String secondAlias = Utils.dublicate(alias, ++counter);
+					stringBuilder.append(String.format(
+							" and o.%s >= :%s and o.%s <= :%s ", field, alias,field,  
+							secondAlias));
+					Date startDate = Utils.getStartOfDay((Date) filterValue);
+					Date endDate = Utils.getEndOfDay((Date) filterValue);
+					queryParams.put(alias, startDate);
+					queryParams.put(secondAlias, endDate);
+				} else {
+					stringBuilder.append(String.format(" and  o.%s =:%s ",
+							field, alias));
+					queryParams.put(alias, filters.get(field));
+				}
+
+			
+		}
+
+		if (Utils.isNotEmptyString(sortField)) {
+			stringBuilder.append(String.format(" order by %s %s", sortField,
+					assending == false ? "desc " : ""));
+		}
+		Query query = getCurrentSession().createQuery(stringBuilder.toString());
+
+		for (String alia : queryParams.keySet()) {
+			
+			query.setParameter(alia, queryParams.get(alia));
+			
+		}
+		return query;
+
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private Query prepareLazyLoadingQuery(String queryString, Integer first,
+			Integer pageSize, String sortField, boolean assending,
+			Map<String, Object> filters, boolean count) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (count) {
+			stringBuilder.append(String.format(
+					"select count( o ) from %s o where 1=1 ",
+					queryString));
+		} else {
+			stringBuilder.append(String.format("select o from %s o where 1=1 ",
+					queryString));
+		}
+		int counter = 1;
+		Map<String, Object> queryParams = new LinkedHashMap<String, Object>();
+
+		for (String field : filters.keySet()) {
+			Object filterValue = filters.get(field);
+			Class fieldClass = null;
 			String alias = null;
 			alias = Utils.dublicate(ALIAS, counter++);
 

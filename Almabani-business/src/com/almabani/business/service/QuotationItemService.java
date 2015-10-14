@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
+import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 
 @Service
 public interface QuotationItemService {
@@ -28,6 +29,8 @@ public interface QuotationItemService {
 	List<OamItemQuotation> getAllQuotationItems();
 
 	List<OamItemQuotation> getAllQuotationItems(Company company);
+
+	List<OamItemQuotation> getItemQuotataion(OamProjectItem oamProjectItem);
 
 
 

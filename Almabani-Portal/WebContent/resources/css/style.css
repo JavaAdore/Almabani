@@ -1,7 +1,17 @@
-.ui-growl
+
+.red
 {
-	top:50px !important;
+	color:red !important;
 	
+}
+.green
+{
+	color:green !important;
+	
+}
+
+.ui-growl {
+	top: 50px !important;
 }
 
 body {
@@ -9,7 +19,7 @@ body {
 		!important;
 }
 
-.loginPasswordGrid tr, .loginPasswordGrid td {
+.loginPasswordGrid tr,.loginPasswordGrid td {
 	border-style: none !important;
 }
 
@@ -44,6 +54,8 @@ body {
 	font-size: small !important;
 }
 
+
+
 .grid {
 	width: 33% !important;
 	height: auto
@@ -76,7 +88,18 @@ body {
 	width: 70% !important;
 }
 
-.ui-menuitem ui-state-hover
-{
-	background-color:transparent !important;
+.ui-menuitem ui-state-hover {
+	background-color: transparent !important;
+}
+
+.noBorder {
+	border: none !important;
+}
+
+.noBorder tr {
+	border: none !important;
+}
+
+.noBorder td {
+	border: none !important;
 }

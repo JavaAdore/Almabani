@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
-import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.virtual.entity.StockItemView;
 
 @Service
 public interface StockItemService {
@@ -27,6 +27,11 @@ public interface StockItemService {
 	List<OamStockItem> getAllStockItems();
 
 	List<OamStockItem> getAllStockItems(Company company);
+
+	List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters);
+
+	Integer getNumberOfOamStockItemsView(Map<String, Object> filters);
 
 
 

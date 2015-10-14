@@ -2,11 +2,14 @@ package com.almabani.portal.managedbean.applicationhelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
@@ -45,6 +48,8 @@ public class ApplicationScopeStore implements Serializable {
 
 	private Map<String, String> documentTypeKeysAndValues;
 
+	private Map<String, String> inOutMap = new TreeMap();
+
 	private List<Country> countries;
 
 	private Map<Country, List<State>> countriesStatesMap = new HashMap();
@@ -53,9 +58,8 @@ public class ApplicationScopeStore implements Serializable {
 
 	private Map<String, String> yesNoMap = new LinkedHashMap();
 
-	private Map<String,String> languagesMap = new LinkedHashMap();
-	
-	
+	private Map<String, String> languagesMap = new LinkedHashMap();
+
 	@PostConstruct
 	public void init() {
 		loadCountries();
@@ -65,15 +69,23 @@ public class ApplicationScopeStore implements Serializable {
 		constructUnitTypesMap();
 		constructYesNoMap();
 		constructLangaugesMap();
+		constructInOutMap();
+
 	}
 
 	private void constructLangaugesMap() {
 
-		
 		languagesMap.put("E", "LANGUAGE_ENGLISH");
 		languagesMap.put("P", "LANGUAGE_PORTUGUESE");
 		languagesMap.put("S", "LANGUAGE_SPANSIH");
-		
+
+	}
+
+	private void constructInOutMap() {
+
+		inOutMap.put("I", MessagesKeyStore.ALMABANI_STOCK_ITEM_INCOME);
+		inOutMap.put("O", MessagesKeyStore.ALMABANI_STOCK_ITEM_OUTCOME);
+
 	}
 
 	private void constructYesNoMap() {
@@ -200,18 +212,13 @@ public class ApplicationScopeStore implements Serializable {
 		}
 		return "";
 	}
-	
-	
 
 	public String getLanguage(String languageCode) {
 		if (Utils.isNotEmptyString(languageCode)) {
-			String langaugeKey = languagesMap
-					.get(languageCode);
+			String langaugeKey = languagesMap.get(languageCode);
 			if (Utils.isNotEmptyString(langaugeKey)) {
-				String languageValue = WebUtils
-						.extractFromBundle(langaugeKey);
-				if (Utils
-						.isNotEmptyString(languageValue)) {
+				String languageValue = WebUtils.extractFromBundle(langaugeKey);
+				if (Utils.isNotEmptyString(languageValue)) {
 					return languageValue;
 				} else {
 					return WebUtils
@@ -225,7 +232,6 @@ public class ApplicationScopeStore implements Serializable {
 		}
 		return "";
 	}
-	
 
 	public String getQuotationType(String quotationType) {
 
@@ -326,6 +332,18 @@ public class ApplicationScopeStore implements Serializable {
 		return unitTypes;
 	}
 
+	
+
+	public List<KeyValueHolder<String, String>> getInOutList() {
+		List<KeyValueHolder<String, String>> quotationType = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : inOutMap.keySet()) {
+			quotationType.add(new KeyValueHolder<String, String>(key,
+					getInOutValue(key)));
+		}
+
+		return quotationType;
+	}
+	
 	public List<KeyValueHolder<String, String>> getYesNoList() {
 		List<KeyValueHolder<String, String>> yesNoList = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : yesNoMap.keySet()) {
@@ -335,10 +353,20 @@ public class ApplicationScopeStore implements Serializable {
 
 		return yesNoList;
 	}
-	
-	
-	
-	
+
+	public List<KeyValueHolder<String, String>> getReversedYesNoList() {
+		List<KeyValueHolder<String, String>> yesNoList = new ArrayList<KeyValueHolder<String, String>>();
+		Set<String> set = new HashSet(yesNoMap.keySet());
+		List<String> list = new ArrayList(set);
+		Collections.reverse(list);
+		for (String key : list) {
+			yesNoList.add(new KeyValueHolder<String, String>(key,
+					getYesNoValue((key))));
+		}
+
+		return yesNoList;
+	}
+
 	public List<KeyValueHolder<String, String>> getLangaugesList() {
 		List<KeyValueHolder<String, String>> langaugesList = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : languagesMap.keySet()) {
@@ -395,7 +423,7 @@ public class ApplicationScopeStore implements Serializable {
 					.append(String.format(
 							"%s %s ",
 							result.get(TimeUnit.MINUTES),
-	 						WebUtils.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_DATES_MINUTE)));
+							WebUtils.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_DATES_MINUTE)));
 			stringBuilder
 					.append(String.format(
 							"%s %s ",
@@ -407,20 +435,37 @@ public class ApplicationScopeStore implements Serializable {
 
 	public String getApplicationDescription() {
 		String val = (String) WebUtils.extractFromRequest("applicationCode");
-		if(Utils.isNotEmptyString(val)) 
-		{
-		val = almabaniFacade.getApplicationDescription(val);
+		if (Utils.isNotEmptyString(val)) {
+			val = almabaniFacade.getApplicationDescription(val);
 		}
 		return Utils.getAbsoluteStringValue(val);
 	}
-	
-	public void logout()
-	{
-		WebUtils.redirectTo("/logout.xhtml");
+
+	public void logout() {
+		WebUtils.redirectTo("/Almabani-Portal/logout.xhtml");
 	}
 
 	
-	
-	
-	
+	public String getInOutValue(String inOutKey) {
+		if (Utils.isNotEmptyString(inOutKey)) {
+			String inOutSituationMassage = inOutMap
+					.get(inOutKey);
+			if (Utils.isNotEmptyString(inOutSituationMassage)) {
+				String inOutLocalizedMessage = WebUtils
+						.extractFromBundle(inOutSituationMassage);
+				if (Utils
+						.isNotEmptyString(inOutLocalizedMessage)) {
+					return inOutLocalizedMessage;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
+	}
 }

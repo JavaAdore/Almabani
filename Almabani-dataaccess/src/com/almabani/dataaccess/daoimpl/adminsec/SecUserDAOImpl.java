@@ -21,7 +21,7 @@ public class SecUserDAOImpl extends AbstractDAO implements SecUserDAO {
 
 	@Override
 	public SecUser getUser(String userLoginCode) {
-		Query query = getCurrentSession().createQuery("select x from SecUser x where x.userLoginCode =:userLoginCode  ");
+		Query query = getCurrentSession().createQuery("select x from SecUser x where lower(x.userLoginCode) = lower(:userLoginCode)  ");
 		query.setParameter("userLoginCode"	, userLoginCode);
 		return (SecUser) Utils.getFirstResult(query.list());
 	}

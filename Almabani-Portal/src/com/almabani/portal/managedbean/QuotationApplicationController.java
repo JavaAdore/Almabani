@@ -120,4 +120,14 @@ public class QuotationApplicationController extends AbstractBeanHelper
 		this.activeTabIndex = activeTabIndex;
 	}
 
+	public void refreshQuotaionList() {
+		quotationItemManagementBean.refreshQuotationList();
+		
+	}
+
+	public void refreshQuotationItemList() {
+		
+		oamItemsQuotSupplierManagementBean.refreshQuotationItemList();
+	}
+
 }

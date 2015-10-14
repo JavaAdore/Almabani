@@ -1,6 +1,7 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +12,15 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.OamItem;
+import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
@@ -26,30 +31,79 @@ import com.almabani.portal.webutils.WebUtils;
 public class ProjectItemManagementBean extends AbstractBeanHelper implements
 		Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private LazyDataModel<OamProjectItem> items;
 
-	private boolean operationSuccess = false;
-	private List<Project> projects;
 	private List<OamItem> oamItems;
+
+	private boolean operationSuccess = false;
+
+	private List<Project> projects;
+
+	private List<Establishment> establishments;
+
+	private List<OamItemQuotation> quotataionItems;
 
 	private OamProjectItem selected;
 
+	public OamStockItem selectedStockItem;
+
+	private LazyDataModel<OamStockItem> stockItems;
+
+	public List<OamItem> autoCompleteItemList(String itemNameOrDescription) {
+
+		itemNameOrDescription = Utils.isNotEmptyString(itemNameOrDescription) ? itemNameOrDescription
+				: "";
+		if (WebUtils.isAdminUser()) {
+			oamItems = almabaniFacade.getAllItems(itemNameOrDescription, null);
+		} else {
+			oamItems = almabaniFacade.getAllItems(itemNameOrDescription,
+					WebUtils.getCurrentLoggedUser().getEmployee()
+							.getEstablishment().getCompany());
+
+		}
+		return oamItems;
+
+	}
+
+	public LazyDataModel<OamProjectItem> getItems() {
+		return items;
+	}
+
+	public List<OamItem> getOamItems() {
+		return oamItems;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public OamProjectItem getSelected() {
+		return selected;
+	}
+
+	public OamStockItem getSelectedStockItem() {
+		return selectedStockItem;
+	}
+
+	public LazyDataModel<OamStockItem> getStockItems() {
+		return stockItems;
+	}
+
 	@PostConstruct
 	public void init() {
-		initializeCompaniesLazyList();
+		initializeLazyModels();
+
 		loadInitialLists();
 
 		prepareStatesList();
 	}
 
-	public void prepareCreate() {
+	private void initializeLazyModels() {
+		items = new QuotationItemLazyModel();
+		stockItems = new OamStockItemLazyModel();
 
-		selected = new OamProjectItem();
 	}
 
 	private void loadInitialLists() {
@@ -61,16 +115,32 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 
 		}
 		if (WebUtils.isAdminUser()) {
-			oamItems = almabaniFacade.getAllItems();
+			establishments = almabaniFacade.getAllEstablishments();
 		} else {
-			oamItems = almabaniFacade.getAllItems(WebUtils
+			establishments = almabaniFacade.getAllEstablishments(WebUtils
 					.getCurrentLoggedUserCompany());
+
 		}
+
 	}
 
-	private void initializeCompaniesLazyList() {
-		items = new QuotationItemLazyModel();
+	private void operationFaild() {
+		operationSuccess = false;
+	}
 
+	private void operationSuccess() {
+		operationSuccess = true;
+	}
+
+	public void prepareCreate() {
+
+		selected = new OamProjectItem();
+	}
+
+	public void prepareCreateStockItem() {
+		selectedStockItem = new OamStockItem();
+		selectedStockItem.setIndInOut(DataAccessConstants.STOCK_ITEM_OUT);
+		quotataionItems = almabaniFacade.getItemQuotataion(selected);
 	}
 
 	private void prepareStatesList() {
@@ -94,63 +164,108 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 		operationSuccess();
 
 	}
-	
-	
-	public List<OamItem> autoCompleteItemList(
-			String itemNameOrDescription) {
 
-		itemNameOrDescription = Utils
-				.isNotEmptyString(itemNameOrDescription) ? itemNameOrDescription 
-				: "";
-		if (WebUtils.isAdminUser()) {
-			oamItems = almabaniFacade.getAllItems(
-					itemNameOrDescription, null);
-		} else {
-			oamItems = almabaniFacade.getAllItems(
-					itemNameOrDescription, WebUtils
-							.getCurrentLoggedUser().getEmployee()
-							.getEstablishment().getCompany());
+	public void withdrawal() throws AlmabaniException {
+
+		boolean isAlreadyExisitEntity = Utils.hasID(selectedStockItem);
+	
+		selectedStockItem.setProjectItem(selected);
+		selectedStockItem = almabaniFacade.addorUpdateOamStockItem(
+				selectedStockItem,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
+		selected.deductAmount(selectedStockItem.getEntryValue());
+		WebUtils.fireInfoMessage(
+				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_STOCK_ITEM));
+	}
+
+	public void setItems(LazyDataModel<OamProjectItem> items) {
+		this.items = items;
+	}
+
+	public void setOamItems(List<OamItem> oamItems) {
+		this.oamItems = oamItems;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
+	public void setSelected(OamProjectItem selected) {
+		this.selected = selected;
+	}
+
+	public void setSelectedStockItem(OamStockItem selectedStockItem) {
+		this.selectedStockItem = selectedStockItem;
+	}
+
+	public void setStockItems(LazyDataModel<OamStockItem> stockItems) {
+		this.stockItems = stockItems;
+	}
+
+	private class OamStockItemLazyModel extends LazyDataModel<OamStockItem>
+			implements Serializable {
+		/**
+* 
+*/
+		private static final long serialVersionUID = 1L;
+		List<OamStockItem> result;
+
+		private Integer rowCount;
+
+		private void attachSelectedProjectItem(Map<String, Object> filters) {
+			filters.put("projectItem", selected);
 
 		}
-		return oamItems;
 
-	}
-	
-	
+		@Override
+		public OamStockItem getRowData(String rowKey) {
 
-	private void operationSuccess() {
-		operationSuccess = true;
-	}
+			for (OamStockItem stockItem : result) {
+				if (stockItem.getId().toString().equals(rowKey)) {
+					selectedStockItem = stockItem;
+					return stockItem;
+				}
+			}
 
-	private void operationFaild() {
-		operationSuccess = false;
+			return null;
+		}
+
+		@Override
+		public List<OamStockItem> load(int first, int pageSize,
+				String sortField, SortOrder sortOrder,
+				Map<String, Object> filters) {
+
+			if (selected != null && Utils.hasID(selected)) {
+
+				attachSelectedProjectItem(filters);
+
+				rowCount = almabaniFacade.getNumberOfStockItems(filters);
+				result = (List<OamStockItem>) almabaniFacade.loadOamStockItems(
+						first, pageSize, sortField,
+						sortOrder == SortOrder.ASCENDING, filters);
+				setRowCount(this.rowCount);
+
+				return result;
+			} else {
+				return new ArrayList();
+			}
+
+		}
+
 	}
 
 	private class QuotationItemLazyModel extends LazyDataModel<OamProjectItem>
 			implements Serializable {
 		/**
- * 
- */
+* 
+*/
 		private static final long serialVersionUID = 1L;
-		private Integer rowCount;
-
 		List<OamProjectItem> result;
 
-		@Override
-		public List<OamProjectItem> load(int first, int pageSize,
-				String sortField, SortOrder sortOrder,
-				Map<String, Object> filters) {
-
-			attachCompanyFiltrataionInCaseOnNoneAdmin(filters);
-			rowCount = almabaniFacade.getNumberOfProjectItems(filters);
-			result = (List<OamProjectItem>) almabaniFacade.loadProjectItems(
-					first, pageSize, sortField,
-					sortOrder == SortOrder.ASCENDING, filters);
-
-			setRowCount(this.rowCount);
-
-			return result;
-		}
+		private Integer rowCount;
 
 		private void attachCompanyFiltrataionInCaseOnNoneAdmin(
 				Map<String, Object> filters) {
@@ -174,38 +289,42 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 			return null;
 		}
 
+		@Override
+		public List<OamProjectItem> load(int first, int pageSize,
+				String sortField, SortOrder sortOrder,
+				Map<String, Object> filters) {
+
+			attachCompanyFiltrataionInCaseOnNoneAdmin(filters);
+			rowCount = almabaniFacade.getNumberOfProjectItems(filters);
+			result = (List<OamProjectItem>) almabaniFacade.loadProjectItems(
+					first, pageSize, sortField,
+					sortOrder == SortOrder.ASCENDING, filters);
+
+			setRowCount(this.rowCount);
+
+			return result;
+		}
+
 	}
 
-	public LazyDataModel<OamProjectItem> getItems() {
-		return items;
+	public List<Establishment> getEstablishments() {
+		return establishments;
 	}
 
-	public void setItems(LazyDataModel<OamProjectItem> items) {
-		this.items = items;
+	public void setEstablishments(List<Establishment> establishments) {
+		this.establishments = establishments;
 	}
 
-	public OamProjectItem getSelected() {
-		return selected;
+	public List<OamItemQuotation> getQuotataionItems() {
+		return quotataionItems;
 	}
 
-	public void setSelected(OamProjectItem selected) {
-		this.selected = selected;
+	public void setQuotataionItems(List<OamItemQuotation> quotataionItems) {
+		this.quotataionItems = quotataionItems;
 	}
 
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-
-	public List<OamItem> getOamItems() {
-		return oamItems;
-	}
-
-	public void setOamItems(List<OamItem> oamItems) {
-		this.oamItems = oamItems;
-	}
+	/**
+* 
+*/
 
 }

@@ -40,7 +40,7 @@
 						<f:selectItem itemLabel="" itemValue="#{null}"
 							noSelectionOption="true" />
 						<f:selectItems value="#{userManagementBean.employees}"
-							var="employee" itemLabel="#{employee.employeeName}" />
+							var="employee" itemLabel="( #{employee.establishment.company.id} )#{ employee.employeeName}" />
 
 						<f:selectItem />
 					</p:selectOneMenu>
@@ -61,9 +61,8 @@
 						value="#{userManagementBean.selected.indAdminSystem}"
 						styleClass="fullWith" required="true"
 						requiredMessage="#{loc.CreateSecUserRequiredMessageIsAdmin}">
-						<f:selectItem itemLabel="" itemValue="#{null}"
-							noSelectionOption="true" />
-						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+						
+						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
