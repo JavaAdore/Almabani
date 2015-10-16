@@ -39,7 +39,7 @@ public class OamStockItem extends AbstractEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "NUM_PROJECT_ITEM", referencedColumnName="NUM_PROJECT_ITEM", nullable = false)
 	private OamProjectItem projectItem;
-//	 
+	 
 	@ManyToOne
 	@JoinColumn(name = "NUM_ESTABLISHMENT", referencedColumnName="NUM_ESTABLISHMENT", nullable = false)
 	private Establishment establishment; 

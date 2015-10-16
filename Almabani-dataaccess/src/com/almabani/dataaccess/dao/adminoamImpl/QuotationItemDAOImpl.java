@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.dataaccess.dao.adminoam.QuotationItemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
 
@@ -65,6 +66,14 @@ public class QuotationItemDAOImpl extends AbstractDAO implements
 						"select x from OamItemQuotation x where x.projectItem =:projectItem");
 		query.setParameter("projectItem", projectItem);
 		return query.list();
+	}
+
+	@Override
+	public List<OamItemQuotation> getQuotationItem(OamQuotation quotation) {
+		Query query = super.getCurrentSession().createQuery("select x from OamItemQuotation x where x.quotation =:quotation ");
+		query.setParameter("quotation", quotation);
+		return query.list();
+		
 	}
 
 }

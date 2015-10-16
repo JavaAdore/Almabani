@@ -32,6 +32,7 @@ public interface ProjectItemDAO extends AbstractDAOInt{
 
 	Long getNumberofRemainingItems(OamProjectItem projectItem);
 
+
 	
 	
 }

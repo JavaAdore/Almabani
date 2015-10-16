@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.almabani.common.entity.AbstractEntity;
+import com.almabani.common.entity.schema.admincor.DepartmentSection;
 
 public class Utils {
 
@@ -87,7 +88,7 @@ public class Utils {
 		String[] fields = currentFilter.split("\\.");
 
 		try {
-			Field field = class1.getDeclaredField(fields[currentFieldIndex]);
+			Field field = class1.getDeclaredField(fields[currentFieldIndex].trim());
 			if (fields.length - 1 > currentFieldIndex) {
 				return getFilterClass(currentFilter, ++currentFieldIndex,
 						field.getType());
@@ -347,5 +348,13 @@ public class Utils {
 			Map<String, String> applicationsDescriptions) {
 		return isNull(applicationsDescriptions) || applicationsDescriptions.size()==0;
 	}
+
 	
+	public static void main(String [] arsgs) throws NoSuchFieldException, SecurityException
+	{
+		
+		System.out.println(DepartmentSection.class.getDeclaredField("sectionCode"));
+		
+		
+	}
 }

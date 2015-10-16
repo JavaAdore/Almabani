@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 @Repository
 public interface QuotationItemDAO extends AbstractDAOInt{
@@ -26,6 +27,8 @@ public interface QuotationItemDAO extends AbstractDAOInt{
 	List<OamItemQuotation> getAllQuotationItems(Company company);
 
 	List<OamItemQuotation> getItemQuotataion(OamProjectItem oamProjectItem);
+
+	List<OamItemQuotation> getQuotationItem(OamQuotation oamQuotation);
 
  
 	

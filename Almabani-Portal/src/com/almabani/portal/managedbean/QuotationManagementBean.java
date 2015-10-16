@@ -62,14 +62,14 @@ public class QuotationManagementBean extends AbstractBeanHelper implements
 	}
 
 	private void loadInitialLists() {
-		if(WebUtils.isAdminUser()){
-		departments = almabaniFacade.getDepartments();
-		wokDemands = almabaniFacade.getWokDemands();
-		}else
-		{
-			Company company = WebUtils.getCurrentLoggedUser().getEmployee().getEstablishment().getCompany();
+		if (WebUtils.isAdminUser()) {
+			departments = almabaniFacade.getDepartments();
+			wokDemands = almabaniFacade.getWokDemands();
+		} else {
+			Company company = WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany();
 			departments = almabaniFacade.getDepartments(company);
-			wokDemands  = almabaniFacade.getWokDemands(company); 
+			wokDemands = almabaniFacade.getWokDemands(company);
 		}
 
 	}
@@ -114,11 +114,14 @@ public class QuotationManagementBean extends AbstractBeanHelper implements
 
 		operationFaild();
 		boolean isAlreadyExisitEntity = Utils.hasID(selected);
+		CommonDriverMap commonDriverMap = CommonDriverMap
+				.appendCurrentUserCode(null, WebUtils.getCurrentUserCode());
 
-		selected = almabaniFacade.addOrUpdateQuotation(
-				selected,
-				CommonDriverMap.appendCurrentUserCode(null,
-						WebUtils.getCurrentUserCode()));
+		commonDriverMap.appendCompany(commonDriverMap,
+				WebUtils.getCurrentLoggedUserCompany());
+
+		selected = almabaniFacade.addOrUpdateQuotation(selected,
+				commonDriverMap);
 		WebUtils.fireInfoMessage(
 				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
 						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
@@ -182,7 +185,7 @@ public class QuotationManagementBean extends AbstractBeanHelper implements
 	public void injectCompanyIncaseOfNoneAdminUser(Map<String, Object> filters) {
 		if (WebUtils.isAdminUser() == false) {
 			filters.put("department.company", WebUtils.getCurrentLoggedUser()
-					.getEmployee().getEstablishment().getCompany()); 
+					.getEmployee().getEstablishment().getCompany());
 		}
 
 	}

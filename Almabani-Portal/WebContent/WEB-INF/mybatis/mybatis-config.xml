@@ -5,10 +5,15 @@
 
 <configuration>
 	<typeAliases>
+			<typeAlias type='com.almabani.common.entity.schema.admincor.Company' alias='company'></typeAlias>
+	
 		<typeAlias type='com.almabani.common.dto.menu.Application' alias='application'></typeAlias>
 		<typeAlias type='com.almabani.common.dto.menu.Module' alias='module'></typeAlias>
 		<typeAlias type='com.almabani.common.dto.menu.SubModule' alias='subModule'></typeAlias>
-
+		<typeAlias type='com.almabani.common.entity.schema.admincor.Department' alias='lightDepartment'></typeAlias>
+		<typeAlias type='com.almabani.common.entity.schema.admincor.DepartmentSection' alias='lightDepartmentSection'></typeAlias>
+		<typeAlias type='com.almabani.common.entity.schema.admincor.Company' alias='lightCompany'></typeAlias>
+		
 	</typeAliases>
 
 

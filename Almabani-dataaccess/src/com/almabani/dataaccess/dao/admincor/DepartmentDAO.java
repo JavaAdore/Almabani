@@ -22,4 +22,8 @@ public interface DepartmentDAO extends AbstractDAOInt{
 	List<Department> getDepartments();
 
 	List<Department> getDepartments(Company company);
+
+	List<Department> getLightDepartments(int companyId);
+
+	List<Department> getAllLightDepartments();
 }

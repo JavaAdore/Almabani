@@ -29,6 +29,9 @@ public class OamQuotationActionType extends AbstractEntity implements Serializab
 	
 	private static final long serialVersionUID = 7544673398792503287L;
 	
+	 
+	
+	
 	@Id
 	@Column(name = "NUM_TYPE_QUOT_ACTION", unique = true, nullable = false, precision = 3, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamTypesQuotActions_Id_Seq_Gen")

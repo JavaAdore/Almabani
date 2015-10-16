@@ -48,10 +48,7 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
 	private String indActive;
 
-	/**
-	 * modificationMakerName represent the user name who make the last
-	 * modification
-	 */
+	
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 

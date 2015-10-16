@@ -23,9 +23,14 @@
 						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
 						icon="ui-icon-calculator" />
 					<p:columnToggler datasource="datalist" trigger="toggler" />
+
 				</f:facet>
-				<p:ajax event="rowSelect" update="viewButton editButton 	:stockItemlistForm" />
-				<p:ajax event="rowUnselect" update="viewButton editButton :stockItemlistForm" />
+
+				<p:ajax event="rowSelect"
+					listener="#{projectItemManagementBean.onRowSelect}"
+					update="viewButton editButton :stockItemlistForm" />
+				<p:ajax event="rowUnselect"
+					update="viewButton editButton :stockItemlistForm" />
 
 				<p:column headerText="#{loc.ViewOamItemLabel_itemCode}"
 					sortBy="#{item.item.itemCode}" filterBy="#{item.item.itemCode}">
@@ -42,6 +47,16 @@
 					headerText="#{loc.EditComDepartmentSectionLabel_sectionCode}"
 					sortBy="#{item.item.itemCategory.comDepartmentSection.sectionCode}"
 					filterBy="#{item.item.itemCategory.comDepartmentSection.sectionCode }">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems
+								value="#{projectItemManagementBean.lightDepartments}" />
+						</p:selectOneMenu>
+					</f:facet>
+
 					<h:outputText
 						value="#{ item.item.itemCategory.comDepartmentSection.sectionCode}" />
 				</p:column>
@@ -107,10 +122,12 @@
 				<p:column headerText="#{loc.ListOamItemTitle_Remaining_amount}"
 					sortBy="#{item.remainingAmount}" filterBy="#{item.remainingAmount}">
 
-					<h:outputText
-						value="#{item.remainingAmount}" />
+					<h:outputText value="#{item.remainingAmount}" />
 				</p:column>
 				<f:facet name="footer">
+
+
+
 					<p:commandButton id="createButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-plus" value="#{loc.Create}"
@@ -126,6 +143,7 @@
 						icon="ui-icon-pencil" value="#{loc.Edit}"
 						update=":editForm:display" oncomplete="PF('editDialog').show()"
 						disabled="#{empty projectItemManagementBean.selected}" />
+
 				</f:facet>
 
 			</p:dataTable>

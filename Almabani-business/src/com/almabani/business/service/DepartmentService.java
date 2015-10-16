@@ -18,4 +18,8 @@ public interface DepartmentService {
 
 	List<Department> getDepartments(Company company);
 
+	List<Department> getLightDepartments(Company company);
+
+	List<Department> getLightDepartments();
+
 }

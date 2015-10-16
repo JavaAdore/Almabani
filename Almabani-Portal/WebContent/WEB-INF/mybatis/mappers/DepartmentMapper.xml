@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.almabani.dataaccess.dao.admincor.DepartmentDAO'>
+
+	<select id='getLightDepartments' parameterType='Company'
+		resultMap="lightDeparmentResultMap">
+		SELECT d.Num_DEPARTMENt departmentNumber,
+		D.NAM_DEPARTMENT
+		departmentName,
+		DS.NUM_DEP_SECTION departmentSectionId ,
+		DS.COD_SECTION
+		sectionCode
+		FROM com_departments d, COM_DEP_SECTIONS ds
+		WHERE
+		DS.NUM_DEPARTMENT = d.NUM_DEPARTMENT AND D.NUM_COMPANY = #{companyId}
+
+	</select>
+
+
+	<select id='getAllLightDepartments' resultMap="lightDeparmentResultMap">
+		SELECT
+		COM.NuM_COMPANY companyNumber ,
+        COM.NAM_COMPANY  companyName,
+        d.Num_DEPARTMENt departmentNumber,
+        D.NAM_DEPARTMENT departmentName,
+        DS.NUM_DEP_SECTION departmentSectionId ,
+        DS.COD_SECTION sectionCode
+        FROM com_departments d, COM_DEP_SECTIONS ds , COM_COMPANIES  com
+        WHERE DS.NUM_DEPARTMENT =
+        d.NUM_DEPARTMENT
+        and D.NUM_COMPANY = COM.NUM_COMPANY 
+
+	</select>
+
+	<resultMap type='lightDepartment' id='lightDeparmentResultMap'>
+		<id column="departmentNumber" property="id" />
+		<result column="departmentName" property="departmentName" />
+		<association property="company" resultMap="companyResultMap" column="companyNumber"  />
+		
+		<collection property="departmentSections" javaType="ArrayList"
+			ofType="lightDepartmentSection" resultMap="lightDepartmentSectionResultMap"></collection>
+	</resultMap>
+
+
+	<resultMap type='lightDepartmentSection' id='lightDepartmentSectionResultMap'>
+		<id column="departmentSectionId" property="id" />
+		<result column="sectionCode" property="sectionCode" />
+	</resultMap>
+
+
+	<resultMap type='lightCompany' id='companyResultMap'>
+		<id column="comapnyId" property="id" />
+		<result column="companyName" property="companyName" />
+	</resultMap>
+
+
+
+
+
+</mapper>

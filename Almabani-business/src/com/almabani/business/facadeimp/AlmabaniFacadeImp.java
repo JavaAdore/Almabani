@@ -1171,9 +1171,9 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 		} else {
 			Long numberOfRemainingItems = projectItemService
 					.getNumberofRemainingItems(oamStockItem.getProjectItem());
-			if (numberOfRemainingItems<oamStockItem.getEntryValue())
-			{
-				throw new AlmabaniException(MessagesKeyStore.ALMABANI_GENERAL_REQUESTED_AMOUNT_IS_GRATER_THAN_EXIST_AMOUNT);
+			if (numberOfRemainingItems < oamStockItem.getEntryValue()) {
+				throw new AlmabaniException(
+						MessagesKeyStore.ALMABANI_GENERAL_REQUESTED_AMOUNT_IS_GRATER_THAN_EXIST_AMOUNT);
 			}
 			return stockItemService.addStockItem(oamStockItem, commonDriverMap);
 		}
@@ -1240,5 +1240,17 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 			OamProjectItem oamProjectItem) {
 		return quotationItemService.getItemQuotataion(oamProjectItem);
 	}
+
+	@Override
+	public List<Department> getLightDepartments(Company company) {
+		return departmentService.getLightDepartments(company);
+	}
+
+	@Override
+	public List<Department> getLightDepartments() {
+		return departmentService.getLightDepartments();
+	}
+
+
 
 }

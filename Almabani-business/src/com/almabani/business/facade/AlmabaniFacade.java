@@ -394,4 +394,9 @@ public interface AlmabaniFacade {
 	
 	List<OamItemQuotation> getItemQuotataion(OamProjectItem oamProjectItem);
 
+	List<Department> getLightDepartments(Company company);
+
+	List<Department> getLightDepartments();
+
+
 }

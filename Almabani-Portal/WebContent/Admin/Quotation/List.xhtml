@@ -107,6 +107,7 @@
 					<p:commandButton id="createButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-plus" value="#{loc.Create}"
+						update="tabs:QuotataionCreateForm"
 						actionListener="#{quotationManagementBean.prepareCreate}"
 						oncomplete="PF('createQuotationDialog').show()" />
 					<p:commandButton id="viewButton" icon="ui-icon-search"

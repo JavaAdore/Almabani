@@ -13,5 +13,6 @@ public class DataAccessConstants implements Serializable {
 	public static final String NO = "N";
 	public static final String STOCK_ITEM_IN = "I"; 
 	public static final String STOCK_ITEM_OUT = "O";
+	public static final String IND_INCLUDE = "Y";
 
 }
