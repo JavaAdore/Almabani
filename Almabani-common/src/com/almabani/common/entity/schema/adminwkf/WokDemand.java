@@ -50,7 +50,7 @@ public class WokDemand extends AbstractEntity implements Serializable {
 //	@JoinColumn(name = "NUM_TYPE_IMPACT", referencedColumnName="NUM_TYPE_IMPACT", nullable = false)
 //	private WokTypesImpact typesImpact;
 //	
-//	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name = "DAT_DEMAND", nullable = false, length = 7)
 //	private Date demandDate;
 //	
@@ -64,7 +64,7 @@ public class WokDemand extends AbstractEntity implements Serializable {
 //	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 //	private String modificationMakerName;
 //	
-//	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 //	private Date lastModificationDate;
 //	
@@ -81,15 +81,15 @@ public class WokDemand extends AbstractEntity implements Serializable {
 //	@JoinColumn(name = "NUM_SITE_LOCATION", referencedColumnName="NUM_SITE_LOCATION", nullable = false)
 //	private OamSiteLocation siteLocation;
 //	
-//	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name = "DAT_ESTIMATED_CONCLUSION", length = 7)
 //	private Date conclusionEstimatedDate;
 //	
-//	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name = "DAT_REAL_CONCLUSION", length = 7)
 //	private Date conclusionRealDate;
 //	
-//	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name = "DAT_VIOLATION_SLA", nullable = false, length = 7)
 //	private Date violationSlaDate;
 //	

@@ -44,7 +44,7 @@ public class OamItemCategory extends AbstractEntity implements Serializable {
 	@Column(name = "IND_ACTIVE", length = 1)
 	private String indActive;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

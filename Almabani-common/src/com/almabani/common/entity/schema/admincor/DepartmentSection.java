@@ -40,7 +40,7 @@ public class DepartmentSection extends AbstractEntity implements
 	@Column(name = "COD_USER_RESPONSIBLE", length = 15)
 	private String responsibleUserCode;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false)
 	private Date lastModificationDate;
 

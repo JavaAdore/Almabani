@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.exception.AlmabaniException;
@@ -16,11 +17,11 @@ public interface ItemCategoryService {
 
 	List<OamItemCategory> loadItemCategories(Integer first, Integer pageSize, String sortField, boolean assending, Map<String, Object> filters);
 
-	OamItemCategory addItemCategory(OamItemCategory company) throws AlmabaniException;
+	OamItemCategory addItemCategory(OamItemCategory itemCategory , CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	OamItemCategory getItemCategory(Long id);
 
-	OamItemCategory updateItemCategory(OamItemCategory company) throws AlmabaniException;
+	OamItemCategory updateItemCategory(OamItemCategory itemCategory, CommonDriverMap commonDriverMap) throws AlmabaniException;
 	
 	List<OamItemCategory> getAllItemCategories();
 

@@ -48,7 +48,7 @@ public class OamProjectDevice implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

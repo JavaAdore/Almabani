@@ -31,8 +31,8 @@ public class ItemCategoryDAOImpl extends AbstractDAO implements ItemCategoryDAO 
 
 	@Override
 	@Transactional
-	public OamItemCategory addItemCategory(OamItemCategory company) {
-		return (OamItemCategory) super.persist(company);
+	public OamItemCategory addItemCategory(OamItemCategory itemCategory) {
+		return (OamItemCategory) super.persist(itemCategory);
 	}
 
 	@Override

@@ -37,23 +37,23 @@ public class OamEmpDailyAllocation extends AbstractEntity implements Serializabl
 	@JoinColumn(name = "NUM_EMP_MON_ALLOCATION", referencedColumnName="NUM_EMP_MON_ALLOCATION", nullable = false)
 	private OamEmpMonthlyAllocation empMonthlyAllocation;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_DAY_ALLOCATION", nullable = false, length = 7)
 	private Date allocationDayDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_HOUR_BEGIN_ALLOCATION", length = 7)
 	private Date allocationBeginHourDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_HOUR_END_ALLOCATION", length = 7)
 	private Date allocationEndHourDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_HOUR_BEGIN_ALLOCATION_REAL", length = 7)
 	private Date realAllocationBeginHourDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_HOUR_END_ALLOCATION_REAL", length = 7)
 	private Date realAllocationEndHourDate;
 	
@@ -66,7 +66,7 @@ public class OamEmpDailyAllocation extends AbstractEntity implements Serializabl
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 

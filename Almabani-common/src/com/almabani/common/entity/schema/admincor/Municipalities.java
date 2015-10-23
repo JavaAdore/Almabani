@@ -29,7 +29,7 @@ public class Municipalities implements Serializable {
 			@AttributeOverride(name = "codState", column = @Column(name = "COD_STATE", nullable = false, length = 2)) })
 	private MunicipalitiesId id;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

@@ -8,11 +8,11 @@
 
 <ui:composition>
 
-	<p:dialog id="createDlg" widgetVar="createDialog" modal="true"
+	<p:dialog id="itemsCreateDlg" widgetVar="itemsCreateDlg" modal="true"
 		resizable="false" appendToBody="true"
 		header="#{loc.CreateOamItemTitle}">
 
-		<h:form id="createForm">
+		<h:form id="itemCreateForm">
 
 
 
@@ -29,8 +29,7 @@
 						<p:selectOneMenu converter="#{manufacturerConverter}"
 							id="manufacturer" widgetVar="manufacturer" styleClass="fullWith"
 							value="#{itemManagementBean.selected.manufacturer}"
-							required="true"
-							requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
+							>
 							<f:selectItem itemValue="#{loc.ALMABANI_GENERAL_NO_SELECT}"
 								itemLabel="#{loc.SelectOneMessage}" noSelectionOption="true" />
 							<f:selectItems value="#{itemManagementBean.manufacturers}"
@@ -47,7 +46,7 @@
 
 					<p:selectOneMenu id="department" styleClass="fullWith"
 						converter="#{departmentConverter}">
-						<p:ajax event="change" process="@this" update="itemCategories"
+						<p:ajax event="change" process="@this" update="itemCategories addItemCategory"
 							listener="#{itemManagementBean.departmentChanged}" />
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{itemManagementBean.departments}"
@@ -57,16 +56,23 @@
 
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
-					<p:selectOneMenu id="itemCategories"
-						value="#{itemManagementBean.selected.itemCategory}"
-						styleClass="fullWith" required="true"
-						converter="#{itemCategoryConverter}"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCategory}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{itemManagementBean.itemCategories}"
-							var="itemCategory" itemValue="#{itemCategory}"
-							itemLabel="#{itemCategory.categoryItemName}" />
-					</p:selectOneMenu>
+					<p:panelGrid columns="2" styleClass="fullWith" style="border:none">
+						<p:selectOneMenu id="itemCategories"
+							value="#{itemManagementBean.selected.itemCategory}"
+							styleClass="fullWith" required="true"
+							converter="#{itemCategoryConverter}"
+							requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCategory}">
+							<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+							<f:selectItems value="#{itemManagementBean.itemCategories}"
+								var="itemCategory" itemValue="#{itemCategory}"
+								itemLabel="#{itemCategory.categoryItemName}" />
+						</p:selectOneMenu>
+						
+							<p:commandButton value="+" immediate="true" id="addItemCategory" disabled="#{itemManagementBean.department==null}"
+							actionListener="#{itemManagementBean.initializeNewCategory()}"
+							update=":createNewCategoryForm"
+							onclick="PF('new_category').show()" />
+					</p:panelGrid>
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_materialType}" />
 					<p:selectOneMenu
@@ -83,8 +89,7 @@
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_indUnitType}" />
 					<p:selectOneMenu value="#{itemManagementBean.selected.indUnitType}"
-						styleClass="fullWith" required="true"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_indUnitType}">
+						styleClass="fullWith" >
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{applicationScopeStore.getUnitTypesList()}"
 							var="unitType" itemValue="#{unitType.key}"
@@ -106,15 +111,12 @@
 						required="true"
 						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemDescription}"
 						maxlength="150" />
-
-
-
 				</p:panelGrid>
 				<p:commandButton actionListener="#{itemManagementBean.saveNew}"
-					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
-					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
+					value="#{loc.Save}" update="display,:growl,:itemsListForm:itemsDataList"
+					oncomplete="if(!args.validationFailed){PF('itemsCreateDlg').hide();}" />
 				<p:commandButton value="#{loc.Cancel}" immediate="true"
-					onclick="PF('createDialog').hide()" />
+					onclick="PF('itemsCreateDlg').hide()" />
 			</h:panelGroup>
 
 		</h:form>
@@ -156,7 +158,7 @@
 				<p:commandButton
 					actionListener="#{itemManagementBean.addNewManufacturer()}"
 					value="#{loc.Save}"
-					update=":growl :createForm:manufacturer :editForm:manufacturer"
+					update=":growl :itemCreateForm:manufacturer :itemsEditForm:manufacturer"
 					oncomplete="if(!args.validationFailed){PF('new_manufacturer').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
 					onclick="PF('new_manufacturer').hide()" />
@@ -166,6 +168,51 @@
 
 	</p:dialog>
 
+
+	<p:dialog id="new_category" widgetVar="new_category" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{loc.CreateOamItemCategoryTitle}">
+		<h:form id="createNewCategoryForm">
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{itemManagementBean.oamItemCategory != null}">
+					
+					<p:outputLabel
+						value="#{loc.ListOamItemCategoryTitle_categoryItemName}" />
+					<p:inputText
+						value="#{itemManagementBean.oamItemCategory.categoryItemName}"
+						required="true"
+						requiredMessage="#{loc.CreateOamItemCategoryRequiredMessage_categoryItemName}" />
+						
+					<p:outputLabel
+						value="#{loc.EditOamItemCategoryTitle_comDepartmentSection}" />
+					<p:selectOneMenu id="departmentSections"
+						converter="#{departmentSectionConverter}" required="true"
+						requiredMessage="#{loc.EditOamItemCategoryRequiredMessage_comDepartmentSection}"
+						value="#{itemManagementBean.oamItemCategory.comDepartmentSection}"
+						styleClass="fullWith">
+						<f:selectItem itemLabel="#{loc.SelectOneMessage}" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{itemManagementBean.departmentSections}"
+							var="departmentSection"
+							itemLabel="#{departmentSection.sectionName}" />
+					</p:selectOneMenu>
+
+					
+
+				</p:panelGrid>
+
+				<p:commandButton
+					actionListener="#{itemManagementBean.addNewItemCategory()}"
+					value="#{loc.Save}"
+					update=":growl @form :itemCreateForm:itemCategories :itemsEditForm:itemCategories"
+					oncomplete="if(!args.validationFailed){PF('new_category').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('new_category').hide()" />
+			</h:panelGroup>
+		</h:form>
+
+	</p:dialog>
 
 </ui:composition>
 

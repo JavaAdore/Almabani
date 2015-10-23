@@ -67,14 +67,14 @@ public class OamItemsQuotSupplier extends AbstractEntity implements ByteArrayHol
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	
 	@Column(name = "IND_SELECTED")
 	private String indSelected; 
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_SELECTION", length = 7)
 	private Date selectionDate;
 	

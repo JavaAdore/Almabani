@@ -60,14 +60,14 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	@Column(name = "NAM_EMPLOYEE", nullable = false, length = 100)
 	private String employeeName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_REGISTRATION", nullable = false, length = 7)
 	private Date registrationDate;
 	
 	@Column(name = "COD_IDENTITY_STATE", length = 30)
 	private String stateIdentityCode;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BIRTH", length = 7)
 	private Date birthDate;
 	
@@ -81,7 +81,7 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	@Column(name = "IND_MARITAL_STATUS", length = 1)
 	private MaritalStatus maritalStatus;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ADMISSION", length = 7)
 	private Date admissionDate;
 	
@@ -93,7 +93,7 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
 	private Active active;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_INACTIVITY", length = 7)
 	private Date inactivityBeginDate;
 	
@@ -132,7 +132,7 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

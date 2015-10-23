@@ -15,10 +15,12 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Department;
+import com.almabani.common.entity.schema.admincor.DepartmentSection;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
@@ -52,19 +54,17 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 
 	Department department;
 
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
 	private List<Company> companies;
 
 	private List<Department> departments;
 
+	private OamItemCategory oamItemCategory;
+
 	private OamItem selected;
+
+	private List<DepartmentSection> departmentSections;
+
+	private ItemsControllerManagementBean itemsControllerManagementBean;
 
 	@PostConstruct
 	public void init() {
@@ -83,6 +83,19 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 		WebUtils.fireInfoMessage(
 				MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_MANUFACTURER));
+	}
+
+	public void addNewItemCategory() throws AlmabaniException {
+		CommonDriverMap commonDriverMap = new CommonDriverMap();
+		commonDriverMap = commonDriverMap.appendCurrentUserCode(
+				commonDriverMap, WebUtils.getCurrentUserCode());
+		oamItemCategory = almabaniFacade.addOrUpdateItemCategory(
+				oamItemCategory, commonDriverMap);
+		itemCategories.add(oamItemCategory);
+		selected.setItemCategory(oamItemCategory);
+		WebUtils.fireInfoMessage(
+				MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_ITEM_CATEGORY));
 	}
 
 	private void loadInitialLists() {
@@ -245,10 +258,18 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 
 	public void onRowSelect(SelectEvent event) {
 		selected = (OamItem) event.getObject();
-		department = selected.getItemCategory().getComDepartmentSection()
-				.getDepartment();
+		passSelectedItemIntoProjectItemManagementBean(selected);
+	}
+	
+	public void onRowUnselect(SelectEvent event) {  
+		passSelectedItemIntoProjectItemManagementBean(null);
 
-		loadItemCategoriesOfDepartment(department);
+	}
+
+	private void passSelectedItemIntoProjectItemManagementBean(OamItem selected2) {
+		if (Utils.isNotNull(itemsControllerManagementBean)) {
+			itemsControllerManagementBean.setSelectedItem(selected);
+		}  
 	}
 
 	public void operationFaild() {
@@ -300,6 +321,13 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 				.getEstablishment().getCompany());
 	}
 
+	public void initializeNewCategory() {
+		oamItemCategory = new OamItemCategory();
+		oamItemCategory.setIndActive(DataAccessConstants.IND_ACTIVE);
+		departmentSections = almabaniFacade.getDepartmentSections(department);
+
+	}
+
 	public List<Department> getDepartments() {
 		return departments;
 	}
@@ -322,6 +350,39 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 
 	public void setManufacturer(OamManufacturer manufacturer) {
 		this.manufacturer = manufacturer;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public OamItemCategory getOamItemCategory() {
+		return oamItemCategory;
+	}
+
+	public void setOamItemCategory(OamItemCategory oamItemCategory) {
+		this.oamItemCategory = oamItemCategory;
+	}
+
+	public List<DepartmentSection> getDepartmentSections() {
+		return departmentSections;
+	}
+
+	public void setDepartmentSections(List<DepartmentSection> departmentSections) {
+		this.departmentSections = departmentSections;
+	}
+
+	public ItemsControllerManagementBean getItemsControllerManagementBean() {
+		return itemsControllerManagementBean;
+	}
+
+	public void setItemsControllerManagementBean(
+			ItemsControllerManagementBean itemsControllerManagementBean) {
+		this.itemsControllerManagementBean = itemsControllerManagementBean;
 	}
 
 }

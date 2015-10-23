@@ -96,7 +96,7 @@ public class OamStockItem extends AbstractEntity implements Serializable {
 		this.modificationMakerName = modificationMakerName;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 

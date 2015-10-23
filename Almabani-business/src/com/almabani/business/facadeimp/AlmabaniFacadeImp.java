@@ -1203,7 +1203,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+	public List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
 			String sortField, boolean ascending, Map<String, Object> filters) {
 
 		return stockItemService.loadOamStockItemsView(first, pageSize,
@@ -1249,6 +1249,16 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	@Override
 	public List<Department> getLightDepartments() {
 		return departmentService.getLightDepartments();
+	}
+
+	@Override
+	public OamItemCategory addOrUpdateItemCategory(
+			OamItemCategory oamItemCategory, CommonDriverMap commonDriverMap) throws AlmabaniException {
+		if (Utils.hasID(oamItemCategory)) {
+			return itemCategoryService.updateItemCategory(oamItemCategory, commonDriverMap);
+		} else {
+			return itemCategoryService.addItemCategory(oamItemCategory, commonDriverMap);
+		}
 	}
 
 

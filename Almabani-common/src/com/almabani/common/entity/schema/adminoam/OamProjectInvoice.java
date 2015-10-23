@@ -38,15 +38,15 @@ public class OamProjectInvoice extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "NUM_PROJECT", referencedColumnName="NUM_PROJECT", nullable = false)
 	private Project project;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_MONTH_INVOICE", nullable = false, length = 7)
 	private Date invoiceMonthdate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_ACRUAL", nullable = false, length = 7)
 	private Date acrualBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_END_ACRUAL", nullable = false, length = 7)
 	private Date acrualEndDate;
 	
@@ -59,7 +59,7 @@ public class OamProjectInvoice extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

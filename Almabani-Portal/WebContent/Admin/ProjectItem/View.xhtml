@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+	<p:dialog id="viewProjectItemDlg" widgetVar="viewProjectItemDlg" modal="true"
 		resizable="false" appendToBody="true"
 		header="#{loc.ViewOamProjectItemTitle}">
 
@@ -46,7 +46,7 @@
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:panelGrid>
-				<p:commandButton value="#{loc.Close}" immediate="true" onclick="PF('viewDialog').hide()" />
+				<p:commandButton value="#{loc.Close}" immediate="true" onclick="PF('viewProjectItemDlg').hide()" />
 			</h:panelGroup>
 
 		</h:form>

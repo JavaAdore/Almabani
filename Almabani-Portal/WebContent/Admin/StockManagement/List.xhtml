@@ -28,12 +28,32 @@
 
 				<p:ajax event="rowSelect"
 					listener="#{projectItemManagementBean.onRowSelect}"
-					update="viewButton editButton " />
-				<p:ajax event="rowUnselect"
-					update="viewButton editButton " />
+					update=":stockItemprojectItemListForm" />
+				<p:ajax event="rowUnselect" update=":stockItemprojectItemListForm" />
 
-				
+				<p:column
+					headerText="#{loc.EditComDepartmentSectionLabel_sectionCode}"
+					sortBy="#{item.item.itemCategory.comDepartmentSection.sectionCode}"
+					filterBy="#{item.item.itemCategory.comDepartmentSection.sectionCode }">
 
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('datalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems
+								value="#{projectItemManagementBean.lightDepartments}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText
+						value="#{ item.item.itemCategory.comDepartmentSection.sectionCode}" />
+				</p:column>
+
+				<p:column headerText="#{loc.EditOamItemLabel_itemCategory}"
+					sortBy="#{item.item.itemCategory.categoryItemName}"
+					filterBy="#{item.item.itemCategory.categoryItemName}">
+					<h:outputText value="#{item.item.itemCategory.categoryItemName}" />
+				</p:column>
 
 				<p:column headerText="#{loc.ListOamProjectItemTitle_project}"
 					sortBy="#{item.project.projectCode}" filterBy="#{item.project}">
@@ -51,6 +71,22 @@
 
 					<h:outputText value="#{item.project.projectCode}" />
 				</p:column>
+				<p:column headerText="#{loc.ViewOamItemLabel_itemCode}"
+					sortBy="#{item.item.itemCode}" filterBy="#{item.item.itemCode}">
+					<h:outputText value="#{item.item.itemCode}" />
+				</p:column>
+
+				<p:column headerText="#{loc.ListOamProjectItemTitle_item}"
+					sortBy="#{item.item.itemDescription}"
+					filterBy="#{item.item.itemDescription}">
+					<h:outputText value="#{item.item.itemDescription}" />
+				</p:column>
+
+
+
+
+
+
 				<p:column headerText="#{loc.ListOamItemTitle_indActive}"
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
@@ -67,28 +103,12 @@
 						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
 				</p:column>
 
-				
-				<f:facet name="footer">
+				<p:column headerText="#{loc.ListOamItemTitle_Remaining_amount}"
+					sortBy="#{item.remainingAmount}" filterBy="#{item.remainingAmount}">
 
+					<h:outputText value="#{item.remainingAmount}" />
+				</p:column>
 
-
-					<p:commandButton id="createButton"
-						rendered="#{applicationScopeStore.hasFullAccess()}"
-						icon="ui-icon-plus" value="#{loc.Create}"
-						actionListener="#{projectItemManagementBean.prepareCreate}"
-						update=":createProjectItemForm:display"
-						oncomplete="PF('createProjectItemDlg').show()" />
-					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{loc.View}" update=":viewForm:display"
-						oncomplete="PF('viewProjectItemDlg').show()"
-						disabled="#{empty projectItemManagementBean.selected}" />
-					<p:commandButton id="editButton"
-						rendered="#{applicationScopeStore.hasFullAccess()}"
-						icon="ui-icon-pencil" value="#{loc.Edit}"
-						update=":editProjectItemForm:display" oncomplete="PF('editProjectItemDialog').show()"
-						disabled="#{empty projectItemManagementBean.selected}" />
-
-				</f:facet>
 
 			</p:dataTable>
 

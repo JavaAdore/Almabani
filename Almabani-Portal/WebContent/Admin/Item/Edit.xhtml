@@ -8,10 +8,10 @@
 
 <ui:composition>
 
-	<p:dialog id="editDlg" widgetVar="editDialog" modal="true" dynamic="true" appendToBody="true"
+	<p:dialog id="itemsEditDlg" widgetVar="itemsEditDialog" modal="true" dynamic="true" appendToBody="true"
 		resizable="false"  header="#{loc.EditOamItemTitle}">
 
-		<h:form id="editForm">
+		<h:form id="itemsEditForm">
 
 
 
@@ -28,8 +28,7 @@
 						<p:selectOneMenu converter="#{manufacturerConverter}"
 							id="manufacturer" widgetVar="manufacturer" styleClass="fullWith"
 							value="#{itemManagementBean.selected.manufacturer}"
-							required="true"
-							requiredMessage="#{loc.CreateOamItemRequiredMessage_manufacturer}">
+							>
 							<f:selectItem itemValue="#{loc.ALMABANI_GENERAL_NO_SELECT}"
 								itemLabel="#{loc.SelectOneMessage}" noSelectionOption="true" />
 							<f:selectItems value="#{itemManagementBean.manufacturers}"
@@ -46,7 +45,7 @@
 
 					<p:selectOneMenu id="department" styleClass="fullWith" value="#{itemManagementBean.department}"
 						converter="#{departmentConverter}">
-						<p:ajax event="change" process="@this" update="itemCategories"
+						<p:ajax event="change" process="@this" update="itemCategories addItemCategory"
 							listener="#{itemManagementBean.departmentChanged}" />
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{itemManagementBean.departments}"
@@ -56,16 +55,23 @@
 
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_itemCategory}" />
-					<p:selectOneMenu id="itemCategories"
-						value="#{itemManagementBean.selected.itemCategory}"
-						styleClass="fullWith" required="true"
-						converter="#{itemCategoryConverter}"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCategory}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{itemManagementBean.itemCategories}"
-							var="itemCategory" itemValue="#{itemCategory}"
-							itemLabel="#{itemCategory.categoryItemName}" />
-					</p:selectOneMenu>
+					<p:panelGrid columns="2" styleClass="fullWith" style="border:none">
+						<p:selectOneMenu id="itemCategories" 
+							value="#{itemManagementBean.selected.itemCategory}"
+							styleClass="fullWith" required="true"
+							converter="#{itemCategoryConverter}"
+							requiredMessage="#{loc.CreateOamItemRequiredMessage_itemCategory}">
+							<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+							<f:selectItems value="#{itemManagementBean.itemCategories}"
+								var="itemCategory" itemValue="#{itemCategory}"
+								itemLabel="#{itemCategory.categoryItemName}" />
+						</p:selectOneMenu>
+						
+							<p:commandButton value="+" immediate="true"  disabled="#{itemManagementBean.department==null}"
+							actionListener="#{itemManagementBean.initializeNewCategory()}" id="addItemCategory"
+							update=":createNewCategoryForm"
+							onclick="PF('new_category').show()" />
+					</p:panelGrid>
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_materialType}" />
 					<p:selectOneMenu
@@ -82,8 +88,7 @@
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_indUnitType}" />
 					<p:selectOneMenu value="#{itemManagementBean.selected.indUnitType}"
-						styleClass="fullWith" required="true"
-						requiredMessage="#{loc.CreateOamItemRequiredMessage_indUnitType}">
+						styleClass="fullWith" >
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{applicationScopeStore.getUnitTypesList()}"
 							var="unitType" itemValue="#{unitType.key}"
@@ -109,9 +114,9 @@
 
 				</p:panelGrid>
 				<p:commandButton actionListener="#{itemManagementBean.saveNew}"
-					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
-					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}" onclick="PF('editDialog').hide()" immediate="true" />
+					value="#{loc.Save}" update="display,:growl,:itemsListForm:itemsDataList"
+					oncomplete="if(!args.validationFailed) {PF('itemsEditDialog').hide();}" />
+				<p:commandButton value="#{loc.Cancel}" onclick="PF('itemsEditDialog').hide()" immediate="true" />
 			</h:panelGroup>
 
 		</h:form>

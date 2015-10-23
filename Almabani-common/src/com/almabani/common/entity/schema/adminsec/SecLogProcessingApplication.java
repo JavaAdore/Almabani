@@ -40,7 +40,7 @@ public class SecLogProcessingApplication extends AbstractEntity implements Seria
 			@JoinColumn(name = "COD_APPLICATION", referencedColumnName = "COD_APPLICATION", nullable = false) })
 	private SecProcessingApplication processingApplication;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LOG_PROCESSING", nullable = false, length = 7)
 	private Date logProcessingDate;
 	

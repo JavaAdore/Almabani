@@ -45,11 +45,11 @@ public class WokUserGroup extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "COD_USER_LOGIN", referencedColumnName="COD_USER_LOGIN", nullable = false)
 	private SecUser user;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_VALIDITY", nullable = false, length = 7)
 	private Date validityBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_END_VALIDITY", length = 7)
 	private Date validityEndDate;
 	
@@ -59,7 +59,7 @@ public class WokUserGroup extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

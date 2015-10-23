@@ -15,11 +15,11 @@
 				selection="#{stockItemManagementBean.selected}" rowKey="#{item.id}"
 				paginator="true" rows="10" rowsPerPageTemplate="10,20,30">
 
-				<p:column headerText="#{loc.ListOamStockItemTitle_establishment}"
-					sortBy="#{item.establishment.establishmentName}"
-					filterBy="#{item.establishment.establishmentName}">
+				<p:column headerText="#{loc.EditOamItemQuotationLabel_quotation}"
+					sortBy="#{item.itemQuotation.quotation.quotationDescription}"
+					filterBy="#{item.itemQuotation.quotation.quotationDescription}">
 
-					<h:outputText value="#{item.establishment.establishmentName}" />
+					<h:outputText value="#{item.itemQuotation.quotation.quotationDescription}" />
 				</p:column>
 				<p:column sortBy="#{item.indInOut}" filterBy="#{item.indInOut}"
 					headerText="#{loc.ListOamStockItemTitle_indInOut}">
@@ -36,6 +36,7 @@
 					<h:outputText
 						value="#{applicationScopeStore.getInOutValue(item.indInOut)}" />
 				</p:column>
+				
 				<p:column headerText="#{loc.ListOamStockItemTitle_entryValue}"
 					sortBy="#{item.entryValue}" filterBy="#{item.entryValue}">
 
@@ -43,27 +44,20 @@
 						styleClass="#{ (item.indInOut.equalsIgnoreCase('O'))?'red':'green'  }" />
 				</p:column>
 
-
-				<!-- 				<p:column -->
-				<!-- 					headerText="#{loc.CreateOamStockItemLabel_modificationMakerName}" -->
-				<!-- 					sortBy="#{item.modificationMakerName}" -->
-				<!-- 					filterBy="#{item.modificationMakerName}"> -->
-
-				<!-- 					<h:outputText value="#{item.modificationMakerName}" /> -->
-				<!-- 				</p:column> -->
-
-				<!-- 				<p:column filterBy="#{item.lastModificationDate}" -->
-				<!-- 					sortBy="#{item.lastModificationDate}"  -->
-				<!-- 					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}"> -->
-				<!-- 					<f:facet name="filter"> -->
-				<!-- 						<p:calendar onclick="PF('stockItemDataList').filter()" -->
-				<!-- 							onblur="PF('stockItemDataList').filter()" pattern="dd/MM/yyyy" -->
-				<!-- 							onchange="PF('stockItemDataList').filter()" /> -->
-				<!-- 					</f:facet> -->
-				<!-- 					<h:outputText value="#{item.lastModificationDate}"> -->
-				<!-- 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" /> -->
-				<!-- 					</h:outputText> -->
-				<!-- 				</p:column> -->
+ 
+				
+				<p:column filterBy="#{item.lastModificationDate}"
+					
+					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
+					<f:facet name="filter">
+						<p:calendar onclick="PF('stockItemDataList').filter()" 
+							onblur="PF('stockItemDataList').filter()" pattern="dd/MM/yyyy"
+							onchange="PF('stockItemDataList').filter()" />
+					</f:facet>
+					<h:outputText value="#{item.lastModificationDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" />
+					</h:outputText>
+				</p:column>
 
 
 

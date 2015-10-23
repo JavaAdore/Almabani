@@ -28,7 +28,7 @@ public class StockItemDAOImpl extends AbstractDAO implements StockItemDAO {
 
 		return super.lazyLoadEntities(OamStockItem.class, first, pageSize,
 				sortField, assending, filters);
-	}
+	} 
 
 	@Override
 	@Transactional
@@ -61,7 +61,7 @@ public class StockItemDAOImpl extends AbstractDAO implements StockItemDAO {
 	}
 
 	@Override
-	public List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+	public List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
 			String sortField, boolean assending, Map<String, Object> filters) {
 		String queryString = "select projectItem , coalesce(indInOut , 0)   from OamStockItem ";
 		return super.lazyLoadEntities(queryString, first, pageSize, sortField, assending, filters);

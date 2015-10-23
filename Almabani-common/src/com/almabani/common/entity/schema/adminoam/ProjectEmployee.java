@@ -59,11 +59,11 @@ public class ProjectEmployee extends AbstractEntity implements Serializable {
 	@Column(name = "IND_TYPE_EMP_CONTR", nullable = false, length = 1)
 	private EmployeeContractType employeeContractType;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_VALIDITY", nullable = false, length = 7)
 	private Date validityBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_END_VALIDITY", length = 7)
 	private Date validityEndDate;
 	
@@ -73,7 +73,7 @@ public class ProjectEmployee extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 

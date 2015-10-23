@@ -1,5 +1,6 @@
 package com.almabani.business.serviceimp;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.almabani.business.service.ItemCategoryService;
+import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.exception.AlmabaniException;
@@ -27,12 +29,14 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 				assending, filters);
 	}
 
-	@Transactional
 	@Override
-	public OamItemCategory addItemCategory(OamItemCategory company)
-			throws AlmabaniException {
-
-		return null;
+	public OamItemCategory addItemCategory(OamItemCategory itemCategory,
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
+		Date date = new Date();
+		itemCategory.setLastModificationDate(date);
+		itemCategory.setModificationMakerName(commonDriverMap
+				.getCurrentUserCode());
+		return itemCategoryDAO.addItemCategory(itemCategory);
 	}
 
 	@Override
@@ -40,32 +44,15 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 		return itemCategoryDAO.getItemCategory(id);
 	}
 
-	@Transactional
 	@Override
-	public OamItemCategory updateItemCategory(OamItemCategory company)
-			throws AlmabaniException {
+	public OamItemCategory updateItemCategory(OamItemCategory itemCategory,
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
 
-		// String fedralIdentifierCode =company.getFederalIdentityCode();
-		// if(Utils.isNull(result) ||company.getId() == result.getId())
-		// {
-		// try
-		// {
-		// return itemCategoryDAO.addOamItemCategory(company);
-		// }catch(Exception ex)
-		// {
-		// AlmabaniException almabaniException = new
-		// AlmabaniException(MessagesKeyStore.ALMABANI_GENERAL_NOT_ABLE_TO_UPDATE);
-		// almabaniException.attachParameter(MessagesKeyStore.ALMABANI_GENERAL_COMPANY);
-		// throw almabaniException;
-		// }
-		// }else
-		// {
-		// company.setFederalIdentityCode(fedralIdentifierCode);
-		// throw new
-		// AlmabaniException(MessagesKeyStore.ALMABANI_ADD_COMPANY_DUPLICATED_FEDRAIL_IDENTIFIER);
-		// }
-
-		return null;
+		Date date = new Date();
+		itemCategory.setLastModificationDate(date);
+		itemCategory.setModificationMakerName(commonDriverMap
+				.getCurrentUserCode());
+		return itemCategoryDAO.addItemCategory(itemCategory);
 
 	}
 
@@ -81,7 +68,7 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 
 	@Override
 	public List<OamItemCategory> getAllItemCategories(Department department) {
-		return itemCategoryDAO.getAllItemCategories( department);
+		return itemCategoryDAO.getAllItemCategories(department);
 	}
 
 }

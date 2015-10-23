@@ -37,7 +37,7 @@ public class OamEmpMonthlyAllocation extends AbstractEntity implements Serializa
 	@JoinColumn(name = "NUM_PROJECT_EMPLOYEE", referencedColumnName="NUM_PROJECT_EMPLOYEE", nullable = false)
 	private ProjectEmployee projectEmployee;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_MONTH_ALLOCATION", nullable = false, length = 7)
 	private Date allocationMonthDate;
 	
@@ -47,15 +47,15 @@ public class OamEmpMonthlyAllocation extends AbstractEntity implements Serializa
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_ALLOCATION", nullable = false, length = 7)
 	private Date allocationBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_END_ALLOCATION", nullable = false, length = 7)
 	private Date allocationEndDate;
 

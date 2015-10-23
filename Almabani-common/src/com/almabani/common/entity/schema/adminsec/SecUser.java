@@ -36,14 +36,14 @@ public class SecUser implements java.io.Serializable {
 	@JoinColumn(name = "COD_EMPLOYEE", referencedColumnName = "COD_EMPLOYEE", nullable = false)
 	private Employee employee;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_REGISTRATION", nullable = false, length = 7)
 	private Date registrationDate;
 
 	@Column(name = "IND_ACTIVE", length = 1)
 	private String indActive;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_INACTIVITY", length = 7)
 	private Date beginInactivityDate;
 
@@ -57,7 +57,7 @@ public class SecUser implements java.io.Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 

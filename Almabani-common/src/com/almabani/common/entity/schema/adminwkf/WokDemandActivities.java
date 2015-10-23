@@ -41,11 +41,11 @@ public class WokDemandActivities extends AbstractEntity implements Serializable 
 	@JoinColumn(name = "NUM_USER_GROUP_ACTIVITY", referencedColumnName="NUM_USER_GROUP", nullable = false)
 	private WokUserGroup userGroup;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_INSERT_ACTIVITY", nullable = false, length = 7)
 	private Date activityInsertDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_UPDATE_ACTIVITY", length = 7)
 	private Date activityUpdateDate;
 	
@@ -55,26 +55,26 @@ public class WokDemandActivities extends AbstractEntity implements Serializable 
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	
 	@Column(name = "DES_ACTIVITY", nullable = false, length = 300)
 	private String activityDescription;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ESTIMATED_BEGIN", length = 7)
 	private Date estimatedBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ESTIMATED_END", length = 7)
 	private Date estimatedEndDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_REAL_BEGIN", length = 7)
 	private Date realBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_REAL_END", length = 7)
 	private Date realEndDate;
 	

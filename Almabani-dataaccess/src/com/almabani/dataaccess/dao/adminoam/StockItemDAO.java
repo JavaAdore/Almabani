@@ -27,7 +27,7 @@ public interface StockItemDAO extends AbstractDAOInt{
 
 	List<OamStockItem> getAllStockItems(Company company);
 
-	List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+	List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
 			String sortField, boolean ascending, Map<String, Object> filters);
 
 	Integer getNumberOfOamStockItemsView(Map<String, Object> filters);

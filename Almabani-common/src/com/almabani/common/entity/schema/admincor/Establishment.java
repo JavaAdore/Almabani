@@ -56,7 +56,7 @@ public class Establishment extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_ESTABLISHMENT", nullable = false, length = 40)
 	private String establishmentName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

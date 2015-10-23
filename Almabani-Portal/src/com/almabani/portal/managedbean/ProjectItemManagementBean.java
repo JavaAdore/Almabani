@@ -62,12 +62,16 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	private OamProjectItem selected;
 
 	public OamStockItem selectedStockItem;
+	
+	private OamItem selectedItem;
 
 	private LazyDataModel<OamStockItem> stockItems;
 
 	private List<SelectItem> lightDepartments;
 
 	private boolean showItemsOfApproviedQuotationsOnly;
+	
+	private ItemsControllerManagementBean itemsControllerManagementBean;
 
 	public List<OamItem> autoCompleteItemList(String itemNameOrDescription) {
 
@@ -203,6 +207,11 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	public void prepareCreate() {
 
 		selected = new OamProjectItem();
+		if(Utils.isNotNull(selectedItem))
+		{
+			selected.setItem(selectedItem);  
+			
+		}
 	}
 
 	public void prepareCreateStockItem() {
@@ -363,7 +372,8 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 				Map<String, Object> filters) {
 
 			attachCompanyFiltrataionInCaseOnNoneAdmin(filters);
-		
+			
+			attachSelectedItemInCaseOfSelected(filters);
 
 				rowCount = almabaniFacade.getNumberOfProjectItems(filters);
 
@@ -375,6 +385,17 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 			setRowCount(this.rowCount);
 
 			return result;
+		}
+
+		private void attachSelectedItemInCaseOfSelected(
+				Map<String, Object> filters) {
+			
+			if(Utils.isNotNull(selectedItem))
+			{
+				
+				filters.put("item", selectedItem);
+			}
+			
 		}
 
 	}
@@ -406,4 +427,25 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	public void setLightDepartments(List<SelectItem> lightDepartments) {
 		this.lightDepartments = lightDepartments;
 	}
+
+	public ItemsControllerManagementBean getItemsControllerManagementBean() {
+		return itemsControllerManagementBean;
+	}
+
+	public void setItemsControllerManagementBean(
+			ItemsControllerManagementBean itemsControllerManagementBean) {
+		this.itemsControllerManagementBean = itemsControllerManagementBean;
+	}
+
+	public OamItem getSelectedItem() {
+		return selectedItem;
+	}
+
+	public void setSelectedItem(OamItem selectedItem) {
+		this.selectedItem = selectedItem;
+	}
+
+
+
+
 }

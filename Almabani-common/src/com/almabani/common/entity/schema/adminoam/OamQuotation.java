@@ -62,18 +62,18 @@ public class OamQuotation extends AbstractEntity implements
 	@Column(name = "COD_LOGIN_INSERT", nullable = false, length = 10)
 	private String insertLoginCode;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ROW_INSERT", nullable = false, length = 7)
 	private Date insertRowDate;
 	
 	@Column(name = "COD_LOGIN_MODIFY", length = 10)
 	private String modificationLoginCode;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", length = 7)
 	private Date lastModificationDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_CREATION", length = 7)
 	private Date creationDate;
 	

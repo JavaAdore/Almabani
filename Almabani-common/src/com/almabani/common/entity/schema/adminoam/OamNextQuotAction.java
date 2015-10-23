@@ -45,7 +45,7 @@ public class OamNextQuotAction implements java.io.Serializable {
 	@Column(name = "COD_LOGIN_MODIFY", nullable = false, length = 10)
 	private String modificationLoginCode;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

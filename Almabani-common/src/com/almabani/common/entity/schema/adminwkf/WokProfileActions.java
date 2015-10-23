@@ -47,11 +47,11 @@ public class WokProfileActions extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "NUM_TYPE_ACTION", referencedColumnName="NUM_TYPE_ACTION", nullable = false)
 	private WokTypeActions typeActions;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_VALIDITY", nullable = false, length = 7)
 	private Date validityBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_END_VALIDITY", length = 7)
 	private Date validityEndDate;
 	
@@ -61,7 +61,7 @@ public class WokProfileActions extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

@@ -379,7 +379,7 @@ public interface AlmabaniFacade {
 
 	void unselectOldSupplierOfQuotationItem(OamItemQuotation itemQuotation);
 
-	List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+	List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
 
 	Integer getNumberOfOamStockItemsView(Map<String, Object> filters);
@@ -397,6 +397,9 @@ public interface AlmabaniFacade {
 	List<Department> getLightDepartments(Company company);
 
 	List<Department> getLightDepartments();
+
+	OamItemCategory addOrUpdateItemCategory(OamItemCategory oamItemCategory,
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 
 }

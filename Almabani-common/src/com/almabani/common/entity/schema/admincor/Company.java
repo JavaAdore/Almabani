@@ -47,7 +47,7 @@ public class Company extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_COMPANY_ALTERNATIVE", length = 100)
 	private String alternativeCompanyName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

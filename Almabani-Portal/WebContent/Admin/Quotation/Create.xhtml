@@ -47,9 +47,9 @@
 					<p:outputLabel value="#{loc.EditOamQuotationTitle_demand}" />
 
 					<p:selectOneMenu id="demand" styleClass="fullWith"
-						value="#{quotationManagementBean.selected.demand}" required="true"
+						value="#{quotationManagementBean.selected.demand}"
 						converter="#{wokDemandConverter}"
-						requiredMessage="#{loc.EditOamQuotationRequiredMessage_demand}">
+						>
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{quotationManagementBean.wokDemands}"
 							var="demandItem" itemValue="#{demandItem}"

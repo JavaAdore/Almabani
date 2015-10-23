@@ -27,7 +27,7 @@ public class HolidayType implements Serializable {
 	@Column(name = "DES_TYPE_EVENT", nullable = false, length = 80)
 	private String eventTypeDescription;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

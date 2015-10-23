@@ -53,7 +53,7 @@ public class Calendar implements Serializable {
 	private String indTypeCalendar;
 	
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

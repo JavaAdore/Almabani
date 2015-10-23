@@ -34,7 +34,7 @@ public class JobTitleType extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ComTypesJobTitle_Id_Seq_Gen")
     private Long id;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DAT_LAST_MODIFY", nullable = false)
     private Date lastModificationDate;
     

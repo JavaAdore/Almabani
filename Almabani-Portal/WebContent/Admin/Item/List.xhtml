@@ -6,13 +6,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="listForm">
+	<h:form id="itemsListForm">
 
 		<p:panel header="#{loc.ListOamItemTitle}"
 			style="margin-left:auto; margin-right:auto ; ">
-			<p:dataTable id="datalist" value="#{itemManagementBean.items}"
+			<p:dataTable id="itemsDataList" value="#{itemManagementBean.items}"
 				draggableColumns="true" draggableRows="true" resizableColumns="true"
-				widgetVar="datalist" var="item" selectionMode="single"
+				widgetVar="itemsDataList" var="item" selectionMode="single"
 				selection="#{itemManagementBean.selected}" rowKey="#{item.id}"
 				paginator="true" lazy="true" rows="10"
 				rowsPerPageTemplate="10,20,30">
@@ -20,18 +20,34 @@
 					<p:commandButton id="toggler" type="button"
 						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
 						icon="ui-icon-calculator" />
-					<p:columnToggler datasource="datalist" trigger="toggler" />
+					<p:columnToggler datasource="itemsDataList" trigger="toggler" />
 				</f:facet>
-				<p:ajax event="rowSelect" update="viewButton editButton" />
-				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
-				<p:column headerText="#{loc.ListOamItemTitle_department}" width="200" 
-					sortBy="#{item.itemCategory.comDepartmentSection.department.departmentName}"
-					filterBy="#{item.itemCategory.comDepartmentSection.department.departmentName}">
 
+				<p:column
+					headerText="#{loc.EditOamItemCategoryTitle_comDepartmentSection}"
+					width="200"
+					sortBy="#{item.itemCategory.comDepartmentSection.sectionCode}"
+					filterBy="#{item.itemCategory.comDepartmentSection.sectionCode}">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('itemsDataList').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems
+								value="#{projectItemManagementBean.lightDepartments}" />
+						</p:selectOneMenu>
+					</f:facet>
 					<h:outputText
 						value="(#{item.itemCategory.comDepartmentSection.department.company.companyName }) #{item.itemCategory.comDepartmentSection.department.departmentName }" />
 				</p:column>
+
+				<p:column headerText="#{loc.ListOamItemTitle_itemCategory}"
+					sortBy="#{item.itemCategory.categoryItemName}"
+					filterBy="#{item.itemCategory.categoryItemName}">
+					<h:outputText value="#{item.itemCategory.categoryItemName}" />
+				</p:column>
+
 
 				<p:column headerText="#{loc.ListOamItemTitle_itemCode}" width="100"
 					sortBy="#{item.itemCode}" filterBy="#{item.itemCode}">
@@ -47,43 +63,15 @@
 				</p:column>
 
 
-				<p:column headerText="#{loc.ListOamItemTitle_itemCategory}"
-					sortBy="#{item.itemCategory}" filterBy="#{item.itemCategory}">
-					<h:outputText value="#{item.itemCategory.categoryItemName}" />
-				</p:column>
 
-				<p:column headerText="#{loc.ListOamItemTitle_materialType}"
-					sortBy="#{item.materialType.materialTypeDescription}"
-					filterBy="#{item.materialType.materialTypeDescription}">
-					<h:outputText value="#{item.materialType.materialTypeDescription}" />
-				</p:column>
 
-				<p:column headerText="#{loc.ListOamItemTitle_manufacturer}"
-					sortBy="#{item.manufacturer.manufacturerName}"
-					filterBy="#{item.manufacturer.manufacturerName}">
-					<h:outputText value="#{item.manufacturer.manufacturerName}" />
-				</p:column>
 
-				<p:column headerText="#{loc.ListOamItemTitle_indUnitType}" width="100"
-					sortBy="#{item.indUnitType}" filterBy="#{item.indUnitType}">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
-							<f:selectItem itemLabel="" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems
-								value="#{applicationScopeStore.getUnitTypesList()}" var="unit"
-								itemValue="#{unit.key}" itemLabel="#{unit.value}" />
-						</p:selectOneMenu>
-					</f:facet>
-					<h:outputText
-						value="#{ applicationScopeStore.getUnitType(item.indUnitType)}" />
-				</p:column>
 
 				<p:column headerText="#{loc.ListOamItemTitle_indActive}" width="100"
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
+						<p:selectOneMenu onchange="PF('itemsDataList').filter()">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
@@ -99,23 +87,7 @@
 
 
 
-				<f:facet name="footer">
-					<p:commandButton id="createButton"
-						rendered="#{applicationScopeStore.hasFullAccess()}"
-						icon="ui-icon-plus" value="#{loc.Create}"
-						actionListener="#{itemManagementBean.prepareCreate}"
-						update=":createForm:display"
-						oncomplete="PF('createDialog').show()" />
-					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{loc.View}" update=":viewForm:display"
-						oncomplete="PF('viewDialog').show()"
-						disabled="#{empty itemManagementBean.selected}" />
-					<p:commandButton id="editButton"
-						rendered="#{applicationScopeStore.hasFullAccess()}"
-						icon="ui-icon-pencil" value="#{loc.Edit}" actionListener="#{itemManagementBean.initializeDepartmentAndDepartmentsList()}"
-						update=":editForm:display" oncomplete="PF('editDialog').show()"
-						disabled="#{empty itemManagementBean.selected}" />
-				</f:facet>
+				
 
 			</p:dataTable>
 

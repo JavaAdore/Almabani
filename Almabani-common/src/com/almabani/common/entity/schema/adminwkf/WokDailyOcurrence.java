@@ -54,7 +54,7 @@ public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "NUM_USER_GROUP", referencedColumnName="NUM_USER_GROUP", nullable = false)
 	private WokUserGroup userGroup;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_TIME_OCCURRENCE", nullable = false, length = 7)
 	private Date occurrenceDateTime;
 	
@@ -71,15 +71,15 @@ public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_TIME_RESPONSE", length = 7)
 	private Date responseDateTime;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_TIME_CLOSING", length = 7)
 	private Date closingDateTime;
 	

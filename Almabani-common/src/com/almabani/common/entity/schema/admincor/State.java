@@ -23,7 +23,7 @@ public class State  implements Serializable {
 	@EmbeddedId    
 	private StateId stateId;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DAT_LAST_MODIFY", nullable = false)
     private Date lastModificationDate;
     

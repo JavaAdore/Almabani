@@ -14,9 +14,9 @@ import org.primefaces.model.SortOrder;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
-import com.almabani.common.virtual.entity.StockItemView;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
 
@@ -30,13 +30,13 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private LazyDataModel<StockItemView> items;
+	private LazyDataModel<OamStockItem> items;
 	
 	private List<Project> projects;
 
 	private boolean operationSuccess = false;
 
-	private StockItemView selected;
+	private OamStockItem selected;
 
 	@PostConstruct
 	public void init() {
@@ -50,7 +50,7 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 	public void prepareCreate() {
 
-		selected = new StockItemView();
+		selected = new OamStockItem();
 	}
 
 	private void loadInitialLists() {
@@ -111,7 +111,7 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		operationSuccess = false;
 	}
 
-	private class StockItemsLazyModel extends LazyDataModel<StockItemView>
+	private class StockItemsLazyModel extends LazyDataModel<OamStockItem>
 			implements Serializable {
 		/**
  * 
@@ -119,10 +119,10 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		private static final long serialVersionUID = 1L;
 		private Integer rowCount;
 
-		List<StockItemView> result;
+		List<OamStockItem> result;
 
 		@Override
-		public List<StockItemView> load(int first, int pageSize,
+		public List<OamStockItem> load(int first, int pageSize,
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
 
@@ -130,7 +130,7 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 			rowCount = almabaniFacade.getNumberOfOamStockItemsView(filters);
 
-			result = (List<StockItemView>) almabaniFacade.loadOamStockItemsView(
+			result = (List<OamStockItem>) almabaniFacade.loadOamStockItemsView(
 					first, pageSize, sortField,
 					sortOrder == SortOrder.ASCENDING, filters);
 
@@ -151,9 +151,9 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		}
 
 		@Override
-		public StockItemView getRowData(String rowKey) {
+		public OamStockItem getRowData(String rowKey) {
 
-			for (StockItemView stockItemView : result) {
+			for (OamStockItem stockItemView : result) {
 				if (stockItemView.getProjectItem().getId().equals(rowKey)) {
 					selected = stockItemView;
 					return stockItemView;
@@ -165,11 +165,11 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 	}
 
-	public LazyDataModel<StockItemView> getItems() {
+	public LazyDataModel<OamStockItem> getItems() {
 		return items;
 	}
 
-	public void setItems(LazyDataModel<StockItemView> items) {
+	public void setItems(LazyDataModel<OamStockItem> items) {
 		this.items = items;
 	}
 
@@ -189,11 +189,11 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		this.operationSuccess = operationSuccess;
 	}
 
-	public StockItemView getSelected() {
+	public OamStockItem getSelected() {
 		return selected;
 	}
 
-	public void setSelected(StockItemView selected) {
+	public void setSelected(OamStockItem selected) {
 		this.selected = selected;
 	}
 

@@ -44,14 +44,14 @@ public class OamQuotationAction extends AbstractEntity implements Serializable {
 	@Column(name = "COD_LOGIN_ACTION", nullable = false, length = 10)
 	private String loginActionCode;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_INSERT_ACTION", nullable = false, length = 7)
 	private Date insertActionDate;
 	
 	@Column(name = "COD_LOGIN_MODIFY", nullable = false, length = 10)
 	private String modificationLoginCode;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	

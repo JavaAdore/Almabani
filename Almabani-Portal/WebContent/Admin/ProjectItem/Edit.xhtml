@@ -8,11 +8,11 @@
 
 <ui:composition>
 
-	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+	<p:dialog id="editProjectItemDialog" widgetVar="editProjectItemDialog" modal="true"
 		resizable="false" appendToBody="true"
 		header="#{loc.EditOamProjectItemTitle}">
 
-		<h:form id="editForm">
+		<h:form id="editProjectItemForm">
 
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"  style="width:300px"
@@ -62,10 +62,10 @@
 				
 				</p:panelGrid>
 				<p:commandButton actionListener="#{projectItemManagementBean.saveNew}"
-					value="#{loc.Save}" update="display,:growl,:listForm:datalist"
-					oncomplete="if(!args.validationFailed) {PF('editDialog').hide();}" />
+					value="#{loc.Save}" update="display,:growl,:projectItemListForm:datalist"
+					oncomplete="if(!args.validationFailed) {PF('editProjectItemDialog').hide();}" />
 				<p:commandButton value="#{loc.Cancel}"
-					onclick="PF('editDialog').hide()" />
+					onclick="PF('editProjectItemDialog').hide()" />
 			</h:panelGroup>
 
 		</h:form>

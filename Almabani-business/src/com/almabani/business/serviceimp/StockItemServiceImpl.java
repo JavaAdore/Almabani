@@ -71,7 +71,7 @@ public class StockItemServiceImpl implements StockItemService {
 	}
 
 	@Override
-	public List<StockItemView> loadOamStockItemsView(int first, int pageSize,
+	public List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
 			String sortField, boolean ascending, Map<String, Object> filters) {
 		return stockItemDAO.loadOamStockItemsView(first, pageSize, sortField,
 				ascending, filters);

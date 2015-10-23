@@ -37,7 +37,7 @@ public class Country extends AbstractEntity implements Serializable {
 	@Column(name = "COD_ACRONYM_COUNTRY", length = 3)
 	private String countryAbbreviationCode;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false)
 	private Date lastModificationDate;
 

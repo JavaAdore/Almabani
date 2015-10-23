@@ -45,15 +45,15 @@ public class WokOccurrenceDemand extends AbstractEntity implements Serializable 
 	@Column(name = "NUM_USER_GROUP_PREVIOUS", precision = 5, scale = 0)
 	private Integer userGroupPrevious;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_OCCURRENCE", nullable = false, length = 7)
 	private Date occurrencedate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_NEXT_ACTION", length = 7)
 	private Date nextActionDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_UPDATE_ACTION", length = 7)
 	private Date updateActionDate;
 	
@@ -63,18 +63,18 @@ public class WokOccurrenceDemand extends AbstractEntity implements Serializable 
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 	
 	@Column(name = "DES_USER_OBSERVATION", length = 300)
 	private String userObservationdescription;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ESTIMATED_BEGIN", length = 7)
 	private Date estimatedBeginDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ESTIMATED_END", length = 7)
 	private Date estimatedEndDate;
 

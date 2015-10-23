@@ -8,10 +8,10 @@
 
 <ui:composition>
 
-	<p:dialog id="viewDlg" widgetVar="viewDialog" modal="true"
+	<p:dialog id="itemViewDlg" widgetVar="itemViewDlg" modal="true"
 		resizable="false" appendToBody="true" header="#{loc.ViewOamItemTitle}">
 
-		<h:form id="viewForm">
+		<h:form id="itemViewForm">
 
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
@@ -68,7 +68,7 @@
 						title="#{loc.ViewOamItemTitle_indUnitType}" />
 				</p:panelGrid>
 				<p:commandButton value="#{loc.Close}" immediate="true"
-					onclick="PF('viewDialog').hide()" />
+					onclick="PF('itemViewDlg').hide()" />
 			</h:panelGroup>
 
 		</h:form>
