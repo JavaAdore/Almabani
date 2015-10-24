@@ -15,19 +15,17 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.admincor.DepartmentSection;
-import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.OamItem;
-import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
+import com.almabani.dataaccess.daoimpl.CustomCriteria;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
 
@@ -35,15 +33,6 @@ import com.almabani.portal.webutils.WebUtils;
 @ViewScoped
 public class ProjectItemManagementBean extends AbstractBeanHelper implements
 		Serializable {
-
-	public boolean isShowItemsOfApproviedQuotationsOnly() {
-		return showItemsOfApproviedQuotationsOnly;
-	}
-
-	public void setShowItemsOfApproviedQuotationsOnly(
-			boolean showItemsOfApproviedQuotationsOnly) {
-		this.showItemsOfApproviedQuotationsOnly = showItemsOfApproviedQuotationsOnly;
-	}
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,23 +44,20 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 
 	private List<Project> projects;
 
-	private List<Establishment> establishments;
-
-	private List<OamItemQuotation> quotataionItems;
-
 	private OamProjectItem selected;
 
 	public OamStockItem selectedStockItem;
-	
+
 	private OamItem selectedItem;
 
 	private LazyDataModel<OamStockItem> stockItems;
 
 	private List<SelectItem> lightDepartments;
 
-	private boolean showItemsOfApproviedQuotationsOnly;
-	
 	private ItemsControllerManagementBean itemsControllerManagementBean;
+
+	private boolean filterByApprovedQuotationsOnly;
+
 
 	public List<OamItem> autoCompleteItemList(String itemNameOrDescription) {
 
@@ -131,7 +117,7 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	private void loadInitialLists() {
 
 		loadProjectsList();
-		loadEstablishmentsList();
+
 		loadLightDepartmentsList();
 
 	}
@@ -175,17 +161,6 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 
 	}
 
-	private void loadEstablishmentsList() {
-		if (WebUtils.isAdminUser()) {
-			establishments = almabaniFacade.getAllEstablishments();
-		} else {
-			establishments = almabaniFacade.getAllEstablishments(WebUtils
-					.getCurrentLoggedUserCompany());
-
-		}
-
-	}
-
 	private void loadProjectsList() {
 		if (WebUtils.isAdminUser()) {
 			projects = almabaniFacade.getAllProjects();
@@ -207,17 +182,10 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 	public void prepareCreate() {
 
 		selected = new OamProjectItem();
-		if(Utils.isNotNull(selectedItem))
-		{
-			selected.setItem(selectedItem);  
-			
-		}
-	}
+		if (Utils.isNotNull(selectedItem)) {
+			selected.setItem(selectedItem);
 
-	public void prepareCreateStockItem() {
-		selectedStockItem = new OamStockItem();
-		selectedStockItem.setIndInOut(DataAccessConstants.STOCK_ITEM_OUT);
-		quotataionItems = almabaniFacade.getItemQuotataion(selected);
+		}
 	}
 
 	private void prepareStatesList() {
@@ -240,22 +208,6 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 
 		operationSuccess();
 
-	}
-
-	public void withdrawal() throws AlmabaniException {
-
-		boolean isAlreadyExisitEntity = Utils.hasID(selectedStockItem);
-
-		selectedStockItem.setProjectItem(selected);
-		selectedStockItem = almabaniFacade.addorUpdateOamStockItem(
-				selectedStockItem,
-				CommonDriverMap.appendCurrentUserCode(null,
-						WebUtils.getCurrentUserCode()));
-		selected.deductAmount(selectedStockItem.getEntryValue());
-		WebUtils.fireInfoMessage(
-				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
-						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
-				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_STOCK_ITEM));
 	}
 
 	public void setItems(LazyDataModel<OamProjectItem> items) {
@@ -372,48 +324,45 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 				Map<String, Object> filters) {
 
 			attachCompanyFiltrataionInCaseOnNoneAdmin(filters);
-			
+
 			attachSelectedItemInCaseOfSelected(filters);
 
-				rowCount = almabaniFacade.getNumberOfProjectItems(filters);
+			attachFilterByArrovedQuotationsOnly(filters);
 
-				result = (List<OamProjectItem>) almabaniFacade
-						.loadProjectItems(first, pageSize, sortField,
-								sortOrder == SortOrder.ASCENDING, filters);
-			
+			rowCount = almabaniFacade.getNumberOfProjectItems(filters);
+
+			result = (List<OamProjectItem>) almabaniFacade.loadProjectItems(
+					first, pageSize, sortField,
+					sortOrder == SortOrder.ASCENDING, filters);
 
 			setRowCount(this.rowCount);
 
 			return result;
 		}
 
-		private void attachSelectedItemInCaseOfSelected(
+		private void attachFilterByArrovedQuotationsOnly(
 				Map<String, Object> filters) {
-			
-			if(Utils.isNotNull(selectedItem))
-			{
-				
-				filters.put("item", selectedItem);
+			if (filterByApprovedQuotationsOnly) {
+				if (filters.containsKey("remainingAmount") == false) {
+					filters.put("remainingAmount", new CustomCriteria(
+							" is not null"));
+
+				}
+
 			}
-			
+
 		}
 
-	}
+		private void attachSelectedItemInCaseOfSelected(
+				Map<String, Object> filters) {
 
-	public List<Establishment> getEstablishments() {
-		return establishments;
-	}
+			if (Utils.isNotNull(selectedItem)) {
 
-	public void setEstablishments(List<Establishment> establishments) {
-		this.establishments = establishments;
-	}
+				filters.put("item", selectedItem);
+			}
 
-	public List<OamItemQuotation> getQuotataionItems() {
-		return quotataionItems;
-	}
+		}
 
-	public void setQuotataionItems(List<OamItemQuotation> quotataionItems) {
-		this.quotataionItems = quotataionItems;
 	}
 
 	public void onRowSelect(SelectEvent event) {
@@ -445,7 +394,14 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 		this.selectedItem = selectedItem;
 	}
 
+	public boolean isFilterByApprovedQuotationsOnly() {
+		return filterByApprovedQuotationsOnly;
+	}
 
+	public void setFilterByApprovedQuotationsOnly(
+			boolean filterByApprovedQuotationsOnly) {
+		this.filterByApprovedQuotationsOnly = filterByApprovedQuotationsOnly;
+	}
 
 
 }

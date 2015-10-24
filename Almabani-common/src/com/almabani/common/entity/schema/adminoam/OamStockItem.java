@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 
@@ -30,7 +31,7 @@ import com.almabani.common.entity.schema.admincor.Establishment;
 public class OamStockItem extends AbstractEntity implements Serializable {   
 	
 	private static final long serialVersionUID = 6832336132373271576L;
-
+ 
 	@Id
 	@Column(name = "NUM_STOCK_ITEM", unique = true, nullable = false, precision = 15, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamStockItems_Id_Seq_Gen")
@@ -44,6 +45,19 @@ public class OamStockItem extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "NUM_ESTABLISHMENT", referencedColumnName="NUM_ESTABLISHMENT", nullable = false)
 	private Establishment establishment; 
 	
+	
+	@Transient
+	private Long maxAmountToWithdraw;
+	
+	
+	public Long getMaxAmountToWithdraw() {
+		return maxAmountToWithdraw;
+	}
+
+	public void setMaxAmountToWithdraw(Long maxAmountToWithdraw) {
+		this.maxAmountToWithdraw = maxAmountToWithdraw;
+	}
+
 	public OamItemQuotation getItemQuotation() {
 		return itemQuotation;
 	}
@@ -71,31 +85,10 @@ public class OamStockItem extends AbstractEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "NUM_ITEM_QUOTATION", referencedColumnName="NUM_ITEM_QUOTATION", nullable = false)
 	private OamItemQuotation itemQuotation;
-//	
-//	/**
-//	 * modificationMakerName represent the user name who make the last modification
-//	 */
+
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	 
-	public OamProjectItem getProjectItem() {
-		return projectItem;
-	}
-
-	public void setProjectItem(OamProjectItem projectItem) {
-		this.projectItem = projectItem;
-	}
-
-	
-
-	public String getModificationMakerName() {
-		return modificationMakerName;
-	}
-
-	public void setModificationMakerName(String modificationMakerName) {
-		this.modificationMakerName = modificationMakerName;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
@@ -135,6 +128,25 @@ public class OamStockItem extends AbstractEntity implements Serializable {
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
 	}
+	
+	public OamProjectItem getProjectItem() {
+		return projectItem;
+	}
+
+	public void setProjectItem(OamProjectItem projectItem) {
+		this.projectItem = projectItem;
+	}
+
+	
+
+	public String getModificationMakerName() {
+		return modificationMakerName;
+	}
+
+	public void setModificationMakerName(String modificationMakerName) {
+		this.modificationMakerName = modificationMakerName;
+	}
+
 
 	  
 }

@@ -10,18 +10,18 @@
 
 		<p:panel header="#{loc.ListOamStockItemTitle}">
 			<p:dataTable id="stockItemDataList"
-				value="#{projectItemManagementBean.stockItems}" var="item"
-				selectionMode="single" lazy="true" widgetVar="stockItemDataList"
-				selection="#{stockItemManagementBean.selected}" rowKey="#{item.id}"
+				value="#{stockItemManagementBean.stockItemDetailedView}" var="item"
+				 lazy="true" widgetVar="stockItemDataList"
 				paginator="true" rows="10" rowsPerPageTemplate="10,20,30">
 
 				<p:column headerText="#{loc.EditOamItemQuotationLabel_quotation}"
-					sortBy="#{item.itemQuotation.quotation.quotationDescription}"
-					filterBy="#{item.itemQuotation.quotation.quotationDescription}">
+					sortBy="#{item.quotationDescription}"
+					filterBy="#{item.quotationDescription}">
 
-					<h:outputText value="#{item.itemQuotation.quotation.quotationDescription}" />
+					<h:outputText
+						value="#{item.quotationDescription}" />
 				</p:column>
-				<p:column sortBy="#{item.indInOut}" filterBy="#{item.indInOut}"
+				<p:column sortBy="#{item.inOrOut}" filterBy="#{item.inOrOut}"
 					headerText="#{loc.ListOamStockItemTitle_indInOut}">
 
 					<f:facet name="filter">
@@ -34,38 +34,39 @@
 					</f:facet>
 
 					<h:outputText
-						value="#{applicationScopeStore.getInOutValue(item.indInOut)}" />
+						value="#{applicationScopeStore.getInOutValue(item.inOrOut)}" />
 				</p:column>
-				
+
 				<p:column headerText="#{loc.ListOamStockItemTitle_entryValue}"
-					sortBy="#{item.entryValue}" filterBy="#{item.entryValue}">
+					sortBy="#{item.amount}" filterBy="#{item.amount}">
 
-					<h:outputText value="#{item.entryValue}"
-						styleClass="#{ (item.indInOut.equalsIgnoreCase('O'))?'red':'green'  }" />
+					<h:outputText value="#{item.amount}"
+						styleClass="#{ (item.inOrOut.equalsIgnoreCase('O'))?'red':'green'  }" />
 				</p:column>
 
- 
-				
-				<p:column filterBy="#{item.lastModificationDate}"
-					
-					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
-					<f:facet name="filter">
-						<p:calendar onclick="PF('stockItemDataList').filter()" 
-							onblur="PF('stockItemDataList').filter()" pattern="dd/MM/yyyy"
-							onchange="PF('stockItemDataList').filter()" />
-					</f:facet>
-					<h:outputText value="#{item.lastModificationDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" />
-					</h:outputText>
-				</p:column>
+
+
+<!-- 				<p:column filterBy="#{item.lastModificationDate}" -->
+<!-- 					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}"> -->
+<!-- 					<f:facet name="filter"> -->
+<!-- 						<p:calendar pattern="dd/MM/yyyy" onchange="PF('stockItemDataList').filter()"> -->
+<!-- 							<p:ajax event="dateSelect" -->
+<!-- 								oncomplete="PF('stockItemDataList').filter()"></p:ajax> -->
+
+<!-- 						</p:calendar> -->
+<!-- 					</f:facet> -->
+<!-- 					<h:outputText value="#{item.lastModificationDate}"> -->
+<!-- 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" /> -->
+<!-- 					</h:outputText> -->
+<!-- 				</p:column> -->
 
 
 
 				<f:facet name="footer">
 					<p:graphicImage id="itemRemaining"
 						name="/images/icons/help-icon.png" width="25"
-						disabled="#{projectItemManagementBean.selected.remainingAmount>=1}"
-						rendered="#{ projectItemManagementBean.selected.remainingAmount lt 1}"
+						disabled="#{stockItemManagementBean.selected.availableQuantity>=1}"
+						rendered="#{ stockItemManagementBean.selected.availableQuantity lt 1}"
 						height="25" onmouseover="PF('noRemainingItem').show()"
 						onmouseout="PF('noRemainingItem').hide()" />
 					<p:overlayPanel widgetVar="noRemainingItem">
@@ -75,10 +76,10 @@
 
 
 					<p:commandButton id="withdraw" widgetVar="withdraw"
-						disabled="#{projectItemManagementBean.selected.remainingAmount ==null || projectItemManagementBean.selected.remainingAmount lt 1}"
+						disabled="#{stockItemManagementBean.selected.availableQuantity ==null || stockItemManagementBean.selected.availableQuantity lt 1}"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-plus" value="#{loc.ALMABANI_STOCK_ITEM_WITHDRAWL}"
-						actionListener="#{projectItemManagementBean.prepareCreateStockItem()}"
+						actionListener="#{stockItemManagementBean.prepareCreateStockItem()}"
 						update=":WithdrawalItemForm itemRemaining"
 						oncomplete="PF('withdrawlDialog').show()" />
 

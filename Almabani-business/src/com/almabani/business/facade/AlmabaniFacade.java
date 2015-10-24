@@ -32,6 +32,8 @@ import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
+import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
+import com.almabani.common.entity.schema.adminoam.view.OamStockItemView;
 import com.almabani.common.entity.schema.adminsec.ApplicationType;
 import com.almabani.common.entity.schema.adminsec.SecApplication;
 import com.almabani.common.entity.schema.adminsec.SecApplicationsCompany;
@@ -42,7 +44,6 @@ import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.exception.AlmabaniException;
-import com.almabani.common.virtual.entity.StockItemView;
 
 @Service
 public interface AlmabaniFacade {
@@ -379,7 +380,7 @@ public interface AlmabaniFacade {
 
 	void unselectOldSupplierOfQuotationItem(OamItemQuotation itemQuotation);
 
-	List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
+	List<OamStockItemView> loadOamStockItemsView(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
 
 	Integer getNumberOfOamStockItemsView(Map<String, Object> filters);
@@ -400,6 +401,15 @@ public interface AlmabaniFacade {
 
 	OamItemCategory addOrUpdateItemCategory(OamItemCategory oamItemCategory,
 			CommonDriverMap commonDriverMap) throws AlmabaniException;
+
+	Integer getNumberOfOamStockItemsDetailsView(Map<String, Object> filters);
+
+	List<OamStockItemDetailsView> loadOamStockItemsDetailsView(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+	
+	Long getNumberofRemainingItems(OamProjectItem projectItem,
+			OamItemQuotation itemQuotation, Establishment establishment);
 
 
 }

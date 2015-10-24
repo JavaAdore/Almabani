@@ -83,17 +83,6 @@ public class ProjectItemDAOImpl extends AbstractDAO implements ProjectItemDAO {
 		return query.list();
 	}
 
-	@Override
-	public Long getNumberofRemainingItems(OamProjectItem projectItem) {
-		Query query = super
-				.getCurrentSession()
-				.createQuery(
-						"select x.remainingAmount from  OamProjectItem x where x=:projectItem");
-		query.setParameter("projectItem", projectItem);
-		Object numberOfRemainingItems = Utils.getFirstResult(query.list());
-
-		return numberOfRemainingItems != null ? (Long) numberOfRemainingItems
-				: 0L;
-	}
+	
 
 }

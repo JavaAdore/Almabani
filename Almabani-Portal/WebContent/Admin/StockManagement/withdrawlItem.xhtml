@@ -18,41 +18,39 @@
 
 			<h:panelGroup id="display">
 				<p:panelGrid columns="2"
-					rendered="#{projectItemManagementBean.selectedStockItem != null}">
+					rendered="#{stockItemManagementBean.selectedStockItem != null}">
 
 
 
 					<p:outputLabel value="#{loc.ALMABANI_PROJECT}" />
 					<p:outputLabel
-						value="#{projectItemManagementBean.selected.project.projectCode}" />
+						value="#{stockItemManagementBean.selected.oamStockItemViewId.projectCode}" />
 
 
 					<p:outputLabel value="#{loc.CreateOamItemLabel_materialType}" />
 					<p:outputLabel
-						value="#{projectItemManagementBean.selected.item.materialType.materialTypeDescription}" />
+						value="#{stockItemManagementBean.selected.oamStockItemViewId.materialType}" />
 
 					<p:outputLabel value="#{loc.CreateOamQuotationLabel_comDepartment}" />
 					<p:outputLabel
-						value=" (#{ projectItemManagementBean.selected.item.itemCategory.comDepartmentSection.department.departmentCode  } ) #{projectItemManagementBean.selected.item.itemCategory.comDepartmentSection.department.departmentName}" />
+						value=" (#{ stockItemManagementBean.selected.oamStockItemViewId.departmentName  } ) #{stockItemManagementBean.selected.oamStockItemViewId.departmentSection}" />
 
 					<p:outputLabel value="#{loc.EditOamItemTitle_itemCategory}" />
 					<p:outputLabel
-						value="#{projectItemManagementBean.selected.item.itemCategory.categoryItemName}" />
-
-					<p:outputLabel value="#{loc.ListOamItemTitle_Remaining_amount}" />
-					<p:outputLabel
-						value="#{projectItemManagementBean.selected.remainingAmount}" />
+						value="#{stockItemManagementBean.selected.oamStockItemViewId.itemCategory}" />
 
 					<p:outputLabel value="#{loc.ALMABANI_GENERAL_QUOTATION_ITEM} " />
 
 					<p:selectOneMenu
-						value="#{projectItemManagementBean.selectedStockItem.itemQuotation}"
+						value="#{stockItemManagementBean.selectedStockItem.itemQuotation}"
 						converter="#{itemQuotataionConverter}" required="true"
 						requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME_IS_REQUIRED}">
+						<p:ajax process="@this"
+							listener="#{stockItemManagementBean.fetchMaxAvailableAmountToWithdraw}"
+							update="withDrawlAmount" />
 						<f:selectItem itemValue=""
 							itemLabel="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_OAM_ITEM_QUOTATION_SELECT_OAM_ITEM_QUOTATION}" />
-						<f:selectItems
-							value="#{projectItemManagementBean.quotataionItems}"
+						<f:selectItems value="#{stockItemManagementBean.quotataionItems}"
 							var="quotataionItem"
 							itemLabel="#{quotataionItem.observationDescription} "
 							itemValue="#{quotataionItem}" />
@@ -64,26 +62,35 @@
 					<p:selectOneMenu id="establishments"
 						converter="#{establishmentConverter}" required="true"
 						requiredMessage="#{loc.CreateOamStockItemRequiredMessage_establishment}"
-						value="#{projectItemManagementBean.selectedStockItem.establishment}"
+						value="#{stockItemManagementBean.selectedStockItem.establishment}"
 						styleClass="fullWith">
+						<p:ajax process="@this"
+							listener="#{stockItemManagementBean.fetchMaxAvailableAmountToWithdraw}"
+							update="withDrawlAmount" />
 						<f:selectItem itemLabel="#{loc.SelectOneMessage}" itemValue=""
 							noSelectionOption="true" />
-						<f:selectItems value="#{projectItemManagementBean.establishments}"
+						<f:selectItems value="#{stockItemManagementBean.establishments}"
 							var="establishment"
 							itemLabel="#{establishment.establishmentName}" />
 					</p:selectOneMenu>
 					<p:outputLabel
 						value="#{loc.ALMABANI_ITEM_STOCK_QUANTITY_TO_WITHDRAWL}" />
-					<p:spinner min="1" required="true" requiredMessage="#{loc.ALMABANI_ITEM_STOCK_QUANTITY_IS_REQUIRED}"
-						max="#{projectItemManagementBean.selected.remainingAmount}"
-						value="#{projectItemManagementBean.selectedStockItem.entryValue}" />
+					<p:panelGrid columns="2" id="withDrawlAmount">
+						<p:spinner min="1" required="true"
+							requiredMessage="#{loc.ALMABANI_ITEM_STOCK_QUANTITY_IS_REQUIRED}"
+							max="#{stockItemManagementBean.selectedStockItem.maxAmountToWithdraw}"
+							value="#{stockItemManagementBean.selectedStockItem.entryValue}" />
+						<p:outputLabel
+							value="#{loc.ALMABANI_STOCK_ITEM_OUT_OF} (#{stockItemManagementBean.selectedStockItem.maxAmountToWithdraw} )"
+							rendered="#{stockItemManagementBean.selectedStockItem.maxAmountToWithdraw !=null}" />
+					</p:panelGrid>
 				</p:panelGrid>
-				<p:commandButton 
-					
-					actionListener="#{projectItemManagementBean.withdrawal()}"
-					value="#{loc.Save}" update="@form :growl :stockItemprojectItemListForm :projectItemListForm "
+				<p:commandButton
+					actionListener="#{stockItemManagementBean.withdrawal()}"
+					value="#{loc.Save}"
+					update="@form :growl :stockItemprojectItemListForm :projectItemListForm "
 					oncomplete="if(!args.validationFailed){PF('withdrawlDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}"
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('withdrawlDialog').hide()" />
 			</h:panelGroup>
 

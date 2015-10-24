@@ -1,20 +1,28 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.constant.DataAccessConstants;
+import com.almabani.common.constant.MessagesKeyStore;
+import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
-import com.almabani.common.entity.schema.admincor.Project;
+import com.almabani.common.entity.schema.admincor.Establishment;
+import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
+import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
+import com.almabani.common.entity.schema.adminoam.view.OamStockItemView;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
@@ -30,54 +38,41 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private LazyDataModel<OamStockItem> items;
-	
-	private List<Project> projects;
+	private LazyDataModel<OamStockItemView> stockItemView;
+
+	private LazyDataModel<OamStockItemDetailsView> stockItemDetailedView;
 
 	private boolean operationSuccess = false;
 
-	private OamStockItem selected;
+	private OamStockItemView selected = null;
+
+	private OamStockItem selectedStockItem;
+
+	private List<OamItemQuotation> quotataionItems;
+
+	private List<Establishment> establishments;
 
 	@PostConstruct
 	public void init() {
-		
+
 		initializeStockItemLazyList();
-		
-		loadInitialLists();
-
-		prepareStatesList();
+		initializeStockItemDetailsLazyList();
+		loadEstablishmentsList();
 	}
 
-	public void prepareCreate() {
-
-		selected = new OamStockItem();
+	public void prepareCreateStockItem() {
+		selectedStockItem = new OamStockItem();
+		selectedStockItem.setIndInOut(DataAccessConstants.STOCK_ITEM_OUT);
+		quotataionItems = almabaniFacade.getItemQuotataion(new OamProjectItem(
+				selected.getOamStockItemViewId().getProjectItemId()));
 	}
 
-	private void loadInitialLists() {
-
-	}
-
-	public List<OamProjectItem> autoCompleteProjectItemList(
-			String projectItemNameOrDescription) {
-
-		projectItemNameOrDescription = Utils
-				.isNotEmptyString(projectItemNameOrDescription) ? projectItemNameOrDescription
-				: "";
-		if (WebUtils.isAdminUser()) {
-			return almabaniFacade.getAllCompanyProjectItems(
-					projectItemNameOrDescription, null);
-		} else {
-			return almabaniFacade.getAllCompanyProjectItems(
-					projectItemNameOrDescription, WebUtils
-							.getCurrentLoggedUser().getEmployee()
-							.getEstablishment().getCompany());
-
-		}
-
+	private void initializeStockItemDetailsLazyList() {
+		stockItemDetailedView = new StockItemsDetailsLazyModel();
 	}
 
 	private void initializeStockItemLazyList() {
-		items = new StockItemsLazyModel();
+		stockItemView = new StockItemsLazyModel();
 
 	}
 
@@ -85,44 +80,15 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 	}
 
-	public void saveNew() throws AlmabaniException {
-
-		operationFaild();
-	//	boolean isAlreadyExisitEntity = Utils.hasID(selected);
-//
-//		selected = almabaniFacade.addorUpdateOamStockItem(
-//				selected,
-//				CommonDriverMap.appendCurrentUserCode(null,
-//						WebUtils.getCurrentUserCode()));
-//		WebUtils.fireInfoMessage(
-//				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
-//						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
-//				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_OAM_STOCK_ITEM));
-
-		operationSuccess();
-
-	}
-
-	private void operationSuccess() {
-		operationSuccess = true;
-	}
-
-	private void operationFaild() {
-		operationSuccess = false;
-	}
-
-	private class StockItemsLazyModel extends LazyDataModel<OamStockItem>
+	private class StockItemsLazyModel extends LazyDataModel<OamStockItemView>
 			implements Serializable {
-		/**
- * 
- */
 		private static final long serialVersionUID = 1L;
 		private Integer rowCount;
 
-		List<OamStockItem> result;
+		List<OamStockItemView> result;
 
 		@Override
-		public List<OamStockItem> load(int first, int pageSize,
+		public List<OamStockItemView> load(int first, int pageSize,
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
 
@@ -130,9 +96,9 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 			rowCount = almabaniFacade.getNumberOfOamStockItemsView(filters);
 
-			result = (List<OamStockItem>) almabaniFacade.loadOamStockItemsView(
-					first, pageSize, sortField,
-					sortOrder == SortOrder.ASCENDING, filters);
+			result = (List<OamStockItemView>) almabaniFacade
+					.loadOamStockItemsView(first, pageSize, sortField,
+							sortOrder == SortOrder.ASCENDING, filters);
 
 			setRowCount(this.rowCount);
 
@@ -151,10 +117,15 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		}
 
 		@Override
-		public OamStockItem getRowData(String rowKey) {
+		public OamStockItemView getRowData(String rowKey) {
 
-			for (OamStockItem stockItemView : result) {
-				if (stockItemView.getProjectItem().getId().equals(rowKey)) {
+			for (OamStockItemView stockItemView : result) {
+				String rowCompositIdentifier = stockItemView
+						.getOamStockItemViewId().getProjectItemId()
+						+ "-"
+						+ stockItemView.getOamStockItemViewId()
+								.getEstablishmentNumber();
+				if (rowCompositIdentifier.toString().equals(rowKey)) {
 					selected = stockItemView;
 					return stockItemView;
 				}
@@ -165,20 +136,51 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 	}
 
-	public LazyDataModel<OamStockItem> getItems() {
-		return items;
-	}
+	private class StockItemsDetailsLazyModel extends
+			LazyDataModel<OamStockItemDetailsView> implements Serializable {
+		private static final long serialVersionUID = 1L;
+		private Integer rowCount;
 
-	public void setItems(LazyDataModel<OamStockItem> items) {
-		this.items = items;
-	}
+		List<OamStockItemDetailsView> result;
 
-	public List<Project> getProjects() {
-		return projects;
-	}
+		@Override
+		public List<OamStockItemDetailsView> load(int first, int pageSize,
+				String sortField, SortOrder sortOrder,
+				Map<String, Object> filters) {
 
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
+			if (Utils.isNotNull(selected)) {
+
+				attachSelectedProjectItem(filters);
+				attachSelectedEstablishment(filters);
+				rowCount = almabaniFacade
+						.getNumberOfOamStockItemsDetailsView(filters);
+
+				result = (List<OamStockItemDetailsView>) almabaniFacade
+						.loadOamStockItemsDetailsView(first, pageSize,
+								sortField, sortOrder == SortOrder.ASCENDING,
+								filters);
+
+				setRowCount(this.rowCount);
+			} else {
+				result = new ArrayList();
+
+			}
+
+			return result;
+		}
+
+		private void attachSelectedEstablishment(Map<String, Object> filters) {
+
+			filters.put("establishment.id", selected.getOamStockItemViewId()
+					.getEstablishmentNumber());
+		}
+
+		private void attachSelectedProjectItem(Map<String, Object> filters) {
+
+			filters.put("projectItemId", selected.getOamStockItemViewId()
+					.getProjectItemId());
+		}
+
 	}
 
 	public boolean isOperationSuccess() {
@@ -189,15 +191,91 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		this.operationSuccess = operationSuccess;
 	}
 
-	public OamStockItem getSelected() {
+	public OamStockItemView getSelected() {
 		return selected;
 	}
 
-	public void setSelected(OamStockItem selected) {
+	public void setSelected(OamStockItemView selected) {
 		this.selected = selected;
 	}
 
+	public LazyDataModel<OamStockItemView> getStockItemView() {
+		return stockItemView;
+	}
 
-	
+	public void setStockItemView(LazyDataModel<OamStockItemView> stockItemView) {
+		this.stockItemView = stockItemView;
+	}
 
+	public LazyDataModel<OamStockItemDetailsView> getStockItemDetailedView() {
+		return stockItemDetailedView;
+	}
+
+	public void setStockItemDetailedView(
+			LazyDataModel<OamStockItemDetailsView> stockItemDetailedView) {
+		this.stockItemDetailedView = stockItemDetailedView;
+	}
+
+	public OamStockItem getSelectedStockItem() {
+		return selectedStockItem;
+	}
+
+	public void setSelectedStockItem(OamStockItem selectedStockItem) {
+		this.selectedStockItem = selectedStockItem;
+	}
+
+	public List<OamItemQuotation> getQuotataionItems() {
+		return quotataionItems;
+	}
+
+	public void setQuotataionItems(List<OamItemQuotation> quotataionItems) {
+		this.quotataionItems = quotataionItems;
+	}
+
+	public void withdrawal() throws AlmabaniException {
+
+		boolean isAlreadyExisitEntity = Utils.hasID(selectedStockItem);
+
+		selectedStockItem.setProjectItem(new OamProjectItem(selected
+				.getOamStockItemViewId().getProjectItemId()));
+		selectedStockItem = almabaniFacade.addorUpdateOamStockItem(
+				selectedStockItem,
+				CommonDriverMap.appendCurrentUserCode(null,
+						WebUtils.getCurrentUserCode()));
+		selected.deductAmount(selectedStockItem.getEntryValue());
+		WebUtils.fireInfoMessage(
+				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_STOCK_ITEM));
+	}
+
+	public List<Establishment> getEstablishments() {
+		return establishments;
+	}
+
+	public void setEstablishments(List<Establishment> establishments) {
+		this.establishments = establishments;
+	}
+
+	private void loadEstablishmentsList() {
+		if (WebUtils.isAdminUser()) {
+			establishments = almabaniFacade.getAllEstablishments();
+		} else {
+			establishments = almabaniFacade.getAllEstablishments(WebUtils
+					.getCurrentLoggedUserCompany());
+
+		}
+	}
+
+	public void fetchMaxAvailableAmountToWithdraw(AjaxBehaviorEvent event)
+	{
+		
+		if(Utils.isNotNull(selectedStockItem.getEstablishment())&& Utils.isNotNull(selectedStockItem.getItemQuotation()))
+		{ 
+			Long availableAmountToWithdrawl =  almabaniFacade.getNumberofRemainingItems(new  OamProjectItem(selected
+					.getOamStockItemViewId().getProjectItemId()) , selectedStockItem.getItemQuotation(),selectedStockItem.getEstablishment());
+			
+			selectedStockItem.setMaxAmountToWithdraw(availableAmountToWithdrawl);
+		}
+	}
 }

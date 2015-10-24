@@ -88,7 +88,8 @@ public class Utils {
 		String[] fields = currentFilter.split("\\.");
 
 		try {
-			Field field = class1.getDeclaredField(fields[currentFieldIndex].trim());
+			Field field = class1.getDeclaredField(fields[currentFieldIndex]
+					.trim());
 			if (fields.length - 1 > currentFieldIndex) {
 				return getFilterClass(currentFilter, ++currentFieldIndex,
 						field.getType());
@@ -309,52 +310,57 @@ public class Utils {
 		}
 	}
 
-	public static String dateToFullString(Date date)
-	{
+	public static String dateToFullString(Date date) {
 		DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
 		return dateFormat.format(date);
 	}
-	
-	
-	public static Map<TimeUnit,Long> computeDiff(Date date1, Date date2) {
-	    long diffInMillies = date2.getTime() - date1.getTime();
-	    List<TimeUnit> units = new ArrayList<TimeUnit>(EnumSet.allOf(TimeUnit.class));
-	    Collections.reverse(units);
-	    Map<TimeUnit,Long> result = new LinkedHashMap<TimeUnit,Long>();
-	    long milliesRest = diffInMillies;
-	    for ( TimeUnit unit : units ) {
-	        long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
-	        long diffInMilliesForUnit = unit.toMillis(diff);
-	        milliesRest = milliesRest - diffInMilliesForUnit;
-	        result.put(unit,diff);
-	    }
-	    return result;
+
+	public static Map<TimeUnit, Long> computeDiff(Date date1, Date date2) {
+		long diffInMillies = date2.getTime() - date1.getTime();
+		List<TimeUnit> units = new ArrayList<TimeUnit>(
+				EnumSet.allOf(TimeUnit.class));
+		Collections.reverse(units);
+		Map<TimeUnit, Long> result = new LinkedHashMap<TimeUnit, Long>();
+		long milliesRest = diffInMillies;
+		for (TimeUnit unit : units) {
+			long diff = unit.convert(milliesRest, TimeUnit.MILLISECONDS);
+			long diffInMilliesForUnit = unit.toMillis(diff);
+			milliesRest = milliesRest - diffInMilliesForUnit;
+			result.put(unit, diff);
+		}
+		return result;
 	}
 
 	public static String getAbsoluteStringValue(String applicationDescription) {
-		if(isNotEmptyString(applicationDescription))
-		{
+		if (isNotEmptyString(applicationDescription)) {
 			return applicationDescription.trim();
-		} 
+		}
 		return "";
-		
+
 	}
 
 	public static boolean isEmptySet(Set allApplications) {
-		return Utils.isNull(allApplications) || allApplications.size()==0;
+		return Utils.isNull(allApplications) || allApplications.size() == 0;
 	}
 
 	public static boolean isEmptyMap(
 			Map<String, String> applicationsDescriptions) {
-		return isNull(applicationsDescriptions) || applicationsDescriptions.size()==0;
+		return isNull(applicationsDescriptions)
+				|| applicationsDescriptions.size() == 0;
 	}
 
-	
-	public static void main(String [] arsgs) throws NoSuchFieldException, SecurityException
-	{
-		
-		System.out.println(DepartmentSection.class.getDeclaredField("sectionCode"));
-		
-		
+	public static boolean isWrapperType(Class clazz) {
+		Set<Class> WRAPPER_TYPES = new HashSet(Arrays.asList(Boolean.class,
+				Character.class, Byte.class, Short.class, Integer.class,
+				Long.class, Float.class, Double.class, Void.class));
+		return WRAPPER_TYPES.contains(clazz);
+	}
+
+	public static void main(String[] arsgs) throws NoSuchFieldException,
+			SecurityException {
+
+		System.out.println(DepartmentSection.class
+				.getDeclaredField("sectionCode"));
+
 	}
 }

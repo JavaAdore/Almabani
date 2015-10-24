@@ -22,6 +22,8 @@
 						icon="ui-icon-calculator" />
 					<p:columnToggler datasource="itemsDataList" trigger="toggler" />
 				</f:facet>
+				<p:ajax event="rowSelect"
+					listener="#{itemManagementBean.onRowSelect}" update=" editButton viewButton :projectItemListForm" />
 
 
 				<p:column
@@ -84,10 +86,27 @@
 				</p:column>
 
 
+				<f:facet name="footer">
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
+						actionListener="#{itemManagementBean.prepareCreate}"
+						update=":itemCreateForm:display"
+						oncomplete="PF('itemsCreateDlg').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}" update=":itemViewForm:display"
+						oncomplete="PF('itemViewDlg').show()"
+						disabled="#{empty itemManagementBean.selected}" />
+					<p:commandButton id="editButton"
+  						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						actionListener="#{itemManagementBean.initializeDepartmentAndDepartmentsList()}"
+						update=":itemsEditForm:display" oncomplete="PF('itemsEditDialog').show()"
+						disabled="#{empty itemManagementBean.selected}" />
+				</f:facet>
 
 
 
-				
 
 			</p:dataTable>
 

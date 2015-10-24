@@ -32,6 +32,9 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 5167822432796921685L;
 
+	
+	
+	
 	@Id
 	@Column(name = "NUM_PROJECT_ITEM", unique = true, nullable = false, precision = 12, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamProjectItems_Id_Seq_Gen")
@@ -56,16 +59,15 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 
-	@Formula("( select sum(decode(t1.IND_IN_OUT,'I',nvl(t1.VAL_ENTRY,0),'O',-1*nvl(t1.VAL_ENTRY,0))) from adminoam.OAM_STOCK_ITEMS    t1 group by t1.NUM_PROJECT_ITEM having  t1.NUM_PROJECT_ITEM = NUM_PROJECT_ITEM) -0")
-	private Long remainingAmount;
 
-	public Long getRemainingAmount() {
-		return remainingAmount;
+	
+	public OamProjectItem(Long id)
+	{
+		this.id= id;
 	}
+	
 
-	public void setRemainingAmount(Long remainingAmount) {
-		this.remainingAmount = remainingAmount;
-	}
+
 
 	public OamProjectItem() {
 	}
@@ -153,10 +155,6 @@ public class OamProjectItem extends AbstractEntity implements Serializable {
 		this.lastModificationDate = lastModificationDate;
 	}
 
-	public void deductAmount(Integer entryValue) {
-		if (remainingAmount != null) {
-			remainingAmount -= entryValue;
-		}
-	}
+
 
 }

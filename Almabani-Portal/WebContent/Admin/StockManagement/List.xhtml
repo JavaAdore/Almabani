@@ -10,13 +10,14 @@
 
 		<p:panel header="#{loc.ListOamProjectItemTitle}"
 			style="margin-left:auto; margin-right:auto ; ">
-			<p:dataTable id="datalist" value="#{projectItemManagementBean.items}"
+			<p:dataTable id="datalist"
+				value="#{stockItemManagementBean.stockItemView}"
 				widgetVar="datalist" var="item" selectionMode="single"
 				resizableColumns="true"
-				selection="#{projectItemManagementBean.selected}"
-				draggableColumns="true" draggableRows="true" rowKey="#{item.id}"
-				paginator="true" lazy="true" rows="10"
-				rowsPerPageTemplate="10,20,30">
+				selection="#{stockItemManagementBean.selected}"
+				draggableColumns="true" draggableRows="true"
+				rowKey="#{item.oamStockItemViewId.projectItemId}-#{item.oamStockItemViewId.establishmentNumber}" paginator="true" lazy="true"
+				rows="10" rowsPerPageTemplate="10,20,30">
 
 				<f:facet name="header">
 					<p:commandButton id="toggler" type="button"
@@ -26,37 +27,15 @@
 
 				</f:facet>
 
+
 				<p:ajax event="rowSelect"
 					listener="#{projectItemManagementBean.onRowSelect}"
 					update=":stockItemprojectItemListForm" />
 				<p:ajax event="rowUnselect" update=":stockItemprojectItemListForm" />
 
-				<p:column
-					headerText="#{loc.EditComDepartmentSectionLabel_sectionCode}"
-					sortBy="#{item.item.itemCategory.comDepartmentSection.sectionCode}"
-					filterBy="#{item.item.itemCategory.comDepartmentSection.sectionCode }">
-
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
-							<f:selectItem itemLabel="" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems
-								value="#{projectItemManagementBean.lightDepartments}" />
-						</p:selectOneMenu>
-					</f:facet>
-
-					<h:outputText
-						value="#{ item.item.itemCategory.comDepartmentSection.sectionCode}" />
-				</p:column>
-
-				<p:column headerText="#{loc.EditOamItemLabel_itemCategory}"
-					sortBy="#{item.item.itemCategory.categoryItemName}"
-					filterBy="#{item.item.itemCategory.categoryItemName}">
-					<h:outputText value="#{item.item.itemCategory.categoryItemName}" />
-				</p:column>
 
 				<p:column headerText="#{loc.ListOamProjectItemTitle_project}"
-					sortBy="#{item.project.projectCode}" filterBy="#{item.project}">
+					sortBy="#{item.oamStockItemViewId.projectCode}" filterBy="#{item.oamStockItemViewId.projectCode}">
 					<f:facet name="filter">
 
 						<p:selectOneMenu onchange="PF('datalist').filter()"
@@ -69,44 +48,47 @@
 						</p:selectOneMenu>
 					</f:facet>
 
-					<h:outputText value="#{item.project.projectCode}" />
-				</p:column>
-				<p:column headerText="#{loc.ViewOamItemLabel_itemCode}"
-					sortBy="#{item.item.itemCode}" filterBy="#{item.item.itemCode}">
-					<h:outputText value="#{item.item.itemCode}" />
-				</p:column>
-
-				<p:column headerText="#{loc.ListOamProjectItemTitle_item}"
-					sortBy="#{item.item.itemDescription}"
-					filterBy="#{item.item.itemDescription}">
-					<h:outputText value="#{item.item.itemDescription}" />
+					<h:outputText value="#{item.oamStockItemViewId.projectCode}" />
 				</p:column>
 
 
 
 
-
-
-				<p:column headerText="#{loc.ListOamItemTitle_indActive}"
-					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+				<p:column
+					headerText="#{loc.EditComDepartmentSectionLabel_sectionCode}"
+					sortBy="#{item.oamStockItemViewId.itemCategory}"
+					filterBy="#{item.oamStockItemViewId.itemCategory }">
 
 					<f:facet name="filter">
 						<p:selectOneMenu onchange="PF('datalist').filter()">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
-							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
-								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+							<f:selectItems
+								value="#{projectItemManagementBean.lightDepartments}" />
 						</p:selectOneMenu>
 					</f:facet>
 
 					<h:outputText
-						value="#{applicationScopeStore.getYesNoValue(item.indActive)}" />
+						value="#{ item.oamStockItemViewId.departmentSection}" />
+				</p:column>
+
+				<p:column headerText="#{loc.EditOamItemLabel_itemCategory}"
+					sortBy="#{item.oamStockItemViewId.itemCategory}"
+					filterBy="#{item.oamStockItemViewId.itemCategory}">
+					<h:outputText value="#{item.oamStockItemViewId.itemCategory}" />
+				</p:column>
+
+
+				
+				<p:column headerText="#{loc.ListOamProjectItemTitle_item}"
+					sortBy="#{item.oamStockItemViewId.itemDescription}"
+					filterBy="#{item.oamStockItemViewId.itemDescription}">
+					<h:outputText value="#{item.oamStockItemViewId.itemDescription}" />
 				</p:column>
 
 				<p:column headerText="#{loc.ListOamItemTitle_Remaining_amount}"
-					sortBy="#{item.remainingAmount}" filterBy="#{item.remainingAmount}">
-
-					<h:outputText value="#{item.remainingAmount}" />
+					sortBy="#{item.availableQuantity}" filterBy="#{item.availableQuantity}">
+					<h:outputText value="#{item.availableQuantity}" />
 				</p:column>
 
 

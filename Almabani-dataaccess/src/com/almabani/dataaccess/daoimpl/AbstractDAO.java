@@ -181,18 +181,19 @@ public class AbstractDAO implements Serializable {
 				assending, filters, false);
 		query.setFetchSize(pageSize);
 		query.setFirstResult(first);
-		List result = query.list();  
+		List result = query.list();
 		return result;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
-	public List lazyLoadEntities(String queryString, Integer first, Integer pageSize,
-			String sortField, boolean assending, Map<String, Object> filters) {
-		Query query = prepareLazyLoadingQuery(queryString, first, pageSize, sortField,
-				assending, filters, false);
+	public List lazyLoadEntities(String queryString, Integer first,
+			Integer pageSize, String sortField, boolean assending,
+			Map<String, Object> filters) {
+		Query query = prepareLazyLoadingQuery(queryString, first, pageSize,
+				sortField, assending, filters, false);
 		query.setFetchSize(pageSize);
 		query.setFirstResult(first);
-		List result = query.list();  
+		List result = query.list();
 		return result;
 	}
 
@@ -201,15 +202,16 @@ public class AbstractDAO implements Serializable {
 		Query query = prepareLazyLoadingQuery(clz, null, null, null, false,
 				filters, true);
 		return ((Long) Utils.getFirstResult(query.list())).intValue();
-	}  
+	}
 
 	@SuppressWarnings("rawtypes")
-	public Integer getCountOfResults(String queryString, Map<String, Object> filters) {
-		Query query = prepareLazyLoadingQuery(queryString, null, null, null, false,
-				filters, true);
+	public Integer getCountOfResults(String queryString,
+			Map<String, Object> filters) {
+		Query query = prepareLazyLoadingQuery(queryString, null, null, null,
+				false, filters, true);
 		return ((Long) Utils.getFirstResult(query.list())).intValue();
-	}  
-	
+	}
+
 	@SuppressWarnings("rawtypes")
 	private Query prepareLazyLoadingQuery(Class clz, Integer first,
 			Integer pageSize, String sortField, boolean assending,
@@ -230,39 +232,77 @@ public class AbstractDAO implements Serializable {
 			Object filterValue = filters.get(field);
 			Class fieldClass = Utils.getFilterClass(field, clz);
 			String alias = null;
-			alias = Utils.dublicate(ALIAS, counter++);
+			alias = Utils.dublicate(ALIAS, ++counter);
 
-			
-				if (fieldClass == String.class) {
-					stringBuilder.append(String.format("and lower( o.%s ) like lower( CONCAT(  :%s ,'%s')   ) ",
-							field, alias,"%"));
-  
-					queryParams.put(alias, ((String) filterValue ).trim() );
+			if (fieldClass == String.class) {
 
-				} else if (Utils.isPrimitiveDataType(fieldClass)) {
-					if (Utils.isAString(filterValue)) {
-						Object object = Utils.initiatePrimitiveObject(
-								fieldClass, (String) filterValue);
+				if (filterValue instanceof CustomCriteria) {
+
+					stringBuilder.append(String
+							.format(" and  o.%s  ", field,
+									((CustomCriteria) filters.get(field))
+											.getCriteria()));
+
+				} else {
+					stringBuilder
+							.append(String
+									.format("and lower( o.%s ) like lower( CONCAT(  :%s ,'%s')   ) ",
+											field, alias, "%"));
+
+					queryParams.put(alias, ((String) filterValue).trim());
+				}
+
+			} else if (Utils.isPrimitiveDataType(fieldClass)) {
+				if (filterValue instanceof CustomCriteria) {
+
+					stringBuilder
+							.append(String.format(" and  o.%s  %s ", field,
+									((CustomCriteria) filters.get(field))
+											.getCriteria()));
+
+				} else {
+
+				 if (Utils.isAString(filterValue)||filterValue.getClass().isPrimitive()||Utils.isWrapperType(filterValue.getClass())) {
+						Object object = Utils.initiatePrimitiveObject(  
+								fieldClass, String.valueOf(filterValue)); 
 						stringBuilder.append(String.format(" and o.%s =:%s ",
 								field, alias));
 						queryParams.put(alias, object);
-					}
-				} else if (fieldClass == Date.class) {
+					} 
+				}
+			} else if (fieldClass == Date.class) {
+				if (filterValue instanceof CustomCriteria) {
+
+					stringBuilder
+							.append(String.format(" and  o.%s   %s ", field,
+									((CustomCriteria) filters.get(field))
+											.getCriteria()));
+
+				} else {
 					String secondAlias = Utils.dublicate(alias, ++counter);
 					stringBuilder.append(String.format(
-							" and o.%s >= :%s and o.%s <= :%s ", field, alias,field,  
-							secondAlias));
+							" and o.%s >= :%s and o.%s <= :%s ", field, alias,
+							field, secondAlias));
 					Date startDate = Utils.getStartOfDay((Date) filterValue);
 					Date endDate = Utils.getEndOfDay((Date) filterValue);
 					queryParams.put(alias, startDate);
 					queryParams.put(secondAlias, endDate);
+				}
+			} else {
+				if (filterValue instanceof CustomCriteria) {
+
+					stringBuilder
+							.append(String.format(" and  o.%s   %s ", field,
+									((CustomCriteria) filters.get(field))
+											.getCriteria()));
+
 				} else {
 					stringBuilder.append(String.format(" and  o.%s =:%s ",
 							field, alias));
 					queryParams.put(alias, filters.get(field));
 				}
+			}
 
-			
 		}
 
 		if (Utils.isNotEmptyString(sortField)) {
@@ -272,14 +312,14 @@ public class AbstractDAO implements Serializable {
 		Query query = getCurrentSession().createQuery(stringBuilder.toString());
 
 		for (String alia : queryParams.keySet()) {
-			
+
 			query.setParameter(alia, queryParams.get(alia));
-			
+
 		}
 		return query;
 
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	private Query prepareLazyLoadingQuery(String queryString, Integer first,
 			Integer pageSize, String sortField, boolean assending,
@@ -287,8 +327,7 @@ public class AbstractDAO implements Serializable {
 		StringBuilder stringBuilder = new StringBuilder();
 		if (count) {
 			stringBuilder.append(String.format(
-					"select count( o ) from %s o where 1=1 ",
-					queryString));
+					"select count( o ) from %s o where 1=1 ", queryString));
 		} else {
 			stringBuilder.append(String.format("select o from %s o where 1=1 ",
 					queryString));
@@ -302,37 +341,37 @@ public class AbstractDAO implements Serializable {
 			String alias = null;
 			alias = Utils.dublicate(ALIAS, counter++);
 
-			
-				if (fieldClass == String.class) {
-					stringBuilder.append(String.format("and lower( o.%s ) like lower( CONCAT(  :%s ,'%s')   ) ",
-							field, alias,"%"));
-  
-					queryParams.put(alias, ((String) filterValue ).trim() );
+			if (fieldClass == String.class) {
+				stringBuilder
+						.append(String
+								.format("and lower( o.%s ) like lower( CONCAT(  :%s ,'%s')   ) ",
+										field, alias, "%"));
 
-				} else if (Utils.isPrimitiveDataType(fieldClass)) {
-					if (Utils.isAString(filterValue)) {
-						Object object = Utils.initiatePrimitiveObject(
-								fieldClass, (String) filterValue);
-						stringBuilder.append(String.format(" and o.%s =:%s ",
-								field, alias));
-						queryParams.put(alias, object);
-					}
-				} else if (fieldClass == Date.class) {
-					String secondAlias = Utils.dublicate(alias, ++counter);
-					stringBuilder.append(String.format(
-							" and o.%s >= :%s and o.%s <= :%s ", field, alias,field,  
-							secondAlias));
-					Date startDate = Utils.getStartOfDay((Date) filterValue);
-					Date endDate = Utils.getEndOfDay((Date) filterValue);
-					queryParams.put(alias, startDate);
-					queryParams.put(secondAlias, endDate);
-				} else {
-					stringBuilder.append(String.format(" and  o.%s =:%s ",
+				queryParams.put(alias, ((String) filterValue).trim());
+
+			} else if (Utils.isPrimitiveDataType(fieldClass)) {
+				if (Utils.isAString(filterValue)) {
+					Object object = Utils.initiatePrimitiveObject(fieldClass,
+							(String) filterValue);
+					stringBuilder.append(String.format(" and o.%s =:%s ",
 							field, alias));
-					queryParams.put(alias, filters.get(field));
+					queryParams.put(alias, object);
 				}
+			} else if (fieldClass == Date.class) {
+				String secondAlias = Utils.dublicate(alias, ++counter);
+				stringBuilder.append(String.format(
+						" and o.%s >= :%s and o.%s <= :%s ", field, alias,
+						field, secondAlias));
+				Date startDate = Utils.getStartOfDay((Date) filterValue);
+				Date endDate = Utils.getEndOfDay((Date) filterValue);
+				queryParams.put(alias, startDate);
+				queryParams.put(secondAlias, endDate);
+			} else {
+				stringBuilder.append(String.format(" and  o.%s =:%s ", field,
+						alias));
+				queryParams.put(alias, filters.get(field));
+			}
 
-			
 		}
 
 		if (Utils.isNotEmptyString(sortField)) {
@@ -342,13 +381,12 @@ public class AbstractDAO implements Serializable {
 		Query query = getCurrentSession().createQuery(stringBuilder.toString());
 
 		for (String alia : queryParams.keySet()) {
-			
+
 			query.setParameter(alia, queryParams.get(alia));
-			
+
 		}
 		return query;
 
 	}
 
-	
 }

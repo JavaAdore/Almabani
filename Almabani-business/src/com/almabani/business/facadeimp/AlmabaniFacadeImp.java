@@ -72,6 +72,8 @@ import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
+import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
+import com.almabani.common.entity.schema.adminoam.view.OamStockItemView;
 import com.almabani.common.entity.schema.adminsec.ApplicationType;
 import com.almabani.common.entity.schema.adminsec.SecApplication;
 import com.almabani.common.entity.schema.adminsec.SecApplicationGrants;
@@ -84,7 +86,6 @@ import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
-import com.almabani.common.virtual.entity.StockItemView;
 
 @Service
 @EnableTransactionManagement
@@ -1169,8 +1170,8 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 			return stockItemService.updateStockItem(oamStockItem,
 					commonDriverMap);
 		} else {
-			Long numberOfRemainingItems = projectItemService
-					.getNumberofRemainingItems(oamStockItem.getProjectItem());
+			Long numberOfRemainingItems = stockItemService
+					.getNumberofRemainingItems(oamStockItem.getProjectItem() , oamStockItem.getItemQuotation() , oamStockItem.getEstablishment());
 			if (numberOfRemainingItems < oamStockItem.getEntryValue()) {
 				throw new AlmabaniException(
 						MessagesKeyStore.ALMABANI_GENERAL_REQUESTED_AMOUNT_IS_GRATER_THAN_EXIST_AMOUNT);
@@ -1203,8 +1204,9 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public List<OamStockItem> loadOamStockItemsView(int first, int pageSize,
-			String sortField, boolean ascending, Map<String, Object> filters) {
+	public List<OamStockItemView> loadOamStockItemsView(int first,
+			int pageSize, String sortField, boolean ascending,
+			Map<String, Object> filters) {
 
 		return stockItemService.loadOamStockItemsView(first, pageSize,
 				sortField, ascending, filters);
@@ -1253,14 +1255,35 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public OamItemCategory addOrUpdateItemCategory(
-			OamItemCategory oamItemCategory, CommonDriverMap commonDriverMap) throws AlmabaniException {
+			OamItemCategory oamItemCategory, CommonDriverMap commonDriverMap)
+			throws AlmabaniException {
 		if (Utils.hasID(oamItemCategory)) {
-			return itemCategoryService.updateItemCategory(oamItemCategory, commonDriverMap);
+			return itemCategoryService.updateItemCategory(oamItemCategory,
+					commonDriverMap);
 		} else {
-			return itemCategoryService.addItemCategory(oamItemCategory, commonDriverMap);
+			return itemCategoryService.addItemCategory(oamItemCategory,
+					commonDriverMap);
 		}
 	}
 
+	@Override
+	public Integer getNumberOfOamStockItemsDetailsView(
+			Map<String, Object> filters) {
+		return stockItemService.getNumberOfOamStockItemsDetailsView(filters);
+	}
 
+	@Override
+	public List<OamStockItemDetailsView> loadOamStockItemsDetailsView(
+			int first, int pageSize, String sortField, boolean assending,
+			Map<String, Object> filters) {
+		return stockItemService.loadOamStockItemsDetailsView(
+				 first,  pageSize,  sortField,  assending,
+				 filters);
+	}
 
+	@Override
+	public Long getNumberofRemainingItems(OamProjectItem projectItem,
+			OamItemQuotation itemQuotation, Establishment establishment) {
+		return stockItemService.getNumberofRemainingItems(projectItem, itemQuotation, establishment); 
+	}
 }
