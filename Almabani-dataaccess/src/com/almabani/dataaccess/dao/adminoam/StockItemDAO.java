@@ -42,8 +42,7 @@ public interface StockItemDAO extends AbstractDAOInt{
 
 	Integer getNumberOfOamStockItemsDetailsView(Map<String, Object> filters);
 
-	Long getNumberOfRemainingItems(OamProjectItem projectItem,
-			OamItemQuotation itemQuotation, Establishment establishment);
+	Long getNumberOfRemainingItems(OamProjectItem projectItem, Establishment establishment);
 
 	
 	

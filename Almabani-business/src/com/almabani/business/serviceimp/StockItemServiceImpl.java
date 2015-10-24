@@ -102,9 +102,11 @@ public class StockItemServiceImpl implements StockItemService {
 	}
 
 	@Override
-	public Long getNumberofRemainingItems(OamProjectItem projectItem,
-			OamItemQuotation itemQuotation, Establishment establishment) {
-		return stockItemDAO.getNumberOfRemainingItems(projectItem,itemQuotation,establishment);
+	public Long getNumberofRemainingItems(OamProjectItem projectItem ,Establishment establishment) {
+		return stockItemDAO.getNumberOfRemainingItems(projectItem,establishment);
 	}
-
 }
+
+
+
+	

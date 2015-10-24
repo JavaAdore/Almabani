@@ -26,7 +26,7 @@
 					value="#{applicationGrantManagementBean.activeCompany}"
 					required="true"
 					requiredMessage="#{loc.CreateOamSupplierRequiredMessage_company}">
-
+					<p:ajax process="@this" listener="#{applicationGrantManagementBean.companySelected}" update="usersList"></p:ajax>
 					<f:selectItem itemValue="" itemDisabled="#{applicationScopeStore.isAdminUser() == false}"
 						itemLabel="#{loc.ALMABANI_SUPPLIER_CREATE_SUPPLIER_SELECT_COMPANY}" />
 					<f:selectItems value="#{applicationGrantManagementBean.companies}"
@@ -53,14 +53,14 @@
 				<h:outputText value="#{loc.ALMABANI_GENERAL_USER}" />
 
 
-				<p:selectOneMenu converter="#{userConverter}"
+				<p:selectOneMenu converter="#{userConverter}" id="usersList"
 					value="#{applicationGrantManagementBean.activeUser}"
 					required="true"
 					requiredMessage="#{loc.ALMABANI_GENERAL_USER_REQUIRED}">
 					<f:selectItem itemValue="" itemDisabled="#{applicationScopeStore.isAdminUser() == false}"
 						itemLabel="#{loc.ALMABANI_GENERAL_SELECT_USER}" />
 					<f:selectItems value="#{applicationGrantManagementBean.users}"
-						var="user" itemLabel="#{user.userLoginCode} " itemValue="#{user}" />
+						var="user" itemLabel="#{user.userLoginCode	} - #{user.employee.employeeName} " itemValue="#{user}" />
 				</p:selectOneMenu>
 
 				<p:commandButton value="#{loc.ALMABANI_GRANTS_DISPLAY_GRANTS}"

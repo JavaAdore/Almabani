@@ -43,8 +43,7 @@ public interface StockItemService {
 			int pageSize, String sortField, boolean assending,
 			Map<String, Object> filters);
 
-	Long getNumberofRemainingItems(OamProjectItem projectItem,
-			OamItemQuotation itemQuotation, Establishment establishment);
+	Long getNumberofRemainingItems(OamProjectItem projectItem,Establishment establishment);
 
 
 

@@ -238,6 +238,11 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 
 		selectedStockItem.setProjectItem(new OamProjectItem(selected
 				.getOamStockItemViewId().getProjectItemId()));
+		
+		selectedStockItem.setEstablishment(new Establishment(selected.getOamStockItemViewId().getEstablishmentNumber()));
+		
+	
+		
 		selectedStockItem = almabaniFacade.addorUpdateOamStockItem(
 				selectedStockItem,
 				CommonDriverMap.appendCurrentUserCode(null,
@@ -267,15 +272,5 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 		}
 	}
 
-	public void fetchMaxAvailableAmountToWithdraw(AjaxBehaviorEvent event)
-	{
-		
-		if(Utils.isNotNull(selectedStockItem.getEstablishment())&& Utils.isNotNull(selectedStockItem.getItemQuotation()))
-		{ 
-			Long availableAmountToWithdrawl =  almabaniFacade.getNumberofRemainingItems(new  OamProjectItem(selected
-					.getOamStockItemViewId().getProjectItemId()) , selectedStockItem.getItemQuotation(),selectedStockItem.getEstablishment());
-			
-			selectedStockItem.setMaxAmountToWithdraw(availableAmountToWithdrawl);
-		}
-	}
+
 }

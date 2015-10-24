@@ -23,65 +23,70 @@ import com.almabani.common.entity.AbstractEntity;
  */
 
 @Entity
-@Table(schema="ADMINCOR",name = "COM_ESTABLISHMENTS")
+@Table(schema = "ADMINCOR", name = "COM_ESTABLISHMENTS")
 @SequenceGenerator(name = "ComEstablishments_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_ESTABLISHMENT", allocationSize = 1, initialValue = 1)
 public class Establishment extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 1288021767291635086L;
-	
+
 	@Id
 	@Column(name = "NUM_ESTABLISHMENT", unique = true, nullable = false, precision = 4, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ComEstablishments_Id_Seq_Gen")
 	private Long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_COMPANY", referencedColumnName="NUM_COMPANY", nullable = false)
+	@JoinColumn(name = "NUM_COMPANY", referencedColumnName = "NUM_COMPANY", nullable = false)
 	private Company company;
-	
+
 	@ManyToOne
 	@JoinColumns({
 			@JoinColumn(name = "NUM_ZIP_CODE", referencedColumnName = "NUM_ZIP_CODE", nullable = false),
 			@JoinColumn(name = "NUM_SEQ_ZIP_CODE", referencedColumnName = "NUM_SEQ_ZIP_CODE", nullable = false) })
 	private ZipCode zipCode;
-	
+
 	@Column(name = "NUM_DOCUMENT", nullable = false, precision = 14, scale = 0)
 	private long documentNumber;
-	
+
 	@Column(name = "NUM_DIGIT_ESTABLISHMENT", precision = 1, scale = 0)
 	private Boolean digitEstablishmentNumber;
-	
+
 	@Column(name = "IND_TYPE_ESTABLISHMENT", length = 1)
 	private String indTypeEstablishment;
-	
+
 	@Column(name = "NAM_ESTABLISHMENT", nullable = false, length = 40)
 	private String establishmentName;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
-	
+
 	/**
-	 * modificationMakerName represent the user name who make the last modification
+	 * modificationMakerName represent the user name who make the last
+	 * modification
 	 */
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
-	
+
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
 	private String indActive;
-	
+
 	@Column(name = "NAM_ADDRESS", length = 80)
 	private String addressName;
-	
+
 	@Column(name = "NUM_ADDRESS", precision = 4, scale = 0)
 	private Integer addressNumber;
-	
+
 	@Column(name = "DES_COMPLEMENT_ADDRESS_1", length = 50)
 	private String desComplementAddress1;
-	
+
 	@Column(name = "DES_COMPLEMENT_ADDRESS_2", length = 50)
 	private String desComplementAddress2;
 
 	public Establishment() {
+	}
+
+	public Establishment(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -92,7 +97,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -106,7 +112,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param company the company to set
+	 * @param company
+	 *            the company to set
 	 */
 	public void setCompany(Company company) {
 		this.company = company;
@@ -120,7 +127,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param zipCode the zipCode to set
+	 * @param zipCode
+	 *            the zipCode to set
 	 */
 	public void setZipCode(ZipCode zipCode) {
 		this.zipCode = zipCode;
@@ -134,7 +142,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param documentNumber the documentNumber to set
+	 * @param documentNumber
+	 *            the documentNumber to set
 	 */
 	public void setDocumentNumber(long documentNumber) {
 		this.documentNumber = documentNumber;
@@ -148,7 +157,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param digitEstablishmentNumber the digitEstablishmentNumber to set
+	 * @param digitEstablishmentNumber
+	 *            the digitEstablishmentNumber to set
 	 */
 	public void setDigitEstablishmentNumber(Boolean digitEstablishmentNumber) {
 		this.digitEstablishmentNumber = digitEstablishmentNumber;
@@ -162,7 +172,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param indTypeEstablishment the indTypeEstablishment to set
+	 * @param indTypeEstablishment
+	 *            the indTypeEstablishment to set
 	 */
 	public void setIndTypeEstablishment(String indTypeEstablishment) {
 		this.indTypeEstablishment = indTypeEstablishment;
@@ -176,7 +187,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param establishmentName the establishmentName to set
+	 * @param establishmentName
+	 *            the establishmentName to set
 	 */
 	public void setEstablishmentName(String establishmentName) {
 		this.establishmentName = establishmentName;
@@ -190,7 +202,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param lastModificationDate the lastModificationDate to set
+	 * @param lastModificationDate
+	 *            the lastModificationDate to set
 	 */
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
@@ -204,7 +217,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param modificationMakerName the modificationMakerName to set
+	 * @param modificationMakerName
+	 *            the modificationMakerName to set
 	 */
 	public void setModificationMakerName(String modificationMakerName) {
 		this.modificationMakerName = modificationMakerName;
@@ -218,7 +232,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param indActive the indActive to set
+	 * @param indActive
+	 *            the indActive to set
 	 */
 	public void setIndActive(String indActive) {
 		this.indActive = indActive;
@@ -232,7 +247,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param addressName the addressName to set
+	 * @param addressName
+	 *            the addressName to set
 	 */
 	public void setAddressName(String addressName) {
 		this.addressName = addressName;
@@ -246,7 +262,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param addressNumber the addressNumber to set
+	 * @param addressNumber
+	 *            the addressNumber to set
 	 */
 	public void setAddressNumber(Integer addressNumber) {
 		this.addressNumber = addressNumber;
@@ -260,7 +277,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param desComplementAddress1 the desComplementAddress1 to set
+	 * @param desComplementAddress1
+	 *            the desComplementAddress1 to set
 	 */
 	public void setDesComplementAddress1(String desComplementAddress1) {
 		this.desComplementAddress1 = desComplementAddress1;
@@ -274,7 +292,8 @@ public class Establishment extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @param desComplementAddress2 the desComplementAddress2 to set
+	 * @param desComplementAddress2
+	 *            the desComplementAddress2 to set
 	 */
 	public void setDesComplementAddress2(String desComplementAddress2) {
 		this.desComplementAddress2 = desComplementAddress2;

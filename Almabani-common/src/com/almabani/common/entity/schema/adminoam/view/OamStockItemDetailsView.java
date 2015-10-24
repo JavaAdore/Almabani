@@ -1,12 +1,15 @@
 package com.almabani.common.entity.schema.adminoam.view;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Subselect;
 
@@ -42,6 +45,22 @@ public class OamStockItemDetailsView implements Serializable {
 
 	@Column(name="DES_QUOTATION")
 	private String quotationDescription;
+	
+	
+	@Column(name="DAT_ENTRY")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date withdrawDate;
+	
+
+
+	public Date getWithdrawDate() {
+		return withdrawDate;
+	}
+
+
+	public void setWithdrawDate(Date withdrawDate) {
+		this.withdrawDate = withdrawDate;
+	}
 
 
 	public Integer getProjectItemId() {

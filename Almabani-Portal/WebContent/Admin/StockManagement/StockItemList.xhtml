@@ -46,19 +46,19 @@
 
 
 
-<!-- 				<p:column filterBy="#{item.lastModificationDate}" -->
-<!-- 					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}"> -->
-<!-- 					<f:facet name="filter"> -->
-<!-- 						<p:calendar pattern="dd/MM/yyyy" onchange="PF('stockItemDataList').filter()"> -->
-<!-- 							<p:ajax event="dateSelect" -->
-<!-- 								oncomplete="PF('stockItemDataList').filter()"></p:ajax> -->
-
-<!-- 						</p:calendar> -->
-<!-- 					</f:facet> -->
-<!-- 					<h:outputText value="#{item.lastModificationDate}"> -->
-<!-- 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" /> -->
-<!-- 					</h:outputText> -->
-<!-- 				</p:column> -->
+				<p:column filterBy="#{item.withdrawDate}"
+					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
+					<f:facet name="filter">
+						<p:calendar pattern="dd/MM/yyyy" onchange="PF('stockItemDataList').filter()">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('stockItemDataList').filter()"></p:ajax>
+  
+						</p:calendar>
+					</f:facet>
+					<h:outputText value="#{item.withdrawDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" />
+					</h:outputText>
+				</p:column>
 
 
 

@@ -1,4 +1,7 @@
-
+.center
+{
+	text-align:center !important;
+}
 .red
 {
 	color:red !important;

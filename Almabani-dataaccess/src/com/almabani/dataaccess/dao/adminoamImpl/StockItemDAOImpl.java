@@ -90,14 +90,12 @@ public class StockItemDAOImpl extends AbstractDAO implements StockItemDAO {
 	}
 
 	@Override
-	public Long getNumberOfRemainingItems(OamProjectItem projectItem,
-			OamItemQuotation itemQuotation, Establishment establishment) {
+	public Long getNumberOfRemainingItems(OamProjectItem projectItem ,Establishment establishment) {
 		Query query = super
 				.getCurrentSession() 
 				.createQuery(
-						"select x.availableQuantity from  OamStockItemView x , OamStockItem xx where x.oamStockItemViewId.projectItemId  = xx.projectItem.id and x.oamStockItemViewId.projectItemId=:projectItem and x.oamStockItemViewId.establishmentNumber=:establishmentNumber and  xx.itemQuotation =:itemQuotation");
+						"select x.availableQuantity from  OamStockItemView x where  x.oamStockItemViewId.projectItemId=:projectItem and x.oamStockItemViewId.establishmentNumber=:establishmentNumber");
 		query.setParameter("projectItem", projectItem.getId()); 
-		query.setParameter("itemQuotation", itemQuotation);
 		query.setParameter("establishmentNumber", establishment.getId());
 		Object numberOfRemainingItems = Utils.getFirstResult(query.list());
 

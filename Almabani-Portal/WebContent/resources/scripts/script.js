@@ -32,3 +32,18 @@ function getCookie(name) {
 	  return result;
 	  
   }
+  
+  $(document).ready(function()
+		  {
+	  
+
+	  $( "td[role='gridcell']" ).each(function(index,obj){
+		  
+		  $(obj).addClass('center');
+		  
+	  });
+		  });
+			 
+			  
+		  
+		

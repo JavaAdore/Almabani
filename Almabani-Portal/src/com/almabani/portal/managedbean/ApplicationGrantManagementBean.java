@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
@@ -52,17 +53,26 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 
 	private void initializeInitialLists() {
 
-		initializeUsersList();
 		initializeCompanyList();
 		initializePrefilTypeList();
 		initializeModulesList();
-
 	}
 
+	
+	
 	private void initializeModulesList() {
 		modules = almabaniFacade.getAllModules();
+		
 	}
 
+	public void companySelected(AjaxBehaviorEvent e)
+	{
+		
+			users = almabaniFacade.getCompanyUsers(activeCompany);
+
+	}
+	
+	
 	public void grantAccess() throws AlmabaniException {
 
 		if (Utils.isNotEmptyList(allApplications)) {
@@ -119,17 +129,7 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 		}
 	}
 
-	private void initializeUsersList() {
-		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
-			users = almabaniFacade.getAllUsers();
-		} else {
-
-			users = almabaniFacade.getCompanyUsers(WebUtils
-					.getCurrentLoggedUser().getEmployee().getEstablishment()
-					.getCompany());
-		}
-
-	}
+	
 
 	public List<UserApplicationGrant> getAllApplications() {
 		return allApplications;

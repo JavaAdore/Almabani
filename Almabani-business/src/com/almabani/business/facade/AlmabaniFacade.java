@@ -392,7 +392,7 @@ public interface AlmabaniFacade {
 	List<Establishment> getAllEstablishments();
 
 	List<Establishment> getAllEstablishments(Company currentLoggedUserCompany);
-	
+
 	List<OamItemQuotation> getItemQuotataion(OamProjectItem oamProjectItem);
 
 	List<Department> getLightDepartments(Company company);
@@ -407,9 +407,8 @@ public interface AlmabaniFacade {
 	List<OamStockItemDetailsView> loadOamStockItemsDetailsView(int first,
 			int pageSize, String sortField, boolean b,
 			Map<String, Object> filters);
-	
-	Long getNumberofRemainingItems(OamProjectItem projectItem,
-			OamItemQuotation itemQuotation, Establishment establishment);
 
+	Long getNumberofRemainingItems(OamProjectItem projectItem,
+			Establishment establishment);
 
 }

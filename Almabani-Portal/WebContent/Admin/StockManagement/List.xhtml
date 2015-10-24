@@ -16,8 +16,9 @@
 				resizableColumns="true"
 				selection="#{stockItemManagementBean.selected}"
 				draggableColumns="true" draggableRows="true"
-				rowKey="#{item.oamStockItemViewId.projectItemId}-#{item.oamStockItemViewId.establishmentNumber}" paginator="true" lazy="true"
-				rows="10" rowsPerPageTemplate="10,20,30">
+				rowKey="#{item.oamStockItemViewId.projectItemId}-#{item.oamStockItemViewId.establishmentNumber}"
+				paginator="true" lazy="true" rows="10"
+				rowsPerPageTemplate="10,20,30">
 
 				<f:facet name="header">
 					<p:commandButton id="toggler" type="button"
@@ -34,22 +35,13 @@
 				<p:ajax event="rowUnselect" update=":stockItemprojectItemListForm" />
 
 
-				<p:column headerText="#{loc.ListOamProjectItemTitle_project}"
-					sortBy="#{item.oamStockItemViewId.projectCode}" filterBy="#{item.oamStockItemViewId.projectCode}">
-					<f:facet name="filter">
 
-						<p:selectOneMenu onchange="PF('datalist').filter()"
-							converter="#{projectConverter}">
-							<f:selectItem itemLabel="" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{projectItemManagementBean.projects}"
-								var="project" itemValue="#{project}"
-								itemLabel="#{project.projectCode}" />
-						</p:selectOneMenu>
-					</f:facet>
-
-					<h:outputText value="#{item.oamStockItemViewId.projectCode}" />
+				<p:column headerText="#{loc.CreateOamStockItemLabel_establishment}"
+					sortBy="#{item.oamStockItemViewId.establishmentName}"
+					filterBy="#{item.oamStockItemViewId.establishmentName}">
+					<h:outputText value="#{item.oamStockItemViewId.establishmentName}" />
 				</p:column>
+
 
 
 
@@ -68,8 +60,7 @@
 						</p:selectOneMenu>
 					</f:facet>
 
-					<h:outputText
-						value="#{ item.oamStockItemViewId.departmentSection}" />
+					<h:outputText value="#{ item.oamStockItemViewId.departmentSection}" />
 				</p:column>
 
 				<p:column headerText="#{loc.EditOamItemLabel_itemCategory}"
@@ -78,8 +69,25 @@
 					<h:outputText value="#{item.oamStockItemViewId.itemCategory}" />
 				</p:column>
 
+				<p:column headerText="#{loc.ListOamProjectItemTitle_project}"
+					sortBy="#{item.oamStockItemViewId.projectCode}"
+					filterBy="#{item.oamStockItemViewId.projectCode}">
+					<f:facet name="filter">
 
-				
+						<p:selectOneMenu onchange="PF('datalist').filter()"
+							converter="#{projectConverter}">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{projectItemManagementBean.projects}"
+								var="project" itemValue="#{project}"
+								itemLabel="#{project.projectCode}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText value="#{item.oamStockItemViewId.projectCode}" />
+				</p:column>
+
+
 				<p:column headerText="#{loc.ListOamProjectItemTitle_item}"
 					sortBy="#{item.oamStockItemViewId.itemDescription}"
 					filterBy="#{item.oamStockItemViewId.itemDescription}">
@@ -87,7 +95,8 @@
 				</p:column>
 
 				<p:column headerText="#{loc.ListOamItemTitle_Remaining_amount}"
-					sortBy="#{item.availableQuantity}" filterBy="#{item.availableQuantity}">
+					sortBy="#{item.availableQuantity}"
+					filterBy="#{item.availableQuantity}">
 					<h:outputText value="#{item.availableQuantity}" />
 				</p:column>
 
