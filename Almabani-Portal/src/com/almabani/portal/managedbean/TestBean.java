@@ -24,8 +24,6 @@ public class TestBean extends AbstractBeanHelper implements Serializable {
 
 	public void test() {
 
-		Object x = companyDAO.getAllCompanyViews();
-		System.out.println(x);
 	} 
 
 	public CompanyDAO getCompanyDAO() {

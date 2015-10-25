@@ -23,47 +23,51 @@ import com.almabani.common.entity.schema.admincor.Establishment;
  */
 
 @Entity
-@Table(schema="ADMINOAM", name = "OAM_ITEM_QUOTATIONS")
+@Table(schema = "ADMINOAM", name = "OAM_ITEM_QUOTATIONS")
 @SequenceGenerator(name = "OamItemQuotations_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_ITEM_QUOTATION", allocationSize = 1, initialValue = 1)
 public class OamItemQuotation extends AbstractEntity implements Serializable {
-	
+
 	private static final long serialVersionUID = 4712509499440223342L;
 
 	@Id
 	@Column(name = "NUM_ITEM_QUOTATION", unique = true, nullable = false, precision = 12, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamItemQuotations_Id_Seq_Gen")
 	private Long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_QUOTATION", referencedColumnName="NUM_QUOTATION", nullable = false)
+	@JoinColumn(name = "NUM_QUOTATION", referencedColumnName = "NUM_QUOTATION", nullable = false)
 	private OamQuotation quotation;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_PROJECT_ITEM", referencedColumnName="NUM_PROJECT_ITEM")
+	@JoinColumn(name = "NUM_PROJECT_ITEM", referencedColumnName = "NUM_PROJECT_ITEM")
 	private OamProjectItem projectItem;
-	
+
 	@Column(name = "QUT_ITEM", nullable = false, precision = 3, scale = 0)
 	private Integer qutItem;
-	
+
 	@Column(name = "DES_OBSERVATION", length = 80)
 	private String observationDescription;
-	
+
 	/**
-	 * modificationMakerName represent the user name who make the last modification
+	 * modificationMakerName represent the user name who make the last
+	 * modification
 	 */
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 
 	@ManyToOne
-	@JoinColumn(name = "NUM_ESTABLISHMENT", referencedColumnName="NUM_ESTABLISHMENT")
-	private Establishment establishment; 
-	
- 
+	@JoinColumn(name = "NUM_ESTABLISHMENT", referencedColumnName = "NUM_ESTABLISHMENT")
+	private Establishment establishment;
+
 	public OamItemQuotation() {
+	}
+
+	public OamItemQuotation(Long id) {
+		this.id = id;
 	}
 
 	public Long getId() {
@@ -129,5 +133,5 @@ public class OamItemQuotation extends AbstractEntity implements Serializable {
 	public void setEstablishment(Establishment establishment) {
 		this.establishment = establishment;
 	}
-	
+
 }

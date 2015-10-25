@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.almabani.common.entity.schema.admincor.Company;
-import com.almabani.common.entity.schema.admincor.view.CompanyView;
 import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.admincor.CompanyDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -68,9 +67,6 @@ public class CompanyDAOImp extends AbstractDAO implements CompanyDAO {
 		return super.getAllEntities(Company.class);
 	}
 
-	@Override
-	public List<CompanyView> getAllCompanyViews() {
-		return super.getAllEntities(CompanyView.class);
-	}
+	
 
 }

@@ -36,10 +36,10 @@
 	<bean id="local" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 		<property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+			value="jdbc:oracle:thin:@192.168.0.16:1521:orcl"></property>
 		<property name="username" value="USERONLINE">  
 		</property>
-		<property name="password" value="a"> 
+		<property name="password" value="braegy#2015"> 
 
 		</property>
 	</bean>

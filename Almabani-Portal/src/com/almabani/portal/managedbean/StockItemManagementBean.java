@@ -20,6 +20,7 @@ import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
 import com.almabani.common.entity.schema.adminoam.view.OamStockItemView;
@@ -235,7 +236,7 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 	public void withdrawal() throws AlmabaniException {
 
 		boolean isAlreadyExisitEntity = Utils.hasID(selectedStockItem);
-
+		
 		selectedStockItem.setProjectItem(new OamProjectItem(selected
 				.getOamStockItemViewId().getProjectItemId()));
 		
