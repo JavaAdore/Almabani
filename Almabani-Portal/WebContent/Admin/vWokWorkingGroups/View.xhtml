@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VWokWorkingGroupsViewDlg" widgetVar="VWokWorkingGroupsViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewVWokWorkingGroupsTitle}" closeOnEscape="true">
+
+            <h:form id="VWokWorkingGroupsViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{vWokWorkingGroupsController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_companyNumber}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.companyNumber}" title="#{myBundle.ViewVWokWorkingGroupsTitle_companyNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_companyBame}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.companyBame}" title="#{myBundle.ViewVWokWorkingGroupsTitle_companyBame}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_projectNumber}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.projectNumber}" title="#{myBundle.ViewVWokWorkingGroupsTitle_projectNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_projectCode}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.projectCode}" title="#{myBundle.ViewVWokWorkingGroupsTitle_projectCode}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_departmentName}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.departmentName}" title="#{myBundle.ViewVWokWorkingGroupsTitle_departmentName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_sectionName}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.sectionName}" title="#{myBundle.ViewVWokWorkingGroupsTitle_sectionName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_groupTypeNumber}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.groupTypeNumber}" title="#{myBundle.ViewVWokWorkingGroupsTitle_groupTypeNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_groupTypeDescription}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.groupTypeDescription}" title="#{myBundle.ViewVWokWorkingGroupsTitle_groupTypeDescription}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_numWorkingGroup}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.numWorkingGroup}" title="#{myBundle.ViewVWokWorkingGroupsTitle_numWorkingGroup}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_workingGroupCode}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.workingGroupCode}" title="#{myBundle.ViewVWokWorkingGroupsTitle_workingGroupCode}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_desWorkingGroup}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.desWorkingGroup}" title="#{myBundle.ViewVWokWorkingGroupsTitle_desWorkingGroup}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_validityBeginDate}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.validityBeginDate}" title="#{myBundle.ViewVWokWorkingGroupsTitle_validityBeginDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_validityEndDate}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.validityEndDate}" title="#{myBundle.ViewVWokWorkingGroupsTitle_validityEndDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_userModifiedName}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.userModifiedName}" title="#{myBundle.ViewVWokWorkingGroupsTitle_userModifiedName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_lastModificationDate}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.lastModificationDate}" title="#{myBundle.ViewVWokWorkingGroupsTitle_lastModificationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_startOperateionHour}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.startOperateionHour}" title="#{myBundle.ViewVWokWorkingGroupsTitle_startOperateionHour}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_endOperationHour}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.endOperationHour}" title="#{myBundle.ViewVWokWorkingGroupsTitle_endOperationHour}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_workingDaysTypeInd}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.workingDaysTypeInd}" title="#{myBundle.ViewVWokWorkingGroupsTitle_workingDaysTypeInd}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_serialversionuid}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.serialversionuid}" title="#{myBundle.ViewVWokWorkingGroupsTitle_serialversionuid}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokWorkingGroupsLabel_id}"/>
+                        <h:outputText value="#{vWokWorkingGroupsController.selected.id}" title="#{myBundle.ViewVWokWorkingGroupsTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('VWokWorkingGroupsViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

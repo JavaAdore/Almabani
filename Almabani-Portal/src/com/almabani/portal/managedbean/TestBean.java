@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 
 import com.almabani.dataaccess.dao.admincor.CompanyDAO;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
+import com.almabani.portal.webutils.WebUtils;
 
 @ManagedBean
 @ViewScoped
@@ -16,22 +17,13 @@ public class TestBean extends AbstractBeanHelper implements Serializable {
 	/**
 	 * 
 	 */
-	
-	@ManagedProperty(value = "#{companyDAOImp}")
-	protected CompanyDAO companyDAO;
-	
+
 	private static final long serialVersionUID = 1L;
 
-	public void test() {
+	public void test() { 
 
-	} 
-
-	public CompanyDAO getCompanyDAO() {
-		return companyDAO;
-	}
-
-	public void setCompanyDAO(CompanyDAO companyDAO) {
-		this.companyDAO = companyDAO;
+		Object o = almabaniFacade.getWokDailyIccurrencesViewRecords("ALZAHER");
+		System.out.println(o);
 	}
 
 }

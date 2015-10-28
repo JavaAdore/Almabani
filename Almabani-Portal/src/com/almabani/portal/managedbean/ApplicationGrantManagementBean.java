@@ -123,10 +123,12 @@ public class ApplicationGrantManagementBean extends AbstractBeanHelper
 		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
 			companies = almabaniFacade.getAllCompanies();
 		} else {
+			activeCompany = WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany();
 			companies = new ArrayList();
-			companies.add(WebUtils.getCurrentLoggedUser().getEmployee()
-					.getEstablishment().getCompany());
-		}
+			companies.add(activeCompany);
+			users = almabaniFacade.getCompanyUsers(activeCompany);
+		} 
 	}
 
 	

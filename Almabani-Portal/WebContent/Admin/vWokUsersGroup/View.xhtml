@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VWokUsersGroupViewDlg" widgetVar="VWokUsersGroupViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewVWokUsersGroupTitle}" closeOnEscape="true">
+
+            <h:form id="VWokUsersGroupViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{vWokUsersGroupController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_userGroupNumber}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.userGroupNumber}" title="#{myBundle.ViewVWokUsersGroupTitle_userGroupNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_companyNumber}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.companyNumber}" title="#{myBundle.ViewVWokUsersGroupTitle_companyNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_companyName}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.companyName}" title="#{myBundle.ViewVWokUsersGroupTitle_companyName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_departmentName}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.departmentName}" title="#{myBundle.ViewVWokUsersGroupTitle_departmentName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_sectionName}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.sectionName}" title="#{myBundle.ViewVWokUsersGroupTitle_sectionName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_loginUserCode}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.loginUserCode}" title="#{myBundle.ViewVWokUsersGroupTitle_loginUserCode}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_employeeCode}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.employeeCode}" title="#{myBundle.ViewVWokUsersGroupTitle_employeeCode}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_employeeName}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.employeeName}" title="#{myBundle.ViewVWokUsersGroupTitle_employeeName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_workingGroupNumber}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.workingGroupNumber}" title="#{myBundle.ViewVWokUsersGroupTitle_workingGroupNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_workingGroupDescription}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.workingGroupDescription}" title="#{myBundle.ViewVWokUsersGroupTitle_workingGroupDescription}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_profileTypeNumber}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.profileTypeNumber}" title="#{myBundle.ViewVWokUsersGroupTitle_profileTypeNumber}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_profileTypeDescription}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.profileTypeDescription}" title="#{myBundle.ViewVWokUsersGroupTitle_profileTypeDescription}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_beginDateValidity}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.beginDateValidity}" title="#{myBundle.ViewVWokUsersGroupTitle_beginDateValidity}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_endDateValidity}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.endDateValidity}" title="#{myBundle.ViewVWokUsersGroupTitle_endDateValidity}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_userModifiedName}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.userModifiedName}" title="#{myBundle.ViewVWokUsersGroupTitle_userModifiedName}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_lastModificationDate}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.lastModificationDate}" title="#{myBundle.ViewVWokUsersGroupTitle_lastModificationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_esponsibleGroupInd}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.esponsibleGroupInd}" title="#{myBundle.ViewVWokUsersGroupTitle_esponsibleGroupInd}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_receiveNotificationInd}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.receiveNotificationInd}" title="#{myBundle.ViewVWokUsersGroupTitle_receiveNotificationInd}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_interactionDemandsInd}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.interactionDemandsInd}" title="#{myBundle.ViewVWokUsersGroupTitle_interactionDemandsInd}"/>
+
+                        <h:outputText value="#{myBundle.ViewVWokUsersGroupLabel_id}"/>
+                        <h:outputText value="#{vWokUsersGroupController.selected.id}" title="#{myBundle.ViewVWokUsersGroupTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('VWokUsersGroupViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

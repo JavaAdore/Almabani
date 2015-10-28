@@ -64,7 +64,7 @@ public class ProjectItemDAOImpl extends AbstractDAO implements ProjectItemDAO {
 		Query query = super
 				.getCurrentSession()
 				.createQuery(
-						"select x from OamProjectItem x where  upper(x.item.itemDescription) like upper(:itemNameOrDescription) or upper(x.item.itemCode) like upper(:itemNameOrDescription) and  x.item.itemCategory.comDepartmentSection.department =:department ");
+						"select x from OamProjectItem x where  (upper(x.item.itemDescription) like upper(:itemNameOrDescription) or upper(x.item.itemCode) like upper(:itemNameOrDescription)) and  x.item.itemCategory.comDepartmentSection.department =:department ");
 		query.setParameter("department", department);
 		query.setParameter("itemNameOrDescription",
 				projectItemNameOrDescription);

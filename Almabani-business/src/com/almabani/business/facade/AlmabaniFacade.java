@@ -43,6 +43,8 @@ import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
+import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
+import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 import com.almabani.common.exception.AlmabaniException;
 
 @Service
@@ -410,5 +412,14 @@ public interface AlmabaniFacade {
 
 	Long getNumberofRemainingItems(OamProjectItem projectItem,
 			Establishment establishment);
+
+	List<WokWorkingGroupsListView> getWokDailyIccurrencesViewRecords(
+			String currentUserCode);
+
+	List<WokDailyOcurrencesView> loadWokDailyOcurrencesView(int first,
+			int pageSize, String sortField, boolean assending,
+			Map<String, Object> filters);
+
+	Integer getCountOfWokDailyOcurrencesView(Map<String, Object> filters);
 
 }

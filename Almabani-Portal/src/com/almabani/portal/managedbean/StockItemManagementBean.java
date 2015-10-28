@@ -112,7 +112,7 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 				Company company = WebUtils.getCurrentLoggedUser().getEmployee()
 						.getEstablishment().getCompany();
 				if (Utils.isNotNull(company))
-					filters.put("company", company);
+					filters.put("oamStockItemViewId.company", company);
 			}
 
 		}

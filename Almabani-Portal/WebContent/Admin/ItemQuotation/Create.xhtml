@@ -26,7 +26,7 @@
 							process=" #{(quotationItemManagementBean.selected.projectItem !=null)?'@this projectItem ':'@this'}"
 							listener="#{quotationItemManagementBean.selectedQuotationChanged}"
 							update="@form" />
-						<f:selectItem itemValue="{null}"
+						<f:selectItem itemValue=""
 							itemDisabled="#{quotationItemManagementBean.selected.quotation !=null}"
 							itemLabel="#{loc.SelectOneMessage}"></f:selectItem>
 						<f:selectItems

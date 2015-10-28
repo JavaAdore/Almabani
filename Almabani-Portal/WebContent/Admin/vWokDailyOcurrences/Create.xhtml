@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VWokDailyOcurrencesCreateDlg" widgetVar="VWokDailyOcurrencesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateVWokDailyOcurrencesTitle}" closeOnEscape="true">
+
+            <h:form id="VWokDailyOcurrencesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{vWokDailyOcurrencesController.selected != null}">
+                    <p:tabView id="VWokDailyOcurrencesTabView">
+
+                        <p:tab id="VWokDailyOcurrencesTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_dailyOccurrenceNumber}" for="dailyOccurrenceNumber" />
+                                <p:inputText id="dailyOccurrenceNumber" value="#{vWokDailyOcurrencesController.selected.dailyOccurrenceNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_dailyOccurrenceNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_occurrenceDate}" for="occurrenceDate" />
+                                <p:calendar id="occurrenceDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.occurrenceDate}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_occurrenceDate}"  showOn="button"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_workingGroupNumber}" for="workingGroupNumber" />
+                                <p:inputText id="workingGroupNumber" value="#{vWokDailyOcurrencesController.selected.workingGroupNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_workingGroupNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_workingGroupDescription}" for="workingGroupDescription" />
+                                <p:inputText id="workingGroupDescription" value="#{vWokDailyOcurrencesController.selected.workingGroupDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_workingGroupDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_userGroupNumber}" for="userGroupNumber" />
+                                <p:inputText id="userGroupNumber" value="#{vWokDailyOcurrencesController.selected.userGroupNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_userGroupNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_loginUserCode}" for="loginUserCode" />
+                                <p:inputText id="loginUserCode" value="#{vWokDailyOcurrencesController.selected.loginUserCode}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_loginUserCode}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_employeeNumber}" for="employeeNumber" />
+                                <p:inputText id="employeeNumber" value="#{vWokDailyOcurrencesController.selected.employeeNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_employeeNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_zoneDeviceNumber}" for="zoneDeviceNumber" />
+                                <p:inputText id="zoneDeviceNumber" value="#{vWokDailyOcurrencesController.selected.zoneDeviceNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_zoneDeviceNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_deviceCode}" for="deviceCode" />
+                                <p:inputText id="deviceCode" value="#{vWokDailyOcurrencesController.selected.deviceCode}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_deviceCode}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_zoneDescription}" for="zoneDescription" />
+                                <p:inputText id="zoneDescription" value="#{vWokDailyOcurrencesController.selected.zoneDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_zoneDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_siteLocationDescription}" for="siteLocationDescription" />
+                                <p:inputText id="siteLocationDescription" value="#{vWokDailyOcurrencesController.selected.siteLocationDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_siteLocationDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_siteDirectionDescription}" for="siteDirectionDescription" />
+                                <p:inputText id="siteDirectionDescription" value="#{vWokDailyOcurrencesController.selected.siteDirectionDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_siteDirectionDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_codGpsLocation}" for="codGpsLocation" />
+                                <p:inputText id="codGpsLocation" value="#{vWokDailyOcurrencesController.selected.codGpsLocation}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_codGpsLocation}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_siteDescription}" for="siteDescription" />
+                                <p:inputText id="siteDescription" value="#{vWokDailyOcurrencesController.selected.siteDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_siteDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_projectCode}" for="projectCode" />
+                                <p:inputText id="projectCode" value="#{vWokDailyOcurrencesController.selected.projectCode}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_projectCode}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_companyNumber}" for="companyNumber" />
+                                <p:inputText id="companyNumber" value="#{vWokDailyOcurrencesController.selected.companyNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_companyNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_occurrenceDescription}" for="occurrenceDescription" />
+                                <p:inputText id="occurrenceDescription" value="#{vWokDailyOcurrencesController.selected.occurrenceDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_occurrenceDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_userModifiedName}" for="userModifiedName" />
+                                <p:inputText id="userModifiedName" value="#{vWokDailyOcurrencesController.selected.userModifiedName}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_userModifiedName}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_lastModificationName}" for="lastModificationName" />
+                                <p:calendar id="lastModificationName" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.lastModificationName}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_lastModificationName}"  showOn="button"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_userGroupCallNumber}" for="userGroupCallNumber" />
+                                <p:inputText id="userGroupCallNumber" value="#{vWokDailyOcurrencesController.selected.userGroupCallNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_userGroupCallNumber}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="VWokDailyOcurrencesTab2" title="#{myBundle.TabHeaderPrefix} 2">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_employeeCallNumber}" for="employeeCallNumber" />
+                                <p:inputText id="employeeCallNumber" value="#{vWokDailyOcurrencesController.selected.employeeCallNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_employeeCallNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_numUserGroupSafety}" for="numUserGroupSafety" />
+                                <p:inputText id="numUserGroupSafety" value="#{vWokDailyOcurrencesController.selected.numUserGroupSafety}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_numUserGroupSafety}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_employeeSaftyNumber}" for="employeeSaftyNumber" />
+                                <p:inputText id="employeeSaftyNumber" value="#{vWokDailyOcurrencesController.selected.employeeSaftyNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_employeeSaftyNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_userGroupTechnicanNumber}" for="userGroupTechnicanNumber" />
+                                <p:inputText id="userGroupTechnicanNumber" value="#{vWokDailyOcurrencesController.selected.userGroupTechnicanNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_userGroupTechnicanNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_employeeTechnicianNumber}" for="employeeTechnicianNumber" />
+                                <p:inputText id="employeeTechnicianNumber" value="#{vWokDailyOcurrencesController.selected.employeeTechnicianNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_employeeTechnicianNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_occurrenceTypeNumber}" for="occurrenceTypeNumber" />
+                                <p:inputText id="occurrenceTypeNumber" value="#{vWokDailyOcurrencesController.selected.occurrenceTypeNumber}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_occurrenceTypeNumber}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_occurrenceTypeDescription}" for="occurrenceTypeDescription" />
+                                <p:inputText id="occurrenceTypeDescription" value="#{vWokDailyOcurrencesController.selected.occurrenceTypeDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_occurrenceTypeDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_responseTime}" for="responseTime" />
+                                <p:calendar id="responseTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.responseTime}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_responseTime}"  showOn="button"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_closingTime}" for="closingTime" />
+                                <p:calendar id="closingTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.closingTime}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_closingTime}"  showOn="button"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_actionTakedDescription}" for="actionTakedDescription" />
+                                <p:inputText id="actionTakedDescription" value="#{vWokDailyOcurrencesController.selected.actionTakedDescription}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_actionTakedDescription}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_contactPoliceDescriptionInd}" for="contactPoliceDescriptionInd" />
+                                <p:inputText id="contactPoliceDescriptionInd" value="#{vWokDailyOcurrencesController.selected.contactPoliceDescriptionInd}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_contactPoliceDescriptionInd}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_contactAmbulanceDescriptionInd}" for="contactAmbulanceDescriptionInd" />
+                                <p:inputText id="contactAmbulanceDescriptionInd" value="#{vWokDailyOcurrencesController.selected.contactAmbulanceDescriptionInd}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_contactAmbulanceDescriptionInd}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_cxntactInsuranceDescriptoinInd}" for="cxntactInsuranceDescriptoinInd" />
+                                <p:inputText id="cxntactInsuranceDescriptoinInd" value="#{vWokDailyOcurrencesController.selected.cxntactInsuranceDescriptoinInd}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_cxntactInsuranceDescriptoinInd}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_contactTransitDescriptionInd}" for="contactTransitDescriptionInd" />
+                                <p:inputText id="contactTransitDescriptionInd" value="#{vWokDailyOcurrencesController.selected.contactTransitDescriptionInd}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_contactTransitDescriptionInd}"/>
+
+                                <p:outputLabel value="#{myBundle.CreateVWokDailyOcurrencesLabel_id}" for="id" />
+                                <p:inputText id="id" value="#{vWokDailyOcurrencesController.selected.id}" title="#{myBundle.CreateVWokDailyOcurrencesTitle_id}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{vWokDailyOcurrencesController.saveNew}" value="#{myBundle.Save}" update="display,:VWokDailyOcurrencesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VWokDailyOcurrencesCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('VWokDailyOcurrencesCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

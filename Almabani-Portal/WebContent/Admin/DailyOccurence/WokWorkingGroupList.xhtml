@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="VWokWorkingGroupsListListForm">
+
+		<p:panel header="#{loc.ListVWokWorkingGroupsListTitle}">
+
+			<p:dataTable id="datalist"
+				value="#{dailyOccuranceManagementBean.wokDailyIccurrencesViewRecords}"
+				var="item" rowKey="#{item.numWorkingGroup}" paginator="true"
+				rows="10" rowsPerPageTemplate="10,20,30,40,50"
+				selectionMode="single"
+				selection="#{dailyOccuranceManagementBean.selectedWokGroup}">
+
+
+				<p:column sortBy="#{item.numCompany}" filterBy="#{item.numCompany}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVWokWorkingGroupsListTitle_numCompany}" />
+					</f:facet>
+					<h:outputText value="#{item.numCompany}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.namCompany}" filterBy="#{item.namCompany}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVWokWorkingGroupsListTitle_namCompany}" />
+					</f:facet>
+					<h:outputText value="#{item.namCompany}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.numProject}" filterBy="#{item.numProject}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVWokWorkingGroupsListTitle_numProject}" />
+					</f:facet>
+					<h:outputText value="#{item.numProject}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.codProject}" filterBy="#{item.codProject}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVWokWorkingGroupsListTitle_codProject}" />
+					</f:facet>
+					<h:outputText value="#{item.codProject}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.numWorkingGroup}"
+					filterBy="#{item.numWorkingGroup}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVWokWorkingGroupsListTitle_numWorkingGroup}" />
+					</f:facet>
+					<h:outputText value="#{item.numWorkingGroup}" />
+
+				</p:column>
+
+
+				<p:column sortBy="#{item.codWorkingGroup}"
+					filterBy="#{item.codWorkingGroup}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVWokWorkingGroupsListTitle_codWorkingGroup}" />
+					</f:facet>
+					<p:commandLink value="#{item.codWorkingGroup}"
+						actionListener="#{dailyOccuranceManagementBean.setSelectedWokGroup(item)}"
+						onclick="changeTab(1)"
+						update=":dailyOccurenceTabView:VWokDailyOcurrencesListForm">
+
+					</p:commandLink>
+				</p:column>
+
+
+			</p:dataTable>
+
+
+
+		</p:panel>
+	</h:form>
+
+</ui:composition>

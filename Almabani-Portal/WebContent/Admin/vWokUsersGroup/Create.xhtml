@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VWokUsersGroupCreateDlg" widgetVar="VWokUsersGroupCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateVWokUsersGroupTitle}" closeOnEscape="true">
+
+            <h:form id="VWokUsersGroupCreateForm">
+
+                <h:panelGroup id="display" rendered="#{vWokUsersGroupController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_userGroupNumber}" for="userGroupNumber" />
+                        <p:inputText id="userGroupNumber" value="#{vWokUsersGroupController.selected.userGroupNumber}" title="#{myBundle.CreateVWokUsersGroupTitle_userGroupNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_companyNumber}" for="companyNumber" />
+                        <p:inputText id="companyNumber" value="#{vWokUsersGroupController.selected.companyNumber}" title="#{myBundle.CreateVWokUsersGroupTitle_companyNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_companyName}" for="companyName" />
+                        <p:inputText id="companyName" value="#{vWokUsersGroupController.selected.companyName}" title="#{myBundle.CreateVWokUsersGroupTitle_companyName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_departmentName}" for="departmentName" />
+                        <p:inputText id="departmentName" value="#{vWokUsersGroupController.selected.departmentName}" title="#{myBundle.CreateVWokUsersGroupTitle_departmentName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_sectionName}" for="sectionName" />
+                        <p:inputText id="sectionName" value="#{vWokUsersGroupController.selected.sectionName}" title="#{myBundle.CreateVWokUsersGroupTitle_sectionName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_loginUserCode}" for="loginUserCode" />
+                        <p:inputText id="loginUserCode" value="#{vWokUsersGroupController.selected.loginUserCode}" title="#{myBundle.CreateVWokUsersGroupTitle_loginUserCode}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_employeeCode}" for="employeeCode" />
+                        <p:inputText id="employeeCode" value="#{vWokUsersGroupController.selected.employeeCode}" title="#{myBundle.CreateVWokUsersGroupTitle_employeeCode}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_employeeName}" for="employeeName" />
+                        <p:inputText id="employeeName" value="#{vWokUsersGroupController.selected.employeeName}" title="#{myBundle.CreateVWokUsersGroupTitle_employeeName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_workingGroupNumber}" for="workingGroupNumber" />
+                        <p:inputText id="workingGroupNumber" value="#{vWokUsersGroupController.selected.workingGroupNumber}" title="#{myBundle.CreateVWokUsersGroupTitle_workingGroupNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_workingGroupDescription}" for="workingGroupDescription" />
+                        <p:inputText id="workingGroupDescription" value="#{vWokUsersGroupController.selected.workingGroupDescription}" title="#{myBundle.CreateVWokUsersGroupTitle_workingGroupDescription}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_profileTypeNumber}" for="profileTypeNumber" />
+                        <p:inputText id="profileTypeNumber" value="#{vWokUsersGroupController.selected.profileTypeNumber}" title="#{myBundle.CreateVWokUsersGroupTitle_profileTypeNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_profileTypeDescription}" for="profileTypeDescription" />
+                        <p:inputText id="profileTypeDescription" value="#{vWokUsersGroupController.selected.profileTypeDescription}" title="#{myBundle.CreateVWokUsersGroupTitle_profileTypeDescription}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_beginDateValidity}" for="beginDateValidity" />
+                        <p:calendar id="beginDateValidity" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokUsersGroupController.selected.beginDateValidity}" title="#{myBundle.CreateVWokUsersGroupTitle_beginDateValidity}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_endDateValidity}" for="endDateValidity" />
+                        <p:calendar id="endDateValidity" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokUsersGroupController.selected.endDateValidity}" title="#{myBundle.CreateVWokUsersGroupTitle_endDateValidity}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_userModifiedName}" for="userModifiedName" />
+                        <p:inputText id="userModifiedName" value="#{vWokUsersGroupController.selected.userModifiedName}" title="#{myBundle.CreateVWokUsersGroupTitle_userModifiedName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_lastModificationDate}" for="lastModificationDate" />
+                        <p:calendar id="lastModificationDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokUsersGroupController.selected.lastModificationDate}" title="#{myBundle.CreateVWokUsersGroupTitle_lastModificationDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_esponsibleGroupInd}" for="esponsibleGroupInd" />
+                        <p:inputText id="esponsibleGroupInd" value="#{vWokUsersGroupController.selected.esponsibleGroupInd}" title="#{myBundle.CreateVWokUsersGroupTitle_esponsibleGroupInd}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_receiveNotificationInd}" for="receiveNotificationInd" />
+                        <p:inputText id="receiveNotificationInd" value="#{vWokUsersGroupController.selected.receiveNotificationInd}" title="#{myBundle.CreateVWokUsersGroupTitle_receiveNotificationInd}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_interactionDemandsInd}" for="interactionDemandsInd" />
+                        <p:inputText id="interactionDemandsInd" value="#{vWokUsersGroupController.selected.interactionDemandsInd}" title="#{myBundle.CreateVWokUsersGroupTitle_interactionDemandsInd}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokUsersGroupLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{vWokUsersGroupController.selected.id}" title="#{myBundle.CreateVWokUsersGroupTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vWokUsersGroupController.saveNew}" value="#{myBundle.Save}" update="display,:VWokUsersGroupListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VWokUsersGroupCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('VWokUsersGroupCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

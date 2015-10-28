@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VWokDailyOcurrencesViewDlg" widgetVar="VWokDailyOcurrencesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewVWokDailyOcurrencesTitle}" closeOnEscape="true">
+
+            <h:form id="VWokDailyOcurrencesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="VWokDailyOcurrencesTabView">
+
+                        <p:tab id="VWokDailyOcurrencesTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{vWokDailyOcurrencesController.selected != null}">
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_dailyOccurrenceNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.dailyOccurrenceNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_dailyOccurrenceNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_occurrenceDate}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.occurrenceDate}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_occurrenceDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_workingGroupNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.workingGroupNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_workingGroupNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_workingGroupDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.workingGroupDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_workingGroupDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_userGroupNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.userGroupNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_userGroupNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_loginUserCode}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.loginUserCode}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_loginUserCode}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_employeeNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.employeeNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_employeeNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_zoneDeviceNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.zoneDeviceNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_zoneDeviceNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_deviceCode}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.deviceCode}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_deviceCode}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_zoneDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.zoneDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_zoneDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_siteLocationDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.siteLocationDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_siteLocationDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_siteDirectionDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.siteDirectionDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_siteDirectionDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_codGpsLocation}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.codGpsLocation}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_codGpsLocation}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_siteDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.siteDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_siteDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_projectCode}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.projectCode}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_projectCode}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_companyNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.companyNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_companyNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_occurrenceDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.occurrenceDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_occurrenceDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_userModifiedName}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.userModifiedName}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_userModifiedName}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_lastModificationName}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.lastModificationName}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_lastModificationName}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_userGroupCallNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.userGroupCallNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_userGroupCallNumber}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="VWokDailyOcurrencesTab2" title="#{myBundle.TabHeaderPrefix} 2">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{vWokDailyOcurrencesController.selected != null}">
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_employeeCallNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.employeeCallNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_employeeCallNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_numUserGroupSafety}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.numUserGroupSafety}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_numUserGroupSafety}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_employeeSaftyNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.employeeSaftyNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_employeeSaftyNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_userGroupTechnicanNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.userGroupTechnicanNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_userGroupTechnicanNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_employeeTechnicianNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.employeeTechnicianNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_employeeTechnicianNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_occurrenceTypeNumber}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.occurrenceTypeNumber}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_occurrenceTypeNumber}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_occurrenceTypeDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.occurrenceTypeDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_occurrenceTypeDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_responseTime}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.responseTime}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_responseTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_closingTime}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.closingTime}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_closingTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_actionTakedDescription}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.actionTakedDescription}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_actionTakedDescription}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_contactPoliceDescriptionInd}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.contactPoliceDescriptionInd}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_contactPoliceDescriptionInd}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_contactAmbulanceDescriptionInd}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.contactAmbulanceDescriptionInd}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_contactAmbulanceDescriptionInd}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_cxntactInsuranceDescriptoinInd}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.cxntactInsuranceDescriptoinInd}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_cxntactInsuranceDescriptoinInd}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_contactTransitDescriptionInd}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.contactTransitDescriptionInd}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_contactTransitDescriptionInd}"/>
+
+                                <h:outputText value="#{myBundle.ViewVWokDailyOcurrencesLabel_id}"/>
+                                <h:outputText value="#{vWokDailyOcurrencesController.selected.id}" title="#{myBundle.ViewVWokDailyOcurrencesTitle_id}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('VWokDailyOcurrencesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

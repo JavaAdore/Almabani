@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="VWokWorkingGroupsListEditDlg" widgetVar="VWokWorkingGroupsListEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditVWokWorkingGroupsListTitle}" closeOnEscape="true">
+
+            <h:form id="VWokWorkingGroupsListEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{vWokWorkingGroupsListController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_numCompany}" for="numCompany" />
+                        <p:inputText id="numCompany" value="#{vWokWorkingGroupsListController.selected.numCompany}" title="#{myBundle.EditVWokWorkingGroupsListTitle_numCompany}"/>
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_namCompany}" for="namCompany" />
+                        <p:inputText id="namCompany" value="#{vWokWorkingGroupsListController.selected.namCompany}" title="#{myBundle.EditVWokWorkingGroupsListTitle_namCompany}"/>
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_numProject}" for="numProject" />
+                        <p:inputText id="numProject" value="#{vWokWorkingGroupsListController.selected.numProject}" title="#{myBundle.EditVWokWorkingGroupsListTitle_numProject}"/>
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_codProject}" for="codProject" />
+                        <p:inputText id="codProject" value="#{vWokWorkingGroupsListController.selected.codProject}" title="#{myBundle.EditVWokWorkingGroupsListTitle_codProject}"/>
+
+
+                        <h:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_numWorkingGroup}" for="numWorkingGroup" />
+                        <h:outputText id="numWorkingGroup" value="#{vWokWorkingGroupsListController.selected.numWorkingGroup}" />
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_codWorkingGroup}" for="codWorkingGroup" />
+                        <p:inputText id="codWorkingGroup" value="#{vWokWorkingGroupsListController.selected.codWorkingGroup}" title="#{myBundle.EditVWokWorkingGroupsListTitle_codWorkingGroup}"/>
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_desWorkingGroup}" for="desWorkingGroup" />
+                        <p:inputText id="desWorkingGroup" value="#{vWokWorkingGroupsListController.selected.desWorkingGroup}" title="#{myBundle.EditVWokWorkingGroupsListTitle_desWorkingGroup}"/>
+
+                        <p:outputLabel value="#{myBundle.EditVWokWorkingGroupsListLabel_qutRows}" for="qutRows" />
+                        <p:inputText id="qutRows" value="#{vWokWorkingGroupsListController.selected.qutRows}" title="#{myBundle.EditVWokWorkingGroupsListTitle_qutRows}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vWokWorkingGroupsListController.save}" value="#{myBundle.Save}" update="display,:VWokWorkingGroupsListListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VWokWorkingGroupsListEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('VWokWorkingGroupsListEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

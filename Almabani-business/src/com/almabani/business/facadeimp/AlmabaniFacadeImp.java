@@ -42,6 +42,7 @@ import com.almabani.business.service.StockItemService;
 import com.almabani.business.service.SubModuleService;
 import com.almabani.business.service.SupplierService;
 import com.almabani.business.service.SystemService;
+import com.almabani.business.service.WokDailyOccurenceService;
 import com.almabani.business.service.WokDemandService;
 import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
@@ -84,6 +85,8 @@ import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
+import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
+import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 
@@ -188,6 +191,9 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Autowired
 	StockItemService stockItemService;
+
+	@Autowired
+	WokDailyOccurenceService wokDailyOccurenceService;
 
 	@PostConstruct
 	public void cacheApplications() {
@@ -1171,7 +1177,8 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 					commonDriverMap);
 		} else {
 			Long numberOfRemainingItems = stockItemService
-					.getNumberofRemainingItems(oamStockItem.getProjectItem(), oamStockItem.getEstablishment());
+					.getNumberofRemainingItems(oamStockItem.getProjectItem(),
+							oamStockItem.getEstablishment());
 			if (numberOfRemainingItems < oamStockItem.getEntryValue()) {
 				throw new AlmabaniException(
 						MessagesKeyStore.ALMABANI_GENERAL_REQUESTED_AMOUNT_IS_GRATER_THAN_EXIST_AMOUNT);
@@ -1276,13 +1283,34 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	public List<OamStockItemDetailsView> loadOamStockItemsDetailsView(
 			int first, int pageSize, String sortField, boolean assending,
 			Map<String, Object> filters) {
-		return stockItemService.loadOamStockItemsDetailsView(
-				 first,  pageSize,  sortField,  assending,
-				 filters);
+		return stockItemService.loadOamStockItemsDetailsView(first, pageSize,
+				sortField, assending, filters);
 	}
 
 	@Override
-	public Long getNumberofRemainingItems(OamProjectItem projectItem, Establishment establishment) {
-		return stockItemService.getNumberofRemainingItems(projectItem, establishment); 
+	public Long getNumberofRemainingItems(OamProjectItem projectItem,
+			Establishment establishment) {
+		return stockItemService.getNumberofRemainingItems(projectItem,
+				establishment);
+	}
+
+	@Override
+	public List<WokWorkingGroupsListView> getWokDailyIccurrencesViewRecords(
+			String currentUserCode) {
+		return wokDailyOccurenceService
+				.getWokDailyIccurrencesViewRecords(currentUserCode);
+	}
+
+	@Override
+	public List<WokDailyOcurrencesView> loadWokDailyOcurrencesView(int first,
+			int pageSize, String sortField, boolean assending,
+			Map<String, Object> filters) {
+		return wokDailyOccurenceService.loadWokDailyOcurrencesView(first,
+				pageSize, sortField, assending, filters);
+	}
+
+	@Override
+	public Integer getCountOfWokDailyOcurrencesView(Map<String, Object> filters) {
+		return wokDailyOccurenceService.getCountOfWokDailyOcurrencesView(filters);
 	}
 }

@@ -55,7 +55,7 @@ public class OamQuotation extends AbstractEntity implements
 	private String quotationDescription;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_DEMAND", referencedColumnName="NUM_DEMAND", nullable = false)
+	@JoinColumn(name = "NUM_DEMAND", referencedColumnName="NUM_DEMAND")
 	@Bundle(key="ALMABANI_GENERAL_DEMAND")
 	private WokDemand demand;
 	

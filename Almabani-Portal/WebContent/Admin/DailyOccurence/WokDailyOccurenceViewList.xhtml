@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="VWokDailyOcurrencesListForm">
+
+        <p:panel header="#{loc.ListVWokDailyOcurrencesTitle}">
+           
+            <p:dataTable id="datalist"
+                         value="#{dailyOccuranceManagementBean.wokDailyOccurencyLazyModel}"
+                         var="item"
+                         rowKey="#{item.dailyOccurrenceNumber}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single" lazy="true"
+                         selection="#{dailyOccuranceManagementBean.selectedWokDailyOcurrencesView}">
+
+                
+
+                <p:column sortBy="#{item.dailyOccurrenceNumber}" filterBy="#{item.dailyOccurrenceNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_dailyOccurrenceNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dailyOccurrenceNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.occurrenceDate}" filterBy="#{item.occurrenceDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.occurrenceDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.workingGroupNumber}" filterBy="#{item.workingGroupNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_workingGroupNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.workingGroupNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.workingGroupDescription}" filterBy="#{item.workingGroupDescription}">
+                    <f:facet name="header">
+                        <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_workingGroupDescription}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.workingGroupDescription}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.userGroupNumber}" filterBy="#{item.userGroupNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_userGroupNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userGroupNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.loginUserCode}" filterBy="#{item.loginUserCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_loginUserCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.loginUserCode}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.employeeNumber}" filterBy="#{item.employeeNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_employeeNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.employeeNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.zoneDeviceNumber}" filterBy="#{item.zoneDeviceNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_zoneDeviceNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.zoneDeviceNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.deviceCode}" filterBy="#{item.deviceCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_deviceCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.deviceCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.zoneDescription}" filterBy="#{item.zoneDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_zoneDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.zoneDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.siteLocationDescription}" filterBy="#{item.siteLocationDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_siteLocationDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.siteLocationDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.siteDirectionDescription}" filterBy="#{item.siteDirectionDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_siteDirectionDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.siteDirectionDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.codGpsLocation}" filterBy="#{item.codGpsLocation}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_codGpsLocation}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codGpsLocation}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.siteDescription}" filterBy="#{item.siteDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_siteDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.siteDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.projectCode}" filterBy="#{item.projectCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_projectCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.projectCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.companyNumber}" filterBy="#{item.companyNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_companyNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.companyNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.occurrenceDescription}" filterBy="#{item.occurrenceDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.occurrenceDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userModifiedName}" filterBy="#{item.userModifiedName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_userModifiedName}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userModifiedName}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.lastModificationName}" filterBy="#{item.lastModificationName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_lastModificationName}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.lastModificationName}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userGroupCallNumber}" filterBy="#{item.userGroupCallNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_userGroupCallNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userGroupCallNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.employeeCallNumber}" filterBy="#{item.employeeCallNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_employeeCallNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.employeeCallNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.numUserGroupSafety}" filterBy="#{item.numUserGroupSafety}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_numUserGroupSafety}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.numUserGroupSafety}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.employeeSaftyNumber}" filterBy="#{item.employeeSaftyNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_employeeSaftyNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.employeeSaftyNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userGroupTechnicanNumber}" filterBy="#{item.userGroupTechnicanNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_userGroupTechnicanNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userGroupTechnicanNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.employeeTechnicianNumber}" filterBy="#{item.employeeTechnicianNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_employeeTechnicianNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.employeeTechnicianNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.occurrenceTypeNumber}" filterBy="#{item.occurrenceTypeNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceTypeNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.occurrenceTypeNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.occurrenceTypeDescription}" filterBy="#{item.occurrenceTypeDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceTypeDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.occurrenceTypeDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.responseTime}" filterBy="#{item.responseTime}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_responseTime}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.responseTime}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.closingTime}" filterBy="#{item.closingTime}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_closingTime}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.closingTime}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.actionTakedDescription}" filterBy="#{item.actionTakedDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_actionTakedDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.actionTakedDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.contactPoliceDescriptionInd}" filterBy="#{item.contactPoliceDescriptionInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_contactPoliceDescriptionInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.contactPoliceDescriptionInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.contactAmbulanceDescriptionInd}" filterBy="#{item.contactAmbulanceDescriptionInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_contactAmbulanceDescriptionInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.contactAmbulanceDescriptionInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.cxntactInsuranceDescriptoinInd}" filterBy="#{item.cxntactInsuranceDescriptoinInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_cxntactInsuranceDescriptoinInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cxntactInsuranceDescriptoinInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.contactTransitDescriptionInd}" filterBy="#{item.contactTransitDescriptionInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_contactTransitDescriptionInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.contactTransitDescriptionInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{loc.ListVWokDailyOcurrencesTitle_id}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+
+        </p:panel>
+    </h:form>
+
+</ui:composition>

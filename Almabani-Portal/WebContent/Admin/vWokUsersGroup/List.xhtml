@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="VWokUsersGroupListForm">
+
+        <p:panel header="#{myBundle.ListVWokUsersGroupTitle}">
+            <p:contextMenu id="VWokUsersGroupDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('VWokUsersGroupListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('VWokUsersGroupListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('VWokUsersGroupListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('VWokUsersGroupListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{vWokUsersGroupController.items}"
+                         var="item"
+                         rowKey="#{item.userGroupNumber}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{vWokUsersGroupController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:VWokUsersGroupDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:VWokUsersGroupDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('VWokUsersGroupListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.userGroupNumber}" filterBy="#{item.userGroupNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_userGroupNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userGroupNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyNumber}" filterBy="#{item.companyNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_companyNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyNumber}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyName}" filterBy="#{item.companyName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_companyName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.departmentName}" filterBy="#{item.departmentName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_departmentName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.departmentName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.sectionName}" filterBy="#{item.sectionName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_sectionName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.sectionName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.loginUserCode}" filterBy="#{item.loginUserCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_loginUserCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.loginUserCode}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.employeeCode}" filterBy="#{item.employeeCode}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_employeeCode}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.employeeCode}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.employeeName}" filterBy="#{item.employeeName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_employeeName}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.employeeName}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.workingGroupNumber}" filterBy="#{item.workingGroupNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_workingGroupNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.workingGroupNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.workingGroupDescription}" filterBy="#{item.workingGroupDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_workingGroupDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.workingGroupDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.profileTypeNumber}" filterBy="#{item.profileTypeNumber}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_profileTypeNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.profileTypeNumber}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.profileTypeDescription}" filterBy="#{item.profileTypeDescription}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_profileTypeDescription}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.profileTypeDescription}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.beginDateValidity}" filterBy="#{item.beginDateValidity}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_beginDateValidity}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.beginDateValidity}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.endDateValidity}" filterBy="#{item.endDateValidity}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_endDateValidity}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.endDateValidity}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userModifiedName}" filterBy="#{item.userModifiedName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_userModifiedName}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userModifiedName}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.lastModificationDate}" filterBy="#{item.lastModificationDate}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_lastModificationDate}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.lastModificationDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.esponsibleGroupInd}" filterBy="#{item.esponsibleGroupInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_esponsibleGroupInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.esponsibleGroupInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.receiveNotificationInd}" filterBy="#{item.receiveNotificationInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_receiveNotificationInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.receiveNotificationInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.interactionDemandsInd}" filterBy="#{item.interactionDemandsInd}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_interactionDemandsInd}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.interactionDemandsInd}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListVWokUsersGroupTitle_id}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{vWokUsersGroupController.prepareCreate}" update=":VWokUsersGroupCreateForm" oncomplete="PF('VWokUsersGroupCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":VWokUsersGroupViewForm" oncomplete="PF('VWokUsersGroupViewDialog').show()" disabled="#{empty vWokUsersGroupController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":VWokUsersGroupEditForm" oncomplete="PF('VWokUsersGroupEditDialog').show()" disabled="#{empty vWokUsersGroupController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{vWokUsersGroupController.delete}" update=":growl,datalist" disabled="#{empty vWokUsersGroupController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

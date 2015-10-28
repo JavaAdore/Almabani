@@ -323,11 +323,12 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
 
+			if(Utils.isNotNull(selectedItem))
+			{
 			attachCompanyFiltrataionInCaseOnNoneAdmin(filters);
 
 			attachSelectedItemInCaseOfSelected(filters);
 
-			attachFilterByArrovedQuotationsOnly(filters);
 
 			rowCount = almabaniFacade.getNumberOfProjectItems(filters);
 
@@ -336,7 +337,11 @@ public class ProjectItemManagementBean extends AbstractBeanHelper implements
 					sortOrder == SortOrder.ASCENDING, filters);
 
 			setRowCount(this.rowCount);
-
+			
+			}else
+			{
+				result = new ArrayList();
+			}
 			return result;
 		}
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VWokWorkingGroupsCreateDlg" widgetVar="VWokWorkingGroupsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateVWokWorkingGroupsTitle}" closeOnEscape="true">
+
+            <h:form id="VWokWorkingGroupsCreateForm">
+
+                <h:panelGroup id="display" rendered="#{vWokWorkingGroupsController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_companyNumber}" for="companyNumber" />
+                        <p:inputText id="companyNumber" value="#{vWokWorkingGroupsController.selected.companyNumber}" title="#{myBundle.CreateVWokWorkingGroupsTitle_companyNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_companyBame}" for="companyBame" />
+                        <p:inputText id="companyBame" value="#{vWokWorkingGroupsController.selected.companyBame}" title="#{myBundle.CreateVWokWorkingGroupsTitle_companyBame}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_projectNumber}" for="projectNumber" />
+                        <p:inputText id="projectNumber" value="#{vWokWorkingGroupsController.selected.projectNumber}" title="#{myBundle.CreateVWokWorkingGroupsTitle_projectNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_projectCode}" for="projectCode" />
+                        <p:inputText id="projectCode" value="#{vWokWorkingGroupsController.selected.projectCode}" title="#{myBundle.CreateVWokWorkingGroupsTitle_projectCode}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_departmentName}" for="departmentName" />
+                        <p:inputText id="departmentName" value="#{vWokWorkingGroupsController.selected.departmentName}" title="#{myBundle.CreateVWokWorkingGroupsTitle_departmentName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_sectionName}" for="sectionName" />
+                        <p:inputText id="sectionName" value="#{vWokWorkingGroupsController.selected.sectionName}" title="#{myBundle.CreateVWokWorkingGroupsTitle_sectionName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_groupTypeNumber}" for="groupTypeNumber" />
+                        <p:inputText id="groupTypeNumber" value="#{vWokWorkingGroupsController.selected.groupTypeNumber}" title="#{myBundle.CreateVWokWorkingGroupsTitle_groupTypeNumber}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_groupTypeDescription}" for="groupTypeDescription" />
+                        <p:inputText id="groupTypeDescription" value="#{vWokWorkingGroupsController.selected.groupTypeDescription}" title="#{myBundle.CreateVWokWorkingGroupsTitle_groupTypeDescription}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_numWorkingGroup}" for="numWorkingGroup" />
+                        <p:inputText id="numWorkingGroup" value="#{vWokWorkingGroupsController.selected.numWorkingGroup}" title="#{myBundle.CreateVWokWorkingGroupsTitle_numWorkingGroup}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_workingGroupCode}" for="workingGroupCode" />
+                        <p:inputText id="workingGroupCode" value="#{vWokWorkingGroupsController.selected.workingGroupCode}" title="#{myBundle.CreateVWokWorkingGroupsTitle_workingGroupCode}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_desWorkingGroup}" for="desWorkingGroup" />
+                        <p:inputText id="desWorkingGroup" value="#{vWokWorkingGroupsController.selected.desWorkingGroup}" title="#{myBundle.CreateVWokWorkingGroupsTitle_desWorkingGroup}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_validityBeginDate}" for="validityBeginDate" />
+                        <p:calendar id="validityBeginDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokWorkingGroupsController.selected.validityBeginDate}" title="#{myBundle.CreateVWokWorkingGroupsTitle_validityBeginDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_validityEndDate}" for="validityEndDate" />
+                        <p:calendar id="validityEndDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokWorkingGroupsController.selected.validityEndDate}" title="#{myBundle.CreateVWokWorkingGroupsTitle_validityEndDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_userModifiedName}" for="userModifiedName" />
+                        <p:inputText id="userModifiedName" value="#{vWokWorkingGroupsController.selected.userModifiedName}" title="#{myBundle.CreateVWokWorkingGroupsTitle_userModifiedName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_lastModificationDate}" for="lastModificationDate" />
+                        <p:calendar id="lastModificationDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokWorkingGroupsController.selected.lastModificationDate}" title="#{myBundle.CreateVWokWorkingGroupsTitle_lastModificationDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_startOperateionHour}" for="startOperateionHour" />
+                        <p:calendar id="startOperateionHour" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokWorkingGroupsController.selected.startOperateionHour}" title="#{myBundle.CreateVWokWorkingGroupsTitle_startOperateionHour}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_endOperationHour}" for="endOperationHour" />
+                        <p:calendar id="endOperationHour" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokWorkingGroupsController.selected.endOperationHour}" title="#{myBundle.CreateVWokWorkingGroupsTitle_endOperationHour}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_workingDaysTypeInd}" for="workingDaysTypeInd" />
+                        <p:inputText id="workingDaysTypeInd" value="#{vWokWorkingGroupsController.selected.workingDaysTypeInd}" title="#{myBundle.CreateVWokWorkingGroupsTitle_workingDaysTypeInd}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVWokWorkingGroupsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{vWokWorkingGroupsController.selected.id}" title="#{myBundle.CreateVWokWorkingGroupsTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vWokWorkingGroupsController.saveNew}" value="#{myBundle.Save}" update="display,:VWokWorkingGroupsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VWokWorkingGroupsCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('VWokWorkingGroupsCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
