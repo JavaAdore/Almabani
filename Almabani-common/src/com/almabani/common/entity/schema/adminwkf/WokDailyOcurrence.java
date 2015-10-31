@@ -36,7 +36,7 @@ public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_TYPE_OCCURRENCE", referencedColumnName="NUM_TYPE_OCCURRENCE", nullable = false)
-	private WokTypesOccurrence typesOccurrence;
+	private WokOccurrenceType typesOccurrence;
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_USER_GROUP_TECHNICIAN", referencedColumnName="NUM_USER_GROUP", nullable = false)
@@ -112,14 +112,14 @@ public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	/**
 	 * @return the typesOccurrence
 	 */
-	public WokTypesOccurrence getTypesOccurrence() {
+	public WokOccurrenceType getTypesOccurrence() {
 		return typesOccurrence;
 	}
 
 	/**
 	 * @param typesOccurrence the typesOccurrence to set
 	 */
-	public void setTypesOccurrence(WokTypesOccurrence typesOccurrence) {
+	public void setTypesOccurrence(WokOccurrenceType typesOccurrence) {
 		this.typesOccurrence = typesOccurrence;
 	}
 

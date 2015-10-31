@@ -39,7 +39,7 @@ public class WokUserGroup extends AbstractEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_TYPE_PROFILE", referencedColumnName="NUM_TYPE_PROFILE", nullable = false)
-	private WokTypeProfiles typeProfiles;
+	private WokTypeProfile typeProfiles;
 	
 	@ManyToOne
 	@JoinColumn(name = "COD_USER_LOGIN", referencedColumnName="COD_USER_LOGIN", nullable = false)
@@ -106,14 +106,14 @@ public class WokUserGroup extends AbstractEntity implements Serializable {
 	/**
 	 * @return the typeProfiles
 	 */
-	public WokTypeProfiles getTypeProfiles() {
+	public WokTypeProfile getTypeProfiles() {
 		return typeProfiles;
 	}
 
 	/**
 	 * @param typeProfiles the typeProfiles to set
 	 */
-	public void setTypeProfiles(WokTypeProfiles typeProfiles) {
+	public void setTypeProfiles(WokTypeProfile typeProfiles) {
 		this.typeProfiles = typeProfiles;
 	}
 

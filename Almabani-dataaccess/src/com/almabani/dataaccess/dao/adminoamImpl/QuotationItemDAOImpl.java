@@ -10,6 +10,7 @@ import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.QuotationItemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
 
@@ -74,6 +75,13 @@ public class QuotationItemDAOImpl extends AbstractDAO implements
 		query.setParameter("quotation", quotation);
 		return query.list();
 		
+	}
+
+	@Override
+	public Integer getNumberOfItemQuotation(OamQuotation quotation) {
+		Query query = super.getCurrentSession().createQuery("select count(x ) from OamItemQuotation x where x.quotation =:quotation ");
+		query.setParameter("quotation", quotation);
+		return (Integer) Utils.getFirstResult(query.list());
 	}
 
 }

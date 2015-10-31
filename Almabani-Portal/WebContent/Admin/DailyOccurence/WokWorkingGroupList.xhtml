@@ -14,7 +14,7 @@
 				value="#{dailyOccuranceManagementBean.wokDailyIccurrencesViewRecords}"
 				var="item" rowKey="#{item.numWorkingGroup}" paginator="true"
 				rows="10" rowsPerPageTemplate="10,20,30,40,50"
-				selectionMode="single"
+				selectionMode="single" draggableColumns="true" draggableRows="true"
 				selection="#{dailyOccuranceManagementBean.selectedWokGroup}">
 
 
@@ -72,9 +72,10 @@
 							value="#{loc.ListVWokWorkingGroupsListTitle_codWorkingGroup}" />
 					</f:facet>
 					<p:commandLink value="#{item.codWorkingGroup}"
-						actionListener="#{dailyOccuranceManagementBean.setSelectedWokGroup(item)}"
-						onclick="changeTab(1)"
-						update=":dailyOccurenceTabView:VWokDailyOcurrencesListForm">
+						actionListener="#{dailyOccuranceManagementBean.workGroupRowSelected(item)}"
+						onclick="changeTab(1);" style="color:blue;text-weight:bold; text-decoration:underline"
+						
+						update="dailyOccurenceTabView:VWokDailyOcurrencesListForm ">
 
 					</p:commandLink>
 				</p:column>

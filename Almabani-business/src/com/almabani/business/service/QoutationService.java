@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
+import com.almabani.common.exception.AlmabaniException;
 
 @Service
 public interface QoutationService {
@@ -18,7 +19,7 @@ public interface QoutationService {
 			String sortField, boolean b, Map<String, Object> filters);
 
 	OamQuotation updateQuotation(OamQuotation oamQuotation,
-			CommonDriverMap commonDriverMap);
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	OamQuotation addQuotation(OamQuotation oamQuotation,
 			CommonDriverMap commonDriverMap);

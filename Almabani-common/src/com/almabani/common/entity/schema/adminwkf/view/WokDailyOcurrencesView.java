@@ -48,7 +48,7 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 	private String loginUserCode;
 
 	@Column(name = "NAM_EMPLOYEE")
-	private String employeeNumber;
+	private String employeeName;
 
 	@Column(name = "NUM_ZONE_DEVICE")
 	private Long zoneDeviceNumber;
@@ -91,19 +91,19 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 	private Long userGroupCallNumber;
 	
 	@Column(name = "NAM_EMPLOYEE_CALL")
-	private String employeeCallNumber;
+	private String employeeCallName;
 
 	@Column(name = "NUM_USER_GROUP_SAFETY")
 	private Long numUserGroupSafety;
 
 	@Column(name = "NAM_EMPLOYEE_SAFETY")
-	private String employeeSaftyNumber;
+	private String employeeSaftyName;
 
 	@Column(name = "NUM_USER_GROUP_TECHNICIAN")
 	private Long userGroupTechnicanNumber;
 
 	@Column(name = "NAM_EMPLOYEE_TECHNICIAN")
-	private String employeeTechnicianNumber;
+	private String employeeTechnicianName;
 
 	@Column(name = "NUM_TYPE_OCCURRENCE")
 	private Long occurrenceTypeNumber;
@@ -185,13 +185,6 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 		this.loginUserCode = loginUserCode;
 	}
 
-	public String getEmployeeNumber() {
-		return employeeNumber;
-	}
-
-	public void setEmployeeNumber(String employeeNumber) {
-		this.employeeNumber = employeeNumber;
-	}
 
 	public Long getZoneDeviceNumber() {
 		return zoneDeviceNumber;
@@ -297,13 +290,7 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 		this.userGroupCallNumber = userGroupCallNumber;
 	}
 
-	public String getEmployeeCallNumber() {
-		return employeeCallNumber;
-	}
-
-	public void setEmployeeCallNumber(String employeeCallNumber) {
-		this.employeeCallNumber = employeeCallNumber;
-	}
+	
 
 	public Long getNumUserGroupSafety() {
 		return numUserGroupSafety;
@@ -313,13 +300,7 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 		this.numUserGroupSafety = numUserGroupSafety;
 	}
 
-	public String getEmployeeSaftyNumber() {
-		return employeeSaftyNumber;
-	}
-
-	public void setEmployeeSaftyNumber(String employeeSaftyNumber) {
-		this.employeeSaftyNumber = employeeSaftyNumber;
-	}
+	
 
 	public Long getUserGroupTechnicanNumber() {
 		return userGroupTechnicanNumber;
@@ -329,14 +310,7 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 		this.userGroupTechnicanNumber = userGroupTechnicanNumber;
 	}
 
-	public String getEmployeeTechnicianNumber() {
-		return employeeTechnicianNumber;
-	}
-
-	public void setEmployeeTechnicianNumber(String employeeTechnicianNumber) {
-		this.employeeTechnicianNumber = employeeTechnicianNumber;
-	}
-
+	
 	public Long getOccurrenceTypeNumber() {
 		return occurrenceTypeNumber;
 	}
@@ -419,6 +393,38 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 	@Override
 	public void setId(Long i) {
 		dailyOccurrenceNumber = i;		
+	}
+
+	public String getEmployeeCallName() {
+		return employeeCallName;
+	}
+
+	public void setEmployeeCallName(String employeeCallName) {
+		this.employeeCallName = employeeCallName;
+	}
+
+	public String getEmployeeSaftyName() {
+		return employeeSaftyName;
+	}
+
+	public void setEmployeeSaftyName(String employeeSaftyName) {
+		this.employeeSaftyName = employeeSaftyName;
+	}
+
+	public String getEmployeeTechnicianName() {
+		return employeeTechnicianName;
+	}
+
+	public void setEmployeeTechnicianName(String employeeTechnicianName) {
+		this.employeeTechnicianName = employeeTechnicianName;
+	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 
 	

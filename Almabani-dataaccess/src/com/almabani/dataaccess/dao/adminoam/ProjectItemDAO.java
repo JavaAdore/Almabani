@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Department;
-import com.almabani.common.entity.schema.admincor.Establishment;
-import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 @Repository

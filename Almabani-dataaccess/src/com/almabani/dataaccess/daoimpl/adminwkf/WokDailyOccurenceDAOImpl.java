@@ -22,9 +22,9 @@ public class WokDailyOccurenceDAOImpl extends AbstractDAO implements WokDailyOcc
 	@Override
 	public List<WokWorkingGroupsListView> getWokDailyIccurrencesViewRecords(
 			String userLoginCode) {
-		//and wug.user.userLoginCode =:userLoginCode
-		Query query = super.getCurrentSession().createQuery("select x from WokWorkingGroupsListView x  , WokWorkingGroup wg , WokUserGroup wug  where x.numWorkingGroup = wg.id and wug.workingGroup = wg     ");
-		//query.setParameter("userLoginCode", userLoginCode);
+		
+		Query query = super.getCurrentSession().createQuery("select x from WokWorkingGroupsListView x  , WokWorkingGroup wg , WokUserGroup wug  where x.numWorkingGroup = wg.id and wug.workingGroup = wg  and wug.user.userLoginCode =:userLoginCode   ");
+		query.setParameter("userLoginCode", userLoginCode);
 		return query.list(); 
 	}
 

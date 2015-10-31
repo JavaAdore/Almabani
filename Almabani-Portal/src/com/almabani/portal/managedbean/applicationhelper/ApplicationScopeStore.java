@@ -379,7 +379,7 @@ public class ApplicationScopeStore implements Serializable {
 	public boolean isAdminUser() {
 		return WebUtils.isAdminUser();
 	}
-
+          
 	public String getCurrentPageURL() {
 		return WebUtils.getCurrentPageURL();
 	}

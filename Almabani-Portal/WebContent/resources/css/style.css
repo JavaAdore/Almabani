@@ -1,16 +1,22 @@
-.center
-{
-	text-align:center !important;
+.center {
+	text-align: center !important;
 }
-.red
+
+td
 {
-	color:red !important;
+		text-align: center !important;
 	
 }
-.green
-{
-	color:green !important;
+.centerComponent {
 	
+}
+
+.red {
+	color: red !important;
+}
+
+.green {
+	color: green !important;
 }
 
 .ui-growl {
@@ -54,10 +60,8 @@ body {
 }
 
 .ui-widget-content {
-	font-size: small !important;
+	font-size: x-small !important;
 }
-
-
 
 .grid {
 	width: 33% !important;
@@ -80,11 +84,11 @@ body {
 }
 
 .ui-column-title {
-	font-size: small !important;
+	font-size: x-small !important;
 }
 
 .ui-button-text {
-	font-size: small !important;
+	font-size: x-small !important;
 }
 
 .ui-cell-editor {

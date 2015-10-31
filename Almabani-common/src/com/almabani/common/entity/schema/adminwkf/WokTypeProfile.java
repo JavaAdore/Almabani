@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,25 +23,20 @@ import com.almabani.common.entity.schema.admincor.Company;
  */
 
 @Entity
-@Table(schema="ADMINWKF", name = "WOK_TYPES_OCCURRENCE")
-//@SequenceGenerator(name = "WokTypesOccurrence_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_TYPES_OCCURRENCE_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
-public class WokTypesOccurrence extends AbstractEntity implements Serializable {
+@Table(schema="ADMINWKF", name = "WOK_TYPES_PROFILES")
+@SequenceGenerator(name = "WokTypesProfiles_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_SEQ_NUM_TYPE_PROFILE", allocationSize = 1, initialValue = 1)
+public class WokTypeProfile extends AbstractEntity implements Serializable {
 	
-	private static final long serialVersionUID = -4410319788627362105L;
+
+	private static final long serialVersionUID = -3293129070870065720L;
 
 	@Id
-	@Column(name = "NUM_TYPE_OCCURRENCE", unique = true, nullable = false, precision = 3, scale = 0)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokTypesOccurrence_Id_Seq_Gen")
+	@Column(name = "NUM_TYPE_PROFILE", unique = true, nullable = false, precision = 3, scale = 0)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokTypesProfiles_Id_Seq_Gen")
 	private Long id;
 	
-	@Column(name = "DES_TYPE_OCCURRENCE", nullable = false, length = 80)
-	private String typeOccurrenceDescription;
-	
-	@Column(name = "IND_NEED_DETAILS", nullable = false, length = 1)
-	private String indNeedDetails;
-	
-	@Column(name = "IND_SEND_EMAIL", nullable = false, length = 1)
-	private String indSendEmail;
+	@Column(name = "DES_TYPE_PROFILE", nullable = false, length = 80)
+	private String typeProfileDescription;
 	
 	@ManyToOne
 	@JoinColumn(name = "NUM_COMPANY", referencedColumnName="NUM_COMPANY", nullable = false)
@@ -57,8 +55,14 @@ public class WokTypesOccurrence extends AbstractEntity implements Serializable {
 	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
 	private Date lastModificationDate;
 
-	public WokTypesOccurrence() {
+	public WokTypeProfile() {
+		
 	}
+	public WokTypeProfile(Long id) {
+		super();
+		this.id = id;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -69,45 +73,17 @@ public class WokTypesOccurrence extends AbstractEntity implements Serializable {
 	}
 
 	/**
-	 * @return the typeOccurrenceDescription
+	 * @return the typeProfileDescription
 	 */
-	public String getTypeOccurrenceDescription() {
-		return typeOccurrenceDescription;
+	public String getTypeProfileDescription() {
+		return typeProfileDescription;
 	}
 
 	/**
-	 * @param typeOccurrenceDescription the typeOccurrenceDescription to set
+	 * @param typeProfileDescription the typeProfileDescription to set
 	 */
-	public void setTypeOccurrenceDescription(String typeOccurrenceDescription) {
-		this.typeOccurrenceDescription = typeOccurrenceDescription;
-	}
-
-	/**
-	 * @return the indNeedDetails
-	 */
-	public String getIndNeedDetails() {
-		return indNeedDetails;
-	}
-
-	/**
-	 * @param indNeedDetails the indNeedDetails to set
-	 */
-	public void setIndNeedDetails(String indNeedDetails) {
-		this.indNeedDetails = indNeedDetails;
-	}
-
-	/**
-	 * @return the indSendEmail
-	 */
-	public String getIndSendEmail() {
-		return indSendEmail;
-	}
-
-	/**
-	 * @param indSendEmail the indSendEmail to set
-	 */
-	public void setIndSendEmail(String indSendEmail) {
-		this.indSendEmail = indSendEmail;
+	public void setTypeProfileDescription(String typeProfileDescription) {
+		this.typeProfileDescription = typeProfileDescription;
 	}
 
 	/**

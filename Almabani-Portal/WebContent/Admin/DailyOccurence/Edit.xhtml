@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="editDlg" widgetVar="editDialog" modal="true"
+		resizable="false" appendToBody="true"
+		header="#{bundle.EditWokDailyOcurrenceTitle}">
+
+		<h:form id="editForm">
+
+			<h:panelGroup id="messagePanel">
+				<p:messages id="editMessages" />
+			</h:panelGroup>
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2"
+					rendered="#{wokDailyOcurrenceController.selected != null}">
+					<h:outputText id="id"
+						value="#{wokDailyOcurrenceController.selected.id}" />
+					<p:selectOneMenu id="typesOccurrence"
+						value="#{wokDailyOcurrenceController.selected.typesOccurrence}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_typesOccurrence}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_typesOccurrence}">
+						<f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}" />
+						<f:selectItems value="#{wokTypesOccurrenceController.items}"
+							var="typesOccurrenceItem" itemValue="#{typesOccurrenceItem}" />
+					</p:selectOneMenu>
+					<p:selectOneMenu id="userGroupTechnician"
+						value="#{wokDailyOcurrenceController.selected.userGroupTechnician}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_userGroupTechnician}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_userGroupTechnician}">
+						<f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}" />
+						<f:selectItems value="#{wokUserGroupController.items}"
+							var="userGroupTechnicianItem"
+							itemValue="#{userGroupTechnicianItem}" />
+					</p:selectOneMenu>
+					<p:selectOneMenu id="userGroupSafety"
+						value="#{wokDailyOcurrenceController.selected.userGroupSafety}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_userGroupSafety}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_userGroupSafety}">
+						<f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}" />
+						<f:selectItems value="#{wokUserGroupController.items}"
+							var="userGroupSafetyItem" itemValue="#{userGroupSafetyItem}" />
+					</p:selectOneMenu>
+					<p:selectOneMenu id="userGroupCall"
+						value="#{wokDailyOcurrenceController.selected.userGroupCall}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_userGroupCall}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_userGroupCall}">
+						<f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}" />
+						<f:selectItems value="#{wokUserGroupController.items}"
+							var="userGroupCallItem" itemValue="#{userGroupCallItem}" />
+					</p:selectOneMenu>
+					<p:selectOneMenu id="userGroup"
+						value="#{wokDailyOcurrenceController.selected.userGroup}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_userGroup}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_userGroup}">
+						<f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}" />
+						<f:selectItems value="#{wokUserGroupController.items}"
+							var="userGroupItem" itemValue="#{userGroupItem}" />
+					</p:selectOneMenu>
+					<p:calendar id="occurrenceDateTime" pattern="MM/dd/yyyy"
+						value="#{wokDailyOcurrenceController.selected.occurrenceDateTime}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_occurrenceDateTime}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_occurrenceDateTime}"
+						showOn="button" />
+					<p:selectOneMenu id="zoneDevice"
+						value="#{wokDailyOcurrenceController.selected.zoneDevice}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_zoneDevice}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_zoneDevice}">
+						<f:selectItem itemValue="" itemLabel="#{bundle.SelectOneMessage}" />
+						<f:selectItems value="#{oamZoneDeviceController.items}"
+							var="zoneDeviceItem" itemValue="#{zoneDeviceItem}" />
+					</p:selectOneMenu>
+					<p:inputText id="occurrenceDescription"
+						value="#{wokDailyOcurrenceController.selected.occurrenceDescription}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_occurrenceDescription}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_occurrenceDescription}" />
+					<p:inputText id="modificationMakerName"
+						value="#{wokDailyOcurrenceController.selected.modificationMakerName}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_modificationMakerName}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_modificationMakerName}" />
+					<p:calendar id="lastModificationDate" pattern="MM/dd/yyyy"
+						value="#{wokDailyOcurrenceController.selected.lastModificationDate}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_lastModificationDate}"
+						required="true"
+						requiredMessage="#{bundle.EditWokDailyOcurrenceRequiredMessage_lastModificationDate}"
+						showOn="button" />
+					<p:calendar id="responseDateTime" pattern="MM/dd/yyyy"
+						value="#{wokDailyOcurrenceController.selected.responseDateTime}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_responseDateTime}"
+						showOn="button" />
+					<p:calendar id="closingDateTime" pattern="MM/dd/yyyy"
+						value="#{wokDailyOcurrenceController.selected.closingDateTime}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_closingDateTime}"
+						showOn="button" />
+					<p:inputText id="actionTakenDescription"
+						value="#{wokDailyOcurrenceController.selected.actionTakenDescription}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_actionTakenDescription}" />
+					<p:inputText id="indContactPolice"
+						value="#{wokDailyOcurrenceController.selected.indContactPolice}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_indContactPolice}" />
+					<p:inputText id="indContactAmbulance"
+						value="#{wokDailyOcurrenceController.selected.indContactAmbulance}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_indContactAmbulance}" />
+					<p:inputText id="indContactInsurance"
+						value="#{wokDailyOcurrenceController.selected.indContactInsurance}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_indContactInsurance}" />
+					<p:inputText id="indContactTransit"
+						value="#{wokDailyOcurrenceController.selected.indContactTransit}"
+						title="#{bundle.EditWokDailyOcurrenceTitle_indContactTransit}" />
+				</p:panelGrid>
+				<p:commandButton
+					actionListener="#{wokDailyOcurrenceController.save}"
+					value="#{bundle.Save}"
+					update="display,messagePanel,:listForm:datalist"
+					oncomplete="if(!args.validationFailed) {editDialog.hide();}" />
+				<p:commandButton value="#{bundle.Cancel}"
+					onclick="editDialog.hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>

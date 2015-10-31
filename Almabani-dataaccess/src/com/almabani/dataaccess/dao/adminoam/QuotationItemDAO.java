@@ -30,6 +30,8 @@ public interface QuotationItemDAO extends AbstractDAOInt{
 
 	List<OamItemQuotation> getQuotationItem(OamQuotation oamQuotation);
 
+	Integer getNumberOfItemQuotation(OamQuotation oamQuotation);
+
  
 	
 }

@@ -24,6 +24,15 @@ import com.almabani.common.entity.AbstractEntity;
 @SequenceGenerator(name = "OamTypesDevice_Id_Seq_Gen", sequenceName = "ADMINOAM.OAM_SEQ_NUM_TYPE_DEVICE", allocationSize = 1, initialValue = 1)
 public class OamTypeDevice extends AbstractEntity implements Serializable{
 
+	public OamTypeDevice(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public final static OamTypeDevice FIXED_CAMERAS = new OamTypeDevice(2L);
+	public final static OamTypeDevice CCTV_CABINETS = new OamTypeDevice(4L);
+
+	
 	private static final long serialVersionUID = 1186413455161829342L;
 
 	@Id

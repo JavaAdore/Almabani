@@ -30,6 +30,7 @@ import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
+import com.almabani.common.entity.schema.adminoam.OamZoneDevice;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
@@ -43,6 +44,9 @@ import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
+import com.almabani.common.entity.schema.adminwkf.WokOccurrenceType;
+import com.almabani.common.entity.schema.adminwkf.WokUserGroup;
+import com.almabani.common.entity.schema.adminwkf.WokWorkingGroup;
 import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
 import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 import com.almabani.common.exception.AlmabaniException;
@@ -124,7 +128,7 @@ public interface AlmabaniFacade {
 	List<WokDemand> getWokDemands();
 
 	OamQuotation addOrUpdateQuotation(OamQuotation selected,
-			CommonDriverMap commonDriverMap);
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	Integer getNumberOfOamItemQuotations(Map<String, Object> filters);
 
@@ -421,5 +425,28 @@ public interface AlmabaniFacade {
 			Map<String, Object> filters);
 
 	Integer getCountOfWokDailyOcurrencesView(Map<String, Object> filters);
+
+	List<WokOccurrenceType> getWokOccurrenceTypeList(
+			Company currentLoggedUserCompany);
+
+	List<WokUserGroup> getOperators(Company company,
+			WokWorkingGroup workingGroup,SecUser secUser);
+
+	List<WokUserGroup> getSafetyAgents(Company company,
+			WokWorkingGroup workingGroup,SecUser secUser);
+
+	List<WokUserGroup> getTechnicians(Company company,
+			WokWorkingGroup workingGroup,SecUser secUser);
+
+	List<WokUserGroup> getCommuincators(Company company,
+			WokWorkingGroup workingGroup,SecUser secUser);
+
+	WokOccurrenceType getOccurenceType(Long id);
+
+	WokUserGroup getWokUserGroup(Long id);
+
+	List<OamZoneDevice> getCamDevicesWithAssociatedLocations();
+
+	OamZoneDevice getOamZoneDevice(Long id);
 
 }

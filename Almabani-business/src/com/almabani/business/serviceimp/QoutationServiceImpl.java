@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.QoutationService;
 import com.almabani.common.constant.DataAccessConstants;
+import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
@@ -16,6 +17,7 @@ import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
+import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.OamQuotationActionDAO;
 import com.almabani.dataaccess.dao.adminoam.OamQuotationActionTypeDAO;
@@ -56,11 +58,13 @@ public class QoutationServiceImpl implements QoutationService {
 
 	@Override
 	public OamQuotation updateQuotation(OamQuotation oamQuotation,
-			CommonDriverMap commonDriverMap) {
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
 		Date date = new Date();
 		oamQuotation.setLastModificationDate(date);
 		oamQuotation.setModificationLoginCode(commonDriverMap
 				.getCurrentUserCode());
+	
+		
 		if (Utils.isNull(oamQuotation)
 				&& Utils.isNotEmptyList(oamQuotation.getQuotataionActions())) {
 			oamQuotation.setSelectedActionType(oamQuotation
@@ -80,8 +84,16 @@ public class QoutationServiceImpl implements QoutationService {
 
 	}
 
+	private void validateQuotationItems(OamQuotation oamQuotation) throws AlmabaniException{
+	Integer numberOfItemQuotaiton=  qoutationItemDAO.getNumberOfItemQuotation(oamQuotation);
+		if(numberOfItemQuotaiton == null || numberOfItemQuotaiton ==0)
+		{
+			throw new AlmabaniException(MessagesKeyStore.ALMABANI_QUOTATION_HAS_NO_ITEMS_TO_CHANGE_ITS_STATUS);
+		}
+	}
+
 	private void handleStockItems(OamQuotation oamQuotation,
-			CommonDriverMap commonDriverMap) {
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
 
 		OamQuotationActionType currentlySelectedActionType = oamQuotation
 				.getSelectedActionType();
@@ -90,6 +102,8 @@ public class QoutationServiceImpl implements QoutationService {
 
 		if (lastSelectedOamActionTypeInDB.equals(currentlySelectedActionType) == false) {
 
+			validateQuotationItems(oamQuotation);
+			
 			OamQuotationActionType approveQuotationActionType = oamQuotationActionType
 					.getApproveActionType(commonDriverMap.getAttachedCompany());
 

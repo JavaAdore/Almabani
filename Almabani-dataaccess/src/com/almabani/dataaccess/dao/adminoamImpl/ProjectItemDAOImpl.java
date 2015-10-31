@@ -10,7 +10,6 @@ import com.almabani.common.constant.DataAccessConfig;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
-import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.ProjectItemDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
 

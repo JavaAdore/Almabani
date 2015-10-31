@@ -25,6 +25,11 @@ import com.almabani.common.entity.schema.admincor.Project;
 //@SequenceGenerator(name = "WokWorkingGroups_Id_Seq_Gen", sequenceName = "ADMINWKF.WOK_WORKING_GROUPS_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
 public class WokWorkingGroup extends AbstractEntity implements Serializable {
 	
+	public WokWorkingGroup(Long id) {
+		super();
+		this.id = id;
+	}
+
 	private static final long serialVersionUID = -5964225776479051957L;
 
 	@Id

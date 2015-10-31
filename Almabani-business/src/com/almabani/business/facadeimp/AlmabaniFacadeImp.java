@@ -29,6 +29,7 @@ import com.almabani.business.service.MaterialTypeService;
 import com.almabani.business.service.MenuService;
 import com.almabani.business.service.ModuleService;
 import com.almabani.business.service.OamQuotationActionTypeService;
+import com.almabani.business.service.OamZoneDeviceService;
 import com.almabani.business.service.PrefilTypeService;
 import com.almabani.business.service.ProjectEmployeeService;
 import com.almabani.business.service.ProjectItemService;
@@ -44,6 +45,8 @@ import com.almabani.business.service.SupplierService;
 import com.almabani.business.service.SystemService;
 import com.almabani.business.service.WokDailyOccurenceService;
 import com.almabani.business.service.WokDemandService;
+import com.almabani.business.service.WokOccurencyTypeService;
+import com.almabani.business.service.WokUserGroupService;
 import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
@@ -71,6 +74,7 @@ import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
+import com.almabani.common.entity.schema.adminoam.OamZoneDevice;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
@@ -85,6 +89,9 @@ import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
+import com.almabani.common.entity.schema.adminwkf.WokOccurrenceType;
+import com.almabani.common.entity.schema.adminwkf.WokUserGroup;
+import com.almabani.common.entity.schema.adminwkf.WokWorkingGroup;
 import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
 import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 import com.almabani.common.exception.AlmabaniException;
@@ -194,6 +201,15 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Autowired
 	WokDailyOccurenceService wokDailyOccurenceService;
+
+	@Autowired
+	WokOccurencyTypeService wokOccurencyTypeService;
+	
+	@Autowired
+	WokUserGroupService wokUserGroupService;
+	
+	@Autowired
+	OamZoneDeviceService zoneDeviceService;
 
 	@PostConstruct
 	public void cacheApplications() {
@@ -398,7 +414,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public OamQuotation addOrUpdateQuotation(OamQuotation oamQuotation,
-			CommonDriverMap commonDriverMap) {
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
 
 		if (Utils.hasID(oamQuotation)) {
 			return qoutationService.updateQuotation(oamQuotation,
@@ -1311,6 +1327,72 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public Integer getCountOfWokDailyOcurrencesView(Map<String, Object> filters) {
-		return wokDailyOccurenceService.getCountOfWokDailyOcurrencesView(filters);
+		return wokDailyOccurenceService
+				.getCountOfWokDailyOcurrencesView(filters);
+	}
+
+	@Override
+	public List<WokOccurrenceType> getWokOccurrenceTypeList(Company company) {
+		return wokOccurencyTypeService.getWokOccurrenceTypeList(company);
+	}
+
+	@Override
+	public List<WokUserGroup> getOperators(Company company, WokWorkingGroup wokWorkingGroup ,SecUser secUser) {
+		Object operatorsParamValue = wokOccurencyTypeService
+				.getOperatorsParamValue(company);
+		if (Utils.isNotNull(operatorsParamValue)) {
+			return wokUserGroupService.getOperators(operatorsParamValue , wokWorkingGroup,secUser);
+		}
+		return new ArrayList<WokUserGroup>();
+	}
+
+	@Override
+	public List<WokUserGroup> getCommuincators(Company company , WokWorkingGroup wokWorkingGroup,SecUser secUser) {
+		Object communicatorsParamValue = wokOccurencyTypeService
+				.getCommuincatorsParamValue(company);
+		if (Utils.isNotNull(communicatorsParamValue)) {
+			return wokUserGroupService.getCommuincators(communicatorsParamValue, wokWorkingGroup,secUser);
+		}
+		return new ArrayList<WokUserGroup>();
+	}
+
+	@Override
+	public List<WokUserGroup> getSafetyAgents(Company company, WokWorkingGroup wokWorkingGroup,SecUser secUser) {
+		Object safetyAgentsParamValue = wokOccurencyTypeService
+				.getSafetyAgentsParamValue(company);
+		if (Utils.isNotNull(safetyAgentsParamValue)) {
+			return wokUserGroupService.getSafetyAgents(safetyAgentsParamValue,wokWorkingGroup,secUser);
+		}
+		return new ArrayList<WokUserGroup>();
+	}
+
+	@Override
+	public List<WokUserGroup> getTechnicians(Company company,WokWorkingGroup wokWorkingGroup,SecUser secUser) {
+		Object techincianParamValue = wokOccurencyTypeService
+				.getTechniciansParamValue(company);
+		if (Utils.isNotNull(techincianParamValue)) {
+			return wokUserGroupService.getTechnicians(techincianParamValue , wokWorkingGroup,secUser);
+		}
+		return new ArrayList<WokUserGroup>();
+	}
+
+	@Override
+	public WokOccurrenceType getOccurenceType(Long id) {
+		return wokOccurencyTypeService.getOccurenceType( id);
+	}
+
+	@Override
+	public WokUserGroup getWokUserGroup(Long id) {
+		return wokUserGroupService.getWokUserGroup(id);
+	}
+
+	@Override
+	public List<OamZoneDevice> getCamDevicesWithAssociatedLocations() {
+		return zoneDeviceService.getCamDevicesWithAssociatedLocations();
+	}
+
+	@Override
+	public OamZoneDevice getOamZoneDevice(Long id) {
+		return zoneDeviceService.getOamZoneDevice( id);
 	}
 }

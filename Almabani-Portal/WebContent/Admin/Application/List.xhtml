@@ -11,8 +11,8 @@
 		<p:panel header="#{loc.ListSecApplicationTitle}"
 			style="margin-left:auto; margin-right:auto ;">
 			<p:dataTable id="datalist" value="#{applicationManagementBean.items}"
-				resizableColumns="true" var="item" widgetVar="datalist"
-				selectionMode="single" draggableColumns="true" draggableRows="true"
+				var="item" widgetVar="datalist" selectionMode="single"
+				resizableColumns="true" draggableColumns="true" draggableRows="true"
 				selection="#{applicationManagementBean.selected}"
 				rowKey="#{item.codApplication}" paginator="true" lazy="true"
 				rows="10" rowsPerPageTemplate="10,20,30">

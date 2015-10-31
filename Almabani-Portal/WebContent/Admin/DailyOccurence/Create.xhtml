@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="createWokDailyOccurency"
+		widgetVar="createWokDailyOccurency" modal="true" resizable="false"
+		appendToBody="true" header="#{loc.CreateWokDailyOcurrenceTitle}">
+
+		<h:form id="createWokDailyOccurencyForm">
+			<h:panelGroup id="display">
+				<p:panelGrid columns="6" styleClass="fullWith"
+					rendered="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence != null}">
+
+					<p:outputLabel value="#{loc.EditWokDailyOcurrenceTitle_userGroup}" />
+					<p:selectOneMenu id="userGroup"
+						converter="#{wokUserGroupConverter}"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroup}"
+						required="true"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroup}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems
+							value="#{dailyOccuranceManagementBean.operatorsList}"
+							var="userGroupItem" itemValue="#{userGroupItem}"
+							itemLabel="( #{userGroupItem.user.employee.employeeName} ) #{userGroupItem.user.userLoginCode}" />
+					</p:selectOneMenu>
+
+
+
+					<p:outputLabel
+						value="#{loc.EditWokDailyOcurrenceTitle_typesOccurrence}" />
+					<p:selectOneMenu id="typesOccurrence"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.typesOccurrence}"
+						required="true" converter="#{wokOccurenceTypeConverter}"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_typesOccurrence}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems
+							value="#{dailyOccuranceManagementBean.occurencyTypeList}"
+							var="typesOccurrenceItem" itemValue="#{typesOccurrenceItem}"
+							itemLabel="#{typesOccurrenceItem.typeOccurrenceDescription}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="#{loc.EditWokDailyOcurrenceTitle_zoneDevice}" />
+
+
+					<p:selectOneMenu id="zoneDevice"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice}"
+						required="true" converter="#{oamZoneDeviceConverter}"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_zoneDevice}">
+						<p:ajax process="@this" update=" location subLocation zone" />
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems value="#{dailyOccuranceManagementBean.cameras}"
+							var="zoneDeviceItem" itemValue="#{zoneDeviceItem}"
+							itemLabel="#{zoneDeviceItem.projectDevice.deviceCode}" />
+					</p:selectOneMenu>
+
+
+
+
+					<p:outputLabel value="#{loc.EditWokDailyOcurrence_location}" />
+
+					<p:outputLabel id="location"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice.reportingZone.reportZoneDescription}" />
+
+					<p:outputLabel value="#{loc.EditWokDailyOcurrence_Sub_location}" />
+					<p:outputLabel id="subLocation"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice.reportingZone.siteDirection.siteDirectionDescription}" />
+					<p:outputLabel value="#{loc.EditWokDailyOcurrence_zone}" />
+
+					<p:outputLabel id="zone"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice.reportingZone.siteDirection.siteDirectionDescription}" />
+
+				</p:panelGrid>
+
+				<p:panelGrid styleClass="fullWith" columns="2"
+					rendered="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence != null}">
+
+					<p:outputLabel
+						value="#{loc.CreateWokDailyOcurrenceTitle_occurrenceDescription}" />
+					<p:editor id="occurrenceDescription"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.occurrenceDescription}"
+						required="true" height="100"
+						requiredMessage="#{loc.CreateWokDailyOcurrenceRequiredMessage_occurrenceDescription}" />
+				</p:panelGrid>
+
+
+				<p:panelGrid columns="6" styleClass="fullWith"
+					rendered="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence != null}">
+
+					<p:outputLabel
+						value="#{loc.EditWokDailyOcurrenceTitle_userGroupCall}" />
+					<p:selectOneMenu id="userGroupCall"
+						converter="#{wokUserGroupConverter}"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupCall}"
+						required="true"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupCall}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems
+							value="#{dailyOccuranceManagementBean.commuincatorsList}"
+							var="userGroupCallItem" itemValue="#{userGroupSafetyItem}"
+							itemLabel="( #{userGroupCallItem.user.employee.employeeName} ) #{userGroupCallItem.user.userLoginCode}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel
+						value="#{loc.EditWokDailyOcurrenceTitle_userGroupSafety}" />
+					<p:selectOneMenu id="userGroupSafety"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupSafety}"
+						required="true" converter="#{wokUserGroupConverter}"
+						converterMessage="#{wokUserGroupConverter}"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupSafety}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems
+							value="#{dailyOccuranceManagementBean.safetyAgentsList}"
+							var="userGroupSafetyItem" itemValue="#{userGroupSafetyItem}"
+							itemLabel="( #{userGroupSafetyItem.user.employee.employeeName} ) #{userGroupSafetyItem.user.userLoginCode}" />
+					</p:selectOneMenu>
+
+
+
+					<p:outputLabel
+						value="#{loc.EditWokDailyOcurrenceTitle_userGroupTechnician}" />
+					<p:selectOneMenu id="userGroupTechnician"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupTechnician}"
+						required="true" converter="#{wokUserGroupConverter}"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupTechnician}">
+						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+						<f:selectItems
+							value="#{dailyOccuranceManagementBean.techniciansList}"
+							var="userGroupTechnicianItem"
+							itemValue="#{userGroupTechnicianItem}"
+							itemLabel="( #{userGroupTechnicianItem.user.employee.employeeName} ) #{userGroupTechnicianItem.user.userLoginCode}" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="6" styleClass="fullWith"
+					rendered="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence != null}">
+
+					<p:outputLabel
+						value="#{loc.EditWokDailyOcurrenceTitle_responseDateTime}" />
+					<p:calendar id="responseDateTime" pattern="MM/dd/yyyy"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.responseDateTime}"
+						maxdate="{currentDate}" showOn="button" />
+
+					<p:outputLabel
+						value="#{loc.EditWokDailyOcurrenceTitle_closingDateTime}" />
+					<p:calendar id="closingDateTime" pattern="MM/dd/yyyy"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.closingDateTime}"
+						maxdate="{currentDate}" showOn="button" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="6" styleClass="fullWith"
+					rendered="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence != null}">
+					<p:outputLabel
+						value="#{loc.CreateWokDailyOcurrenceTitle_actionTakenDescription}" />
+					<p:editor id="actionTakenDescription" height="100"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.actionTakenDescription}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="4" styleClass="fullWith"
+					rendered="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence != null}">
+
+					<p:outputLabel
+						value="#{loc.CreateWokDailyOcurrenceTitle_indContactPolice}" />
+					<p:selectOneMenu
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactPolice}">
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel
+						value="#{loc.CreateWokDailyOcurrenceTitle_indContactAmbulance}" />
+					<p:selectOneMenu
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactAmbulance}">
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel
+						value="#{loc.CreateWokDailyOcurrenceTitle_indContactInsurance}" />
+					<p:selectOneMenu
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactInsurance}">
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
+
+
+					<p:outputLabel
+						value="#{loc.CreateWokDailyOcurrenceTitle_indContactTransit}" />
+
+					<p:selectOneMenu
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactTransit}">
+						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+					</p:selectOneMenu>
+
+
+				</p:panelGrid>
+
+				<p:commandButton
+					actionListener="#{dailyOccuranceManagementBean.saveWokDailyOccurence()}"
+					value="#{loc.Save}" update=":growl @form"
+					oncomplete="if(!args.validationFailed){PF('createWokDailyOccurency').hide();}" />
+				<p:commandButton value="#{loc.Cancel}"
+					onclick="PF('createWokDailyOccurency').hide()" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>
+
+</html>
