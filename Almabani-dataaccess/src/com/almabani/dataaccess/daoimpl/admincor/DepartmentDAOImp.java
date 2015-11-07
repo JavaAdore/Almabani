@@ -2,6 +2,7 @@ package com.almabani.dataaccess.daoimpl.admincor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
@@ -22,16 +23,6 @@ public class DepartmentDAOImp extends AbstractDAO implements DepartmentDAO {
 
 	@Autowired
 	private DefaultSqlSessionFactory defaultSqlSessionFactory;
-
-	@Override
-	public void persist(Department department) {
-		super.persist(department);
-	}
-
-	@Override
-	public void update(Department department) {
-		getCurrentSession().merge(department);
-	}
 
 	@Override
 	public Department getDepartment(Long id) {
@@ -62,7 +53,7 @@ public class DepartmentDAOImp extends AbstractDAO implements DepartmentDAO {
 			DepartmentDAO departmentDAO = sqlSession
 					.getMapper(DepartmentDAO.class);
 			List<Department> result = departmentDAO
-					.getLightDepartments(companyId);  
+					.getLightDepartments(companyId);
 			return result;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -82,8 +73,7 @@ public class DepartmentDAOImp extends AbstractDAO implements DepartmentDAO {
 			sqlSession = defaultSqlSessionFactory.openSession();
 			DepartmentDAO departmentDAO = sqlSession
 					.getMapper(DepartmentDAO.class);
-			List<Department> result = departmentDAO
-					.getAllLightDepartments();  
+			List<Department> result = departmentDAO.getAllLightDepartments();
 			return result;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -93,6 +83,23 @@ public class DepartmentDAOImp extends AbstractDAO implements DepartmentDAO {
 				sqlSession.close();
 			}
 		}
+	}
+
+	@Override
+	public List<Department> loadDepartments(int first, int pageSize,
+			String sortField, boolean assending, Map<String, Object> filters) {
+		return super.lazyLoadEntities(Department.class, first, pageSize,
+				sortField, assending, filters);
+	}
+
+	@Override
+	public Integer getNumberOfDepartments(Map<String, Object> filters) {
+		return super.getCountOfResults(Department.class, filters);
+	}
+
+	@Override
+	public Department saveOrUpdate(Department department) {
+		return (Department) super.persist(department);
 	}
 
 }

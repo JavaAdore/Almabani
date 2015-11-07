@@ -15,11 +15,13 @@
 				var="item" rowKey="#{item.dailyOccurrenceNumber}" paginator="true"
 				rows="10" rowsPerPageTemplate="10,20,30,40,50"
 				selectionMode="single" lazy="true" draggableColumns="true"
-				draggableRows="true"
 				selection="#{dailyOccuranceManagementBean.selectedWokDailyOcurrencesView}">
 				<p:column style="width:30px">
-					<p:rowToggler />
+					<p:rowToggler  />
 				</p:column>
+
+				<p:ajax event="rowSelect" update=" editButton" />
+				<p:ajax event="rowUnselect" update=" editButton" />
 
 				<p:column sortBy="#{item.occurrenceDate}"
 					headerText="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDate}"
@@ -105,21 +107,15 @@
 							value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDescription}" />
 					</f:facet>
 					<div align="center">
-						<p:commandButton oncomplete="PF('occDetails').show()"
-							icon="ui-icon-search" title="View" />
+						<p:commandButton id="dailyOccurence" icon="ui-icon-search"  update=":dailyOccurenceTabView:dialogForm"
+							actionListener="#{dailyOccuranceManagementBean.setSelectedWokDailyOcurrencesView(item)}"
+							oncomplete="PF('dlg3').show()" title="View" />
 					</div>
 
-					<p:overlayPanel widgetVar="occDetails" style="width:110px"
-						showCloseIcon="true">
-						<h:form>
-							<p:inputTextarea readonly="true" cols="20" style="width: 90px;"
-								value="#{item.occurrenceDescription}" />
-						</h:form>
-					</p:overlayPanel>
-
+ 
 				</p:column>
 
-				<p:rowExpansion>
+				<p:rowExpansion  >
 
 					<p:panelGrid columns="2" columnClasses="value,value"
 						styleClass="fullWith">
@@ -172,7 +168,8 @@
 
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_actionTakedDescription}" />
-						<h:outputLabel value="#{item.actionTakedDescription}" />
+						<p:editor controls="" height="100"
+							value="#{item.actionTakedDescription}" />
 
 
 						<h:outputLabel
@@ -197,13 +194,12 @@
 						update=":dailyOccurenceTabView:createWokDailyOccurencyForm"
 						actionListener="#{dailyOccuranceManagementBean.prepareCreateDailyOccurence}"
 						oncomplete="PF('createWokDailyOccurency').show()" />
-
 					<p:commandButton id="editButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-pencil" value="#{loc.Edit}"
-						actionListener="#{itemManagementBean.initializeDepartmentAndDepartmentsList()}"
-						oncomplete="PF('itemsEditDialog').show()"
-						disabled="#{empty itemManagementBean.selected}" />
+						update=":dailyOccurenceTabView:editDailyOccurenceForm"
+						oncomplete="PF('dailyOccurenceEditDialog').show()"
+						disabled="#{ dailyOccuranceManagementBean.selectedWokDailyOcurrence.id==null}" />
 				</f:facet>
 
 			</p:dataTable>
@@ -213,9 +209,14 @@
 
 		</p:panel>
 
+
 	</h:form>
-
-
+	<p:dialog modal="true" widgetVar="dlg3" dynamic="true">
+		<h:form id="dialogForm">
+			<p:editor
+				value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.occurrenceDescription}" />
+		</h:form>
+	</p:dialog>
 
 
 </ui:composition>

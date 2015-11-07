@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartmentCreateDlg" widgetVar="DepartmentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{loc.CreateDepartmentTitle}" closeOnEscape="true">
+
+            <h:form id="DepartmentCreateForm">
+
+                <h:panelGroup id="display" rendered="#{departmentManagementBean.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_departmentCode}" for="departmentCode" />
+                        <p:inputText id="departmentCode" value="#{departmentManagementBean.selected.departmentCode}" title="#{loc.CreateDepartmentTitle_departmentCode}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_departmentCode}"/>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_responsibleUserCode}" for="responsibleUserCode" />
+                        <p:inputText id="responsibleUserCode" value="#{departmentManagementBean.selected.responsibleUserCode}" title="#{loc.CreateDepartmentTitle_responsibleUserCode}"/>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_lastModificationDate}" for="lastModificationDate" />
+                        <p:calendar id="lastModificationDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{departmentManagementBean.selected.lastModificationDate}" title="#{loc.CreateDepartmentTitle_lastModificationDate}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_lastModificationDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_active}" for="active" />
+                        <p:inputText id="active" value="#{departmentManagementBean.selected.active}" title="#{loc.CreateDepartmentTitle_active}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_active}"/>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_departmentName}" for="departmentName" />
+                        <p:inputText id="departmentName" value="#{departmentManagementBean.selected.departmentName}" title="#{loc.CreateDepartmentTitle_departmentName}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_departmentName}"/>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_modificationMakerName}" for="modificationMakerName" />
+                        <p:inputText id="modificationMakerName" value="#{departmentManagementBean.selected.modificationMakerName}" title="#{loc.CreateDepartmentTitle_modificationMakerName}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_modificationMakerName}"/>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_company}" for="company" />
+                        <p:selectOneMenu id="company" value="#{departmentManagementBean.selected.company}"  converter="companyConverter">
+                            <f:selectItem itemLabel="#{loc.SelectOneMessage}"/>
+                            <f:selectItems value="#{companyController.items}"
+                                           var="companyItem"
+                                           itemValue="#{companyItem}"
+                                           itemLabel="#{companyItem.companyName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{loc.CreateDepartmentLabel_departmentSections}" for="departmentSections" />
+                        <p:inputText id="departmentSections" value="#{departmentManagementBean.selected.departmentSections}" title="#{loc.CreateDepartmentTitle_departmentSections}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{departmentManagementBean.saveNew}" value="#{loc.Save}" update="display,:DepartmentListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DepartmentCreateDialog'));">
+                        <p:confirm header="#{loc.ConfirmationHeader}" message="#{loc.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{loc.Cancel}" onclick="PF('DepartmentCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

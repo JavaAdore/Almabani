@@ -13,11 +13,11 @@
 		header="#{loc.CreateOamProjectItemTitle}">
 
 		<h:form id="createProjectItemForm">
-			<h:panelGroup id="display"  >
+			<h:panelGroup id="display"  >  
 				<p:panelGrid columns="2"  style="width:300px"
 					rendered="#{projectItemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.EditOamProjectItemTitle_item}" />
-					<p:autoComplete styleClass="fullWith" dropdown="true" 
+					<p:autoComplete minQueryLength="2" styleClass="fullWith" dropdown="true" dropdownMode="current"
 						value="#{projectItemManagementBean.selected.item}"
 						required="true" converter="#{itemConverter}"
 						requiredMessage="#{loc.EditOamProjectItemRequiredMessage_item}"

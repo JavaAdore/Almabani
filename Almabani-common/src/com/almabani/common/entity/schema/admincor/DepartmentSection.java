@@ -37,8 +37,9 @@ public class DepartmentSection extends AbstractEntity implements
 	@Column(name = "COD_SECTION", nullable = false, length = 15)
 	private String sectionCode;
 
-	@Column(name = "COD_USER_RESPONSIBLE", length = 15)
-	private String responsibleUserCode;
+	@ManyToOne
+	@JoinColumn(name="COD_USER_RESPONSIBLE" , referencedColumnName="COD_EMPLOYEE")
+	private Employee responsibleUserCode;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false)
@@ -76,11 +77,11 @@ public class DepartmentSection extends AbstractEntity implements
 		this.sectionCode = sectionCode;
 	}
 
-	public String getResponsibleUserCode() {
+	public Employee getResponsibleUserCode() {
 		return responsibleUserCode;
 	}
 
-	public void setResponsibleUserCode(String responsibleUserCode) {
+	public void setResponsibleUserCode(Employee responsibleUserCode) {
 		this.responsibleUserCode = responsibleUserCode;
 	}
 

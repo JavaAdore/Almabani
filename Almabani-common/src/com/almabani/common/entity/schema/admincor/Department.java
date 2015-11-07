@@ -41,8 +41,9 @@ public class Department extends AbstractEntity implements Serializable {
 	@Column(name = "COD_DEPARTMENT", nullable = false, length = 15)
 	private String departmentCode;
 
-	@Column(name = "COD_USER_RESPONSIBLE", length = 15)
-	private String responsibleUserCode;
+	@ManyToOne
+	@JoinColumn(name="COD_USER_RESPONSIBLE" , referencedColumnName="COD_EMPLOYEE")
+	private Employee responsibleUserCode;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_LAST_MODIFY", nullable = false)
@@ -86,11 +87,11 @@ public class Department extends AbstractEntity implements Serializable {
 		this.departmentCode = departmentCode;
 	}
 
-	public String getResponsibleUserCode() {
+	public Employee getResponsibleUserCode() {
 		return responsibleUserCode;
 	}
 
-	public void setResponsibleUserCode(String responsibleUserCode) {
+	public void setResponsibleUserCode(Employee responsibleUserCode) {
 		this.responsibleUserCode = responsibleUserCode;
 	}
 

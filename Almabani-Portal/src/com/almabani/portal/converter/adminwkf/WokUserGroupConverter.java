@@ -6,12 +6,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import com.almabani.common.entity.schema.adminwkf.WokDemand;
-import com.almabani.common.entity.schema.adminwkf.WokOccurrenceType;
 import com.almabani.common.entity.schema.adminwkf.WokUserGroup;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Occurs;
 
 @ManagedBean
 @ApplicationScoped

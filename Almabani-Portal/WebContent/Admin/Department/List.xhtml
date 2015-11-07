@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="DepartmentListForm">
+
+		<p:panel header="#{loc.ListDepartmentTitle}">
+			<p:dataTable id="datalist" value="#{departmentManagementBean.items}"
+				var="item" rowKey="#{item.id}" paginator="true" rows="10"
+				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single"
+				lazy="true" selection="#{departmentManagementBean.selected}">
+
+
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+				<p:column sortBy="#{item.company.companyName}"
+					filterBy="#{item.company.companyName}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListDepartmentTitle_company}" />
+					</f:facet>
+					<h:outputText value="#{item.company.companyName}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.departmentCode}"
+					filterBy="#{item.departmentCode}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListDepartmentTitle_departmentCode}" />
+					</f:facet>
+					<h:outputText value="#{item.departmentCode}" />
+				</p:column>
+
+
+
+
+				<p:column sortBy="#{item.departmentName}"
+					filterBy="#{item.departmentName}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListDepartmentTitle_departmentName}" />
+					</f:facet>
+					<h:outputText value="#{item.departmentName}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.active}" filterBy="#{item.active}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListDepartmentTitle_active}" />
+					</f:facet>
+					<h:outputText value="#{item.active}" />
+				</p:column>
+
+				<p:column sortBy="#{item.responsibleUserCode}"
+					filterBy="#{item.responsibleUserCode}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListDepartmentTitle_responsibleUserCode}" />
+					</f:facet>
+					<h:outputText value="#{item.responsibleUserCode}" />
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
+						actionListener="#{departmentManagementBean.prepareCreate}"
+						oncomplete="PF('DepartmentCreateDialog').show()" />
+					<p:commandButton id="viewButton" icon="ui-icon-search"
+						value="#{loc.View}"
+						disabled=" #{empty departmentManagementBean.selected.id}" />
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						disabled=" #{departmentManagementBean.selected.id ==null}" />
+
+
+				</f:facet>
+
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+
+
+</ui:composition>

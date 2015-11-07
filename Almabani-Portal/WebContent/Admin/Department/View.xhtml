@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartmentViewDlg" widgetVar="DepartmentViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{loc.ViewDepartmentTitle}" closeOnEscape="true">
+
+            <h:form id="DepartmentViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{departmentManagementBean.selected != null}">
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_id}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.id}" title="#{loc.ViewDepartmentTitle_id}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_departmentCode}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.departmentCode}" title="#{loc.ViewDepartmentTitle_departmentCode}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_responsibleUserCode}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.responsibleUserCode}" title="#{loc.ViewDepartmentTitle_responsibleUserCode}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_lastModificationDate}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.lastModificationDate}" title="#{loc.ViewDepartmentTitle_lastModificationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_active}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.active}" title="#{loc.ViewDepartmentTitle_active}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_departmentName}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.departmentName}" title="#{loc.ViewDepartmentTitle_departmentName}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_modificationMakerName}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.modificationMakerName}" title="#{loc.ViewDepartmentTitle_modificationMakerName}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_company}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.company.companyName}"/>
+
+                        <h:outputText value="#{loc.ViewDepartmentLabel_departmentSections}"/>
+                        <h:outputText value="#{departmentManagementBean.selected.departmentSections}" title="#{loc.ViewDepartmentTitle_departmentSections}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{loc.Close}" onclick="PF('DepartmentViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

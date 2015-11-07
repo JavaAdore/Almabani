@@ -45,13 +45,13 @@
 
 <!-- 	 <bean id="local" class="org.apache.commons.dbcp.BasicDataSource"> -->
 <!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
-<!-- 		<property name="url" value="jdbc:oracle:thin:@192.168.0.16:1521:orcl"></property> -->
+<!-- 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property> -->
 <!-- 		<property name="username" value="USERONLINE"> -->
-<!-- 		</property> -->
+<!-- 		</property>    -->
 <!-- 		<property name="password" value="braegy#2015"> -->
 
 <!-- 		</property> -->
-<!-- 	</bean> -->
+<!-- 	</bean> -->  
 
 
 	<!-- <bean id="local" class="org.apache.commons.dbcp.BasicDataSource"> -->
@@ -93,7 +93,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">validate</prop>
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 	</bean>

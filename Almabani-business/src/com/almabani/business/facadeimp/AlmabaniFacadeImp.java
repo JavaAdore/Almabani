@@ -62,6 +62,7 @@ import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.admincor.JobTitleType;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.admincor.State;
+import com.almabani.common.entity.schema.admincor.view.VComDepartmentSection;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
@@ -88,6 +89,7 @@ import com.almabani.common.entity.schema.adminsec.SecSubModule;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
+import com.almabani.common.entity.schema.adminwkf.WokDailyOcurrence;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.entity.schema.adminwkf.WokOccurrenceType;
 import com.almabani.common.entity.schema.adminwkf.WokUserGroup;
@@ -204,10 +206,10 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Autowired
 	WokOccurencyTypeService wokOccurencyTypeService;
-	
+
 	@Autowired
 	WokUserGroupService wokUserGroupService;
-	
+
 	@Autowired
 	OamZoneDeviceService zoneDeviceService;
 
@@ -256,11 +258,6 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	@Override
 	public Integer getNumberOfEmployees(Map<String, Object> filters) {
 		return employeeService.getNumberOfEmployees(filters);
-	}
-
-	@Override
-	public Department saveOrUpdate(Department department) {
-		return departmentService.saveOrUpdate(department);
 	}
 
 	@Override
@@ -1337,48 +1334,56 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public List<WokUserGroup> getOperators(Company company, WokWorkingGroup wokWorkingGroup ,SecUser secUser) {
+	public List<WokUserGroup> getOperators(Company company,
+			WokWorkingGroup wokWorkingGroup, SecUser secUser) {
 		Object operatorsParamValue = wokOccurencyTypeService
 				.getOperatorsParamValue(company);
 		if (Utils.isNotNull(operatorsParamValue)) {
-			return wokUserGroupService.getOperators(operatorsParamValue , wokWorkingGroup,secUser);
+			return wokUserGroupService.getOperators(operatorsParamValue,
+					wokWorkingGroup, secUser);
 		}
 		return new ArrayList<WokUserGroup>();
 	}
 
 	@Override
-	public List<WokUserGroup> getCommuincators(Company company , WokWorkingGroup wokWorkingGroup,SecUser secUser) {
+	public List<WokUserGroup> getCommuincators(Company company,
+			WokWorkingGroup wokWorkingGroup, SecUser secUser) {
 		Object communicatorsParamValue = wokOccurencyTypeService
 				.getCommuincatorsParamValue(company);
 		if (Utils.isNotNull(communicatorsParamValue)) {
-			return wokUserGroupService.getCommuincators(communicatorsParamValue, wokWorkingGroup,secUser);
+			return wokUserGroupService.getCommuincators(
+					communicatorsParamValue, wokWorkingGroup, secUser);
 		}
 		return new ArrayList<WokUserGroup>();
 	}
 
 	@Override
-	public List<WokUserGroup> getSafetyAgents(Company company, WokWorkingGroup wokWorkingGroup,SecUser secUser) {
+	public List<WokUserGroup> getSafetyAgents(Company company,
+			WokWorkingGroup wokWorkingGroup, SecUser secUser) {
 		Object safetyAgentsParamValue = wokOccurencyTypeService
 				.getSafetyAgentsParamValue(company);
 		if (Utils.isNotNull(safetyAgentsParamValue)) {
-			return wokUserGroupService.getSafetyAgents(safetyAgentsParamValue,wokWorkingGroup,secUser);
+			return wokUserGroupService.getSafetyAgents(safetyAgentsParamValue,
+					wokWorkingGroup, secUser);
 		}
 		return new ArrayList<WokUserGroup>();
 	}
 
 	@Override
-	public List<WokUserGroup> getTechnicians(Company company,WokWorkingGroup wokWorkingGroup,SecUser secUser) {
+	public List<WokUserGroup> getTechnicians(Company company,
+			WokWorkingGroup wokWorkingGroup, SecUser secUser) {
 		Object techincianParamValue = wokOccurencyTypeService
 				.getTechniciansParamValue(company);
 		if (Utils.isNotNull(techincianParamValue)) {
-			return wokUserGroupService.getTechnicians(techincianParamValue , wokWorkingGroup,secUser);
+			return wokUserGroupService.getTechnicians(techincianParamValue,
+					wokWorkingGroup, secUser);
 		}
 		return new ArrayList<WokUserGroup>();
 	}
 
 	@Override
 	public WokOccurrenceType getOccurenceType(Long id) {
-		return wokOccurencyTypeService.getOccurenceType( id);
+		return wokOccurencyTypeService.getOccurenceType(id);
 	}
 
 	@Override
@@ -1393,6 +1398,63 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public OamZoneDevice getOamZoneDevice(Long id) {
-		return zoneDeviceService.getOamZoneDevice( id);
+		return zoneDeviceService.getOamZoneDevice(id);
 	}
+
+	@Override
+	public WokDailyOcurrence addOrUpdateWokDailyOccurency(
+			WokDailyOcurrence selectedWokDailyOcurrence,
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
+		if (Utils.hasID(selectedWokDailyOcurrence)) {
+			return wokDailyOccurenceService.updateWokDailyOccurency(
+					selectedWokDailyOcurrence, commonDriverMap);
+		} else {
+			return wokDailyOccurenceService.addWokDailyOccurency(
+					selectedWokDailyOcurrence, commonDriverMap);
+
+		}
+	}
+
+	@Override
+	public WokDailyOcurrence getWokDailyOccurence(Long id) {
+		return wokDailyOccurenceService.getWokDailyOccurence(id);
+	}
+
+	@Override
+	public List<Department> loadDepartments(int first, int pageSize,
+			String sortField, boolean assending, Map<String, Object> filters) {
+		return departmentService.loadDepartments(first, pageSize, sortField,
+				assending, filters);
+	}
+
+	@Override
+	public Integer getNumberOfDepartments(Map<String, Object> filters) {
+		return departmentService.getNumberOfDepartments(filters);
+	}
+
+	@Override
+	public Department addOrUpdate(Department department,
+			CommonDriverMap commonDriverMap) {
+		if (Utils.hasID(department)) {
+
+			return departmentService.addDepartment(department, commonDriverMap);
+		} else {
+			return departmentService.updateDepartment(department,
+					commonDriverMap);
+		}
+	}
+
+	@Override
+	public List<VComDepartmentSection> loadDepartmentSectionsView(
+			Integer first, Integer pageSize, String sortField,
+			boolean assending, Map<String, Object> filters) {
+		return departmentSectionService.loadDepartmentSectionsView(first,
+				pageSize, sortField, assending, filters);
+	}
+
+	@Override
+	public Integer getNumberOfDepartmentSectionsView(Map<String, Object> filters) {
+		return departmentSectionService.getNumberOfDepartmentSectionsView(filters);
+	}
+
 }

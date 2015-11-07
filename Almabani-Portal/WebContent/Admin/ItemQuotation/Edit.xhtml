@@ -19,31 +19,37 @@
 					rendered="#{quotationItemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_quotation}" />
 					<p:selectOneMenu id="quotation" styleClass="fullWith"
-						
 						value="#{quotationItemManagementBean.selected.quotation}"
-						converter="#{quotationConverter}"  required="true"
+						converter="#{quotationConverter}" required="true"
 						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_quotation}">
-						<p:ajax  
-							process=" #{(quotationItemManagementBean.selected.projectItem !=null)?'@this projectItem ':'@this'}" listener="#{quotationItemManagementBean.selectedQuotationChanged}" update="@form" />
-						<f:selectItem itemValue="{null}" itemDisabled="#{quotationItemManagementBean.selected.quotation !=null}"   itemLabel="#{loc.SelectOneMessage}"></f:selectItem>
-						<f:selectItems 
+						<p:ajax
+							process=" #{(quotationItemManagementBean.selected.projectItem !=null)?'@this projectItem ':'@this'}"
+							listener="#{quotationItemManagementBean.selectedQuotationChanged}"
+							update="@form" />
+						<f:selectItem itemValue="{null}"
+							itemDisabled="#{quotationItemManagementBean.selected.quotation !=null}"
+							itemLabel="#{loc.SelectOneMessage}"></f:selectItem>
+						<f:selectItems
 							value="#{quotationItemManagementBean.oamQuotataions}"
 							var="quotation" itemValue="#{quotation}"
 							itemLabel="#{quotation.quotationDescription}" />
-					</p:selectOneMenu> 
-					
-					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}" rendered="#{quotationItemManagementBean.selected.quotation!=null}"  />
-					<p:autoComplete styleClass="fullWith" dropdown="true" widgetVar="projectItem"
-						id="projectItem" rendered="#{quotationItemManagementBean.selected.quotation !=null}"
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}"
+						rendered="#{quotationItemManagementBean.selected.quotation!=null}" />
+					<p:autoComplete minQueryLength="2" styleClass="fullWith"
+						widgetVar="projectItem" id="projectItem"
+						rendered="#{quotationItemManagementBean.selected.quotation !=null}"
 						value="#{quotationItemManagementBean.selected.projectItem}"
-						required="true" converter="#{projectItemConverter}"
+						dropdown="true" dropdownMode="current" required="true"
+						converter="#{projectItemConverter}"
 						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}"
 						completeMethod="#{quotationItemManagementBean.autoCompleteProjectItemList}"
-						var="projectItemItem" itemValue="#{projectItemItem}" 
+						var="projectItemItem" itemValue="#{projectItemItem}"
 						scrollHeight="450" itemLabel=" #{projectItemItem.item.itemCode}"
 						forceSelection="true">
 						<p:ajax immediate="true" process="@this" update="quotation"></p:ajax>
-  						<f:facet name="itemtip">
+						<f:facet name="itemtip">
 							<h:panelGrid width="400" columns="2" cellpadding="5">
 
 								<h:outputText value="#{loc.ALMABANI_GENERAL_PROJECT}" />
@@ -77,7 +83,7 @@
 						value="#{quotationItemManagementBean.selected.observationDescription}"
 						maxlength="80" />
 
-				</p:panelGrid>  
+				</p:panelGrid>
 
 
 				<p:commandButton

@@ -19,10 +19,8 @@
 
 					<p:outputLabel value="#{loc.EditWokDailyOcurrenceTitle_userGroup}" />
 					<p:selectOneMenu id="userGroup"
-						converter="#{wokUserGroupConverter}"
-						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroup}"
-						required="true"
-						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroup}">
+						converter="#{wokUserGroupConverter}" required="true"  requiredMessage="#{loc.CreateWokDailyOcurrenceRequiredMessage_userGroup}"
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroup}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
 							value="#{dailyOccuranceManagementBean.operatorsList}"
@@ -85,7 +83,7 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_occurrenceDescription}" />
 					<p:editor id="occurrenceDescription"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.occurrenceDescription}"
-						required="true" height="100"
+						required="true" height="100" maxlength="600"
 						requiredMessage="#{loc.CreateWokDailyOcurrenceRequiredMessage_occurrenceDescription}" />
 				</p:panelGrid>
 
@@ -97,9 +95,7 @@
 						value="#{loc.EditWokDailyOcurrenceTitle_userGroupCall}" />
 					<p:selectOneMenu id="userGroupCall"
 						converter="#{wokUserGroupConverter}"
-						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupCall}"
-						required="true"
-						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupCall}">
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupCall}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
 							value="#{dailyOccuranceManagementBean.commuincatorsList}"
@@ -112,9 +108,9 @@
 						value="#{loc.EditWokDailyOcurrenceTitle_userGroupSafety}" />
 					<p:selectOneMenu id="userGroupSafety"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupSafety}"
-						required="true" converter="#{wokUserGroupConverter}"
-						converterMessage="#{wokUserGroupConverter}"
-						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupSafety}">
+						converter="#{wokUserGroupConverter}" required="true" 
+						requiredMessage="#{loc.CreateWokDailyOcurrenceRequiredMessage_userGroupSafety}"
+						converterMessage="#{wokUserGroupConverter}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
 							value="#{dailyOccuranceManagementBean.safetyAgentsList}"
@@ -128,8 +124,7 @@
 						value="#{loc.EditWokDailyOcurrenceTitle_userGroupTechnician}" />
 					<p:selectOneMenu id="userGroupTechnician"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupTechnician}"
-						required="true" converter="#{wokUserGroupConverter}"
-						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupTechnician}">
+						converter="#{wokUserGroupConverter}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
 							value="#{dailyOccuranceManagementBean.techniciansList}"
@@ -211,7 +206,7 @@
 					actionListener="#{dailyOccuranceManagementBean.saveWokDailyOccurence()}"
 					value="#{loc.Save}" update=":growl @form"
 					oncomplete="if(!args.validationFailed){PF('createWokDailyOccurency').hide();}" />
-				<p:commandButton value="#{loc.Cancel}"
+				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('createWokDailyOccurency').hide()" />
 			</h:panelGroup>
 

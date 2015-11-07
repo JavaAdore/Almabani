@@ -1,6 +1,7 @@
 package com.almabani.dataaccess.dao.admincor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +14,7 @@ import com.almabani.dataaccess.dao.AbstractDAOInt;
 @Repository
 public interface DepartmentDAO extends AbstractDAOInt{
 	
-	void persist(Department department);
-	
-	void update(Department department);
+	Department saveOrUpdate(Department department);
 	
 	Department getDepartment(Long id);
 
@@ -26,4 +25,9 @@ public interface DepartmentDAO extends AbstractDAOInt{
 	List<Department> getLightDepartments(int companyId);
 
 	List<Department> getAllLightDepartments();
+
+	List<Department> loadDepartments(int first, int pageSize, String sortField,
+			boolean assending, Map<String, Object> filters);
+
+	Integer getNumberOfDepartments(Map<String, Object> filters);
 }

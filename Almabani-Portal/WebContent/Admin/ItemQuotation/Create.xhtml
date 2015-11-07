@@ -50,8 +50,8 @@
 
 					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}"
 						rendered="#{quotationItemManagementBean.selected.quotation!=null}" />
-					<p:autoComplete styleClass="fullWith" dropdown="true"
-						widgetVar="projectItem" id="projectItem"
+					<p:autoComplete  styleClass="fullWith"  minQueryLength="2"
+						widgetVar="projectItem" id="projectItem" dropdown="true" dropdownMode="current"
 						rendered="#{quotationItemManagementBean.selected.quotation !=null}"
 						value="#{quotationItemManagementBean.selected.projectItem}"
 						required="true" converter="#{projectItemConverter}"

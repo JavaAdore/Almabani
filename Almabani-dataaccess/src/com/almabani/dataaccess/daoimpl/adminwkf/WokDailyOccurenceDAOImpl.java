@@ -6,6 +6,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.adminwkf.WokDailyOcurrence;
 import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
 import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 import com.almabani.dataaccess.dao.adminwkf.WokDailyOccurenceDAO;
@@ -38,6 +39,17 @@ public class WokDailyOccurenceDAOImpl extends AbstractDAO implements WokDailyOcc
 	@Override
 	public Integer getCountOfWokDailyOcurrencesView(Map<String, Object> filters) {
 		return super.getCountOfResults(WokDailyOcurrencesView.class, filters);
+	}
+
+	@Override
+	public WokDailyOcurrence WokDailyOccurency(
+			WokDailyOcurrence wokDailyOcurrence) {
+		return (WokDailyOcurrence) super.persist(wokDailyOcurrence);
+	}
+
+	@Override
+	public WokDailyOcurrence getWokDailyOccurence(Long id) {
+		return (WokDailyOcurrence) super.getEntity(WokDailyOcurrence.class, id);
 	}
 
 	

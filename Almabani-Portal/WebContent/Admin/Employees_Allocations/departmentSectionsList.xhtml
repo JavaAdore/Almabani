@@ -61,12 +61,12 @@
 						</p:column>
 
 						<p:column styleClass="singleLine"
-							sortBy="#{employeesAndAllocationsBean.selectedDepartmentSection.responsibleUserCode}">
+							sortBy="#{employeesAndAllocationsBean.selectedDepartmentSection.responsibleUserCode.employeeName}">
 							<f:facet name="header">
 								<h:outputText value="Responsible User Code" />
 							</f:facet>
 							<h:outputText
-								value="#{employeesAndAllocationsBean.selectedDepartmentSection.responsibleUserCode}" />
+								value="#{employeesAndAllocationsBean.selectedDepartmentSection.responsibleUserCode.employeeName}" />
 						</p:column>
 						
 						<p:column style="width:100px;text-align: center">

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+<ui:composition>
+	<h:form id="VComDepartmentSectionListForm">
+
+		<p:panel header="#{loc.ListVComDepartmentSectionTitle}">
+
+			<p:dataTable id="datalist"
+				value="#{employeeManagementBean.departmentSections}" var="item"
+				rowKey="#{item.departmentSectionNumber}" paginator="true" rows="10"
+				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" lazy="true" 
+				selection="#{employeeManagementBean.selectedDepartmentSection}">
+
+				<!-- 				<p:column sortBy="#{item.departmentSectionNumber}" -->
+				<!-- 					filterBy="#{item.departmentSectionNumber}"> -->
+				<!-- 					<f:facet name="header"> -->
+				<!-- 						<h:outputText -->
+				<!-- 							value="#{loc.ListVComDepartmentSectionTitle_departmentSectionNumber}" /> -->
+				<!-- 					</f:facet> -->
+				<!-- 					<h:outputText value="#{item.departmentSectionNumber}" /> -->
+				<!-- 				</p:column> -->
+
+
+				<!-- 				<p:column sortBy="#{item.departmentNumber}" -->
+				<!-- 					filterBy="#{item.departmentNumber}"> -->
+				<!-- 					<f:facet name="header"> -->
+				<!-- 						<h:outputText -->
+				<!-- 							value="#{loc.ListVComDepartmentSectionTitle_departmentNumber}" /> -->
+				<!-- 					</f:facet> -->
+				<!-- 					<h:outputText value="#{item.departmentNumber}" /> -->
+				<!-- 				</p:column> -->
+
+				<!-- 				<p:column sortBy="#{item.sectionNumber}" -->
+				<!-- 					filterBy="#{item.sectionNumber}"> -->
+				<!-- 					<f:facet name="header"> -->
+				<!-- 						<h:outputText -->
+				<!-- 							value="#{loc.ListVComDepartmentSectionTitle_sectionNumber}" /> -->
+				<!-- 					</f:facet> -->
+				<!-- 					<h:outputText value="#{item.sectionNumber}" /> -->
+				<!-- 				</p:column> -->
+
+
+				<p:column headerText="#{loc.ListVComDepartmentSectionTitle_company}"
+					sortBy="#{item.company.companyName}"
+					filterBy="#{item.company.companyName}" name="header">
+					<h:outputText value="#{item.company.companyName}">
+					</h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{item.deaprtmentCode}"
+					filterBy="#{item.deaprtmentCode}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_deaprtmentCode}" />
+					</f:facet>
+					<h:outputText value="#{item.deaprtmentCode}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.departmentName}"
+					filterBy="#{item.departmentName}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_departmentName}" />
+					</f:facet>
+					<h:outputText value="#{item.departmentName}" />
+				</p:column>
+
+
+
+
+
+				<p:column sortBy="#{item.sectionCode}"
+					filterBy="#{item.sectionCode}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_sectionCode}" />
+					</f:facet>
+					<h:outputText value="#{item.sectionCode}" />
+				</p:column>
+
+
+
+
+				<p:column sortBy="#{item.indActive}" filterBy="#{item.indActive}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_indActive}" />
+					</f:facet>
+					<h:outputText value="#{item.indActive}" />
+				</p:column>
+
+
+				<p:column
+					headerText="#{loc.ListVComDepartmentSectionTitle_responsibleEmployee}"
+					filterBy="#{item.responsibleEmployee.employeeName}"
+					sortBy="#{item.responsibleEmployee.employeeName}">
+
+					<h:outputText value="#{item.responsibleEmployee}">
+					</h:outputText>
+				</p:column>
+
+
+				<p:column sortBy="#{item.numberOfSupportEmployees}"
+					filterBy="#{item.numberOfSupportEmployees}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_numberOfSupportEmployees}" />
+					</f:facet>
+					<h:outputText value="#{item.numberOfSupportEmployees}" />
+				</p:column>
+
+
+
+				<p:column sortBy="#{item.numberOfContractEmployees}"
+					filterBy="#{item.numberOfContractEmployees}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_numberOfContractEmployees}" />
+					</f:facet>
+					<h:outputText value="#{item.numberOfContractEmployees}" />
+				</p:column>
+
+				<p:column sortBy="#{item.numberOfAllEmployees}"
+					filterBy="#{item.numberOfAllEmployees}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListVComDepartmentSectionTitle_numberOfAllEmployees}" />
+					</f:facet>
+					<h:outputText value="#{item.numberOfAllEmployees}" />
+				</p:column>
+
+
+			</p:dataTable>
+
+
+		</p:panel>
+	</h:form>
+</ui:composition>
+</html>

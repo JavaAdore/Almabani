@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.entity.schema.adminwkf.WokDailyOcurrence;
 import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
 import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 
@@ -19,5 +20,9 @@ public interface WokDailyOccurenceDAO {
 			Map<String, Object> filters);
 
 	Integer getCountOfWokDailyOcurrencesView(Map<String, Object> filters);
+
+	WokDailyOcurrence WokDailyOccurency(WokDailyOcurrence wokDailyOcurrence);
+
+	WokDailyOcurrence getWokDailyOccurence(Long id);
 
 }

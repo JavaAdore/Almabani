@@ -18,9 +18,9 @@
 				<p:panelGrid columns="2"  style="width:300px"
 					rendered="#{projectItemManagementBean.selected != null}">
 					<p:outputLabel value="#{loc.EditOamProjectItemTitle_item}" />
-					<p:autoComplete styleClass="fullWith" dropdown="true" 
+					<p:autoComplete minQueryLength="2" styleClass="fullWith" 
 						value="#{projectItemManagementBean.selected.item}"
-						required="true" converter="#{itemConverter}"
+						required="true" converter="#{itemConverter}"  dropdown="true" dropdownMode="current"
 						requiredMessage="#{loc.EditOamProjectItemRequiredMessage_item}"
 						completeMethod="#{projectItemManagementBean.autoCompleteItemList}"
 						var="item" itemValue="#{item}" scrollHeight="450" 

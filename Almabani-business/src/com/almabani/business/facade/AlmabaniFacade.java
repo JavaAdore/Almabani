@@ -18,6 +18,7 @@ import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.admincor.JobTitleType;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.admincor.State;
+import com.almabani.common.entity.schema.admincor.view.VComDepartmentSection;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
@@ -43,6 +44,7 @@ import com.almabani.common.entity.schema.adminsec.SecSubModule;
 import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminsec.SecTypesPerfil;
 import com.almabani.common.entity.schema.adminsec.SecUser;
+import com.almabani.common.entity.schema.adminwkf.WokDailyOcurrence;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 import com.almabani.common.entity.schema.adminwkf.WokOccurrenceType;
 import com.almabani.common.entity.schema.adminwkf.WokUserGroup;
@@ -57,8 +59,6 @@ public interface AlmabaniFacade {
 	Company getCompany(Long id);
 
 	Country getCountry(Long id);
-
-	Department saveOrUpdate(Department department);
 
 	Department getDepartment(Long id);
 
@@ -448,5 +448,25 @@ public interface AlmabaniFacade {
 	List<OamZoneDevice> getCamDevicesWithAssociatedLocations();
 
 	OamZoneDevice getOamZoneDevice(Long id);
+
+	WokDailyOcurrence addOrUpdateWokDailyOccurency(
+			WokDailyOcurrence selectedWokDailyOcurrence,
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
+
+	WokDailyOcurrence getWokDailyOccurence(Long id);
+
+	List<Department> loadDepartments(int first, int pageSize, String sortField,
+			boolean assending, Map<String, Object> filters);
+
+	Integer getNumberOfDepartments(Map<String, Object> filters);
+
+	Department addOrUpdate(Department selected,
+			CommonDriverMap appendCurrentUserCode);
+	
+	List<VComDepartmentSection> loadDepartmentSectionsView(Integer first, Integer pageSize,
+			String sortField, boolean assending, Map<String, Object> filters);
+
+	Integer getNumberOfDepartmentSectionsView(Map<String, Object> filters);
+
 
 }

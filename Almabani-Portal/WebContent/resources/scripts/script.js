@@ -40,3 +40,33 @@ function centerEveryThingInTD() {
 
 	});
 }
+
+
+function getNoStyleValue( component , val)
+{
+	try{
+		if (window.DOMParser)
+		{
+		  parser=new DOMParser();
+		  xmlDoc=parser.parseFromString(val,"text/xml");
+		}
+		else // Internet Explorer
+		{
+		  xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+		  xmlDoc.async=false;
+				  xmlDoc.loadXML(val);
+
+		}
+		var val =  xmlDoc.getElementsByTagName("span")[0].childNodes[0].nodeValue;
+		 if (val !=null)
+		{
+			 
+			 $(component).html( val);
+		}
+		 return  $(component).html( "");
+
+	}catch(e)
+	{
+		return  $(component).html( "");
+	}
+}

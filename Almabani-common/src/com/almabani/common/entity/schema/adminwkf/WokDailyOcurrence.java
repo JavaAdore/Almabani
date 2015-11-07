@@ -39,15 +39,15 @@ public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	private WokOccurrenceType typesOccurrence;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_USER_GROUP_TECHNICIAN", referencedColumnName="NUM_USER_GROUP", nullable = false)
+	@JoinColumn(name = "NUM_USER_GROUP_TECHNICIAN", referencedColumnName="NUM_USER_GROUP")
 	private WokUserGroup userGroupTechnician;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_USER_GROUP_SAFETY", referencedColumnName="NUM_USER_GROUP", nullable = false)
+	@JoinColumn(name = "NUM_USER_GROUP_SAFETY", referencedColumnName="NUM_USER_GROUP")
 	private WokUserGroup userGroupSafety;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_USER_GROUP_CALL", referencedColumnName="NUM_USER_GROUP", nullable = false)
+	@JoinColumn(name = "NUM_USER_GROUP_CALL", referencedColumnName="NUM_USER_GROUP")
 	private WokUserGroup userGroupCall;
 	
 	@ManyToOne
@@ -62,7 +62,7 @@ public class WokDailyOcurrence extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "NUM_ZONE_DEVICE", referencedColumnName="NUM_ZONE_DEVICE", nullable = false)
 	private OamZoneDevice zoneDevice;
 	
-	@Column(name = "DES_OCCURRENCE", nullable = false, length = 300)
+	@Column(name = "DES_OCCURRENCE", nullable = false, length = 600)
 	private String occurrenceDescription;
 	
 	/**

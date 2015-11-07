@@ -8,7 +8,7 @@
 
 	<h:form id="listForm">
 
-		<p:panel header="#{bundle.ListSecApplicationGrantsTitle}" style="margin-left:auto; margin-right:auto ; ">
+		<p:panel header="#{loc.ListSecApplicationGrantsTitle}" style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" resizableColumns="true"
 				value="#{secApplicationGrantsController.items}" var="item"
 				selectionMode="single"
@@ -26,33 +26,33 @@
 
 				<p:column sortBy="#{item.id}">
 					<f:facet name="header">
-						<h:outputText value="#{bundle.ListSecApplicationGrantsTitle_id}" />
+						<h:outputText value="#{loc.ListSecApplicationGrantsTitle_id}" />
 					</f:facet>
 					<h:outputText value="#{item.id}" />
 				</p:column>
 				<p:column sortBy="#{item.typesPerfil}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_typesPerfil}" />
+							value="#{loc.ListSecApplicationGrantsTitle_typesPerfil}" />
 					</f:facet>
 				</p:column>
 				<p:column sortBy="#{item.applicationsCompany}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_applicationsCompany}" />
+							value="#{loc.ListSecApplicationGrantsTitle_applicationsCompany}" />
 					</f:facet>
 				</p:column>
 				<p:column sortBy="#{item.userLoginCode}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_userLoginCode}" />
+							value="#{loc.ListSecApplicationGrantsTitle_userLoginCode}" />
 					</f:facet>
 					<h:outputText value="#{item.userLoginCode}" />
 				</p:column>
 				<p:column sortBy="#{item.validityBeginDate}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_validityBeginDate}" />
+							value="#{loc.ListSecApplicationGrantsTitle_validityBeginDate}" />
 					</f:facet>
 					<h:outputText value="#{item.validityBeginDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy" />
@@ -61,7 +61,7 @@
 				<p:column sortBy="#{item.validityEndDate}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_validityEndDate}" />
+							value="#{loc.ListSecApplicationGrantsTitle_validityEndDate}" />
 					</f:facet>
 					<h:outputText value="#{item.validityEndDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy" />
@@ -70,21 +70,21 @@
 				<p:column sortBy="#{item.observationDescription}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_observationDescription}" />
+							value="#{loc.ListSecApplicationGrantsTitle_observationDescription}" />
 					</f:facet>
 					<h:outputText value="#{item.observationDescription}" />
 				</p:column>
 				<p:column sortBy="#{item.modificationMakerName}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_modificationMakerName}" />
+							value="#{loc.ListSecApplicationGrantsTitle_modificationMakerName}" />
 					</f:facet>
 					<h:outputText value="#{item.modificationMakerName}" />
 				</p:column>
 				<p:column sortBy="#{item.lastModificationDate}">
 					<f:facet name="header">
 						<h:outputText
-							value="#{bundle.ListSecApplicationGrantsTitle_lastModificationDate}" />
+							value="#{loc.ListSecApplicationGrantsTitle_lastModificationDate}" />
 					</f:facet>
 					<h:outputText value="#{item.lastModificationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy" />
@@ -92,15 +92,15 @@
 				</p:column>
 				<f:facet name="footer">
 					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{bundle.Create}"
+						value="#{loc.Create}"
 						actionListener="#{secApplicationGrantsController.prepareCreate}"
 						update=":createForm:display" oncomplete="createDialog.show()" />
 					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{bundle.View}" update=":viewForm:display"
+						value="#{loc.View}" update=":viewForm:display"
 						oncomplete="viewDialog.show()"
 						disabled="#{empty secApplicationGrantsController.selected}" />
 					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{bundle.Edit}" update=":editForm:display"
+						value="#{loc.Edit}" update=":editForm:display"
 						oncomplete="editDialog.show()"
 						disabled="#{empty secApplicationGrantsController.selected}" />
 				</f:facet>

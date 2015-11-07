@@ -81,7 +81,7 @@ public class QuotationItemDAOImpl extends AbstractDAO implements
 	public Integer getNumberOfItemQuotation(OamQuotation quotation) {
 		Query query = super.getCurrentSession().createQuery("select count(x ) from OamItemQuotation x where x.quotation =:quotation ");
 		query.setParameter("quotation", quotation);
-		return (Integer) Utils.getFirstResult(query.list());
+		return ((Long) Utils.getFirstResult(query.list())).intValue();
 	}
 
 }

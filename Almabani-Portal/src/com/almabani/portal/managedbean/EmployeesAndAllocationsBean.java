@@ -55,6 +55,7 @@ public class EmployeesAndAllocationsBean extends AbstractBeanHelper implements
 
 	@PostConstruct
 	public void init() {
+		
 		companiesList = almabaniFacade.getAllCompanies();
 
 	}

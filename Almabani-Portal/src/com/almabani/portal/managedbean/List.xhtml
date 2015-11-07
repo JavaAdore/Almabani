@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+    <ui:composition>
+        <h:form id="employeeListForm"
+				rendered="#{employeesAndAllocationsBean.selectedDepartmentSection.id gt 0}">
+				<br />
+				<p:panel header="#{loc.ListComEmployeeTitle}" style="width:88%">
+
+					<p:dataTable var="employee"
+						value="#{employeesAndAllocationsBean.employeesList}"
+						scrollable="true" scrollRows="10" liveScroll="true"
+						resizableColumns="true" selectionMode="single" rows="10"
+						rowKey="#{employee.id}" paginator="true"
+						rowsPerPageTemplate="10,20,30">
+
+						<p:ajax event="rowSelect" update="" />
+
+						<p:column sortBy="#{employee.id}" filterBy="#{employee.id}" 
+								filterStyle="width:40px;" style="width:60px;" >
+							<f:facet name="header">
+								<h:outputText value="Emp ID" />
+							</f:facet>
+							<h:outputText value="#{employee.id}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.employeeName}" filterBy="#{employee.employeeName}">
+							<f:facet name="header">
+								<h:outputText value="Employee Name" />
+							</f:facet>
+							<h:outputText value="#{employee.employeeName}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.federalIdentityCode}" filterBy="#{employee.federalIdentityCode}"
+								style="width:140px;">
+							<f:facet name="header">
+								<h:outputText value="Fedral Identity Code" />
+							</f:facet>
+							<h:outputText value="#{employee.federalIdentityCode}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.admissionDate}" style="width:110px;">
+							<f:facet name="header">
+								<h:outputText value="Admission Date" />
+							</f:facet>
+							<h:outputText value="#{employee.admissionDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column sortBy="#{employee.jobTitleType.jobTitle}" style="width:80px;">
+							<f:facet name="header">
+								<h:outputText value="Job Title" />
+							</f:facet>
+							<h:outputText value="#{employee.jobTitleType.jobTitle}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.active}" style="width:50px;">
+							<f:facet name="header">
+								<h:outputText value="Active" />
+							</f:facet>
+							<h:outputText
+								value="#{employeesAndAllocationsBean.extractFromBundle(employee.active.key)}" />
+						</p:column>
+
+						<p:column sortBy="#{employee.employeeType}" style="width:100px;">
+							<f:facet name="header">
+								<h:outputText value="EmployeeType" />
+							</f:facet>
+							<h:outputText
+								value="#{employeesAndAllocationsBean.extractFromBundle(employee.employeeType.key)}" />
+						</p:column>
+
+						<p:column style="width:110px;text-align: center">
+							<f:facet name="header">
+								<h:outputText value="Employee Details" />
+							</f:facet>
+							<p:commandButton update="employeeListForm:empDetails"
+								oncomplete="PF('empOP').show('#{component.clientId}')"
+								icon="ui-icon-search" title="Employee Details"
+								actionListener="#{employeesAndAllocationsBean.employeeDetails(employee)}">
+
+							</p:commandButton>
+						</p:column>
+						
+						<p:column style="width:110px;text-align: center">
+							<f:facet name="header">
+								<h:outputText value="Allocations" />
+							</f:facet>
+							<p:commandButton update="employeeListForm:empAllocationsDetails"
+								oncomplete="PF('empAllocationsOP').show('#{component.clientId}')"
+								icon="ui-icon-search" title="Employee Allocations"
+								actionListener="#{employeesAndAllocationsBean.employeeAllocations(employee)}">
+
+							</p:commandButton>
+						</p:column>
+						
+					</p:dataTable>
+				</p:panel>
+				
+				<p:overlayPanel widgetVar="empOP" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+					<p:outputPanel id="empDetails" style="text-align:center;">
+						<p:panelGrid columns="4"
+							rendered="#{not empty employeesAndAllocationsBean.employee4Details}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+								<itiGeeks:ByteImageViewer
+									objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
+							</f:facet>
+							
+							<h:outputText value="Employee Name" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.employeeName}" />
+
+							<h:outputText value="Job Title" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.jobTitleType.jobTitle}" />
+
+							<h:outputText value="Department Section Name" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.departmentSection.sectionName}" />
+
+							<h:outputText value="State Identity Code" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.stateIdentityCode}" />
+							
+							<h:outputText value="Begining Activity Date" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.inactivityBeginDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+							
+							<h:outputText value="Birth Date" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.birthDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+							
+							<h:outputText value="Last Modification Date" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.lastModificationDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+							
+							<h:outputText value="Registration Date" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.registrationDate}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+							
+							<h:outputText value="Email1" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.email1Description}" />
+							
+							<h:outputText value="Email2" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.email2Description}" />
+							
+							<h:outputText value="Observation" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.observationDescription}" />
+							
+							<h:outputText value="#{loc.ListComEmployeeTitle_gender}" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.gender}" />
+							
+							<h:outputText value="Marital Status" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.maritalStatus}" />
+							
+							<h:outputText value="Modifier Name" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.modificationMakerName}" />
+							
+							<h:outputText value="Ddd Mobile Number" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.dddMobileNumber}" />
+							
+							<h:outputText value="Ddd Telephone" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.telephoneNumber}" />
+							
+							<h:outputText value="Ddi Mobile Number" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.ddiMobileNumber}" />
+							
+							<h:outputText value="Ddi Telephone" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.ddiTelephoneNumber}" />
+							
+							<h:outputText value="Mobile" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.mobileNumber}" />
+							
+							<h:outputText value="Telephone NUmber" />
+							<h:outputText value="#{employeesAndAllocationsBean.employee4Details.telephoneNumber}" />
+
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:overlayPanel>
+				
+				<p:overlayPanel widgetVar="empAllocationsOP" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+					<p:outputPanel id="empAllocationsDetails" style="text-align:center;">
+						<p:panelGrid columns="2" columnClasses="label,value">
+							
+							<f:facet name="header">
+								<itiGeeks:ByteImageViewer
+									objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
+							</f:facet>
+
+					<p:dataTable var="projectsEmployee"
+						value="#{employeesAndAllocationsBean.projectsEmployeeCurrentList}"
+						scrollable="true" scrollRows="10" liveScroll="true"
+						resizableColumns="true" selectionMode="single" rows="10"
+						rowKey="#{projectsEmployee.id}" paginator="true"
+						style="width:700px;" rowsPerPageTemplate="10,20,30"
+						emptyMessage="No data found for this employee. :(">
+
+						<p:column sortBy="#{projectsEmployee.project.projectCode}"
+							style="width:200px;">
+							<f:facet name="header">
+								<h:outputText value="Project Code" />
+							</f:facet>
+							<h:outputText value="#{projectsEmployee.project.projectCode}" />
+						</p:column>
+
+						<p:column
+							sortBy="#{projectsEmployee.projectJobTitle.projectJobTitleDescription}"
+							style="width:200px;">
+							<f:facet name="header">
+								<h:outputText value="Job Title Description" />
+							</f:facet>
+							<h:outputText
+								value="#{projectsEmployee.projectJobTitle.projectJobTitleDescription}" />
+						</p:column>
+
+						<p:column
+							sortBy="#{projectsEmployee.typesAllocation.allocationTypeDescription}"
+							style="width:200px;">
+							<f:facet name="header">
+								<h:outputText value="Allocation Type Description" />
+							</f:facet>
+							<h:outputText
+								value="#{projectsEmployee.typesAllocation.allocationTypeDescription}" />
+						</p:column>
+						
+						<f:facet name="footer">
+							<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
+								value="#{loc.Create}" 
+								actionListener="#{quotationManagementBean.prepareCreate}"
+								update=":createForm:display" 
+								oncomplete="PF('createDialog').show()" />
+							<p:commandButton id="viewButton" icon="ui-icon-search"
+								value="#{loc.View}" update=":viewForm:display"
+								oncomplete="PF('viewDialog').show()"
+								disabled="#{empty quotationManagementBean.selected}" />
+							<p:commandButton id="editButton" icon="ui-icon-pencil"
+								value="#{loc.Edit}" update=":editForm:display"  rendered="#{applicationScopeStore.hasFullAccess()}"
+								oncomplete="PF('editDialog').show()"
+								disabled="#{empty quotationManagementBean.selected}" />
+						</f:facet>
+
+					</p:dataTable>
+
+				</p:panelGrid>
+					</p:outputPanel>
+				</p:overlayPanel>
+			</h:form>
+    </ui:composition>
+</html>

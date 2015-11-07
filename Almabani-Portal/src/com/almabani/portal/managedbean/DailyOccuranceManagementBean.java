@@ -12,6 +12,8 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.constant.MessagesKeyStore;
+import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamZoneDevice;
 import com.almabani.common.entity.schema.adminsec.SecUser;
@@ -21,6 +23,7 @@ import com.almabani.common.entity.schema.adminwkf.WokUserGroup;
 import com.almabani.common.entity.schema.adminwkf.WokWorkingGroup;
 import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
 import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
+import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
@@ -39,21 +42,16 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 	private LazyDataModel<WokDailyOcurrencesView> wokDailyOccurencyLazyModel;
 	private WokDailyOcurrencesView selectedWokDailyOcurrencesView;
 	private WokDailyOcurrence selectedWokDailyOcurrence;
-	
-	
-	
+
 	private List<WokOccurrenceType> occurencyTypeList;
 	private List<WokUserGroup> operatorsList;
 	private List<WokUserGroup> commuincatorsList;
 	private List<WokUserGroup> safetyAgentsList;
 	private List<WokUserGroup> techniciansList;
-	
+
 	private List<OamZoneDevice> cameras;
 
-	
-	
-	
-	@PostConstruct 
+	@PostConstruct
 	public void init() {
 
 		wokDailyIccurrencesViewRecords = almabaniFacade
@@ -65,7 +63,7 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 			selectedWokGroup = wokDailyIccurrencesViewRecords.get(0);
 			workGroupRowSelected(selectedWokGroup);
 		}
-		 
+
 		loadInitialLists();
 		initializeWokDailyOccurencyLazyModel();
 
@@ -74,25 +72,31 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 	private void loadInitialLists() {
 
 		loadOccurencyTypeList();
-		
-		
+
 	}
-	
-	
-	public void workGroupRowSelected(WokWorkingGroupsListView selectedWokGroup)
-	{
+
+	public void workGroupRowSelected(WokWorkingGroupsListView selectedWokGroup) {
 		Company company = WebUtils.getCurrentLoggedUserCompany();
 		SecUser secUser = WebUtils.getCurrentLoggedUser();
-		operatorsList = almabaniFacade.getOperators(company, new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()) ,secUser);
-		commuincatorsList = almabaniFacade.getCommuincators(company,new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),secUser);
-		safetyAgentsList = almabaniFacade.getSafetyAgents(company,new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),secUser);
-		techniciansList = almabaniFacade.getTechnicians(company,new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),secUser);
-		cameras =  almabaniFacade.getCamDevicesWithAssociatedLocations();
+		operatorsList = almabaniFacade.getOperators(company,
+				new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),
+				secUser);
+		commuincatorsList = almabaniFacade.getCommuincators(company,
+				new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),
+				secUser);
+		safetyAgentsList = almabaniFacade.getSafetyAgents(company,
+				new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),
+				secUser);
+		techniciansList = almabaniFacade.getTechnicians(company,
+				new WokWorkingGroup(selectedWokGroup.getNumWorkingGroup()),
+				secUser);
+		cameras = almabaniFacade.getCamDevicesWithAssociatedLocations();
 		System.out.println();
 	}
 
 	private void loadOccurencyTypeList() {
-		occurencyTypeList = almabaniFacade.getWokOccurrenceTypeList(WebUtils.getCurrentLoggedUserCompany());
+		occurencyTypeList = almabaniFacade.getWokOccurrenceTypeList(WebUtils
+				.getCurrentLoggedUserCompany());
 	}
 
 	public void initializeWokDailyOccurencyLazyModel() {
@@ -129,10 +133,10 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 				result = (List<WokDailyOcurrencesView>) almabaniFacade
 						.loadWokDailyOcurrencesView(first, pageSize, sortField,
 								sortOrder == SortOrder.ASCENDING, filters);
- 
+
 				setRowCount(this.rowCount);
 			} else {
-				result = new ArrayList();
+				result = new ArrayList<WokDailyOcurrencesView>();
 			}
 
 			return result;
@@ -140,8 +144,9 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 
 		private void attachSelectedWokGroupFiltration(
 				Map<String, Object> filters) {
-			filters.put("workingGroupNumber", selectedWokGroup.getNumWorkingGroup());
-			
+			filters.put("workingGroupNumber",
+					selectedWokGroup.getNumWorkingGroup());
+
 		}
 
 		@Override
@@ -150,6 +155,7 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 			for (WokDailyOcurrencesView wokDailyOcurrencesView : result) {
 				if (wokDailyOcurrencesView.getId().toString().equals(rowKey)) {
 					selectedWokDailyOcurrencesView = wokDailyOcurrencesView;
+					selectedWokDailyOcurrence = almabaniFacade.getWokDailyOccurence(wokDailyOcurrencesView.getId());
 					return wokDailyOcurrencesView;
 				}
 			}
@@ -158,15 +164,22 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 		}
 
 	}
-	
-	
-	public void saveWokDailyOccurence()
-	{
-		System.out.println();
+
+	public void saveWokDailyOccurence() throws AlmabaniException {
+		boolean isAlreadyExisitEntity = Utils.hasID(selectedWokDailyOcurrence);
+		CommonDriverMap commonDriverMap = CommonDriverMap
+				.appendCurrentUserCode(null, WebUtils.getCurrentUserCode());
+		selectedWokDailyOcurrence = almabaniFacade
+				.addOrUpdateWokDailyOccurency(selectedWokDailyOcurrence,
+						commonDriverMap);
+		WebUtils.fireInfoMessage(
+				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_DAILY_OCCURENCE));
+
 	}
-	
-	public void prepareCreateDailyOccurence()
-	{
+
+	public void prepareCreateDailyOccurence() {
 		selectedWokDailyOcurrence = new WokDailyOcurrence();
 	}
 
@@ -186,6 +199,11 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 	public void setSelectedWokDailyOcurrencesView(
 			WokDailyOcurrencesView selectedWokDailyOcurrencesView) {
 		this.selectedWokDailyOcurrencesView = selectedWokDailyOcurrencesView;
+		if(selectedWokDailyOcurrencesView!=null)
+		{
+			selectedWokDailyOcurrence = almabaniFacade.getWokDailyOccurence(selectedWokDailyOcurrencesView.getId());
+
+		}
 	}
 
 	public WokWorkingGroupsListView getSelectedWokGroup() {
@@ -195,7 +213,6 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 	public void setSelectedWokGroup(WokWorkingGroupsListView selectedWokGroup) {
 		this.selectedWokGroup = selectedWokGroup;
 	}
-
 
 	public WokDailyOcurrence getSelectedWokDailyOcurrence() {
 		return selectedWokDailyOcurrence;
