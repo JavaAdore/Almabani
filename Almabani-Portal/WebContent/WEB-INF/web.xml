@@ -29,6 +29,11 @@
 	</context-param>
 
 
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
 
 
 
@@ -129,15 +134,15 @@
 		<location>/error/PageNotFound.xhtml</location>
 	</error-page>
 
-<!-- 	<filter> -->
-<!-- 		<filter-name>noCache</filter-name> -->
-<!-- 		<filter-class>com.almabani.portal.filter.NoCacheFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>noCache</filter-name> -->
-<!-- 		<url-pattern>*.xhtml</url-pattern> -->
-<!-- 	</filter-mapping> -->
-  
+	<!-- <filter> -->
+	<!-- <filter-name>noCache</filter-name> -->
+	<!-- <filter-class>com.almabani.portal.filter.NoCacheFilter</filter-class> -->
+	<!-- </filter> -->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>noCache</filter-name> -->
+	<!-- <url-pattern>*.xhtml</url-pattern> -->
+	<!-- </filter-mapping> -->
+
 
 
 

@@ -30,7 +30,7 @@ public class OamTypeDevice extends AbstractEntity implements Serializable{
 	}
 
 	public final static OamTypeDevice FIXED_CAMERAS = new OamTypeDevice(2L);
-	public final static OamTypeDevice CCTV_CABINETS = new OamTypeDevice(4L);
+	public final static OamTypeDevice CCTV_CABINETS = new OamTypeDevice(3L);
 
 	
 	private static final long serialVersionUID = 1186413455161829342L;

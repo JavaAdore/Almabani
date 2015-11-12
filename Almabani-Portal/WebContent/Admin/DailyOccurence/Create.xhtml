@@ -140,13 +140,13 @@
 
 					<p:outputLabel
 						value="#{loc.EditWokDailyOcurrenceTitle_responseDateTime}" />
-					<p:calendar id="responseDateTime" pattern="MM/dd/yyyy"
+					<p:calendar id="responseDateTime" pattern="MM/dd/yyyy HH:mm:ss" required="true"  requiredMessage="#{loc.CreateVWokDailyOcurrencesHelpText_responseTime}"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.responseDateTime}"
 						maxdate="{currentDate}" showOn="button" />
 
 					<p:outputLabel
 						value="#{loc.EditWokDailyOcurrenceTitle_closingDateTime}" />
-					<p:calendar id="closingDateTime" pattern="MM/dd/yyyy"
+					<p:calendar id="closingDateTime" pattern="MM/dd/yyyy HH:mm:ss"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.closingDateTime}"
 						maxdate="{currentDate}" showOn="button" />
 				</p:panelGrid>

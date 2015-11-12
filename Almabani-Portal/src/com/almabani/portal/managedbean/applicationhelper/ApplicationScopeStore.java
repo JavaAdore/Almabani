@@ -22,6 +22,7 @@ import com.almabani.business.facade.AlmabaniFacade;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.menu.Access;
 import com.almabani.common.dto.menu.KeyValueHolder;
+import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Country;
 import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.adminsec.SecUser;
@@ -467,5 +468,25 @@ public class ApplicationScopeStore implements Serializable {
 			}
 		}
 		return "";
+	}
+	
+	
+	
+	public String getCurrentCompanyTimeZone()
+	{
+		Company company = WebUtils.getCurrentLoggedUserCompany();
+		if(Utils.isNotNull(company))
+		{
+			com.almabani.common.entity.schema.admincor.State state = company.getState();
+			if(Utils.isNotNull(state) && Utils.isNotNull(state.getStateId()) && Utils.isNotNull(state.getStateId().getCountry()))
+			{
+				Country country = state.getStateId().getCountry();
+				if(country !=null && country.getGmtHoursDefferent()!=null)
+				{
+					return country.getGmtHoursDefferent().toString();
+				}
+			}
+		}
+		return "+0";
 	}
 }

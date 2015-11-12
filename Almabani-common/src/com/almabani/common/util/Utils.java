@@ -363,4 +363,23 @@ public class Utils {
 				.getDeclaredField("sectionCode"));
 
 	}
+
+	public static Date getTodayInHourZero() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR,0);
+		calendar.set(Calendar.MINUTE,0);
+		calendar.set(Calendar.SECOND,0);
+		calendar.set(Calendar.MILLISECOND,0);
+		return calendar.getTime();
+
+	}
+
+	public static Date getTodayInHour24() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR,23);
+		calendar.set(Calendar.MINUTE,59);
+		calendar.set(Calendar.SECOND,59);
+		calendar.set(Calendar.MILLISECOND,99);
+		return calendar.getTime();
+	}
 }

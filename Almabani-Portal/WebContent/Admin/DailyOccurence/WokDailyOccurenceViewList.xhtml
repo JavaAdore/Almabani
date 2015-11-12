@@ -17,18 +17,18 @@
 				selectionMode="single" lazy="true" draggableColumns="true"
 				selection="#{dailyOccuranceManagementBean.selectedWokDailyOcurrencesView}">
 				<p:column style="width:30px">
-					<p:rowToggler  />
+					<p:rowToggler />
 				</p:column>
 
 				<p:ajax event="rowSelect" update=" editButton" />
 				<p:ajax event="rowUnselect" update=" editButton" />
 
-				<p:column sortBy="#{item.occurrenceDate}"
-					headerText="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDate}"
-					filterBy="#{item.occurrenceDate}">
+				<p:column sortBy="#{item.responseTime}"
+					headerText="#{loc.ListVWokDailyOcurrencesTitle_responseTime}"
+					filterBy="#{item.responseTime}">
 
 					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy"
+						<p:calendar pattern="dd/MM/yyyy" 
 							onchange="PF('WokDailyOccurencedatalist').filter()"
 							maxdate="{currentDate}">
 							<p:ajax event="dateSelect"
@@ -36,10 +36,12 @@
 
 						</p:calendar>
 					</f:facet>
-					<h:outputText value="#{item.occurrenceDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+					<h:outputText value="#{item.responseTime}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss"  timeZone="#{applicationScopeStore.getCurrentCompanyTimeZone()}GMT" />
 					</h:outputText>
 				</p:column>
+
+
 
 
 
@@ -107,15 +109,16 @@
 							value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDescription}" />
 					</f:facet>
 					<div align="center">
-						<p:commandButton id="dailyOccurence" icon="ui-icon-search"  update=":dailyOccurenceTabView:dialogForm"
+						<p:commandButton id="dailyOccurence" icon="ui-icon-search"
+							update=":dailyOccurenceTabView:dialogForm"
 							actionListener="#{dailyOccuranceManagementBean.setSelectedWokDailyOcurrencesView(item)}"
 							oncomplete="PF('dlg3').show()" title="View" />
 					</div>
 
- 
+
 				</p:column>
 
-				<p:rowExpansion  >
+				<p:rowExpansion>
 
 					<p:panelGrid columns="2" columnClasses="value,value"
 						styleClass="fullWith">
@@ -154,11 +157,11 @@
 						<h:outputLabel value="#{item.employeeTechnicianName}" />
 
 						<h:outputLabel
-							value="#{loc.ListVWokDailyOcurrencesTitle_responseTime}" />
-						<h:outputLabel value="#{item.responseTime}">
+							value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDate}" />
+						<h:outputLabel value="#{item.occurrenceDate}">
 							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 						</h:outputLabel>
-
+ 
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_closingTime}" />
 						<h:outputLabel value="#{item.closingTime}">

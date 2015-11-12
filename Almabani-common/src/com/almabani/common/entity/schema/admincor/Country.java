@@ -47,6 +47,9 @@ public class Country extends AbstractEntity implements Serializable {
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
 	
+	@Column(name="NUM_GMT_HOURS")
+	private Integer gmtHoursDefferent;
+	
 	public Long getId() {
 		return id;
 	}
@@ -85,6 +88,14 @@ public class Country extends AbstractEntity implements Serializable {
 
 	public void setModificationMakerName(String modificationMakerName) {
 		this.modificationMakerName = modificationMakerName;
+	}
+
+	public Integer getGmtHoursDefferent() {
+		return gmtHoursDefferent;
+	}
+
+	public void setGmtHoursDefferent(Integer gmtHoursDefferent) {
+		this.gmtHoursDefferent = gmtHoursDefferent;
 	}
 	
 }
