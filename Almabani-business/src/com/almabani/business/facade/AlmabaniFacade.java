@@ -1,5 +1,6 @@
 package com.almabani.business.facade;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -467,6 +468,10 @@ public interface AlmabaniFacade {
 			String sortField, boolean assending, Map<String, Object> filters);
 
 	Integer getNumberOfDepartmentSectionsView(Map<String, Object> filters);
+
+	Integer getNumberOfEmployeesView(Map<String, Object> filters);
+
+	Date getMinAllowedEmployeeDate();
 
 
 }

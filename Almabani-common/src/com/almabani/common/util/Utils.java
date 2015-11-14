@@ -1,6 +1,8 @@
 package com.almabani.common.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
@@ -17,6 +19,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.almabani.common.entity.AbstractEntity;
 import com.almabani.common.entity.schema.admincor.DepartmentSection;
@@ -366,20 +377,54 @@ public class Utils {
 
 	public static Date getTodayInHourZero() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR,0);
-		calendar.set(Calendar.MINUTE,0);
-		calendar.set(Calendar.SECOND,0);
-		calendar.set(Calendar.MILLISECOND,0);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTime();
 
 	}
 
 	public static Date getTodayInHour24() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR,23);
-		calendar.set(Calendar.MINUTE,59);
-		calendar.set(Calendar.SECOND,59);
-		calendar.set(Calendar.MILLISECOND,99);
+		calendar.set(Calendar.HOUR, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 99);
 		return calendar.getTime();
+	}
+
+	public static String extractNoneStyleText(String str) {
+		if (Utils.isNotEmptyString(str)) {
+			try {
+				DocumentBuilderFactory factory = DocumentBuilderFactory
+						.newInstance();
+				DocumentBuilder builder;
+
+				builder = factory.newDocumentBuilder();
+
+				Document document = builder.parse(new InputSource(
+						new StringReader(str)));
+				Element rootElement = document.getDocumentElement();
+				str = Utils
+						.getAbsoluteStringValue(rootElement.getTextContent());
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (str.length() > 30) {
+
+				return str.substring(0,30) + "...";
+			}
+
+			return str;
+		}
+		return "";
 	}
 }

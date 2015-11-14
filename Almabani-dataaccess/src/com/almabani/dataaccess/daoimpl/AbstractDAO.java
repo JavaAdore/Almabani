@@ -281,8 +281,8 @@ public class AbstractDAO implements Serializable {
 				} else {
 					String secondAlias = Utils.dublicate(alias, ++counter);
 					stringBuilder.append(String.format(
-							" and o.%s >= :%s and o.%s <= :%s ", field, alias,
-							field, secondAlias));
+							" and o.%s BETWEEN  :%s and  :%s ", field, alias,
+							 secondAlias));
 					Date startDate = Utils.getStartOfDay((Date) filterValue);
 					Date endDate = Utils.getEndOfDay((Date) filterValue);
 					queryParams.put(alias, startDate);

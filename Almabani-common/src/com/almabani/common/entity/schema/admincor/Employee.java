@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,11 +17,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.almabani.common.entity.AbstractEntity;
-import com.almabani.common.enums.Active;
-import com.almabani.common.enums.DocumentType;
-import com.almabani.common.enums.EmployeeType;
-import com.almabani.common.enums.Gender;
-import com.almabani.common.enums.MaritalStatus;
 import com.almabani.common.interfaces.ByteArrayHolder;
 
 @Entity
@@ -72,14 +65,12 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	private Date birthDate;
 	
 //	@Convert(converter = GenderConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_GENDER", length = 1)
-	private Gender gender;
+	private String gender;
 	
 //	@Convert(converter = MaritalStatusConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_MARITAL_STATUS", length = 1)
-	private MaritalStatus maritalStatus;
+	private String maritalStatus;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_ADMISSION", length = 7)
@@ -89,18 +80,16 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	private String observationDescription;
 	
 //	@Convert(converter = ActiveConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
-	private Active active;
+	private String active;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_INACTIVITY", length = 7)
 	private Date inactivityBeginDate;
 	
 //	@Convert(converter = EmployeeTypeConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_TYPE_EMPLOYEE", length = 1)
-	private EmployeeType employeeType;
+	private String employeeType;
 	
 	@Column(name = "DES_EMAIL_1", length = 80)
 	private String email1Description;
@@ -137,9 +126,8 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	private Date lastModificationDate;
 	
 //	@Convert(converter = DocumentTypeConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_TYPE_DOCUMENT", length = 1)
-	private DocumentType indTypeDocument;
+	private String indTypeDocument;
 	
 	//@Column(name = "IMG_EMPLOYEE")
 	@Transient   
@@ -288,34 +276,7 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 		this.birthDate = birthDate;
 	}
 	
-	/**
-	 * @return the gender
-	 */
-	public Gender getGender() {
-		return gender;
-	}
-
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	/**
-	 * @return the maritalStatus
-	 */
-	public MaritalStatus getMaritalStatus() {
-		return maritalStatus;
-	}
-
-	/**
-	 * @param maritalStatus the maritalStatus to set
-	 */
-	public void setMaritalStatus(MaritalStatus maritalStatus) {
-		this.maritalStatus = maritalStatus;
-	}
-
+	
 	/**
 	 * @return the admissionDate
 	 */
@@ -344,19 +305,7 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 		this.observationDescription = observationDescription;
 	}
 	
-	/**
-	 * @return the active
-	 */
-	public Active getActive() {
-		return active;
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Active active) {
-		this.active = active;
-	}
+	
 
 	/**
 	 * @return the inactivityBeginDate
@@ -372,20 +321,7 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 		this.inactivityBeginDate = inactivityBeginDate;
 	}
 	
-	/**
-	 * @return the employeeType
-	 */
-	public EmployeeType getEmployeeType() {
-		return employeeType;
-	}
-
-	/**
-	 * @param employeeType the employeeType to set
-	 */
-	public void setEmployeeType(EmployeeType employeeType) {
-		this.employeeType = employeeType;
-	}
-
+	
 	/**
 	 * @return the email1Description
 	 */
@@ -526,19 +462,6 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 		this.lastModificationDate = lastModificationDate;
 	}
 	
-	/**
-	 * @return the indTypeDocument
-	 */
-	public DocumentType getIndTypeDocument() {
-		return indTypeDocument;
-	}
-
-	/**
-	 * @param indTypeDocument the indTypeDocument to set
-	 */
-	public void setIndTypeDocument(DocumentType indTypeDocument) {
-		this.indTypeDocument = indTypeDocument;
-	}
 	
 	/**
 	 * @return the employeeImage
@@ -569,4 +492,47 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	public byte[] getHoldedImage() {
 		return getEmployeeImage();
 	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+	public String getEmployeeType() {
+		return employeeType;
+	}
+
+	public void setEmployeeType(String employeeType) {
+		this.employeeType = employeeType;
+	}
+
+	public String getIndTypeDocument() {
+		return indTypeDocument;
+	}
+
+	public void setIndTypeDocument(String indTypeDocument) {
+		this.indTypeDocument = indTypeDocument;
+	}
+	
+	
+	
 }

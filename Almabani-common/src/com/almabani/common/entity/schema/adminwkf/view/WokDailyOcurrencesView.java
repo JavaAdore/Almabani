@@ -12,10 +12,13 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Subselect;
+import org.hibernate.annotations.Type;
 
 import com.almabani.common.entity.AbstractEntity;
 
@@ -112,8 +115,8 @@ public class WokDailyOcurrencesView extends AbstractEntity implements Serializab
 	private String occurrenceTypeDescription;
 
 	@Column(name = "DAT_TIME_RESPONSE")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date responseTime;
+	@Type(type="timestamp") 
+	private Date responseTime;       
 
 	@Column(name = "DAT_TIME_CLOSING")
 	@Temporal(TemporalType.TIMESTAMP)

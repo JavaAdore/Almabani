@@ -43,23 +43,31 @@ public class ApplicationScopeStore implements Serializable {
 	@ManagedProperty(value = "#{almabaniFacadeImp}")
 	protected AlmabaniFacade almabaniFacade;
 
-	private Map<String, String> oamQoutationSituationMap = new TreeMap();
+	private Map<String, String> oamQoutationSituationMap = new TreeMap<String, String>();
 
-	private Map<String, String> oamQoutationTypeMap = new TreeMap();
+	private Map<String, String> oamQoutationTypeMap = new TreeMap<String, String>();
 
 	private Map<String, String> documentTypeKeysAndValues;
 
-	private Map<String, String> inOutMap = new TreeMap();
+	private Map<String, String> inOutMap = new TreeMap<String, String>();
 
 	private List<Country> countries;
 
-	private Map<Country, List<State>> countriesStatesMap = new HashMap();
+	private Map<Country, List<State>> countriesStatesMap = new HashMap<Country, List<State>>();
 
-	private Map<String, String> unitTypesMap = new TreeMap();
+	private Map<String, String> unitTypesMap = new TreeMap<String, String>();
 
-	private Map<String, String> yesNoMap = new LinkedHashMap();
+	private Map<String, String> yesNoMap = new LinkedHashMap<String, String>();
 
-	private Map<String, String> languagesMap = new LinkedHashMap();
+	private Map<String, String> languagesMap = new LinkedHashMap<String, String>();
+
+	private Map<String, String> employeeTypeMap = new LinkedHashMap<String, String>();
+
+	private Map<String, String> genderMap = new LinkedHashMap<String, String>();
+
+	private Map<String, String> documentTypeMap = new LinkedHashMap<String, String>();
+
+	private Map<String, String> maritalStatusMap = new LinkedHashMap<String, String>();
 
 	@PostConstruct
 	public void init() {
@@ -71,6 +79,36 @@ public class ApplicationScopeStore implements Serializable {
 		constructYesNoMap();
 		constructLangaugesMap();
 		constructInOutMap();
+		constructEmployeeTypeMap();
+		contructGenderMap();
+		constructDocumentTypeKeysAndValues();
+		constructMaritalStatusMap();
+
+	}
+
+	private void constructMaritalStatusMap() {
+
+		maritalStatusMap.put("I", "MaritalStatus_SINGLE");
+		maritalStatusMap.put("E", "MaritalStatus_ENGAGED");
+		maritalStatusMap.put("M", "MaritalStatus_MARRIED");
+		maritalStatusMap.put("S", "MaritalStatus_SEPARATED");
+		maritalStatusMap.put("D", "MaritalStatus_DIVORCED");
+		maritalStatusMap.put("W", "MaritalStatus_WIDOWED");
+		maritalStatusMap.put("O", "MaritalStatus_OTHERS");
+
+	}
+
+	private void contructGenderMap() {
+		genderMap.put("M", "Gender_MALE");
+		genderMap.put("F", "Gender_FEMALE");
+	}
+
+	private void constructEmployeeTypeMap() {
+
+		employeeTypeMap.put("E", "EmployeeType_EMPLOYEE");
+		employeeTypeMap.put("T", "EmployeeType_TRAINEE");
+		employeeTypeMap.put("C", "EmployeeType_COMMISSION");
+		employeeTypeMap.put("P", "EmployeeType_PART_TIME");
 
 	}
 
@@ -124,7 +162,6 @@ public class ApplicationScopeStore implements Serializable {
 
 	}
 
-	@SuppressWarnings({ "unused", "rawtypes", "unchecked" })
 	private void constructDocumentTypeKeysAndValues() {
 
 		documentTypeKeysAndValues = new TreeMap();
@@ -323,6 +360,17 @@ public class ApplicationScopeStore implements Serializable {
 		return quotationType;
 	}
 
+	public List<KeyValueHolder<String, String>> getMaritalStatusList() {
+		List<KeyValueHolder<String, String>> unitTypes = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : maritalStatusMap.keySet()) {
+			unitTypes.add(new KeyValueHolder<String, String>(key,
+					getUnitType(key)));
+		}
+
+		return unitTypes;
+	}
+	
+	
 	public List<KeyValueHolder<String, String>> getUnitTypesList() {
 		List<KeyValueHolder<String, String>> unitTypes = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : unitTypesMap.keySet()) {
@@ -333,7 +381,16 @@ public class ApplicationScopeStore implements Serializable {
 		return unitTypes;
 	}
 
-	
+
+	public List<KeyValueHolder<String, String>> getEmployeeTypeList() {
+		List<KeyValueHolder<String, String>> unitTypes = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : employeeTypeMap.keySet()) {
+			unitTypes.add(new KeyValueHolder<String, String>(key,
+					getUnitType(key)));
+		}
+
+		return unitTypes;
+	}
 
 	public List<KeyValueHolder<String, String>> getInOutList() {
 		List<KeyValueHolder<String, String>> quotationType = new ArrayList<KeyValueHolder<String, String>>();
@@ -344,7 +401,7 @@ public class ApplicationScopeStore implements Serializable {
 
 		return quotationType;
 	}
-	
+
 	public List<KeyValueHolder<String, String>> getYesNoList() {
 		List<KeyValueHolder<String, String>> yesNoList = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : yesNoMap.keySet()) {
@@ -357,8 +414,8 @@ public class ApplicationScopeStore implements Serializable {
 
 	public List<KeyValueHolder<String, String>> getReversedYesNoList() {
 		List<KeyValueHolder<String, String>> yesNoList = new ArrayList<KeyValueHolder<String, String>>();
-		Set<String> set = new HashSet(yesNoMap.keySet());
-		List<String> list = new ArrayList(set);
+		Set<String> set = new HashSet<String>(yesNoMap.keySet());
+		List<String> list = new ArrayList<String>(set);
 		Collections.reverse(list);
 		for (String key : list) {
 			yesNoList.add(new KeyValueHolder<String, String>(key,
@@ -380,7 +437,7 @@ public class ApplicationScopeStore implements Serializable {
 	public boolean isAdminUser() {
 		return WebUtils.isAdminUser();
 	}
-          
+
 	public String getCurrentPageURL() {
 		return WebUtils.getCurrentPageURL();
 	}
@@ -446,16 +503,13 @@ public class ApplicationScopeStore implements Serializable {
 		WebUtils.redirectTo("/Almabani-Portal/logout.xhtml");
 	}
 
-	
 	public String getInOutValue(String inOutKey) {
 		if (Utils.isNotEmptyString(inOutKey)) {
-			String inOutSituationMassage = inOutMap
-					.get(inOutKey);
+			String inOutSituationMassage = inOutMap.get(inOutKey);
 			if (Utils.isNotEmptyString(inOutSituationMassage)) {
 				String inOutLocalizedMessage = WebUtils
 						.extractFromBundle(inOutSituationMassage);
-				if (Utils
-						.isNotEmptyString(inOutLocalizedMessage)) {
+				if (Utils.isNotEmptyString(inOutLocalizedMessage)) {
 					return inOutLocalizedMessage;
 				} else {
 					return WebUtils
@@ -469,24 +523,118 @@ public class ApplicationScopeStore implements Serializable {
 		}
 		return "";
 	}
-	
-	
-	
-	public String getCurrentCompanyTimeZone()
-	{
+
+	public String getCurrentCompanyTimeZone() {
 		Company company = WebUtils.getCurrentLoggedUserCompany();
-		if(Utils.isNotNull(company))
-		{
-			com.almabani.common.entity.schema.admincor.State state = company.getState();
-			if(Utils.isNotNull(state) && Utils.isNotNull(state.getStateId()) && Utils.isNotNull(state.getStateId().getCountry()))
-			{
+		if (Utils.isNotNull(company)) {
+			com.almabani.common.entity.schema.admincor.State state = company
+					.getState();
+			if (Utils.isNotNull(state) && Utils.isNotNull(state.getStateId())
+					&& Utils.isNotNull(state.getStateId().getCountry())) {
 				Country country = state.getStateId().getCountry();
-				if(country !=null && country.getGmtHoursDefferent()!=null)
-				{
-					return country.getGmtHoursDefferent().toString();
+				if (country != null && country.getGmtHoursDefferent() != null) {
+					return country.getGmtHoursDefferent() > 0 ? "+"
+							+ country.getGmtHoursDefferent() : "-"
+							+ country.getGmtHoursDefferent();
 				}
 			}
 		}
 		return "+0";
+	}
+
+	public String extractNoneStyleText(String str) {
+
+		return Utils.extractNoneStyleText(str);
+	}
+
+	public String getEmployeeTypeValue(String employeeTypeKey) {
+		if (Utils.isNotEmptyString(employeeTypeKey)) {
+			String employeeTypeSituationMassage = employeeTypeMap
+					.get(employeeTypeKey);
+			if (Utils.isNotEmptyString(employeeTypeSituationMassage)) {
+				String employeeTypeLocalizedMessage = WebUtils
+						.extractFromBundle(employeeTypeSituationMassage);
+				if (Utils.isNotEmptyString(employeeTypeLocalizedMessage)) {
+					return employeeTypeLocalizedMessage;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
+	}
+
+	public List<KeyValueHolder<String, String>> getGenderList() {
+		List<KeyValueHolder<String, String>> genderList = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : genderMap.keySet()) {
+			genderList.add(new KeyValueHolder<String, String>(key,
+					getGenderValue((key))));
+		}
+
+		return genderList;
+	}
+
+	public List<KeyValueHolder<String, String>> getDocumentTypeList() {
+		List<KeyValueHolder<String, String>> documentTypeList = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : documentTypeMap.keySet()) {
+			documentTypeList.add(new KeyValueHolder<String, String>(key,
+					getDocumentTypeValue((key))));
+		}
+
+		return documentTypeList;
+	}
+
+	public String getDocumentTypeValue(String documentTypeKey) {
+		if (Utils.isNotEmptyString(documentTypeKey)) {
+			String documentTypeSituationMassage = documentTypeMap
+					.get(documentTypeKey);
+			if (Utils.isNotEmptyString(documentTypeSituationMassage)) {
+				String documentTypeLocalizedMessage = WebUtils
+						.extractFromBundle(documentTypeSituationMassage);
+				if (Utils.isNotEmptyString(documentTypeLocalizedMessage)) {
+					return documentTypeLocalizedMessage;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
+	}
+
+	public String getGenderValue(String genderKey) {
+		if (Utils.isNotEmptyString(genderKey)) {
+			String genderSituationMassage = genderMap.get(genderKey);
+			if (Utils.isNotEmptyString(genderSituationMassage)) {
+				String genderLocalizedMessage = WebUtils
+						.extractFromBundle(genderSituationMassage);
+				if (Utils.isNotEmptyString(genderLocalizedMessage)) {
+					return genderLocalizedMessage;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
+	}
+	
+	public Date getMinAllowedEmployeeDate()
+	{
+		
+		return almabaniFacade.getMinAllowedEmployeeDate();
 	}
 }

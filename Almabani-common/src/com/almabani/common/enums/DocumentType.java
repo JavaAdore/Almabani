@@ -1,9 +1,8 @@
 package com.almabani.common.enums;
 
-public enum DocumentType implements Enumable{
+public enum DocumentType implements Enumable {
 
-	N("DocumentType_NATIONAL", "N"),
-	F("DocumentType_FOREIGN", "F");
+	N("N", "DocumentType_NATIONAL"), F("F", "DocumentType_FOREIGN");
 
 	private String key;
 	private String value;
@@ -12,14 +11,14 @@ public enum DocumentType implements Enumable{
 		this.key = key;
 		this.value = value;
 	}
-	
+
 	@Override
-	public String getKey(){
+	public String getKey() {
 		return key;
 	}
 
 	@Override
-	public String getValue(){
+	public String getValue() {
 		return value;
 	}
 

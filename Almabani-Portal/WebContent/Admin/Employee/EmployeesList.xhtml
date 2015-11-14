@@ -94,11 +94,10 @@
 					<f:facet name="header">
 						<p:outputLabel value="Allocations" />
 					</f:facet>
-					<!-- 					update=":empAllocationsOP" -->
 					<p:commandButton
 						oncomplete="PF('empAllocationsOP').show('#{component.clientId}')"
-						icon="ui-icon-search" title="Employee Allocations"
-						actionListener="#{projectEmployeeBean.employeeAllocations(employee)}">
+						icon="ui-icon-search" title="Employee Allocations" update=":empAllocationsOP"
+						actionListener="#{employeeManagementBean.loadEmployeeProjects(employee)}">
 
 					</p:commandButton>
 				</p:column>
@@ -220,78 +219,6 @@
 					<p:outputLabel
 						value="#{employeeManagementBean.selectedEmployee.telephoneNumber}" />
 
-				</p:panelGrid>
-			</p:outputPanel>
-		</h:form>
-
-	</p:dialog>
-
-	<p:dialog widgetVar="empAllocationsOP" showEffect="fade" modal="true"
-		dynamic="true" hideEffect="fade" dismissable="false"
-		showCloseIcon="true">
-
-		<h:form id="empAllocationsOP">
-			<p:outputPanel id="empAllocationsDetails" style="text-align:center;">
-				<p:panelGrid columns="2" columnClasses="label,value">
-
-					<f:facet name="header">
-						<itiGeeks:ByteImageViewer
-							objectImplementsByteArrayHolder="#{employeeManagementBean.selectedEmployee}" />
-					</f:facet>
-
-					<p:dataTable var="projectsEmployee"
-						id="projectsEmployeeCurrentList" lazy="true"
-						value="#{projectEmployeeBean.projectsEmployeeCurrentList}"
-						scrollable="true" scrollRows="10" liveScroll="true"
-						resizableColumns="true" selectionMode="single" rows="10"
-						rowKey="#{projectsEmployee.id}" paginator="true"
-						selection="#{projectEmployeeBean.selectedProjectEmployee}"
-						style="width:700px;" rowsPerPageTemplate="10,20,30"
-						emptyMessage="No data found for this employee. :(">
-
-						<p:ajax event="rowSelect" update="editButton :growl" />
-
-						<p:column sortBy="#{projectsEmployee.project.projectCode}"
-							style="width:200px;">
-							<f:facet name="header">
-								<p:outputLabel value="Project Code" />
-							</f:facet>
-							<p:outputLabel value="#{projectsEmployee.project.projectCode}" />
-						</p:column>
-
-						<p:column
-							sortBy="#{projectsEmployee.projectJobTitle.projectJobTitleDescription}"
-							style="width:200px;">
-							<f:facet name="header">
-								<p:outputLabel value="Job Title Description" />
-							</f:facet>
-							<p:outputLabel
-								value="#{projectsEmployee.projectJobTitle.projectJobTitleDescription}" />
-						</p:column>
-
-						<p:column
-							sortBy="#{projectsEmployee.allocationType.allocationTypeDescription}"
-							style="width:200px;">
-							<f:facet name="header">
-								<p:outputLabel value="Allocation Type Description" />
-							</f:facet>
-							<p:outputLabel
-								value="#{projectsEmployee.allocationType.allocationTypeDescription}" />
-						</p:column>
-
-						<f:facet name="footer">
-							<p:commandButton id="createButton" icon="ui-icon-plus" update=":createProjectEmployeeForm"
-								value="#{loc.Create}" actionListener="#{employeeManagementBean.prepareCreateEmployee()}" immediate="true"
-								oncomplete="PF('createProjectEmployeeDialog').show()" />
-
-							<!-- update="projectsEmployeeCurrentList" -->
-							<p:commandButton id="editButton" icon="ui-icon-pencil"
-								value="#{loc.Edit}"
-								oncomplete="PF('editProjectEmployeeDialog').show()"
-								disabled="#{empty projectEmployeeBean.selectedProjectEmployee}" />
-						</f:facet>
-
-					</p:dataTable>
 				</p:panelGrid>
 			</p:outputPanel>
 		</h:form>

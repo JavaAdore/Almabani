@@ -1,6 +1,8 @@
 package com.almabani.business.facadeimp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.almabani.business.constant.BusinessConstants;
 import com.almabani.business.facade.AlmabaniFacade;
 import com.almabani.business.service.AllocationTypeService;
 import com.almabani.business.service.ApplicationService;
@@ -1456,5 +1459,17 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	public Integer getNumberOfDepartmentSectionsView(Map<String, Object> filters) {
 		return departmentSectionService.getNumberOfDepartmentSectionsView(filters);
 	}
+
+	@Override
+	public Integer getNumberOfEmployeesView(Map<String, Object> filters) {
+		return employeeService.getNumberOfEmployees(filters);
+	}
+
+	@Override
+	public Date getMinAllowedEmployeeDate() {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.YEAR, BusinessConstants.MIN_ACCEPTED_EMPLOYEE_OLD *-1);
+		return c.getTime();
+	} 
 
 }

@@ -112,10 +112,12 @@
 					<p:commandButton id="createButton" icon="ui-icon-plus"
 						value="#{loc.Create}"
 						actionListener="#{employeeBean.prepareCreateEmployee(employeesAndAllocationsBean.selectedCompany)}"
-						update=":employeeListForm :createEmployeeForm"  rendered="#{applicationScopeStore.hasFullAccess()}" 
+						update=":employeeListForm :createEmployeeForm"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
 						oncomplete="PF('createEmployeeDialog').show()" />
 					<p:commandButton id="editButton" icon="ui-icon-pencil"
-						value="#{loc.Edit}" rendered="#{applicationScopeStore.hasFullAccess()}" 
+						value="#{loc.Edit}"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
 						update=":employeeListForm :editEmployeeForm:departments :editEmployeeForm:departmentSections"
 						actionListener="#{employeeBean.prepareEditEmployee(employeesAndAllocationsBean.selectedEmployee)}"
 						oncomplete="PF('editEmployeeDialog').show()"
@@ -126,9 +128,9 @@
 		</p:panel>
 	</h:form>
 
-	<p:dialog modal="true" widgetVar="empOP" showEffect="fade" hideEffect="fade" 
-		dismissable="false" showCloseIcon="true">
-		
+	<p:dialog modal="true" widgetVar="empOP" showEffect="fade"
+		hideEffect="fade" dismissable="false" showCloseIcon="true">
+
 		<h:form id="empOPForm">
 			<p:outputPanel id="empDetails" style="text-align:center;">
 				<p:panelGrid columns="4"
@@ -136,7 +138,8 @@
 					columnClasses="label,value">
 
 					<f:facet name="header">
-						<itiGeeks:ByteImageViewer objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
+						<itiGeeks:ByteImageViewer
+							objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
 					</f:facet>
 
 					<h:outputText value="Employee Name" />
@@ -230,79 +233,9 @@
 				</p:panelGrid>
 			</p:outputPanel>
 		</h:form>
-		
+
 	</p:dialog>
 
-	<p:dialog widgetVar="empAllocationsOP" showEffect="fade"  modal="true"
-		dynamic="true" hideEffect="fade" dismissable="false"
-		showCloseIcon="true">
-		
-		<h:form id ="empAllocationsOP">
-			<p:outputPanel id="empAllocationsDetails" style="text-align:center;">
-				<p:panelGrid columns="2" columnClasses="label,value">
 
-					<f:facet name="header">
-						<itiGeeks:ByteImageViewer objectImplementsByteArrayHolder="#{employeesAndAllocationsBean.employee4Details}" />
-					</f:facet>
-
-					<p:dataTable var="projectsEmployee"
-						id="projectsEmployeeCurrentList" lazy="true"
-						value="#{projectEmployeeBean.projectsEmployeeCurrentList}"
-						scrollable="true" scrollRows="10" liveScroll="true"
-						resizableColumns="true" selectionMode="single" rows="10"
-						rowKey="#{projectsEmployee.id}" paginator="true"
-						selection="#{projectEmployeeBean.selectedProjectEmployee}"
-						style="width:700px;" rowsPerPageTemplate="10,20,30"
-						emptyMessage="No data found for this employee. :(">
-
-						<p:ajax event="rowSelect" update="editButton :growl" />
-
-						<p:column sortBy="#{projectsEmployee.project.projectCode}"
-							style="width:200px;">
-							<f:facet name="header">
-								<h:outputText value="Project Code" />
-							</f:facet>
-							<h:outputText value="#{projectsEmployee.project.projectCode}" />
-						</p:column>
-
-						<p:column
-							sortBy="#{projectsEmployee.projectJobTitle.projectJobTitleDescription}"
-							style="width:200px;">
-							<f:facet name="header">
-								<h:outputText value="Job Title Description" />
-							</f:facet>
-							<h:outputText
-								value="#{projectsEmployee.projectJobTitle.projectJobTitleDescription}" />
-						</p:column>
-
-						<p:column
-							sortBy="#{projectsEmployee.allocationType.allocationTypeDescription}"
-							style="width:200px;">
-							<f:facet name="header">
-								<h:outputText value="Allocation Type Description" />
-							</f:facet>
-							<h:outputText
-								value="#{projectsEmployee.allocationType.allocationTypeDescription}" />
-						</p:column>
-
-						<f:facet name="footer">
-							<p:commandButton id="createButton" icon="ui-icon-plus"
-								value="#{loc.Create}" 
-								actionListener="#{projectEmployeeBean.prepareCreateProjectEmployee(employeesAndAllocationsBean.selectedCompany)}"
-								update=":createProjectEmployeeForm"
-								oncomplete="PF('createProjectEmployeeDialog').show()" />
-
-							<p:commandButton id="editButton" icon="ui-icon-pencil"
-								value="#{loc.Edit}" update="projectsEmployeeCurrentList"
-								oncomplete="PF('editProjectEmployeeDialog').show()"
-								disabled="#{empty projectEmployeeBean.selectedProjectEmployee}" />
-						</f:facet>
-
-					</p:dataTable>
-				</p:panelGrid>
-			</p:outputPanel>
-		</h:form>
-		
-	</p:dialog>
 </ui:composition>
 </html>

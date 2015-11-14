@@ -22,11 +22,10 @@ import com.almabani.common.entity.AbstractEntity;
  * SEQUENCE "COM_DEP_SECTIONS_ID_SEQ_GEN" INCREMENT BY 50 START WITH 50;
  */
 @Entity
-@Table( schema="ADMINCOR",name = "COM_DEP_SECTIONS")
+@Table(schema = "ADMINCOR", name = "COM_DEP_SECTIONS")
 @SequenceGenerator(name = "ComDepSections_Id_Seq_Gen", sequenceName = "ADMINCOR.COM_SEQ_NUM_DEP_SECTION", allocationSize = 1, initialValue = 1)
-public class DepartmentSection extends AbstractEntity implements
-		Serializable {
-	
+public class DepartmentSection extends AbstractEntity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -38,7 +37,7 @@ public class DepartmentSection extends AbstractEntity implements
 	private String sectionCode;
 
 	@ManyToOne
-	@JoinColumn(name="COD_USER_RESPONSIBLE" , referencedColumnName="COD_EMPLOYEE")
+	@JoinColumn(name = "COD_USER_RESPONSIBLE", referencedColumnName = "COD_EMPLOYEE")
 	private Employee responsibleUserCode;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -52,14 +51,19 @@ public class DepartmentSection extends AbstractEntity implements
 	private String sectionName;
 
 	/**
-	 * modificationMakerName represent the user name who make the last modification
+	 * modificationMakerName represent the user name who make the last
+	 * modification
 	 */
 	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
 	private String modificationMakerName;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "NUM_DEPARTMENT" , referencedColumnName="NUM_DEPARTMENT")
+	@JoinColumn(name = "NUM_DEPARTMENT", referencedColumnName = "NUM_DEPARTMENT")
 	private Department department;
+	public DepartmentSection(){}
+	public DepartmentSection(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
