@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -406,8 +408,7 @@ public class Utils {
 				Document document = builder.parse(new InputSource(
 						new StringReader(str)));
 				Element rootElement = document.getDocumentElement();
-				str = Utils
-						.getAbsoluteStringValue(rootElement.getTextContent());
+				str = Utils.getAbsoluteStringValue(rootElement.getNodeValue());
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -420,11 +421,27 @@ public class Utils {
 			}
 			if (str.length() > 30) {
 
-				return str.substring(0,30) + "...";
+				return str.substring(0, 30) + "...";
 			}
 
 			return str;
 		}
 		return "";
+	}
+
+	public static byte[] getBytes(Blob blob) {
+		try {
+			if (blob != null && blob.length() > 0) {
+				int blobLength = (int) blob.length();
+
+				return blob.getBytes(1, blobLength);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new byte[] {};
+
 	}
 }

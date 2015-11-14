@@ -17,7 +17,7 @@ public interface EmployeeDAO extends AbstractDAOInt{
 	
 	void persist(Employee employee);
 	
-	void update(Employee employee);
+	Employee update(Employee employee);
 	
 	Employee getEmployee(Long id);
 

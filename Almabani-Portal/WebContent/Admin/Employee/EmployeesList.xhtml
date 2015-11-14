@@ -15,13 +15,19 @@
 			rendered="#{employeeManagementBean.selectedDepartmentSection !=null and not empty employeeManagementBean.departmentSections}">
 			<p:dataTable var="employee"
 				value="#{employeeManagementBean.employees}" scrollable="true"
-				scrollRows="10" resizableColumns="true" draggableRows="true"
+				scrollRows="10" resizableColumns="true" 
 				draggableColumns="true" selectionMode="single" rows="10" lazy="true"
 				selection="#{employeeManagementBean.selectedEmployee}"
 				rowKey="#{employee.id}" paginator="true"
 				rowsPerPageTemplate="10,20,30">
 
-				<p:ajax event="rowSelect"  update="editButton :growl" />
+				<p:ajax event="rowSelect" update="editButton :growl" />
+
+
+				<p:column style="width:30px">
+					<p:rowToggler />
+				</p:column>
+
 
 				<p:column sortBy="#{employee.id}" filterBy="#{employee.id}"
 					filterStyle="width:40px;" style="width:60px;">
@@ -68,7 +74,7 @@
 					<f:facet name="header">
 						<p:outputLabel value="Active" />
 					</f:facet>
-					<p:outputLabel value="#{employee.active}" />
+					<p:outputLabel value="#{applicationScopeStore.getYesNoValue(employee.active)}" />
 				</p:column>
 
 				<p:column sortBy="#{employee.employeeType}" style="width:100px;">
@@ -78,17 +84,7 @@
 					<p:outputLabel value="#{employee.employeeType}" />
 				</p:column>
 
-				<p:column style="width:110px;text-align: center">
-					<f:facet name="header">
-						<p:outputLabel value="Employee Details" />
-					</f:facet>
-					<p:commandButton update=":empOPForm"
-						actionListener="#{employeeManagementBean.setSelectedEmployee(employee)}"
-						oncomplete="PF('empOP').show('#{component.clientId}')"
-						icon="ui-icon-search" title="Employee Details">
 
-					</p:commandButton>
-				</p:column>
 
 				<p:column style="width:110px;text-align: center">
 					<f:facet name="header">
@@ -96,133 +92,112 @@
 					</f:facet>
 					<p:commandButton
 						oncomplete="PF('empAllocationsOP').show('#{component.clientId}')"
-						icon="ui-icon-search" title="Employee Allocations" update=":empAllocationsOP"
+						icon="ui-icon-search" title="Employee Allocations"
+						update=":empAllocationsOP"
 						actionListener="#{employeeManagementBean.loadEmployeeProjects(employee)}">
 
 					</p:commandButton>
 				</p:column>
 
+
+				<p:rowExpansion>
+
+					<p:panelGrid columns="4">
+
+						<f:facet name="header">
+							<itiGeeks:ByteImageViewer
+								objectImplementsByteArrayHolder="#{employee}" />
+						</f:facet>
+
+						<p:outputLabel value="Employee Name" />
+						<p:outputLabel value="#{employee.employeeName}" />
+
+						<p:outputLabel value="Job Title" />
+						<p:outputLabel value="#{employee.jobTitleType.jobTitle}" />
+
+						<p:outputLabel value="Department Section Name" />
+
+						<p:outputLabel value="#{employee.departmentSection.sectionName}" />
+
+						<p:outputLabel value="State Identity Code" />
+						<p:outputLabel value="#{employee.stateIdentityCode}" />
+
+						<p:outputLabel value="Begining Activity Date" />
+						<p:outputLabel value="#{employee.inactivityBeginDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Birth Date" />
+						<p:outputLabel value="#{employee.birthDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Last Modification Date" />
+						<p:outputLabel value="#{employee.lastModificationDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Registration Date" />
+						<p:outputLabel value="#{employee.registrationDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Email1" />
+						<p:outputLabel value="#{employee.email1Description}" />
+
+						<p:outputLabel value="Email2" />
+						<p:outputLabel value="#{employee.email2Description}" />
+
+						<p:outputLabel value="Observation" />
+						<p:outputLabel value="#{employee.observationDescription}" />
+
+						<p:outputLabel value="#{loc.ListComEmployeeTitle_gender}" />
+						<p:outputLabel value="#{employee.gender}" />
+
+						<p:outputLabel value="Marital Status" />
+						<p:outputLabel value="#{employee.maritalStatus}" />
+
+						<p:outputLabel value="Modifier Name" />
+						<p:outputLabel value="#{employee.modificationMakerName}" />
+
+						<p:outputLabel value="Ddd Mobile Number" />
+						<p:outputLabel value="#{employee.dddMobileNumber}" />
+
+						<p:outputLabel value="Ddd Telephone" />
+						<p:outputLabel value="#{employee.telephoneNumber}" />
+
+						<p:outputLabel value="Ddi Mobile Number" />
+						<p:outputLabel value="#{employee.ddiMobileNumber}" />
+
+						<p:outputLabel value="Ddi Telephone" />
+						<p:outputLabel value="#{employee.ddiTelephoneNumber}" />
+
+						<p:outputLabel value="Mobile" />
+						<p:outputLabel value="#{employee.mobileNumber}" />
+
+						<p:outputLabel value="Telephone NUmber" />
+						<p:outputLabel value="#{employee.telephoneNumber}" />
+
+					</p:panelGrid>
+				</p:rowExpansion>
+
 				<f:facet name="footer">
 					<p:commandButton id="createButton" icon="ui-icon-plus"
-						value="#{loc.Create}" update=":createEmployeeForm" actionListener="#{employeeManagementBean.prepareCreateEmployee()}"
+						value="#{loc.Create}" update=":createEmployeeForm"
+						actionListener="#{employeeManagementBean.prepareCreateEmployee()}"
 						oncomplete="PF('createEmployeeDialog').show()" />
 					<p:commandButton id="editButton" icon="ui-icon-pencil"
-						value="#{loc.Edit}" rendered="#{applicationScopeStore.hasFullAccess()}"
+						value="#{loc.Edit}" update=":editEmployeeForm"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
 						actionListener="#{employeeManagementBean.loadInitialLists()}"
-						oncomplete="PF('editEmployeeDialog').show()" 
-						disabled="#{employeeManagementBean.selectedEmployee ==null}"/>
+						oncomplete="PF('editEmployeeDialog').show()"
+						disabled="#{employeeManagementBean.selectedEmployee ==null}" />
 				</f:facet>
 
 			</p:dataTable>
 		</p:panel>
 	</h:form>
 
-	<p:dialog modal="true" widgetVar="empOP" showEffect="fade"
-		hideEffect="fade" dismissable="false" showCloseIcon="true">
 
-		<h:form id="empOPForm">
-			<p:outputPanel id="empDetails" style="text-align:center;">
-				<p:panelGrid columns="4"
-					rendered="#{not empty employeeManagementBean.selectedEmployee}">
-
-					<f:facet name="header">
-						<itiGeeks:ByteImageViewer
-							objectImplementsByteArrayHolder="#{employeeManagementBean.selectedEmployee}" />
-					</f:facet>
-
-					<p:outputLabel value="Employee Name" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.employeeName}" />
-
-					<p:outputLabel value="Job Title" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.jobTitleType.jobTitle}" />
-
-					<p:outputLabel value="Department Section Name" />
-
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.departmentSection.sectionName}" />
-
-					<p:outputLabel value="State Identity Code" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.stateIdentityCode}" />
-
-					<p:outputLabel value="Begining Activity Date" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.inactivityBeginDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</p:outputLabel>
-
-					<p:outputLabel value="Birth Date" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.birthDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</p:outputLabel>
-
-					<p:outputLabel value="Last Modification Date" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.lastModificationDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</p:outputLabel>
-
-					<p:outputLabel value="Registration Date" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.registrationDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</p:outputLabel>
-
-					<p:outputLabel value="Email1" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.email1Description}" />
-
-					<p:outputLabel value="Email2" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.email2Description}" />
-
-					<p:outputLabel value="Observation" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.observationDescription}" />
-
-					<p:outputLabel value="#{loc.ListComEmployeeTitle_gender}" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.gender}" />
-
-					<p:outputLabel value="Marital Status" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.maritalStatus}" />
-
-					<p:outputLabel value="Modifier Name" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.modificationMakerName}" />
-
-					<p:outputLabel value="Ddd Mobile Number" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.dddMobileNumber}" />
-
-					<p:outputLabel value="Ddd Telephone" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.telephoneNumber}" />
-
-					<p:outputLabel value="Ddi Mobile Number" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.ddiMobileNumber}" />
-
-					<p:outputLabel value="Ddi Telephone" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.ddiTelephoneNumber}" />
-
-					<p:outputLabel value="Mobile" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.mobileNumber}" />
-
-					<p:outputLabel value="Telephone NUmber" />
-					<p:outputLabel
-						value="#{employeeManagementBean.selectedEmployee.telephoneNumber}" />
-
-				</p:panelGrid>
-			</p:outputPanel>
-		</h:form>
-
-	</p:dialog>
 </ui:composition>
 </html>

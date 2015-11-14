@@ -7,10 +7,10 @@
 
 <ui:composition>
 
-	<p:dialog widgetVar="empAllocationsOP" showEffect="fade" modal="true"
-		dynamic="true" hideEffect="fade" dismissable="false"
+	<p:dialog widgetVar="empAllocationsOP" showEffect="fade" modal="true" resizable="false"
+		dynamic="true" hideEffect="fade" dismissable="false" closeOnEscape="true"
 		showCloseIcon="true">
-
+		<p:ajax event="close" listener="#{employeeManagementBean.selectNullProjectEmployee()}" />
 		<h:form id="empAllocationsOP">
 			<p:outputPanel id="empAllocationsDetails" style="text-align:center;">
 				<p:panelGrid columns="2" columnClasses="label,value">
@@ -22,15 +22,15 @@
 
 					<p:dataTable var="projectsEmployee"
 						id="projectsEmployeeCurrentList" lazy="true"
-						value="#{employeeManegementBean.employeeProjects}"
+						value="#{employeeManagementBean.employeeProjects}"
 						scrollable="true" scrollRows="10" liveScroll="true"
 						resizableColumns="true" selectionMode="single" rows="10"
 						rowKey="#{projectsEmployee.id}" paginator="true"
-						selection="#{projectEmployeeBean.selectedProjectEmployee}"
+						selection="#{employeeManagementBean.projectEmployee}"
 						style="width:700px;" rowsPerPageTemplate="10,20,30"
 						emptyMessage="No data found for this employee. :(">
 
-<!-- 						<p:ajax event="rowSelect" update="editButton :growl" /> -->
+						<p:ajax event="rowSelect" update="editButton :growl" />
 
 						<p:column sortBy="#{projectsEmployee.project.projectCode}"
 							style="width:200px;">
@@ -61,17 +61,15 @@
 						</p:column>
 
 						<f:facet name="footer">
-<!-- 						update=":createProjectEmployeeForm" -->
 							<p:commandButton id="createButton" icon="ui-icon-plus"
 								value="#{loc.Create}"
 								actionListener="#{employeeManagementBean.prepareCreateProjectEmployee()}"
-								
+								update=":createProjectEmployeeForm"
 								oncomplete="PF('createProjectEmployeeDialog').show()" />
-							<!-- update="projectsEmployeeCurrentList" -->
 							<p:commandButton id="editButton" icon="ui-icon-pencil"
-								value="#{loc.Edit}" 
+								value="#{loc.Edit}"  update="editProjectEmployeeForm" actionListener="#{employeeManagementBean.loadProjectEmployeeNeededLists()}"
 								oncomplete="PF('editProjectEmployeeDialog').show()"
-								disabled="#{empty projectEmployeeBean.selectedProjectEmployee}" />
+								disabled="#{empty  employeeManagementBean.projectEmployee}" />
 						</f:facet>
 
 					</p:dataTable>

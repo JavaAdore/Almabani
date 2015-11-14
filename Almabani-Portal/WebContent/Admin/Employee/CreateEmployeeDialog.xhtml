@@ -87,8 +87,8 @@
 										itemValue="#{null}" noSelectionOption="true" />
 									<f:selectItems
 										value="#{applicationScopeStore.getDocumentTypeList()}"
-										var="documentType" itemLabel="#{documentType.key}"
-										itemValue="#{documentType.value}" />
+										var="documentType" itemLabel="#{documentType.value}"
+										itemValue="#{documentType.key}" />
 								</p:selectOneMenu>
 
 								<p:outputLabel value="Date of Birth:" for="birthDate" />
@@ -107,16 +107,21 @@
 
 						<p:outputLabel value="Email1:" for="email1" />
 						<p:inputText id="email1" maxlength="80"
+							validatorMessage="invalid email1 address"
 							value="#{employeeManagementBean.selectedEmployee.email1Description}"
 							styleClass="fullWith">
 							<f:validator validatorId="custom.emailValidator" />
+
+
 						</p:inputText>
 
 						<p:outputLabel value="Email2:" for="email2" />
 						<p:inputText id="email2" maxlength="80"
+							validatorMessage="invalid email2 address"
 							value="#{employeeManagementBean.selectedEmployee.email2Description}"
 							styleClass="fullWith">
 							<f:validator validatorId="custom.emailValidator" />
+
 						</p:inputText>
 
 						<p:outputLabel value="Telephone Number:" for="telephoneNumber" />

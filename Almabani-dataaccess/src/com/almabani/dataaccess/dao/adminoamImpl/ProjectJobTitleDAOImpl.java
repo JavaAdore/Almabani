@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.dataaccess.dao.adminoam.ProjectJobTitleDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -57,6 +58,13 @@ public class ProjectJobTitleDAOImpl extends AbstractDAO implements ProjectJobTit
 	public List<ProjectJobTitle> loadProjectJobTitles(int first, int pageSize,
 			String sortField, boolean asc, Map<String, Object> filters) {
 		return super.lazyLoadEntities(ProjectJobTitle.class, first, pageSize, sortField, asc, filters);
+	}
+
+	@Override
+	public List<ProjectJobTitle> getProjectJobTitles(Project selectedProject) {
+		Query query = getCurrentSession().createQuery("select pjt from ProjectJobTitle pjt where pjt.project =:project");
+		query.setParameter("project", selectedProject);
+		return query.list();
 	}
 	
 }

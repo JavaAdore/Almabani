@@ -1,6 +1,7 @@
 package com.almabani.common.entity.schema.admincor;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -129,9 +130,8 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	@Column(name = "IND_TYPE_DOCUMENT", length = 1)
 	private String indTypeDocument;
 	
-	//@Column(name = "IMG_EMPLOYEE")
-	@Transient   
-	private byte[] employeeImage;
+	@Column(name = "IMG_EMPLOYEE")
+	private Blob employeeImage;
 
 	public Employee() {
 	}
@@ -466,14 +466,14 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	/**
 	 * @return the employeeImage
 	 */
-	public byte[] getEmployeeImage() {
+	public Blob getEmployeeImage() {
 		return employeeImage;
 	}
 
 	/**
 	 * @param employeeImage the employeeImage to set
 	 */
-	public void setEmployeeImage(byte[] employeeImage) {
+	public void setEmployeeImage(Blob employeeImage) {
 		this.employeeImage = employeeImage;
 	}
 
@@ -483,13 +483,13 @@ public class Employee extends AbstractEntity implements ByteArrayHolder, Seriali
 	}
 
 	@Override
-	public void setHoldedImage(byte[] blob) {
+	public void setHoldedImage(Blob blob) {
 		setEmployeeImage(blob);
 		
 	}
 
 	@Override
-	public byte[] getHoldedImage() {
+	public Blob getHoldedImage() {
 		return getEmployeeImage();
 	}
 

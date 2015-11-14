@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 
 @Service
@@ -23,6 +24,8 @@ public interface ProjectJobTitleService {
 
 	List<ProjectJobTitle> loadProjectJobTitles(int first, int pageSize,
 			String sortField, boolean asc, Map<String, Object> filters);
+
+	List<ProjectJobTitle> getProjectJobTitles(Project selectedProject);
 
 	
 }

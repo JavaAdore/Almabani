@@ -87,8 +87,8 @@
 										itemValue="#{null}" noSelectionOption="true" />
 									<f:selectItems
 										value="#{applicationScopeStore.getDocumentTypeList()}"
-										var="documentType" itemLabel="#{documentType.key}"
-										itemValue="#{documentType.value}" />
+										var="documentType" itemLabel="#{documentType.value}"
+										itemValue="#{documentType.key}" />
 								</p:selectOneMenu>
 
 								<p:outputLabel value="Date of Birth:" for="birthDate" />
@@ -211,7 +211,7 @@
 					</p:panelGrid>
 
 				</p:tab>
-
+  
 
 				<p:tab id="confirm" title="Confirmation">
 					<ui:include src="confirmationTab.xhtml" />

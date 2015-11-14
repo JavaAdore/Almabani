@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form>
-		<p:remoteCommand  name="updateListForm"  update="tabs:listForm" ></p:remoteCommand>
+		<p:remoteCommand  name="updateListForm"  update="tabs:listForm  tabs:QuotationItemSupplierlistForm" ></p:remoteCommand>
 	</h:form>
 
 	<h:form id="listForm">
@@ -25,7 +25,7 @@
 						icon="ui-icon-calculator" />
 					<p:columnToggler datasource="datalist" trigger="toggler" />
 				</f:facet>
-				<p:ajax event="rowSelect" update="viewButton editButton" />
+				<p:ajax event="rowSelect" listener="#{quotationItemManagementBean.selectedQuotationItemChagned}" update="viewButton editButton" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
 				<p:column sortBy="#{item.id}" filterBy="#{item.id}"

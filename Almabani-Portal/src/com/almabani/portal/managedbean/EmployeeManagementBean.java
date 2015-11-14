@@ -3,25 +3,32 @@ package com.almabani.portal.managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.entity.schema.admincor.DepartmentSection;
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.admincor.Establishment;
 import com.almabani.common.entity.schema.admincor.JobTitleType;
 import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.admincor.view.VComDepartmentSection;
+import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
+import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.common.enums.Active;
+import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
@@ -47,9 +54,15 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 
 	private ProjectEmployee projectEmployee;
 
-	private List<ProjectEmployee> employeeProjects;
+	private Set<ProjectEmployee> employeeProjects;
 
 	private List<Project> projects;
+
+	private List<AllocationType> allocationTypes;
+
+	private List<ProjectJobTitle> projectJobTitles;
+
+	private Project selectedProject;
 
 	@PostConstruct
 	public void init() {
@@ -80,7 +93,21 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 	public void prepareCreateProjectEmployee() {
 		projectEmployee = new ProjectEmployee();
 		loadAvailableProjects();
+		resetInitializedLists();
+	}
 
+	public void loadProjectEmployeeNeededLists() {
+		selectedProject = projectEmployee.getProject();
+		loadAvailableProjects();
+		resetInitializedLists();
+		loadProjectRelatedLists();
+
+	}
+
+	private void resetInitializedLists() {
+
+		allocationTypes = new ArrayList();
+		projectJobTitles = new ArrayList();
 	}
 
 	private void loadAvailableProjects() {
@@ -103,6 +130,21 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 
 		jobTitleTypes = almabaniFacade
 				.getJobTitleTypes(selectedDepartmentSection.getCompany());
+	}
+
+	public void projectSelected(AjaxBehaviorEvent e) {
+
+		selectedProject = (Project) ((SelectOneMenu) e.getSource()).getValue();
+		loadProjectRelatedLists();
+	}
+
+	private void loadProjectRelatedLists() {
+		if (Utils.isNotNull(selectedProject)) {
+			allocationTypes = almabaniFacade
+					.getAllocationTypes(selectedProject);
+			projectJobTitles = almabaniFacade
+					.getProjectJobTitles(selectedProject);
+		}
 	}
 
 	private class DepartmentSectionLazyModel extends
@@ -207,7 +249,8 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 
 	public void loadEmployeeProjects(Employee employee) {
 		selectedEmployee = employee;
-		employeeProjects = almabaniFacade.getProjectEmployee(employee);
+		employeeProjects = new HashSet(
+				almabaniFacade.getProjectEmployee(employee));
 	}
 
 	public VComDepartmentSection getSelectedDepartmentSection() {
@@ -262,7 +305,18 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 
 	public void saveEmployee() {
 
-		System.out.println("adding");
+		boolean isAlreadyExisitEntity = Utils.hasID(selectedEmployee);
+		
+		selectedEmployee.setDepartmentSection(new DepartmentSection(selectedDepartmentSection.getDepartmentSectionNumber()));
+		selectedEmployee.setLastModificationDate(new Date());
+		selectedEmployee
+				.setModificationMakerName(WebUtils.getCurrentUserCode());
+		selectedEmployee = almabaniFacade.saveOrUpdate(selectedEmployee);
+
+		WebUtils.fireInfoMessage(
+				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_ITEM));
 	}
 
 	public ProjectEmployee getProjectEmployee() {
@@ -273,11 +327,11 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 		this.projectEmployee = projectEmployee;
 	}
 
-	public List<ProjectEmployee> getEmployeeProjects() {
+	public Set<ProjectEmployee> getEmployeeProjects() {
 		return employeeProjects;
 	}
 
-	public void setEmployeeProjects(List<ProjectEmployee> employeeProjects) {
+	public void setEmployeeProjects(Set<ProjectEmployee> employeeProjects) {
 		this.employeeProjects = employeeProjects;
 	}
 
@@ -289,4 +343,47 @@ public class EmployeeManagementBean extends AbstractBeanHelper implements
 		this.projects = projects;
 	}
 
+	public void saveProjectEmployee() throws AlmabaniException {
+
+		boolean isAlreadyExisitEntity = Utils.hasID(projectEmployee);
+		projectEmployee.setEmployee(selectedEmployee);
+		projectEmployee.setLastModificationDate(new Date());
+		projectEmployee.setModificationMakerName(WebUtils.getCurrentUserCode());
+		projectEmployee = almabaniFacade.saveOrUpdate(projectEmployee);
+
+		employeeProjects.add(projectEmployee);
+		WebUtils.fireInfoMessage(
+				(isAlreadyExisitEntity) ? MessagesKeyStore.ALMABANI_GENERAL_UPDATED_SUCCESSFULLY
+						: MessagesKeyStore.ALMABANI_GENERAL_ADDED_SUCCESSFULLY,
+				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_ITEM));
+	}
+
+	public List<AllocationType> getAllocationTypes() {
+		return allocationTypes;
+	}
+
+	public void setAllocationTypes(List<AllocationType> allocationTypes) {
+		this.allocationTypes = allocationTypes;
+	}
+
+	public List<ProjectJobTitle> getProjectJobTitles() {
+		return projectJobTitles;
+	}
+
+	public void setProjectJobTitles(List<ProjectJobTitle> projectJobTitles) {
+		this.projectJobTitles = projectJobTitles;
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
+	}
+
+	public void selectNullProjectEmployee() {
+
+		projectEmployee = null;
+	}
 }

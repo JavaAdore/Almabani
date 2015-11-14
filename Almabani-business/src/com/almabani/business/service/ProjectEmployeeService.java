@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.common.entity.schema.admincor.Employee;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
+import com.almabani.common.exception.AlmabaniException;
 
 @Service
 public interface ProjectEmployeeService {
@@ -15,7 +16,7 @@ public interface ProjectEmployeeService {
 	
 	List<ProjectEmployee> getProjectEmployee(List<Employee> employees);
 
-	ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee);
+	ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee) throws AlmabaniException;
 
 	Integer getNumberOfProjectEmployees(Map<String, Object> filters);
 

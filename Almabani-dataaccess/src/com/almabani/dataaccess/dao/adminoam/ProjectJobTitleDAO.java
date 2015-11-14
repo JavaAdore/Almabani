@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -26,5 +27,7 @@ public interface ProjectJobTitleDAO extends AbstractDAOInt{
 
 	List<ProjectJobTitle> loadProjectJobTitles(int first, int pageSize,
 			String sortField, boolean asc, Map<String, Object> filters);
+
+	List<ProjectJobTitle> getProjectJobTitles(Project selectedProject);
 	
 }

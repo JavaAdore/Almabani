@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Employee;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.dataaccess.dao.AbstractDAOInt;
 
@@ -31,5 +32,9 @@ public interface ProjectEmployeeDAO extends AbstractDAOInt{
 	List<ProjectEmployee> loadProjectsAllocationEmployee(int first,
 			int pageSize, String sortField, boolean ascending,
 			Map<String, Object> filters);
+
+	int getNumberOfProjectEmployees(Project project, Employee employee);
+
+	ProjectEmployee getProjectEmployee(Long id);
 	
 }

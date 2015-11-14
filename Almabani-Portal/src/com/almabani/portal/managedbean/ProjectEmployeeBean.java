@@ -20,6 +20,7 @@ import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.common.entity.schema.adminoam.ProjectEmployee;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.common.enums.EmployeeContractType;
+import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
@@ -52,7 +53,7 @@ public class ProjectEmployeeBean extends AbstractBeanHelper implements
 		employeeContractTypes = EmployeeContractType.values();
 	}
 
-	public void saveOrUpdate(ProjectEmployee projectEmployee) {
+	public void saveOrUpdate(ProjectEmployee projectEmployee) throws AlmabaniException {
 		projectEmployee.setModificationMakerName("Not yet!");
 		projectEmployee.setLastModificationDate(new Date());
 		projectEmployee.setValidityBeginDate(new Date());

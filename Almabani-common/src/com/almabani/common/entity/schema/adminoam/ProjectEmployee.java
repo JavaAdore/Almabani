@@ -55,9 +55,8 @@ public class ProjectEmployee extends AbstractEntity implements Serializable {
 	private Employee employee;
 	
 //	@Convert(converter = EmployeeContractTypeConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name = "IND_TYPE_EMP_CONTR", nullable = false, length = 1)
-	private EmployeeContractType employeeContractType;
+	private String employeeContractType;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DAT_BEGIN_VALIDITY", nullable = false, length = 7)
@@ -144,19 +143,7 @@ public class ProjectEmployee extends AbstractEntity implements Serializable {
 		this.employee = employee;
 	}
 	
-	/**
-	 * @return the employeeContractType
-	 */
-	public EmployeeContractType getEmployeeContractType() {
-		return employeeContractType;
-	}
-
-	/**
-	 * @param employeeContractType the employeeContractType to set
-	 */
-	public void setEmployeeContractType(EmployeeContractType employeeContractType) {
-		this.employeeContractType = employeeContractType;
-	}
+	
 
 	/**
 	 * @return the validityBeginDate
@@ -212,6 +199,14 @@ public class ProjectEmployee extends AbstractEntity implements Serializable {
 	 */
 	public void setLastModificationDate(Date lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
+	}
+
+	public String getEmployeeContractType() {
+		return employeeContractType;
+	}
+
+	public void setEmployeeContractType(String employeeContractType) {
+		this.employeeContractType = employeeContractType;
 	}
 	
 }

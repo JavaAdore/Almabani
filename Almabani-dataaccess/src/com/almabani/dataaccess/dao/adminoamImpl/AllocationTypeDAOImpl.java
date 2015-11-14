@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.dataaccess.dao.adminoam.AllocationTypeDAO;
 import com.almabani.dataaccess.daoimpl.AbstractDAO;
@@ -32,6 +33,13 @@ public class AllocationTypeDAOImpl extends AbstractDAO implements AllocationType
 		
 		Query query = getCurrentSession().createQuery("select at from AllocationType at where at.project.company =:company");
 		query.setParameter("company", company);
+		return query.list();
+	}
+
+	@Override
+	public List<AllocationType> getAllocationType(Project selectedproject) {
+		Query query = getCurrentSession().createQuery("select at from AllocationType at where at.project =:project");
+		query.setParameter("project", selectedproject);
 		return query.list();
 	}
 	

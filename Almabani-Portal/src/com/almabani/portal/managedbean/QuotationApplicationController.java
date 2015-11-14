@@ -67,7 +67,9 @@ public class QuotationApplicationController extends AbstractBeanHelper
 		if (Utils.isNotNull(quotation)
 				&& Utils.isNotNull(quotationItemManagementBean)) {
 			quotationItemManagementBean.setParentQuotation(quotation);
+			oamItemsQuotSupplierManagementBean.setParentQuotationItem(null);
 			WebUtils.invokeJavaScriptFunction("updateListForm()");
+
 		}
 	}
 

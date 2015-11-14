@@ -23,8 +23,8 @@ public class EmployeeDAOImp extends AbstractDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public void update(Employee employee) {
-		getCurrentSession().merge(employee);
+	public Employee update(Employee employee) {
+		return (Employee )getCurrentSession().merge(employee);
 	}
 
 	@Override

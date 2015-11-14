@@ -1,6 +1,7 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -90,11 +91,11 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper
 
 	@PostConstruct
 	public void init() {
-		initializeCompaniesLazyList();
+		initializeOamItemSupplierLazyList();
 		prepareInitialLists();
 	}
 
-	private void initializeCompaniesLazyList() {
+	private void initializeOamItemSupplierLazyList() {
 		items = new OamItemsQuotSupplierLazyModel();
 	}
 
@@ -175,17 +176,22 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
 
-			injectCompanyIncaseOfNoneAdminUser(filters);
+			if (Utils.isNotNull(parentQuotationItem)) {
+				
+				filters.put("itemQuotation", parentQuotationItem);
 
-			rowCount = almabaniFacade.getCountOfOamItemsQuotSupplier(filters);
+				rowCount = almabaniFacade
+						.getCountOfOamItemsQuotSupplier(filters);
 
-			result = (List<OamItemsQuotSupplier>) almabaniFacade
-					.loadOamItemsQuotSuppliers(first, pageSize, sortField,
-							sortOrder == SortOrder.ASCENDING, filters);
+				result = (List<OamItemsQuotSupplier>) almabaniFacade
+						.loadOamItemsQuotSuppliers(first, pageSize, sortField,
+								sortOrder == SortOrder.ASCENDING, filters);
 
-			setRowCount(this.rowCount);
+				setRowCount(this.rowCount);
 
-			return result;
+				return result;
+			}
+			return new ArrayList();
 		}
 
 		private void injectCompanyIncaseOfNoneAdminUser(
@@ -314,7 +320,7 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper
 		String status = (String) ((SelectOneMenu) event.getSource()).getValue();
 		if (Utils.isNotEmptyString(status)
 				&& status.equalsIgnoreCase(DataAccessConstants.YES)) {
-			try { 
+			try {
 				almabaniFacade
 						.checkQuotationItemSupplierSelectionAvailability(selected
 								.getItemQuotation());
@@ -342,5 +348,10 @@ public class OamItemsQuotSupplierManagementBean extends AbstractBeanHelper
 
 	public void cancelSelectingCurrentSupplier() {
 		selected.setIndSelected(DataAccessConstants.NO);
+	}
+
+	public void loadOamItemSupplierLazyModel() {
+
+		initializeOamItemSupplierLazyList();
 	}
 }

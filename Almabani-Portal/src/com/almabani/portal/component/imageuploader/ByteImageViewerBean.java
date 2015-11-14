@@ -42,7 +42,7 @@ public class ByteImageViewerBean implements Serializable {
 				FileOutputStream fis = new FileOutputStream(new File(
 						ImageUploaderHandlerBean.parent_uploaded_images_path
 								+ path));
-				fis.write(byteArrayHolder.getHoldedImage());
+				fis.write( Utils.getBytes(byteArrayHolder.getHoldedImage()));
 				fis.close();
 				imagesGarbageCollector.registerNewImage(fullPath); 
 			} catch (IOException e) {

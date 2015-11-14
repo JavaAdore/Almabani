@@ -296,7 +296,7 @@ public interface AlmabaniFacade {
 
 	ProjectJobTitle getProjectJobTitle(Long id);
 
-	ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee);
+	ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee) throws AlmabaniException;
 
 	List<SecUser> loadUsers(int first, int pageSize, String sortField,
 			boolean ascending, Map<String, Object> filters);
@@ -472,6 +472,10 @@ public interface AlmabaniFacade {
 	Integer getNumberOfEmployeesView(Map<String, Object> filters);
 
 	Date getMinAllowedEmployeeDate();
+
+	List<AllocationType> getAllocationTypes(Project selectedproject);
+
+	List<ProjectJobTitle> getProjectJobTitles(Project selectedProject);
 
 
 }

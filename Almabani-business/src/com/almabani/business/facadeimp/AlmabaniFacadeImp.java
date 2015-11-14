@@ -981,7 +981,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee) {
+	public ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee) throws AlmabaniException {
 		return projectEmployeeService.saveOrUpdate(projectEmployee);
 	}
 
@@ -1470,6 +1470,16 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.YEAR, BusinessConstants.MIN_ACCEPTED_EMPLOYEE_OLD *-1);
 		return c.getTime();
+	}
+
+	@Override
+	public List<AllocationType> getAllocationTypes(Project selectedproject) {
+		return allocationTypeService.getAllocationType(selectedproject);
+	}
+
+	@Override
+	public List<ProjectJobTitle> getProjectJobTitles(Project selectedProject) {
+		return projectJobTitleService.getProjectJobTitles(selectedProject);
 	} 
 
 }

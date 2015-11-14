@@ -1,6 +1,7 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -159,16 +162,18 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
 
-			injcetParentQuotationIfExisit(filters);
-			injectCompanyInCaseOfNoneAdminUser(filters);
-			rowCount = almabaniFacade.getNumberOfOamItemQuotations(filters);
-			result = (List<OamItemQuotation>) almabaniFacade
-					.loadItemQuotataions(first, pageSize, sortField,
-							sortOrder == SortOrder.ASCENDING, filters);
+			if (Utils.isNotNull(parentQuotation)) {
+				filters.put("quotation", parentQuotation);
+				rowCount = almabaniFacade.getNumberOfOamItemQuotations(filters);
+				setRowCount(this.rowCount);
 
-			setRowCount(this.rowCount);
+				return result = (List<OamItemQuotation>) almabaniFacade
+						.loadItemQuotataions(first, pageSize, sortField,
+								sortOrder == SortOrder.ASCENDING, filters);
 
-			return result;
+			} else {
+				return new ArrayList();
+			}
 		}
 
 		private void injectCompanyInCaseOfNoneAdminUser(
@@ -183,9 +188,6 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 
 		private void injcetParentQuotationIfExisit(Map<String, Object> filters) {
 
-			if (Utils.isNotNull(parentQuotation)) {
-				filters.put("quotation", parentQuotation);
-			}
 		}
 
 		@Override
@@ -261,6 +263,13 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 				selected.setProjectItem(null);
 			}
 		}
+	}
+
+	public void selectedQuotationItemChagned(SelectEvent event) {
+		OamItemQuotation oamItemQuotation = (OamItemQuotation) event.getObject(); 
+		quotationApplicationController.getOamItemsQuotSupplierManagementBean().setParentQuotationItem(oamItemQuotation);
+		quotationApplicationController.getOamItemsQuotSupplierManagementBean().loadOamItemSupplierLazyModel();
+		WebUtils.invokeJavaScriptFunction("updateListForm()");
 	}
 
 	public void refreshQuotationList() {

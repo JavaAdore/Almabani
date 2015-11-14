@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.ProjectJobTitleService;
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.ProjectJobTitle;
 import com.almabani.dataaccess.dao.adminoam.ProjectJobTitleDAO;
 
@@ -52,6 +53,11 @@ public class ProjectJobTitleServiceImp implements ProjectJobTitleService {
 			String sortField, boolean asc, Map<String, Object> filters) {
 		return projectJobTitleDAO.loadProjectJobTitles( first,  pageSize,
 				 sortField,  asc, filters);
+	}
+
+	@Override
+	public List<ProjectJobTitle> getProjectJobTitles(Project selectedProject) {
+		return projectJobTitleDAO.getProjectJobTitles( selectedProject);
 	}	
 	
 }

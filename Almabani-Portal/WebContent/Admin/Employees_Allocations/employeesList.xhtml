@@ -100,7 +100,7 @@
 					<f:facet name="header">
 						<h:outputText value="Allocations" />
 					</f:facet>
-					<p:commandButton update=":empAllocationsOP"
+					<p:commandButton
 						oncomplete="PF('empAllocationsOP').show('#{component.clientId}')"
 						icon="ui-icon-search" title="Employee Allocations"
 						actionListener="#{projectEmployeeBean.employeeAllocations(employee)}">

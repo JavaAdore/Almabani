@@ -116,7 +116,7 @@
 				<h:outputText
 					value="#{employeeManagementBean.selectedEmployee.observationDescription}" />
 
-				<h:outputText style="font-weight:bold" value="Status	:" />
+				<h:outputText style="font-weight:bold" value="Active	:" />
 				<h:outputText
 					value="#{applicationScopeStore.getYesNoValue(employeeManagementBean.selectedEmployee.active)}" />
 
@@ -131,8 +131,8 @@
 
 	</p:panelGrid>
 
-	<p:commandButton value="Submit" validateClient="true"
-		actionListener="#{employeeManagementBean.saveEmployee()}"
+	<p:commandButton value="#{employeeManagementBean.selectedEmployee.id ==null ? 'Create':'Update'}" validateClient="true"
+		actionListener="#{employeeManagementBean.saveEmployee()}" oncomplete="try{PF('createEmployeeDialog').hide(); PF('editEmployeeDialog').hide()}catch(e){}"
 		update=":growl :employeeListForm" process="@this" />
 
 

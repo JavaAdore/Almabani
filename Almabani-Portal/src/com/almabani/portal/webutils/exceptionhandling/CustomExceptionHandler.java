@@ -9,6 +9,7 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.portal.webutils.WebUtils;
 
 public class CustomExceptionHandler extends ExceptionHandlerWrapper {
@@ -37,7 +38,6 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 			// get the exception from context
 			Throwable t = context.getException();
 
-
 			// here you do what ever you want with exception
 			try {
 
@@ -48,12 +48,23 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 					WebUtils.fireErrorMessage(((AlmabaniException) t).getKey());
 
 				} else if (t.getCause() instanceof AlmabaniException) {
-					WebUtils.fireErrorMessage(((AlmabaniException) t.getCause())
-							.getKey());
+					if (Utils.isEmptySet(((AlmabaniException) t.getCause())
+							.getParameters())) {
+						WebUtils.fireErrorMessage(((AlmabaniException) t
+								.getCause()).getKey());
+					} else {
+						WebUtils.displayAlmabanyExceptionErrorMessage((AlmabaniException) t
+								.getCause());
+					}
 
 				} else if (ex instanceof AlmabaniException) {
- 
-					WebUtils.fireErrorMessage(((AlmabaniException) ex).getKey());
+					if (Utils.isEmptySet(((AlmabaniException) ex)
+							.getParameters())) {
+						WebUtils.fireErrorMessage(((AlmabaniException) ex)
+								.getKey());
+					} else { 
+						WebUtils.displayAlmabanyExceptionErrorMessage(((AlmabaniException) ex));
+					}
 
 				}
 

@@ -7,12 +7,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
 
-	<p:dialog id="createProjectEmpDialog" closeOnEscape="true"
-		widgetVar="createProjectEmployeeDialog" modal="true" dynamic="true"
-		resizable="false" header="Create New Employee Project" width="90%">
+	<p:dialog id="editProjectEmpDialog" closeOnEscape="true"
+		widgetVar="editProjectEmployeeDialog" modal="true" dynamic="true"
+		resizable="false" header="edit New Employee Project" width="90%">
 
-		<p:ajax event="close" immediate="true" update=":createProjectEmployeeForm" />
-		<h:form id="createProjectEmployeeForm">
+		<p:ajax event="close" immediate="true" listener="#{employeeManagementBean.selectNullProjectEmployee()}" update=":editProjectEmployeeForm" />
+		<h:form id="editProjectEmployeeForm">
 			<h:panelGroup id="display">
 				<center>
 					<p:panelGrid columns="2" style="width:100%">
@@ -81,14 +81,14 @@
 							value="#{employeeManagementBean.projectEmployee.validityEndDate}" />
 
 					</p:panelGrid>
-					<p:commandButton value="Create" validateClient="true"
+					<p:commandButton value="Edit" validateClient="true"
 						update=":growl @form :empAllocationsOP"
 						actionListener="#{employeeManagementBean.saveProjectEmployee()}"
-						oncomplete="if(!args.validationFailed ){PF('createProjectEmployeeDialog').hide();}" />
+						oncomplete="if(!args.validationFailed ){PF('editProjectEmployeeDialog').hide();}" />
 
 
 					<p:commandButton immediate="true"
-						onclick="PF('createProjectEmployeeDialog').hide()" value="Cancel" />
+						onclick="PF('editProjectEmployeeDialog').hide()" value="Cancel" />
 				</center>
 			</h:panelGroup>
 		</h:form>

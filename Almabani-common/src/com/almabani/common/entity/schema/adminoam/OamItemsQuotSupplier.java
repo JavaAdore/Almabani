@@ -1,6 +1,7 @@
 package com.almabani.common.entity.schema.adminoam;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -83,7 +84,7 @@ public class OamItemsQuotSupplier extends AbstractEntity implements ByteArrayHol
 	
 	//@Column(name = "IMG_QUOTATION")
 	@Transient  
-	private byte[] imgQuotation;
+	private Blob imgQuotation;
 	
 	public OamItemsQuotSupplier() {
 	}
@@ -281,25 +282,25 @@ public class OamItemsQuotSupplier extends AbstractEntity implements ByteArrayHol
 	/**
 	 * @return the imgQuotation
 	 */
-	public byte[] getImgQuotation() {
+	public Blob getImgQuotation() {
 		return imgQuotation;
 	}
 
 	/**
 	 * @param imgQuotation the imgQuotation to set
 	 */
-	public void setImgQuotation(byte[] imgQuotation) {
+	public void setImgQuotation(Blob imgQuotation) {
 		this.imgQuotation = imgQuotation;
 	}
 
 	@Override
-	public void setHoldedImage(byte[] blob) {
+	public void setHoldedImage(Blob blob) {
 		setImgQuotation(blob);
 		
 	}
 
 	@Override
-	public byte[] getHoldedImage() {
+	public Blob getHoldedImage() {
 		return getImgQuotation();
 	}
 	

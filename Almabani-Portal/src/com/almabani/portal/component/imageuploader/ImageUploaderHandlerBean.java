@@ -2,9 +2,11 @@ package com.almabani.portal.component.imageuploader;
 
 import java.io.File;
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+import javax.sql.rowset.serial.SerialException;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
@@ -49,7 +51,17 @@ public class ImageUploaderHandlerBean implements Serializable {
 		byteArrayHolder = (ByteArrayHolder) event.getComponent()
 				.getAttributes().get(getByteArrayHolderAttributeName());
 		if (Utils.isNotNull(byteArrayHolder)) {
-			byteArrayHolder.setHoldedImage(event.getFile().getContents());
+			try {
+				byteArrayHolder
+						.setHoldedImage(new javax.sql.rowset.serial.SerialBlob(
+								event.getFile().getContents()));
+			} catch (SerialException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 

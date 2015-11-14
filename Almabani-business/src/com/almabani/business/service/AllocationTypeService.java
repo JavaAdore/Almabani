@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
 
 @Service
@@ -15,5 +16,7 @@ public interface AllocationTypeService {
 	AllocationType getAllocationType(Long id);
 
 	List<AllocationType> getAllocationTypes(Company company);
+
+	List<AllocationType> getAllocationType(Project selectedproject);
 	
 }

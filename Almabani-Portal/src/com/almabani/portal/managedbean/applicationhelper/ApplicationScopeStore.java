@@ -69,6 +69,8 @@ public class ApplicationScopeStore implements Serializable {
 
 	private Map<String, String> maritalStatusMap = new LinkedHashMap<String, String>();
 
+	private Map<String, String> contractTypeMap = new LinkedHashMap<String, String>();
+
 	@PostConstruct
 	public void init() {
 		loadCountries();
@@ -83,6 +85,14 @@ public class ApplicationScopeStore implements Serializable {
 		contructGenderMap();
 		constructDocumentTypeKeysAndValues();
 		constructMaritalStatusMap();
+		constructContractTypeMap();
+
+	}
+
+	private void constructContractTypeMap() {
+
+		contractTypeMap.put("C", "EmployeeContractType_Contract");
+		contractTypeMap.put("S", "EmployeeContractType_Support");
 
 	}
 
@@ -164,11 +174,11 @@ public class ApplicationScopeStore implements Serializable {
 
 	private void constructDocumentTypeKeysAndValues() {
 
-		documentTypeKeysAndValues = new TreeMap();
-
+		documentTypeMap = new TreeMap();
+  
 		for (DocumentType documentType : DocumentType.values()) {
-			documentTypeKeysAndValues.put(documentType.getKey(),
-					WebUtils.extractFromBundle(documentType.getKey()));
+			documentTypeMap.put(documentType.getKey(),
+					WebUtils.extractFromBundle(documentType.getValue()));
 		}
 	}
 
@@ -360,17 +370,26 @@ public class ApplicationScopeStore implements Serializable {
 		return quotationType;
 	}
 
+	public List<KeyValueHolder<String, String>> getContractTypesList() {
+		List<KeyValueHolder<String, String>> contractType = new ArrayList<KeyValueHolder<String, String>>();
+		for (String key : contractTypeMap.keySet()) {
+			contractType.add(new KeyValueHolder<String, String>(key,
+					getContractType(key)));
+		}
+
+		return contractType;
+	}
+
 	public List<KeyValueHolder<String, String>> getMaritalStatusList() {
 		List<KeyValueHolder<String, String>> unitTypes = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : maritalStatusMap.keySet()) {
 			unitTypes.add(new KeyValueHolder<String, String>(key,
-					getUnitType(key)));
+					getMaritalStatus(key)));
 		}
 
 		return unitTypes;
 	}
-	
-	
+
 	public List<KeyValueHolder<String, String>> getUnitTypesList() {
 		List<KeyValueHolder<String, String>> unitTypes = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : unitTypesMap.keySet()) {
@@ -381,12 +400,11 @@ public class ApplicationScopeStore implements Serializable {
 		return unitTypes;
 	}
 
-
 	public List<KeyValueHolder<String, String>> getEmployeeTypeList() {
 		List<KeyValueHolder<String, String>> unitTypes = new ArrayList<KeyValueHolder<String, String>>();
 		for (String key : employeeTypeMap.keySet()) {
 			unitTypes.add(new KeyValueHolder<String, String>(key,
-					getUnitType(key)));
+					getEmployeeTypeValue(key)));
 		}
 
 		return unitTypes;
@@ -524,6 +542,29 @@ public class ApplicationScopeStore implements Serializable {
 		return "";
 	}
 
+	public String getMaritalStatus(String inOutKey) {
+		if (Utils.isNotEmptyString(inOutKey)) {
+			String inOutSituationMassage = maritalStatusMap.get(inOutKey);
+			if (Utils.isNotEmptyString(inOutSituationMassage)) {
+				String inOutLocalizedMessage = WebUtils
+						.extractFromBundle(inOutSituationMassage);
+				if (Utils.isNotEmptyString(inOutLocalizedMessage)) {
+					return inOutLocalizedMessage;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
+	}
+
+	
+	
 	public String getCurrentCompanyTimeZone() {
 		Company company = WebUtils.getCurrentLoggedUserCompany();
 		if (Utils.isNotNull(company)) {
@@ -631,10 +672,31 @@ public class ApplicationScopeStore implements Serializable {
 		}
 		return "";
 	}
-	
-	public Date getMinAllowedEmployeeDate()
-	{
-		
+
+	public Date getMinAllowedEmployeeDate() {
+
 		return almabaniFacade.getMinAllowedEmployeeDate();
+	}
+
+	public String getContractType(String contractTypeKey) {
+		if (Utils.isNotEmptyString(contractTypeKey)) {
+			String contractTypeSituationMassage = contractTypeMap
+					.get(contractTypeKey);
+			if (Utils.isNotEmptyString(contractTypeSituationMassage)) {
+				String contractTypeLocalizedMessage = WebUtils
+						.extractFromBundle(contractTypeSituationMassage);
+				if (Utils.isNotEmptyString(contractTypeLocalizedMessage)) {
+					return contractTypeLocalizedMessage;
+				} else {
+					return WebUtils
+							.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+
+				}
+			} else {
+				return WebUtils
+						.extractFromBundle(MessagesKeyStore.ALMABANI_GENERAL_NOT_DEFINED_VALUE);
+			}
+		}
+		return "";
 	}
 }
