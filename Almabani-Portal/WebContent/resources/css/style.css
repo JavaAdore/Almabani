@@ -2,6 +2,17 @@
 	text-align: center !important;
 }
 
+.hasDatepicker 
+{
+		width: 100% !important;
+		border:2px solid red;	
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year
+{
+	color:black !important;
+}
+
 td
 {
 		text-align: center !important;
@@ -110,3 +121,5 @@ body {
 .noBorder td {
 	border: none !important;
 }
+
+

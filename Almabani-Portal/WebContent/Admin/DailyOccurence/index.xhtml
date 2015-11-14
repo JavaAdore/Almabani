@@ -7,7 +7,7 @@
 	template="/WEB-INF/template/master.xhtml">
 
 	<ui:define name="title">
-		<h:outputText value="#{bundle.SecApplicationTitle}"></h:outputText>
+		<h:outputText value="#{loc.WokDailyOccurency}"></h:outputText>
 	</ui:define>
 
 	<ui:define name="content">
@@ -17,13 +17,14 @@
 		PF('dailyOccurenceTabView').select(index);
 	}    		
 	</script>
+
 		<p:tabView id="dailyOccurenceTabView"
 			widgetVar="dailyOccurenceTabView" dynamic="true" cache="true">
 			<p:tab id="workingGroupTab"
 				title="#{loc.ALMABANI_GENERAL_WORKING_GROUPS}">
 				<ui:include src="WokWorkingGroupList.xhtml" />
 			</p:tab>
-			<p:tab id="dailyOccurenceTab" 
+			<p:tab id="dailyOccurenceTab"
 				title="#{loc.ALMABANI_GENERAL_DAILY_OCCURENCE}">
 				<ui:include src="DailyOccurenceManagementPage.xhtml" />
 			</p:tab>

@@ -39,7 +39,7 @@
 					sortBy="#{item.project.projectCode}" filterBy="#{item.project}">
 					<f:facet name="filter">
 
-						<p:selectOneMenu onchange="PF('datalist').filter()"
+						<p:selectOneMenu onchange="PF('datalist').filter()" styleClass="fullWith"
 							converter="#{projectConverter}">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
@@ -55,7 +55,7 @@
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
+						<p:selectOneMenu onchange="PF('datalist').filter()" styleClass="fullWith">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"

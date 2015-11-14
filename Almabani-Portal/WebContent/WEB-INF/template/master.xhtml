@@ -42,8 +42,8 @@
 	<script>
 // 	window.history.forward();
     </script>
-	   
- 	<ui:insert name="head"></ui:insert>
+
+	<ui:insert name="head"></ui:insert>
 </h:head>
 <h:body onunload="">
 
@@ -71,6 +71,7 @@
 								name="new_design/dist/img/user2-160x160.jpg" class="img-circle"
 								alt="User Image" />
 							<p>
+							
 								#{applicationScopeStore.getCurrentlyLoggedUser().userLoginCode}
 								<small>#{applicationScopeStore.getCurrentlyLoggedUser().employee.establishment.company.companyName}
 								</small>
@@ -90,7 +91,7 @@
 
 
 									</h:commandLink>
-
+	
 								</h:form>
 							</div>
 						</li>
@@ -201,7 +202,7 @@
 
 	<!-- jQuery 2.1.4 -->
 	<!-- jQuery UI 1.11.4 -->
-	<h:outputScript name="new_design/dist/js/jquery-ui.min.js"></h:outputScript>
+<!-- 	<h:outputScript name="new_design/dist/js/jquery-ui.min.js"></h:outputScript> -->
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<script>

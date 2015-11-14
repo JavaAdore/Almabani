@@ -49,7 +49,7 @@
 				<p:column filterBy="#{item.withdrawDate}"
 					headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
 					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy" onchange="PF('stockItemDataList').filter()">
+						<p:calendar  navigator="true" pattern="dd/MM/yyyy" onchange="PF('stockItemDataList').filter()">
 							<p:ajax event="dateSelect"
 								oncomplete="PF('stockItemDataList').filter()"></p:ajax>
   

@@ -87,7 +87,7 @@
 					headerText="#{loc.ListOamItemsQuotSupplierTitle_indSelected}"
 					sortBy="#{item.indSelected}" filterBy="#{item.indSelected}">
 					<f:facet name="filter">
-						<p:selectOneMenu
+						<p:selectOneMenu styleClass="fullWith"
 							onchange="PF('quotationItemSupplierDataList').filter()">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />

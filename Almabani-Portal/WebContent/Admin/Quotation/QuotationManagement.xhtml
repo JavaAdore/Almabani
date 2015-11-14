@@ -51,7 +51,7 @@
 			</p:steps>
 		</h:form>
 
-		<p:tabView id="tabs"  >
+		<p:tabView id="tabs"   >
 			<p:ajax event="tabChange" update=":stepsForm"
 				listener="#{quotationApplicationController.onTabChange}" />
 
@@ -79,7 +79,7 @@
 				<ui:include src="/Admin/ItemQuotation/Create.xhtml" />
 			</p:tab>
 
-			<p:tab id="quotationItemSupplierTab"
+			<p:tab id="quotationItemSupplierTab" 
 				title="#{loc.GENERAL_ALMABANI_ITEM_QUOTATION_SUPPLER}">
 
 				<ui:include src="/Admin/ItemsQuotSupplier/List.xhtml" />

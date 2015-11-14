@@ -36,13 +36,13 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="validateBeginingDate" value="Validate Begining Date: " />
-					<p:calendar id="validateBeginingDate" pattern="dd/MM/yyyy" style="width: 250px;"
+					<p:calendar  navigator="true" id="validateBeginingDate" pattern="dd/MM/yyyy" style="width: 250px;"
 						value="#{projectBean.selectedProject.validityBeginDate}" required="true"
 						title="Validate Begining Date"
 						requiredMessage="Validate Begining Date field is required" />
 
 					<p:outputLabel for="validateEndDate" value="Validate End Date: " />
-					<p:calendar id="validateEndDate" pattern="dd/MM/yyyy" style="width: 250px;"
+					<p:calendar  navigator="true" id="validateEndDate" pattern="dd/MM/yyyy" style="width: 250px;"
 						value="#{projectBean.selectedProject.validityEndDate}"
 						title="Validate End Date" />
 

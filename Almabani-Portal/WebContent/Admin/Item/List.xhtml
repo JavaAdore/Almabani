@@ -33,7 +33,7 @@
 					filterBy="#{item.itemCategory.comDepartmentSection.sectionCode}">
 
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('itemsDataList').filter()">
+						<p:selectOneMenu onchange="PF('itemsDataList').filter()" styleClass="fullWith">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems
@@ -73,7 +73,7 @@
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('itemsDataList').filter()">
+						<p:selectOneMenu onchange="PF('itemsDataList').filter()" styleClass="fullWith"> 
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"

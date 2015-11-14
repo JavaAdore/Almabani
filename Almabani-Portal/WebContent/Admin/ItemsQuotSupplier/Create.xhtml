@@ -28,7 +28,7 @@
 							rendered="#{oamItemsQuotSupplierManagementBean.selected != null}">
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME}" />
-							<p:selectOneMenu id="supplier" widgetVar="supplier"
+							<p:selectOneMenu id="supplier" widgetVar="supplier" styleClass="fullWith"
 								value="#{oamItemsQuotSupplierManagementBean.selected.itemQuotation}"
 								converter="#{itemQuotataionConverter}" required="true"
 								requiredMessage="#{loc.ALMABANI_OAM_ITEM_QUOTATION_NAME_CREATE_OAM_ITEM_QUOTATION_NAME_IS_REQUIRED}">
@@ -43,7 +43,7 @@
 
 							<p:outputLabel
 								value="#{loc.ALMABANI_OAM_ITEM_QUOTATION_CREATE_SUPPLIER}" />
-							<p:panelGrid columns="2">
+							<p:panelGrid columns="2" styleClass="fullWith">
 								<p:selectOneMenu
 									value="#{oamItemsQuotSupplierManagementBean.selected.supplier}"
 									converter="#{supplierConverter}" required="true"

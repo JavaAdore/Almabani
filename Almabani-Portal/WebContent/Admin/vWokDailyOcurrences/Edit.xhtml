@@ -21,7 +21,7 @@
                                 <h:outputText id="dailyOccurrenceNumber" value="#{vWokDailyOcurrencesController.selected.dailyOccurrenceNumber}" />
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_occurrenceDate}" for="occurrenceDate" />
-                                <p:calendar id="occurrenceDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.occurrenceDate}" title="#{myBundle.EditVWokDailyOcurrencesTitle_occurrenceDate}"  showOn="button"/>
+                                <p:calendar  navigator="true" id="occurrenceDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.occurrenceDate}" title="#{myBundle.EditVWokDailyOcurrencesTitle_occurrenceDate}"  showOn="button"/>
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_workingGroupNumber}" for="workingGroupNumber" />
                                 <p:inputText id="workingGroupNumber" value="#{vWokDailyOcurrencesController.selected.workingGroupNumber}" title="#{myBundle.EditVWokDailyOcurrencesTitle_workingGroupNumber}"/>
@@ -72,7 +72,7 @@
                                 <p:inputText id="userModifiedName" value="#{vWokDailyOcurrencesController.selected.userModifiedName}" title="#{myBundle.EditVWokDailyOcurrencesTitle_userModifiedName}"/>
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_lastModificationName}" for="lastModificationName" />
-                                <p:calendar id="lastModificationName" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.lastModificationName}" title="#{myBundle.EditVWokDailyOcurrencesTitle_lastModificationName}"  showOn="button"/>
+                                <p:calendar  navigator="true" id="lastModificationName" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.lastModificationName}" title="#{myBundle.EditVWokDailyOcurrencesTitle_lastModificationName}"  showOn="button"/>
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_userGroupCallNumber}" for="userGroupCallNumber" />
                                 <p:inputText id="userGroupCallNumber" value="#{vWokDailyOcurrencesController.selected.userGroupCallNumber}" title="#{myBundle.EditVWokDailyOcurrencesTitle_userGroupCallNumber}"/>
@@ -103,10 +103,10 @@
                                 <p:inputText id="occurrenceTypeDescription" value="#{vWokDailyOcurrencesController.selected.occurrenceTypeDescription}" title="#{myBundle.EditVWokDailyOcurrencesTitle_occurrenceTypeDescription}"/>
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_responseTime}" for="responseTime" />
-                                <p:calendar id="responseTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.responseTime}" title="#{myBundle.EditVWokDailyOcurrencesTitle_responseTime}"  showOn="button"/>
+                                <p:calendar  navigator="true" id="responseTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.responseTime}" title="#{myBundle.EditVWokDailyOcurrencesTitle_responseTime}"  showOn="button"/>
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_closingTime}" for="closingTime" />
-                                <p:calendar id="closingTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.closingTime}" title="#{myBundle.EditVWokDailyOcurrencesTitle_closingTime}"  showOn="button"/>
+                                <p:calendar  navigator="true" id="closingTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{vWokDailyOcurrencesController.selected.closingTime}" title="#{myBundle.EditVWokDailyOcurrencesTitle_closingTime}"  showOn="button"/>
 
                                 <p:outputLabel value="#{myBundle.EditVWokDailyOcurrencesLabel_actionTakedDescription}" for="actionTakedDescription" />
                                 <p:inputText id="actionTakedDescription" value="#{vWokDailyOcurrencesController.selected.actionTakedDescription}" title="#{myBundle.EditVWokDailyOcurrencesTitle_actionTakedDescription}"/>

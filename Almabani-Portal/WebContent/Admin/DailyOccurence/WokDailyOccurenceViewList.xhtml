@@ -28,7 +28,7 @@
 					filterBy="#{item.responseTime}">
 
 					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy" 
+						<p:calendar navigator="true" pattern="dd/MM/yyyy"
 							onchange="PF('WokDailyOccurencedatalist').filter()"
 							maxdate="{currentDate}">
 							<p:ajax event="dateSelect"
@@ -37,7 +37,7 @@
 						</p:calendar>
 					</f:facet>
 					<h:outputText value="#{item.responseTime}">
-						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss"  timeZone="#{applicationScopeStore.getCurrentCompanyTimeZone()}GMT" />
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:column>
 
@@ -64,43 +64,20 @@
 					<h:outputText value="#{item.occurrenceTypeDescription}" />
 				</p:column>
 
-				<p:column sortBy="#{item.deviceCode}" filterBy="#{item.deviceCode}">
-					<f:facet name="header">
-						<h:outputText
-							value="#{loc.ListVWokDailyOcurrencesTitle_deviceCode}" />
-					</f:facet>
-					<h:outputText value="#{item.deviceCode}" />
-				</p:column>
 
-				<p:column sortBy="#{item.siteDescription}"
-					filterBy="#{item.siteDescription}">
-					<f:facet name="header">
-						<h:outputText
-							value="#{loc.ListVWokDailyOcurrencesTitle_siteDescription}" />
-					</f:facet>
-					<h:outputText value="#{item.siteDescription}" />
-				</p:column>
 
-				<p:column sortBy="#{item.siteDirectionDescription}"
-					filterBy="#{item.siteDirectionDescription}">
+				<p:column>
 					<f:facet name="header">
 						<h:outputText
-							value="#{loc.ListVWokDailyOcurrencesTitle_siteDirectionDescription}" />
+							value="Details" />
 					</f:facet>
-					<h:outputText value="#{item.siteDirectionDescription}" />
+					<h:outputText value="#{item.siteDescription}" /> , 
+					<h:outputText value="#{item.siteDirectionDescription}" /> , 
+					<h:outputText
+						value="#{loc.ListVWokDailyOcurrencesTitle_zoneDescription}" /> .
 				</p:column>
 
 
-
-
-				<p:column sortBy="#{item.zoneDescription}"
-					filterBy="#{item.zoneDescription}">
-					<f:facet name="header">
-						<h:outputText
-							value="#{loc.ListVWokDailyOcurrencesTitle_zoneDescription}" />
-					</f:facet>
-					<h:outputText value="#{item.zoneDescription}" />
-				</p:column>
 
 				<p:column sortBy="#{item.occurrenceDescription}"
 					filterBy="#{item.occurrenceDescription}">
@@ -109,10 +86,14 @@
 							value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDescription}" />
 					</f:facet>
 					<div align="center">
-						<p:commandButton id="dailyOccurence" icon="ui-icon-search"
+						<p:commandLink id="dailyOccurence"
+							style="color:blue;text-weight:bold; text-decoration:underline"
 							update=":dailyOccurenceTabView:dialogForm"
+							value="#{applicationScopeStore.extractNoneStyleText(item.occurrenceDescription)}"
 							actionListener="#{dailyOccuranceManagementBean.setSelectedWokDailyOcurrencesView(item)}"
 							oncomplete="PF('dlg3').show()" title="View" />
+
+
 					</div>
 
 
@@ -133,6 +114,9 @@
 							value="#{loc.ListVWokDailyOcurrencesTitle_loginUserCode}" />
 						<h:outputLabel value="#{item.loginUserCode}" />
 
+						<h:outputText
+							value="#{loc.ListVWokDailyOcurrencesTitle_deviceCode}" />
+						<h:outputLabel value="#{item.deviceCode}" />
 
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_userModifiedName}" />
@@ -161,7 +145,7 @@
 						<h:outputLabel value="#{item.occurrenceDate}">
 							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 						</h:outputLabel>
- 
+
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_closingTime}" />
 						<h:outputLabel value="#{item.closingTime}">

@@ -74,12 +74,12 @@
 
 						<p:outputLabel for="validityBeginDate"
 							value="Validity Begin Date:" />
-						<p:calendar id="validityBeginDate" style="width:250px" pattern="dd/MM/yyyy"
+						<p:calendar  navigator="true" id="validityBeginDate" style="width:250px" pattern="dd/MM/yyyy"
 							value="#{projectEmployeeBean.selectedProjectEmployee.validityBeginDate}" />
 							
 						<p:outputLabel for="validityEndDate"
 							value="Validity End Date:" />
-						<p:calendar id="validityEndDate" style="width:250px" pattern="dd/MM/yyyy"
+						<p:calendar  navigator="true" id="validityEndDate" style="width:250px" pattern="dd/MM/yyyy"
 							value="#{projectEmployeeBean.selectedProjectEmployee.validityEndDate}" />
 
 					</p:panelGrid>

@@ -13,11 +13,14 @@
 		<p:panel header="#{loc.ListVComDepartmentSectionTitle}">
 
 			<p:dataTable id="datalist"
-				value="#{employeeManagementBean.departmentSections}" var="item"
+				value="#{employeeManagementBean.departmentSections}" var="item" 
 				rowKey="#{item.departmentSectionNumber}" paginator="true" rows="10"
-				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" lazy="true" 
+				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single"
+				lazy="true"
 				selection="#{employeeManagementBean.selectedDepartmentSection}">
-
+				<p:ajax event="rowSelect" listener="#{employeeManagementBean.departmentSectionRowChanged}" update=":employeeListForm" />
+				 <p:ajax event="filter" listener="#{employeeManagementBean.departmentSectionRowChanged}" update=":employeeListForm" />
+  				
 				<!-- 				<p:column sortBy="#{item.departmentSectionNumber}" -->
 				<!-- 					filterBy="#{item.departmentSectionNumber}"> -->
 				<!-- 					<f:facet name="header"> -->

@@ -22,7 +22,7 @@
                         <p:inputText id="responsibleUserCode" value="#{departmentManagementBean.selected.responsibleUserCode}" title="#{loc.CreateDepartmentTitle_responsibleUserCode}"/>
 
                         <p:outputLabel value="#{loc.CreateDepartmentLabel_lastModificationDate}" for="lastModificationDate" />
-                        <p:calendar id="lastModificationDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{departmentManagementBean.selected.lastModificationDate}" title="#{loc.CreateDepartmentTitle_lastModificationDate}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_lastModificationDate}" showOn="button"/>
+                        <p:calendar  navigator="true" id="lastModificationDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{departmentManagementBean.selected.lastModificationDate}" title="#{loc.CreateDepartmentTitle_lastModificationDate}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_lastModificationDate}" showOn="button"/>
 
                         <p:outputLabel value="#{loc.CreateDepartmentLabel_active}" for="active" />
                         <p:inputText id="active" value="#{departmentManagementBean.selected.active}" title="#{loc.CreateDepartmentTitle_active}" required="true" requiredMessage="#{loc.CreateDepartmentRequiredMessage_active}"/>

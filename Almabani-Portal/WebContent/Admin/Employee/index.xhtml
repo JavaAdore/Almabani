@@ -10,15 +10,34 @@
 		<h:outputText value="#{loc.ComEmployeeTitle}"></h:outputText>
 	</ui:define>
 
-	<ui:define name="content"> 
+	<ui:define name="head">
+		<style type="text/css">
+.ui-wizard-step-title {
+	font-size: small !important;
+}
 
+.ui-fileupload-buttonbar {
+	background: transparent none;
+	border: none;
+}
+
+.ui-fileupload-content {
+	display: none;
+}
+
+.ui-fileupload-buttonbar .ui-fileupload-choose {
+	background-color: rgba(142, 103, 64, 0.98);
+}
+</style>
+
+	</ui:define>
+
+	<ui:define name="content">
+		<ui:include src="EditEmployeeDialog.xhtml" />
+		<ui:include src="CreateEmployeeDialog.xhtml" />
 		<ui:include src="DepartmentSectionList.xhtml" />
+		<ui:include src="EmployeesList.xhtml" />
 
-		<!--         <ui:include src="View.xhtml"/> -->
-
-		<!--         <ui:include src="Edit.xhtml"/> -->
-
-		<!--         <ui:include src="Create.xhtml"/> -->
 
 	</ui:define>
 

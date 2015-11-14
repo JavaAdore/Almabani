@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+<ui:composition>
+
+
+	<p:panelGrid columns="2" styleClass="fullWith">
+
+		<p:panelGrid
+			style="overflow: hidden;  position: relative; width:0%">
+			<itiGeeks:ByteImageViewer
+				objectImplementsByteArrayHolder="#{employeeManagementBean.selectedEmployee}">
+			</itiGeeks:ByteImageViewer>
+		</p:panelGrid>
+		<p:panelGrid styleClass="fullWith">
+			<p:panelGrid columns="4" layout="grid" styleClass="fullWith">
+				<f:facet name="header">
+					<p:outputLabel value="Personal" />
+				</f:facet>
+				<h:outputText style="font-weight:bold" value="employee Name:" />
+				<h:outputText style="font-weight:bold"
+					value="#{employeeManagementBean.selectedEmployee.employeeName}" />
+
+				<h:outputText style="font-weight:bold"
+					value="Federal Identity Code:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.federalIdentityCode}" />
+
+				<h:outputText style="font-weight:bold" value="Date of Birth:" />
+				<h:outputText style="font-weight:bold"
+					value="#{employeeManagementBean.selectedEmployee.birthDate}" />
+
+				<h:outputText style="font-weight:bold" value="Gender: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.gender}" />
+
+				<h:outputText style="font-weight:bold" value="Marital Status: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.maritalStatus}" />
+				<h:outputText style="font-weight:bold" value="Country: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.country.countryName}" />
+				<h:outputText style="font-weight:bold" value="Document Type: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.indTypeDocument}" />
+
+			</p:panelGrid>
+
+
+
+
+
+
+
+			<p:panelGrid columns="4" layout="grid" styleClass="fullWith">
+				<f:facet name="header">
+					<p:outputLabel value="Contact" />
+				</f:facet>
+				<h:outputText style="font-weight:bold" value="Email1:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.email1Description}" />
+
+				<h:outputText style="font-weight:bold" value="Email2:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.email2Description}" />
+
+				<h:outputText style="font-weight:bold" value="Telephone Number:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.telephoneNumber}" />
+				<h:outputText style="font-weight:bold" value="DDD Telephone Number:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.dddTelephoneNumber}" />
+				<h:outputText style="font-weight:bold" value="DDD Mobile Number:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.dddMobileNumber}" />
+				<h:outputText style="font-weight:bold" value="Mobile Number:" />
+				<h:outputText style="font-weight:bold"
+					value="#{employeeManagementBean.selectedEmployee.mobileNumber}" />
+
+
+			</p:panelGrid>
+
+			<p:panelGrid columns="4" layout="grid" styleClass="fullWith">
+				<f:facet name="header">
+					<p:outputLabel value="Company" />
+				</f:facet>
+
+				<h:outputText style="font-weight:bold" value="Department: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.departmentSection.department.departmentName}" />
+
+				<h:outputText style="font-weight:bold" value="Department Section: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.departmentSection.sectionName}" />
+
+				<h:outputText style="font-weight:bold" value="Establishment: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.establishment.establishmentName}" />
+
+				<h:outputText style="font-weight:bold" value="Job Title Type: " />
+				<h:outputText
+					value="#{employeeBean.extractFromBundle(employeeManagementBean.selectedEmployee.jobTitleType.jobTitle)}" />
+
+				<h:outputText style="font-weight:bold" value="Admission Date:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.admissionDate}" />
+
+				<h:outputText style="font-weight:bold"
+					value="Observation Description:" />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.observationDescription}" />
+
+				<h:outputText style="font-weight:bold" value="Status	:" />
+				<h:outputText
+					value="#{applicationScopeStore.getYesNoValue(employeeManagementBean.selectedEmployee.active)}" />
+
+
+
+				<h:outputText style="font-weight:bold" value="employee Type: " />
+				<h:outputText
+					value="#{employeeManagementBean.selectedEmployee.employeeType}" />
+
+			</p:panelGrid>
+		</p:panelGrid>
+
+	</p:panelGrid>
+
+	<p:commandButton value="Submit" validateClient="true"
+		actionListener="#{employeeManagementBean.saveEmployee()}"
+		update=":growl :employeeListForm" process="@this" />
+
+
+</ui:composition>
+</html>

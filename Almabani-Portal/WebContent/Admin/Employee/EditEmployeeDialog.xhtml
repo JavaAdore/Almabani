@@ -1,0 +1,226 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
+
+
+	<p:dialog id="editEmpDialog" widgetVar="editEmployeeDialog"
+		closable="true" closeOnEscape="true" modal="true" dynamic="true"
+		resizable="false" styleClass="fullWith" appendToBody="true"
+		header="edit New Employee">
+
+		<p:ajax event="close" immediate="true" update=":growl"
+			oncomplete="PF('wizard').loadStep('first',false)" />
+		<h:form id="editEmployeeForm">
+			<p:wizard widgetVar="wizard" styleClass="fullWith"
+				rendered="#{employeeManagementBean.selectedEmployee != null}">
+
+				<p:tab id="first" title="Personal">
+					<p:panelGrid styleClass="fullWith">
+						<p:panelGrid columns="2" styleClass="fullWith">
+							<itiGeeks:ImageUploader defaultImageStyleClass="fullWith"
+								objectImplementsByteArrayHolder="#{employeeManagementBean.selectedEmployee}" />
+
+
+							<p:panelGrid columns="4" styleClass="fullWith">
+								<p:outputLabel value="Employee Name:" for="empName" />
+								<p:inputText id="empName" maxlength="100"
+									value="#{employeeManagementBean.selectedEmployee.employeeName}"
+									required="true" requiredMessage="Employee Name is required"
+									styleClass="fullWith" />
+
+								<p:outputLabel value="Federal Identity Code:"
+									for="federalIdentityCode" />
+								<p:inputText id="federalIdentityCode"
+									value="#{employeeManagementBean.selectedEmployee.federalIdentityCode}"
+									required="true" maxlength="30"
+									requiredMessage="Federal Identity Code is required"
+									styleClass="fullWith" />
+
+								<p:outputLabel value="State Identity Code:"
+									for="stateIdentityCode" />
+								<p:inputText id="stateIdentityCode" maxlength="30"
+									value="#{employeeManagementBean.selectedEmployee.stateIdentityCode}"
+									styleClass="fullWith" />
+
+								<p:outputLabel for="genders" value="Gender: " />
+								<p:selectOneMenu id="genders"
+									value="#{employeeManagementBean.selectedEmployee.gender}"
+									styleClass="fullWith">
+									<f:selectItem itemLabel="Select Gender" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItems value="#{applicationScopeStore.getGenderList()}"
+										var="gender" itemLabel="#{gender.value}"
+										itemValue="#{gender.key}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel for="maritalStatus" value="Marital Status: " />
+								<p:selectOneMenu id="maritalStatus"
+									value="#{employeeManagementBean.selectedEmployee.maritalStatus}"
+									styleClass="fullWith">
+									<f:selectItem itemLabel="Select Marital Status"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems
+										value="#{applicationScopeStore.getMaritalStatusList()}"
+										var="maritalStatus" itemLabel="#{maritalStatus.value}"
+										itemValue="#{maritalStatus.key}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel for="country" value="Country: " />
+								<p:selectOneMenu id="country" converter="#{countryConverter}"
+									value="#{employeeManagementBean.selectedEmployee.country}"
+									styleClass="fullWith">
+									<f:selectItem itemLabel="Select Country" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{applicationScopeStore.countries}"
+										var="country" itemValue="#{country}"
+										itemLabel="#{country.countryName}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel for="documentTypes" value="Document Type: " />
+								<p:selectOneMenu id="documentTypes"
+									value="#{employeeManagementBean.selectedEmployee.indTypeDocument}"
+									styleClass="fullWith">
+									<f:selectItem itemLabel="Select Document Type"
+										itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems
+										value="#{applicationScopeStore.getDocumentTypeList()}"
+										var="documentType" itemLabel="#{documentType.key}"
+										itemValue="#{documentType.value}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Date of Birth:" for="birthDate" />
+								<p:calendar navigator="true" id="birthDate"
+									maxdate="#{applicationScopeStore.getMinAllowedEmployeeDate()}"
+									value="#{employeeManagementBean.selectedEmployee.birthDate}" />
+							</p:panelGrid>
+						</p:panelGrid>
+					</p:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="contact" title="Contact">
+
+					<p:panelGrid styleClass="fullWith" columns="4">
+
+						<p:outputLabel value="Email1:" for="email1" />
+						<p:inputText id="email1" maxlength="80"
+							value="#{employeeManagementBean.selectedEmployee.email1Description}"
+							styleClass="fullWith">
+							<f:validator validatorId="custom.emailValidator" />
+						</p:inputText>
+
+						<p:outputLabel value="Email2:" for="email2" />
+						<p:inputText id="email2" maxlength="80"
+							value="#{employeeManagementBean.selectedEmployee.email2Description}"
+							styleClass="fullWith">
+							<f:validator validatorId="custom.emailValidator" />
+						</p:inputText>
+
+						<p:outputLabel value="Telephone Number:" for="telephoneNumber" />
+						<p:inputText id="telephoneNumber" maxlength="10"
+							styleClass="fullWith" converter="longConverter"
+							value="#{employeeManagementBean.selectedEmployee.telephoneNumber}" />
+
+						<p:outputLabel value="DDD Telephone Number:"
+							for="dddTelephoneNumber" />
+						<p:inputText id="dddTelephoneNumber" maxlength="3"
+							styleClass="fullWith"
+							value="#{employeeManagementBean.selectedEmployee.dddTelephoneNumber}" />
+
+						<p:outputLabel value="Mobile Number:" for="mobileNumber" />
+						<p:inputText id="mobileNumber" converter="longConverter"
+							maxlength="10" styleClass="fullWith"
+							value="#{employeeManagementBean.selectedEmployee.mobileNumber}" />
+
+						<p:outputLabel value="DDD Mobile Number:" for="dddMobileNumber" />
+						<p:inputText id="dddMobileNumber" maxlength="3"
+							styleClass="fullWith"
+							value="#{employeeManagementBean.selectedEmployee.dddMobileNumber}" />
+
+					</p:panelGrid>
+
+
+				</p:tab>
+
+				<p:tab id="company" title="Company">
+
+					<p:panelGrid styleClass="fullWith" columns="4">
+
+						<p:outputLabel for="establishments" value="Establishment: " />
+						<p:selectOneMenu id="establishments"
+							converter="#{establishmentConverter}" required="true"
+							value="#{employeeManagementBean.selectedEmployee.establishment}"
+							styleClass="fullWith">
+							<f:selectItem itemLabel="Select Establishment" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{employeeManagementBean.establishments}"
+								var="establishment" itemValue="#{establishment}"
+								itemLabel="#{establishment.establishmentName}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="jobTitleTypes" value="Job Title Type: " />
+						<p:selectOneMenu id="jobTitleTypes"
+							converter="#{jobTitleConverter}"
+							value="#{employeeManagementBean.selectedEmployee.jobTitleType}"
+							styleClass="fullWith">
+							<f:selectItem itemLabel="Select Job Title Type" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{employeeManagementBean.jobTitleTypes}"
+								var="item" itemValue="#{item}" itemLabel="#{item.jobTitle}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Admission Date:" for="admissionDate" />
+						<p:calendar navigator="true" id="admissionDate"
+							maxdate="#{currentDate}" styleClass="fullWith"
+							value="#{employeeManagementBean.selectedEmployee.admissionDate}" />
+
+
+
+						<p:outputLabel value="Active: " />
+						<p:selectOneMenu id="status"
+							value="#{employeeManagementBean.selectedEmployee.active}"
+							required="true" requiredMessage="Activation is required"
+							styleClass="fullWith">
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="active" itemLabel="#{active.value}"
+								itemValue="#{active.key}" />
+
+						</p:selectOneMenu>
+
+						<p:outputLabel for="employeeTypes" value="Employee Type: " />
+						<p:selectOneMenu id="employeeTypes"
+							value="#{employeeManagementBean.selectedEmployee.employeeType}"
+							styleClass="fullWith">
+							<f:selectItem itemLabel="Select Employee Type"
+								itemValue="#{null}" noSelectionOption="true" />
+							<f:selectItems
+								value="#{applicationScopeStore.getEmployeeTypeList()}"
+								var="employeeType" itemLabel="#{employeeType.value}"
+								itemValue="#{employeeType.key}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Observation Description:"
+							for="observationDescription" />
+						<p:inputTextarea id="observationDescription" rows="5" cols="33"
+							maxlength="300"
+							value="#{employeeManagementBean.selectedEmployee.observationDescription}"
+							style=" resize: none;" styleClass="fullWith" />
+					</p:panelGrid>
+
+				</p:tab>
+
+
+				<p:tab id="confirm" title="Confirmation">
+					<ui:include src="confirmationTab.xhtml" />
+				</p:tab>
+			</p:wizard>
+
+
+
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

@@ -34,7 +34,7 @@
 								<p:inputText id="stateIdentityCode" value="#{employeeBean.selectedEmployee.stateIdentityCode}" style="width:250px"/>
 					
 								<p:outputLabel value="Date of Birth:" for="birthDate" />
-        						<p:calendar id="birthDate" value="#{employeeBean.employee.birthDate}" />
+        						<p:calendar  navigator="true" id="birthDate" value="#{employeeBean.employee.birthDate}" />
         			        			
 								<p:outputLabel for="genders" value="Gender: " />
 								<p:selectOneMenu id="genders" value="#{employeeBean.selectedEmployee.gender}" style="width:250px">
@@ -140,7 +140,7 @@
 								</p:selectOneMenu>
 					
 								<p:outputLabel value="Admission Date:" for="admissionDate" />
-        						<p:calendar id="admissionDate" value="#{employeeBean.selectedEmployee.admissionDate}" />
+        						<p:calendar  navigator="true" id="admissionDate" value="#{employeeBean.selectedEmployee.admissionDate}" />
         			
         						<p:outputLabel value="Observation Description:" for="observationDescription" />
 								<p:inputText id="observationDescription" value="#{employeeBean.selectedEmployee.observationDescription}" style="width:250px"/>
@@ -152,7 +152,7 @@
 								</p:selectOneMenu>
 					
 								<p:outputLabel value="Inactivity Begin Date:" for="admissionDate" />
-        						<p:calendar id="inactivityBeginDate" value="#{employeeBean.selectedEmployee.inactivityBeginDate}" />
+        						<p:calendar  navigator="true" id="inactivityBeginDate" value="#{employeeBean.selectedEmployee.inactivityBeginDate}" />
         			
         						<p:outputLabel for="employeeTypes" value="Employee Type: " />
 								<p:selectOneMenu id="employeeTypes" value="#{employeeBean.selectedEmployee.employeeType}" style="width:250px">

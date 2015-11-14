@@ -50,7 +50,7 @@
 							sortBy="#{company.lastModificationDate}" style="width:160px;"
 							headerText="#{loc.ListComCompanyTitle_lastModifyingDate}">
 							<f:facet name="filter">
-								<p:calendar onclick="PF('datalist').filter()"
+								<p:calendar  navigator="true" onclick="PF('datalist').filter()"
 									onblur="PF('datalist').filter()" pattern="dd/MM/yyyy"
 									onchange="PF('datalist').filter()" />
 							</f:facet>

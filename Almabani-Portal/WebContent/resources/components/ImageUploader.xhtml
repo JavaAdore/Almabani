@@ -10,7 +10,7 @@
 	xmlns:itiGeeks="http://java.sun.com/jsf/composite/components">
 
 
-
+	
 
 	<composite:interface>
 		<composite:attribute name="objectImplementsByteArrayHolder"
@@ -24,30 +24,33 @@
 	</composite:interface>
 
 	<composite:implementation>
+		<center>
+			<p:panelGrid id="viewer" styleClass="noBorder" columns="2">
 
-		<h:form enctype="multipart/form-data">
+				<itiGeeks:ByteImageViewer
+					objectImplementsByteArrayHolder="#{cc.attrs.objectImplementsByteArrayHolder}" />
+				<p:commandLink
+					actionListener="#{imageUploaderHandlerBean.deleteOldImage(cc.attrs.objectImplementsByteArrayHolder)}"
+					rendered="#{cc.attrs.objectImplementsByteArrayHolder.holdedImage !=null}"
+					process="viewer" update="viewer">
+					<p:graphicImage name="images/icons/delete.png" />
+
+				</p:commandLink>
 
 
-			<p:fileUpload styleClass="none"
-				fileUploadListener="#{imageUploaderHandlerBean.handleFileUpload}"
-				mode="advanced" update="viewer" auto="true"
-				allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-				<f:attribute
-					name="#{imageUploaderHandlerBean.getByteArrayHolderAttributeName()}"
-					value="#{cc.attrs.objectImplementsByteArrayHolder}" />
-				<p:panelGrid id="viewer" columns="2">
-					<itiGeeks:ByteImageViewer
-						objectImplementsByteArrayHolder="#{cc.attrs.objectImplementsByteArrayHolder}"/>
-					<p:commandLink
-						actionListener="#{imageUploaderHandlerBean.deleteOldImage(cc.attrs.objectImplementsByteArrayHolder)}"
-						rendered="#{cc.attrs.objectImplementsByteArrayHolder.holdedImage !=null}"
-						update="@form">
-						<p:graphicImage name="images/icons/delete.png" />
+				<p:fileUpload
+					fileUploadListener="#{imageUploaderHandlerBean.handleFileUpload}"
+					mode="advanced" update="viewer" auto="true" dragDropSupport="true"
+					styleClass="noBorder" uploadLabel="upload" multiple="false"
+					skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+					<f:attribute
+						name="#{imageUploaderHandlerBean.getByteArrayHolderAttributeName()}"
+						value="#{cc.attrs.objectImplementsByteArrayHolder}" />
 
-					</p:commandLink>
-				</p:panelGrid>
-			</p:fileUpload>
-		</h:form>
+				</p:fileUpload>
+			</p:panelGrid>
+		</center>
+
 
 	</composite:implementation>
 
