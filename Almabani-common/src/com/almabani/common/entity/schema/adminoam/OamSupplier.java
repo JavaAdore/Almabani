@@ -81,7 +81,7 @@ public class OamSupplier extends AbstractEntity implements Serializable {
 	@Column(name="DES_EMAIL" , length=50)
 	private String email;
 	
-	@Column(name="IND_PROSPECT",nullable=false, length = 1)
+	@Column(name="IND_PROSPECT", length = 1)
 	private String indProspect;
 
 	public OamSupplier() {

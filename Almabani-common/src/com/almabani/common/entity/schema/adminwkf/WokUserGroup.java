@@ -29,24 +29,24 @@ public class WokUserGroup extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = -7465052548278372040L;
 
 	@Id
-	@Column(name = "NUM_USER_GROUP", unique = true, nullable = false, precision = 5, scale = 0)
+	@Column(name = "NUM_USER_GROUP", unique = true, precision = 5, scale = 0)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WokUsersGroup_Id_Seq_Gen")
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_WORKING_GROUP", referencedColumnName="NUM_WORKING_GROUP", nullable = false)
+	@JoinColumn(name = "NUM_WORKING_GROUP", referencedColumnName="NUM_WORKING_GROUP")
 	private WokWorkingGroup workingGroup;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_TYPE_PROFILE", referencedColumnName="NUM_TYPE_PROFILE", nullable = false)
+	@JoinColumn(name = "NUM_TYPE_PROFILE", referencedColumnName="NUM_TYPE_PROFILE")
 	private WokTypeProfile typeProfiles;
 	
 	@ManyToOne
-	@JoinColumn(name = "COD_USER_LOGIN", referencedColumnName="COD_USER_LOGIN", nullable = false)
+	@JoinColumn(name = "COD_USER_LOGIN", referencedColumnName="COD_USER_LOGIN")
 	private SecUser user;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DAT_BEGIN_VALIDITY", nullable = false, length = 7)
+	@Column(name = "DAT_BEGIN_VALIDITY", length = 7)
 	private Date validityBeginDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -56,26 +56,26 @@ public class WokUserGroup extends AbstractEntity implements Serializable {
 	/**
 	 * modificationMakerName represent the user name who make the last modification
 	 */
-	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
+	@Column(name = "NAM_USER_MODIFY", length = 10)
 	private String modificationMakerName;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
+	@Column(name = "DAT_LAST_MODIFY", length = 7)
 	private Date lastModificationDate;
 	
-	@Column(name = "IND_RESPONSIBLE_GROUP", nullable = false, length = 1)
+	@Column(name = "IND_RESPONSIBLE_GROUP", length = 1)
 	private String indResponsibleGroup;
 	
-	@Column(name = "IND_RECEIVE_NOTIFICATION", nullable = false, length = 1)
+	@Column(name = "IND_RECEIVE_NOTIFICATION", length = 1)
 	private String indReceiveNotification;
 	
-	@Column(name = "IND_INTERACTION_DEMANDS", nullable = false, length = 1)
+	@Column(name = "IND_INTERACTION_DEMANDS", length = 1)
 	private String indInteractionDemands;
 	
-	@Column(name = "IND_RECEIVE_EMAIL_OCCURRENCE", nullable = false, length = 1)
+	@Column(name = "IND_RECEIVE_EMAIL_OCCURRENCE", length = 1)
 	private String indReceiveEmailOccurrence;
 	
-	@Column(name = "IND_INTERACTION_OCCURRENCES", nullable = false, length = 1)
+	@Column(name = "IND_INTERACTION_OCCURRENCES", length = 1)
 	private String indInteractionOccurrences;
 
 	public WokUserGroup() {

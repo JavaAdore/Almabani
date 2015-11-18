@@ -409,15 +409,8 @@ public class Utils {
 						new StringReader(str)));
 				Element rootElement = document.getDocumentElement();
 				str = Utils.getAbsoluteStringValue(rootElement.getNodeValue());
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				// do Absolutely nothing
 			}
 			if (str.length() > 30) {
 
@@ -439,7 +432,7 @@ public class Utils {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return new byte[] {};
 

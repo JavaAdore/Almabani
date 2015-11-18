@@ -17,6 +17,10 @@ public interface WokUserGroupDAO {
 
 	WokUserGroup getWokUserGroup(Long id);
 
+	List<WokUserGroup> getInteractionOccurenceUserGroups(
+			WokTypeProfile wokTypeProfile, WokWorkingGroup wokWorkingGroup,
+			SecUser secUser);
+
 	
 
 }

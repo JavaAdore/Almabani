@@ -1,4 +1,4 @@
-package com.almabani.common.entity.schema.adminoam;
+	package com.almabani.common.entity.schema.adminoam;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -29,36 +29,36 @@ public class OamZoneDevice extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 5580091354043445039L;
 	
 	@Id
-	@Column(name = "NUM_ZONE_DEVICE", unique = true, nullable = false, precision = 8, scale = 0)
+	@Column(name = "NUM_ZONE_DEVICE", unique = true, precision = 8, scale = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OamZoneDevices_Id_Seq_Gen")
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "COD_DEVICE", referencedColumnName="COD_DEVICE", nullable = false)
+	@JoinColumn(name = "COD_DEVICE", referencedColumnName="COD_DEVICE")
 	private OamProjectDevice projectDevice;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_REPORT_ZONE", referencedColumnName="NUM_REPORT_ZONE", nullable = false)
+	@JoinColumn(name = "NUM_REPORT_ZONE", referencedColumnName="NUM_REPORT_ZONE")
 	private OamReportingZone reportingZone;
 	
 	@ManyToOne
-	@JoinColumn(name = "NUM_ZONE", referencedColumnName="NUM_ZONE", nullable = false)
+	@JoinColumn(name = "NUM_ZONE", referencedColumnName="NUM_ZONE")
 	private OamZone zone;
 	
 	@Column(name = "DES_DEVICE", length = 80)
 	private String deviceDescription;
 	
-	@Column(name = "IND_ACTIVE", nullable = false, length = 1)
+	@Column(name = "IND_ACTIVE", length = 1)
 	private String indActive;
 	
 	/**
 	 * modificationMakerName represent the user name who make the last modification
 	 */
-	@Column(name = "NAM_USER_MODIFY", nullable = false, length = 10)
+	@Column(name = "NAM_USER_MODIFY", length = 10)
 	private String modificationMakerName;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
+	@Column(name = "DAT_LAST_MODIFY", length = 7)
 	private Date lastModificationDate;
 
 	public OamZoneDevice() {

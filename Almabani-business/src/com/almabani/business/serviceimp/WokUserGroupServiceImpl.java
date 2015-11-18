@@ -51,7 +51,7 @@ public class WokUserGroupServiceImpl implements WokUserGroupService {
 	public List<WokUserGroup> getOperators(Object operatorsParamValue,
 			WokWorkingGroup wokWorkingGroup, SecUser secUser) {
 
-		return wokUserGroupDAO.getUserGroups(
+		return wokUserGroupDAO.getInteractionOccurenceUserGroups(
 				new WokTypeProfile(new Long(String
 						.valueOf(operatorsParamValue))), wokWorkingGroup,
 				secUser);
