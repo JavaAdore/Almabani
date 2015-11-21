@@ -24,14 +24,14 @@ public class WokUserGroupDAOImpl extends AbstractDAO implements WokUserGroupDAO 
 	@Override
 	public List<WokUserGroup> getUserGroups(WokTypeProfile wokTypeProfile,
 			WokWorkingGroup workingGroup, SecUser user) {
-		Query query = getCurrentSession().createQuery("select t1 from WokUserGroup t1 , SecUser t2 , Employee t3  where t1.workingGroup =:workingGroup and t1.user =t2 and t2.employee = t3 and t1.typeProfiles =:typeProfiles and t1.validityBeginDate >=:begindate and t1.validityEndDate <=:endDate  ");
+		Query query = getCurrentSession().createQuery("select t1 from WokUserGroup t1 , SecUser t2 , Employee t3  where t1.workingGroup =:workingGroup and t1.user =t2 and t2.employee = t3 and t1.typeProfiles =:typeProfiles and   ( CURRENT_DATE() between t1.validityBeginDate and coalesce(t1.validityEndDate,CURRENT_DATE()+1))  ");
 		query.setParameter("workingGroup", workingGroup);
 		query.setParameter("typeProfiles", wokTypeProfile);
-		query.setParameter("begindate", Utils.getTodayInHourZero());  
+		//query.setParameter("begindate", Utils.getTodayInHourZero());  
 		java.util.Calendar endDate = java.util.Calendar.getInstance();
 		endDate.setTime(Utils.getTodayInHour24());
 		endDate.add(java.util.Calendar.DAY_OF_MONTH, 1);
-		query.setParameter("endDate", endDate.getTime());  
+		//query.setParameter("endDate", endDate.getTime());  
 		return query.list();
 	}
   
@@ -44,15 +44,15 @@ public class WokUserGroupDAOImpl extends AbstractDAO implements WokUserGroupDAO 
 	public List<WokUserGroup> getInteractionOccurenceUserGroups(
 			WokTypeProfile wokTypeProfile, WokWorkingGroup workingGroup,
 			SecUser secUser) {
-		Query query = getCurrentSession().createQuery("select t1 from WokUserGroup t1 , SecUser t2 ,  Employee t3  where t1.workingGroup =:workingGroup and t1.user =t2 and t2.employee = t3 and t1.typeProfiles =:typeProfiles  and t1.indInteractionOccurrences =:status  and t1.validityBeginDate >=:begindate and t1.validityEndDate <=:endDate  ");
+		Query query = getCurrentSession().createQuery("select t1 from WokUserGroup t1 , SecUser t2 ,  Employee t3  where t1.workingGroup =:workingGroup and t1.user =t2 and t2.employee = t3 and t1.typeProfiles =:typeProfiles  and t1.indInteractionOccurrences =:status  and   ( CURRENT_DATE() between t1.validityBeginDate and coalesce(t1.validityEndDate,CURRENT_DATE()+1))  ");
 		query.setParameter("workingGroup", workingGroup);
 		query.setParameter("typeProfiles", wokTypeProfile);
-		query.setParameter("begindate", Utils.getTodayInHourZero());
+		//query.setParameter("begindate", Utils.getTodayInHourZero());
 		query.setParameter("status", DataAccessConstants.IND_ACTIVE);   
 		java.util.Calendar endDate = java.util.Calendar.getInstance();
 		endDate.setTime(Utils.getTodayInHour24());
 		endDate.add(java.util.Calendar.DAY_OF_MONTH, 1);
-		query.setParameter("endDate", endDate.getTime());  
+	//	query.setParameter("endDate", endDate.getTime());  
   		return query.list();
 	}
 

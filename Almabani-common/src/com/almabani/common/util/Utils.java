@@ -408,7 +408,7 @@ public class Utils {
 				Document document = builder.parse(new InputSource(
 						new StringReader(str)));
 				Element rootElement = document.getDocumentElement();
-				str = Utils.getAbsoluteStringValue(rootElement.getNodeValue());
+				str = Utils.getAbsoluteStringValue(rootElement.getFirstChild().getNodeValue());
 			} catch (Exception e) {
 				// do Absolutely nothing
 			}
