@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<h:form id="quotationActionsListForm">
+
+		<p:panel header="#{loc.ListOamQuotationTitle}"
+			style="margin-left:auto; margin-right:auto ; ">
+			<p:dataTable id="datalist"
+				value="#{quotationManagementBean.selected.quotataionActions}"
+				resizableColumns="true" widgetVar="quotationActionsListFormDatalist"
+				var="item" draggableColumns="true" draggableRows="true"
+				rowKey="#{item.id}" paginator="true" rows="10" editable="true"
+				rowsPerPageTemplate="10,20,30">
+
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+
+
+				<p:column sortBy="#{item.id}" filterBy="#{item.id}">
+					<f:facet name="header">
+						<h:outputText value="#{loc.ListOamQuotationActionTypeTitle_id}" />
+					</f:facet>
+					<h:outputText value="#{item.id}" />
+				</p:column>
+
+
+				<p:column
+					sortBy="#{item.oamTypesQuotActions.typeQuotActionDescription}"
+					filterBy="#{item.oamTypesQuotActions.typeQuotActionDescription}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListOamQuotationActionTypeTitle_typeQuotActionDescription}" />
+					</f:facet>
+					<h:outputText
+						value="#{item.oamTypesQuotActions.typeQuotActionDescription}" />
+				</p:column>
+
+
+
+
+				<p:column
+					headerText="#{loc.ListOamQuotationActionTypeTitle_indActive}"
+					sortBy="#{item.oamTypesQuotActions.indActive}"
+					filterBy="#{item.oamTypesQuotActions.indActive}">
+
+
+					<f:facet name="filter">
+						<p:selectOneMenu styleClass="fullWith"
+							onchange="PF('quotationActionsListFormDatalist').filter()">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText
+						value="#{applicationScopeStore.getYesNoValue(item.oamTypesQuotActions.indActive)}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.oamTypesQuotActions.modificationMakerName}"
+					filterBy="#{item.oamTypesQuotActions.modificationMakerName}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListOamQuotationActionTypeTitle_modificationMakerName}" />
+					</f:facet>
+					<h:outputText
+						value="#{item.oamTypesQuotActions.modificationMakerName}" />
+				</p:column>
+
+
+				<p:column sortBy="#{item.oamTypesQuotActions.lastModificationDate}"
+					filterBy="#{item.oamTypesQuotActions.lastModificationDate}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListOamQuotationActionTypeTitle_lastModificationDate}" />
+					</f:facet>
+					<h:outputText
+						value="#{item.oamTypesQuotActions.lastModificationDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+
+
+				<p:column  headerText="#{loc.ListOamQuotationActionTypeTitle_indPending}" sortBy="#{item.oamTypesQuotActions.indPending}"
+					filterBy="#{item.oamTypesQuotActions.indPending}" >
+				 
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('quotationActionsListFormDatalist').filter()" styleClass="fullWith">
+							<f:selectItem itemLabel="" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+								var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
+						</p:selectOneMenu>
+					</f:facet>
+					
+					<h:outputText value="#{applicationScopeStore.getYesNoValue(item.oamTypesQuotActions.indPending)}" />
+				</p:column>
+
+
+
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>

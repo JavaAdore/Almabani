@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.QuotationItemService;
+import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.QuotationItemDAO;
 
 @Service
@@ -34,21 +37,36 @@ public class QuotationItemsServiceImpl implements QuotationItemService {
 
 	@Override
 	public OamItemQuotation updateQuotationItem(
-			OamItemQuotation oamItemQuotation, CommonDriverMap commonDriverMap) {
+			OamItemQuotation oamItemQuotation, CommonDriverMap commonDriverMap) throws AlmabaniException {
 		Date date = new Date();
 		oamItemQuotation.setLastModificationDate(date);
 		oamItemQuotation.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
+		checkItemCostValidation(oamItemQuotation);
 		return qoutationItemDAO.addOrUpdate(oamItemQuotation);
+	}
+
+	private void checkItemCostValidation(OamItemQuotation oamItemQuotation) throws AlmabaniException {
+		if(Utils.isNotNull(oamItemQuotation.getBillingCost() ) && Utils.isNotNull(oamItemQuotation.getItemCost()))
+		{
+			
+			if(oamItemQuotation.getBillingCost() <oamItemQuotation.getItemCost())
+			{ 
+				throw new AlmabaniException(MessagesKeyStore.ALMABANI_QUOTATION_ITEM_BILLING_COST_SHOULD_BE_LESS_THAN_ITEM_COST);
+				
+			}
+		} 
+		
 	}
 
 	@Override
 	public OamItemQuotation addQuotationItem(OamItemQuotation oamItemQuotation,
-			CommonDriverMap commonDriverMap) {
+			CommonDriverMap commonDriverMap) throws AlmabaniException {
 		Date date = new Date();
 		oamItemQuotation.setLastModificationDate(date);
 		oamItemQuotation.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
+		checkItemCostValidation(oamItemQuotation);
 		return qoutationItemDAO.addOrUpdate(oamItemQuotation);
 	}
 

@@ -1,5 +1,6 @@
 package com.almabani.portal.managedbean.applicationhelper;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +19,12 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
 import com.almabani.business.facade.AlmabaniFacade;
 import com.almabani.common.constant.MessagesKeyStore;
+import com.almabani.common.dto.FileHolder;
 import com.almabani.common.dto.menu.Access;
 import com.almabani.common.dto.menu.KeyValueHolder;
 import com.almabani.common.entity.schema.admincor.Company;
@@ -175,7 +180,7 @@ public class ApplicationScopeStore implements Serializable {
 	private void constructDocumentTypeKeysAndValues() {
 
 		documentTypeMap = new TreeMap();
-  
+
 		for (DocumentType documentType : DocumentType.values()) {
 			documentTypeMap.put(documentType.getKey(),
 					WebUtils.extractFromBundle(documentType.getValue()));
@@ -434,8 +439,7 @@ public class ApplicationScopeStore implements Serializable {
 		List<KeyValueHolder<String, String>> yesNoList = new ArrayList<KeyValueHolder<String, String>>();
 		Set<String> set = new HashSet<String>(yesNoMap.keySet());
 		List<String> list = new ArrayList<String>(set);
-		Collections.reverse(list);
-		for (String key : list) {
+  		for (String key : list) {
 			yesNoList.add(new KeyValueHolder<String, String>(key,
 					getYesNoValue((key))));
 		}
@@ -563,8 +567,6 @@ public class ApplicationScopeStore implements Serializable {
 		return "";
 	}
 
-	
-	
 	public String getCurrentCompanyTimeZone() {
 		Company company = WebUtils.getCurrentLoggedUserCompany();
 		if (Utils.isNotNull(company)) {
@@ -698,5 +700,17 @@ public class ApplicationScopeStore implements Serializable {
 			}
 		}
 		return "";
+	} 
+
+	public StreamedContent prepareStreamContent( InputStream is ,String fileName) {
+		
+		return new DefaultStreamedContent(is, "pdf",fileName); 
+
+	}
+
+	public StreamedContent prepareStreamContent(FileHolder fileHodler) {
+		return new DefaultStreamedContent(fileHodler.getInputStream(), "pdf",
+				fileHodler.getFileName());
+
 	}
 }

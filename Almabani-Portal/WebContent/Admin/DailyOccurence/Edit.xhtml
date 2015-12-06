@@ -53,7 +53,9 @@
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice}"
 						required="true" converter="#{oamZoneDeviceConverter}"
 						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_zoneDevice}">
-						<p:ajax process="@this" update=" location subLocation zone" />
+						<p:ajax process="@this"
+							listener="#{dailyOccuranceManagementBean.findZoneLocation}"
+							update=" location subLocation zone" />
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems value="#{dailyOccuranceManagementBean.cameras}"
 							var="zoneDeviceItem" itemValue="#{zoneDeviceItem}"
@@ -64,17 +66,18 @@
 
 
 					<p:outputLabel value="#{loc.EditWokDailyOcurrence_location}" />
+					<p:outputLabel id="subLocation"
+						value="#{dailyOccuranceManagementBean.zoneLocation.siteDirection.siteDirectionDescription}" />
 
-					<p:outputLabel id="location"
-						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice.reportingZone.reportZoneDescription}" />
 
 					<p:outputLabel value="#{loc.EditWokDailyOcurrence_Sub_location}" />
-					<p:outputLabel id="subLocation"
-						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice.reportingZone.siteDirection.siteDirectionDescription}" />
+					<p:outputLabel id="location"
+						value="#{dailyOccuranceManagementBean.zoneLocation.site.siteDescription}" />
+
 					<p:outputLabel value="#{loc.EditWokDailyOcurrence_zone}" />
 
 					<p:outputLabel id="zone"
-						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.zoneDevice.reportingZone.siteDirection.siteDirectionDescription}" />
+						value="#{dailyOccuranceManagementBean.zoneLocation.oamZoneDevice.zone.zoneDescription}" />
 
 				</p:panelGrid>
 
@@ -170,7 +173,7 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_indContactPolice}" />
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactPolice}">
-						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -178,7 +181,7 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_indContactAmbulance}" />
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactAmbulance}">
-						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -187,7 +190,7 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_indContactInsurance}" />
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactInsurance}">
-						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -199,7 +202,7 @@
 
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactTransit}">
-						<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 

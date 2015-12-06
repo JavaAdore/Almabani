@@ -63,6 +63,14 @@ public class OamItemQuotation extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "NUM_ESTABLISHMENT", referencedColumnName = "NUM_ESTABLISHMENT")
 	private Establishment establishment;
 
+	@Column(name = "VAL_COST_ITEM")
+	private Long itemCost;
+	
+	@Column(name="VAL_BILL_ITEM")
+	private Long billingCost;
+	
+	
+	
 	public OamItemQuotation() {
 	}
 
@@ -132,6 +140,22 @@ public class OamItemQuotation extends AbstractEntity implements Serializable {
 
 	public void setEstablishment(Establishment establishment) {
 		this.establishment = establishment;
+	}
+
+	public Long getItemCost() {
+		return itemCost;
+	}
+
+	public void setItemCost(Long itemCost) {
+		this.itemCost = itemCost;
+	}
+
+	public Long getBillingCost() {
+		return billingCost;
+	}
+
+	public void setBillingCost(Long billingCost) {
+		this.billingCost = billingCost;
 	}
 
 }

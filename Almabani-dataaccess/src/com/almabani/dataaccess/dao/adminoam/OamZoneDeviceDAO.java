@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.almabani.common.dto.ZoneDeviceWithLocation;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
 import com.almabani.common.entity.schema.adminoam.OamZoneDevice;
@@ -15,6 +16,9 @@ public interface OamZoneDeviceDAO extends AbstractDAOInt{
 	List<OamZoneDevice> getCamDevicesWithAssociatedLocations();
 
 	OamZoneDevice getOamZoneDevice(Long id);
+
+	List<ZoneDeviceWithLocation> getCamDeviceWithAssociatedLocations(
+			OamZoneDevice oamZoneDevice);
 
 
 	

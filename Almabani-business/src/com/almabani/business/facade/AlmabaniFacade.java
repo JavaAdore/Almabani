@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.dto.UserApplicationGrant;
+import com.almabani.common.dto.ZoneDeviceWithLocation;
 import com.almabani.common.dto.menu.Module;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Contractor;
@@ -21,6 +22,7 @@ import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.admincor.view.VComDepartmentSection;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
+import com.almabani.common.entity.schema.adminoam.OamDocumentType;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
@@ -29,6 +31,7 @@ import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
+import com.almabani.common.entity.schema.adminoam.OamQuotationDocument;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
@@ -143,7 +146,7 @@ public interface AlmabaniFacade {
 	OamProjectItem getProjectItem(Long projectItemId);
 
 	OamItemQuotation addOrUpdateQuotationItem(OamItemQuotation selected,
-			CommonDriverMap appendCurrentUserCode);
+			CommonDriverMap appendCurrentUserCode) throws AlmabaniException;
 
 	Integer getCountOfOamItemsQuotSupplier(Map<String, Object> filters);
 
@@ -476,6 +479,14 @@ public interface AlmabaniFacade {
 	List<AllocationType> getAllocationTypes(Project selectedproject);
 
 	List<ProjectJobTitle> getProjectJobTitles(Project selectedProject);
+
+	List<OamDocumentType> getDocuemtTypeList(Company currentLoggedUserCompany);
+
+	OamDocumentType getDocumentType(Long id);
+	
+	List<OamQuotationDocument> getQuotationDocuments(OamQuotation quotation);
+
+	ZoneDeviceWithLocation getZoneLocation(OamZoneDevice oamZoneDevice);
 
 
 }

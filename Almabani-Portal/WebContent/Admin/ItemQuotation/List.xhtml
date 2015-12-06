@@ -6,13 +6,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
-		<p:remoteCommand  name="updateListForm"  update="tabs:listForm  tabs:QuotationItemSupplierlistForm" ></p:remoteCommand>
-	</h:form>
+
 
 	<h:form id="listForm">
 
-		<p:panel header="#{loc.ListOamItemQuotationTitle}" style="margin-left:auto; margin-right:auto ; ">
+		<p:panel header="#{loc.ListOamItemQuotationTitle}"
+			style="margin-left:auto; margin-right:auto ; ">
 			<p:dataTable id="datalist" resizableColumns="true"
 				value="#{quotationItemManagementBean.items}" var="item"
 				selectionMode="single" draggableColumns="true" draggableRows="true"
@@ -25,7 +24,9 @@
 						icon="ui-icon-calculator" />
 					<p:columnToggler datasource="datalist" trigger="toggler" />
 				</f:facet>
-				<p:ajax event="rowSelect" listener="#{quotationItemManagementBean.selectedQuotationItemChagned}" update="viewButton editButton" />
+				<p:ajax event="rowSelect"
+					listener="#{quotationItemManagementBean.selectedQuotationItemChagned}"
+					update="viewButton editButton" />
 				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
 				<p:column sortBy="#{item.id}" filterBy="#{item.id}"
@@ -50,6 +51,24 @@
 					headerText="#{loc.ListOamItemQuotationTitle_qutItem}">
 					<h:outputText value="#{item.qutItem}" />
 				</p:column>
+				
+				<p:column sortBy="#{item.billingCost}" filterBy="#{item.billingCost}"
+					headerText="#{loc.CreateOamItemQuotationTitle_item_cost}">
+					<h:outputText value="#{item.billingCost}" />
+				</p:column>
+				
+
+				<p:column sortBy="#{item.billingCost}" filterBy="#{item.billingCost}"
+					headerText="#{loc.CreateOamItemQuotationTitle_item_billing_cost}">
+					<h:outputText value="#{item.billingCost}" />
+				</p:column>
+
+
+
+				<p:column sortBy="#{item.qutItem}" filterBy="#{item.qutItem}"
+					headerText="#{loc.ListOamItemQuotationTitle_qutItem}">
+					<h:outputText value="#{item.qutItem}" />
+				</p:column>
 
 				<p:column sortBy="#{item.observationDescription}"
 					filterBy="#{item.observationDescription}"
@@ -60,20 +79,24 @@
 
 
 				<f:facet name="footer">
-										
-				
-					<p:commandButton id="createButton" rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-plus"
-						value="#{loc.Create}" update="tabs:createForm:display"
+
+
+					<p:commandButton id="createButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-plus" value="#{loc.Create}"
+						update="tabs:createForm:display"
 						actionListener="#{quotationItemManagementBean.prepareCreate}"
 						oncomplete="PF('createDialog').show()" />
-					
+
 					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{loc.View}" update="tabs:viewForm:display" 
+						value="#{loc.View}" update="tabs:viewForm:display"
 						oncomplete="PF('viewDialog').show()"
 						disabled="#{empty quotationItemManagementBean.selected}" />
-					
-					<p:commandButton id="editButton"   rendered="#{applicationScopeStore.hasFullAccess()}" icon="ui-icon-pencil"
-						value="#{loc.Edit}"  update="tabs:editForm:display"
+
+					<p:commandButton id="editButton"
+						rendered="#{applicationScopeStore.hasFullAccess()}"
+						icon="ui-icon-pencil" value="#{loc.Edit}"
+						update="tabs:editForm:display"
 						oncomplete="PF('editDialog').show()"
 						disabled="#{empty quotationItemManagementBean.selected}" />
 				</f:facet>

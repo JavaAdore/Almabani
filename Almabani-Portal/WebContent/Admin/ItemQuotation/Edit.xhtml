@@ -26,7 +26,7 @@
 							process=" #{(quotationItemManagementBean.selected.projectItem !=null)?'@this projectItem ':'@this'}"
 							listener="#{quotationItemManagementBean.selectedQuotationChanged}"
 							update="@form" />
-						<f:selectItem itemValue="{null}"
+						<f:selectItem itemValue=""
 							itemDisabled="#{quotationItemManagementBean.selected.quotation !=null}"
 							itemLabel="#{loc.SelectOneMessage}"></f:selectItem>
 						<f:selectItems
@@ -35,14 +35,29 @@
 							itemLabel="#{quotation.quotationDescription}" />
 					</p:selectOneMenu>
 
+					<p:outputLabel for="establishments"
+						value="#{loc.CreateOamStockItemLabel_establishment} " />
+					<p:selectOneMenu id="establishments"
+						converter="#{establishmentConverter}"
+						value="#{quotationItemManagementBean.selected.establishment}"
+						styleClass="fullWith">
+						<f:selectItem itemLabel="#{loc.SelectOneMessage}" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems
+							value="#{quotationItemManagementBean.establishments}"
+							var="establishment"
+							itemLabel="#{establishment.establishmentName}" />
+					</p:selectOneMenu>
+
+
 					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}"
 						rendered="#{quotationItemManagementBean.selected.quotation!=null}" />
-					<p:autoComplete minQueryLength="2" styleClass="fullWith"
-						widgetVar="projectItem" id="projectItem"
+					<p:autoComplete styleClass="fullWith" minQueryLength="2"
+						widgetVar="projectItem" id="projectItem" dropdown="true"
+						dropdownMode="current"
 						rendered="#{quotationItemManagementBean.selected.quotation !=null}"
 						value="#{quotationItemManagementBean.selected.projectItem}"
-						dropdown="true" dropdownMode="current" required="true"
-						converter="#{projectItemConverter}"
+						required="true" converter="#{projectItemConverter}"
 						requiredMessage="#{loc.EditOamItemQuotationRequiredMessage_projectItem}"
 						completeMethod="#{quotationItemManagementBean.autoCompleteProjectItemList}"
 						var="projectItemItem" itemValue="#{projectItemItem}"
@@ -77,6 +92,20 @@
 						required="true"
 						requiredMessage="#{loc.CreateOamItemQuotationRequiredMessage_qutItem}" />
 
+
+					<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_item_cost}" />
+
+					<p:spinner id="itemCost" styleClass="fullWith" min="1"
+						max="999999999999999"
+						value="#{quotationItemManagementBean.selected.itemCost}" />
+
+					<p:outputLabel
+						value="#{loc.CreateOamItemQuotationTitle_item_billing_cost}" />
+
+					<p:spinner id="billingCost" styleClass="fullWith" min="1"
+						max="999999999999999"
+						value="#{quotationItemManagementBean.selected.billingCost}" />
+
 					<p:outputLabel
 						value="#{loc.CreateOamItemQuotationTitle_observationDescription}" />
 					<p:inputTextarea id="observationDescription" styleClass="fullWith"
@@ -89,7 +118,7 @@
 				<p:commandButton
 					actionListener="#{quotationItemManagementBean.saveNew}"
 					value="#{loc.Save}" update="display,:growl,tabs:listForm:datalist"
-					oncomplete="if(!args.validationFailed){PF('editDialog').hide();}" />
+					oncomplete="if(!args.validationFailed){if(status=='success')PF('editDialog').hide();}"  />
 				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('editDialog').hide()" />
 			</h:panelGroup>

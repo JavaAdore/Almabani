@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/template/master.xhtml">
 
+
 	<ui:define name="title">
 		#{loc.QUOTATION_QUOTATION_MANAGEMENT_TITLE}
 	</ui:define>
@@ -47,15 +48,21 @@
 				activeIndex="#{quotationApplicationController.activeTabIndex}">
 				<p:menuitem value="#{loc.CreateOamItemQuotationLabel_quotation}" />
 				<p:menuitem value="#{loc.GENERAL_ALMABANI_QUOTATION_ITEM}" />
-				<p:menuitem value="#{loc.GENERAL_ALMABANI_ITEM_QUOTATION_SUPPLER}" />
+				<p:menuitem value="#{loc.GENERAL_ALMABANI_QUOTATION_HISTORY}" />
+				<p:menuitem value="#{loc.GENERAL_ALMABANI_QUOTATION_DOCUMENT}" />
 			</p:steps>
 		</h:form>
 
-		<p:tabView id="tabs"   >
+		<h:form>
+			<p:remoteCommand name="updateListForm"
+				update="tabs:listForm tabs:quotationDocumentListForm  tabs:quotationActionsListForm"></p:remoteCommand>
+		</h:form>
+
+		<p:tabView id="tabs">
 			<p:ajax event="tabChange" update=":stepsForm"
 				listener="#{quotationApplicationController.onTabChange}" />
 
-			<p:tab id="quotationTab" 
+			<p:tab id="quotationTab"
 				title="#{loc.CreateOamItemQuotationLabel_quotation}">
 
 				<ui:include src="List.xhtml" />
@@ -79,22 +86,26 @@
 				<ui:include src="/Admin/ItemQuotation/Create.xhtml" />
 			</p:tab>
 
-			<p:tab id="quotationItemSupplierTab" 
-				title="#{loc.GENERAL_ALMABANI_ITEM_QUOTATION_SUPPLER}">
+			<p:tab title="#{loc.GENERAL_ALMABANI_QUOTATION_HISTORY}">
 
-				<ui:include src="/Admin/ItemsQuotSupplier/List.xhtml" />
 
-				<ui:include src="/Admin/ItemsQuotSupplier/View.xhtml" />
 
-				<ui:include src="/Admin/ItemsQuotSupplier/Edit.xhtml" />
+				<ui:include src="/Admin/QuotationActions/List.xhtml" />
+			</p:tab>
 
-				<ui:include src="/Admin/ItemsQuotSupplier/Create.xhtml" />
+
+			<p:tab id="quotationItemSupplierTab"
+				title="#{loc.GENERAL_ALMABANI_QUOTATION_DOCUMENT}">
+
+				<ui:include src="/Admin/QuotationDocument/List.xhtml" />
+
+
 
 			</p:tab>
 
 		</p:tabView>
- 
-  
-  	</ui:define>
+
+
+	</ui:define>
 
 </ui:composition>

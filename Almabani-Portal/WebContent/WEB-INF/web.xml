@@ -44,7 +44,8 @@
 	<!-- <listener> -->
 	<!-- <listener-class>com.almabani.portal.listener.SessionCapturerListener</listener-class> -->
 	<!-- </listener> -->
-
+	
+	
 	<filter>
 		<filter-name>logoutFilter</filter-name>
 		<filter-class>com.almabani.portal.filter.LogoutFilter</filter-class>

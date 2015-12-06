@@ -1,6 +1,7 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -8,12 +9,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.TabChangeEvent;
 
+import com.almabani.common.entity.schema.admincor.Company;
+import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
+import com.almabani.common.entity.schema.adminoam.OamQuotationDocument;
+import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.util.Utils;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 import com.almabani.portal.webutils.WebUtils;
@@ -64,8 +71,12 @@ public class QuotationApplicationController extends AbstractBeanHelper
 
 	public void setQuotation(OamQuotation quotation) {
 		this.quotation = quotation;
+		
+		
 		if (Utils.isNotNull(quotation)
 				&& Utils.isNotNull(quotationItemManagementBean)) {
+
+			
 			quotationItemManagementBean.setParentQuotation(quotation);
 			oamItemsQuotSupplierManagementBean.setParentQuotationItem(null);
 			WebUtils.invokeJavaScriptFunction("updateListForm()");
@@ -130,6 +141,15 @@ public class QuotationApplicationController extends AbstractBeanHelper
 	public void refreshQuotationItemList() {
 		
 		oamItemsQuotSupplierManagementBean.refreshQuotationItemList();
+	}
+	
+	public void companyChanged(AjaxBehaviorEvent event) {
+		
+		
+		Company company = (Company) ((SelectOneMenu) event.getSource()).getValue();
+		
+		quotationManagementBean.loadIntialList(company);
+
 	}
 
 }

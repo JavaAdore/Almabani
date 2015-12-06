@@ -6,83 +6,304 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <ui:composition>
 
-	<p:dialog id="createQuotataionDlg" widgetVar="createQuotationDialog" modal="true"
-		resizable="false" appendToBody="true"
+	<p:dialog id="createQuotataionDlg" widgetVar="createQuotationDialog"
+		style="min-height:250px" closeOnEscape="true" modal="true"
+		resizable="false" appendToBody="true" width="1000px"
 		header="#{loc.CreateOamQuotationTitle}">
+		<p:ajax immediate="true" event="close"
+			onstart="PF('quotationWizard').loadStep(PF('quotationWizard').cfg.steps [0],true)" />
 
 		<h:form id="QuotataionCreateForm">
-
-			
-
-			<h:panelGroup id="quotationDisplay">
-				<p:panelGrid columns="2"
-					rendered="#{quotationManagementBean.selected != null}">
-					<p:outputLabel value="#{loc.EditOamQuotationTitle_department}" />
-					<p:selectOneMenu id="department" styleClass="fullWith"
-						value="#{quotationManagementBean.selected.department}"
-						title="#{loc.EditOamQuotationTitle_department}" required="true"
-						converter="#{departmentConverter}"
-						requiredMessage="#{loc.EditOamQuotationRequiredMessage_department}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{quotationManagementBean.departments}"
-							var="departmentItem" itemValue="#{departmentItem}"
-							itemLabel="#{departmentItem.departmentName}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel
-						value="#{loc.CreateOamQuotationTitle_indTypeQuotation}" />
-					<p:selectOneMenu id="indQoutationType" styleClass="fullWith"
-						value="#{quotationManagementBean.selected.indTypeQuotation}"
-						required="true"
-						requiredMessage="#{loc.EditOamQuotationRequiredMessage_indQuotationType}">
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems
-							value="#{applicationScopeStore.getQuotationTypeList()}"
-							var="quotationType" itemValue="#{quotationType.key}"
-							itemLabel="#{quotationType.value}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel value="#{loc.EditOamQuotationTitle_demand}" />
-
-					<p:selectOneMenu id="demand" styleClass="fullWith"
-						value="#{quotationManagementBean.selected.demand}"
-						converter="#{wokDemandConverter}"
-						>
-						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
-						<f:selectItems value="#{quotationManagementBean.wokDemands}"
-							var="demandItem" itemValue="#{demandItem}"
-							itemLabel="#{demandItem.demandSummaryDescription}" />
-					</p:selectOneMenu>
+			<p:panel>
+				<p:wizard id="quotationWizard" widgetVar="quotationWizard">
+					<p:tab title="#{loc.ALMABANI_GENERAL_COMPANY}"
+						rendered="#{applicationScopeStore.isAdminUser()}">
+						<p:outputLabel value="#{loc.ALMABANI_GENERAL_COMPANY}"
+							for="company" />
+						<p:selectOneMenu id="company" styleClass="fullWith"
+							required="true"
+							requiredMessage="#{loc.ALMABANI_QUOTATION_COMPANY_IS_REQUIRED}"
+							converter="#{companyConverter}">
+							<p:ajax event="change" oncomplete="PF('quotationWizard').next()"
+								listener="#{quotationApplicationController.companyChanged}"
+								update="supplier demand department project" />
+							<f:selectItem itemLabel="#{loc.SelectOneMessage}" />
+							<f:selectItems value="#{quotationManagementBean.companies}"
+								var="company" itemValue="#{company}"
+								itemLabel="#{company.companyName}" />
+						</p:selectOneMenu>
 
 
-					<p:outputLabel
-						value="#{loc.CreateOamQuotationTitle_quotationDescription}" />
+					</p:tab>
 
-					<p:inputTextarea id="quotationDescription" maxlength="80"
-						value="#{quotationManagementBean.selected.quotationDescription}"
-						required="true"
-						requiredMessage="#{loc.CreateOamQuotationRequiredMessage_quotationDescription}" />
+					<p:tab title="#{loc.ALMABANI_GENERAL_BASIC_INFORMATION}">
+
+						<p:panelGrid columns="4" styleClass="fullWith">
+
+							<p:outputLabel value="#{loc.EditOamQuotationTitle_department}" for="department" />
+							<p:selectOneMenu for="department" id="department"
+								styleClass="fullWith"
+								value="#{quotationManagementBean.selected.department}"
+								title="#{loc.EditOamQuotationTitle_department}" required="true"
+								converter="#{departmentConverter}"
+								requiredMessage="#{loc.EditOamQuotationRequiredMessage_department}">
+								<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+								<f:selectItems value="#{quotationManagementBean.departments}"
+									var="departmentItem" itemValue="#{departmentItem}"
+									itemLabel="#{departmentItem.departmentName}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{loc.CreateOamQuotationLabel_project}"
+								for="project" />
+							<p:selectOneMenu id="project" required="true"
+								styleClass="fullWith"
+								requiredMessage="#{loc.ALMABANI_GENERAL_OAM_PROJECT_IS_REQUIRED}"
+								value="#{quotationManagementBean.selected.project}"
+								converter="#{projectConverter}">
+								<f:selectItem itemLabel="#{loc.SelectOneMessage}" />
+								<f:selectItems value="#{quotationManagementBean.projects}"
+									var="project" itemValue="#{project}"
+									itemLabel="#{project.projectCode}" />
+
+							</p:selectOneMenu>
+
+							<p:outputLabel for="indQoutationType"
+								value="#{loc.CreateOamQuotationTitle_indTypeQuotation}" />
+							<p:selectOneMenu id="indQoutationType" styleClass="fullWith"
+								value="#{quotationManagementBean.selected.indTypeQuotation}"
+								required="true"
+								requiredMessage="#{loc.EditOamQuotationRequiredMessage_indQuotationType}">
+								<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+								<f:selectItems
+									value="#{applicationScopeStore.getQuotationTypeList()}"
+									var="quotationType" itemValue="#{quotationType.key}"
+									itemLabel="#{quotationType.value}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="demand"
+								value="#{loc.EditOamQuotationTitle_demand}" />
+
+							<p:selectOneMenu id="demand" styleClass="fullWith"
+								value="#{quotationManagementBean.selected.demand}"
+								converter="#{wokDemandConverter}">
+								<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
+								<f:selectItems value="#{quotationManagementBean.wokDemands}"
+									var="demandItem" itemValue="#{demandItem}"
+									itemLabel="#{demandItem.demandSummaryDescription}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{loc.CreateOamQuotationLabel_supplier}"
+								for="supplier" />
+							<p:selectOneMenu id="supplier" styleClass="fullWith"
+								value="#{quotationManagementBean.selected.supplier}"
+								converter="#{supplierConverter}">
+								<f:selectItem itemLabel="#{loc.SelectOneMessage}" />
+								<f:selectItems value="#{quotationManagementBean.suppliers}"
+									var="supplierItem" itemValue="#{supplierItem}"
+									itemLabel="#{supplierItem.supplierName.toString()}" />
+
+							</p:selectOneMenu>
 
 
 
 
-				</p:panelGrid>
-				
-				
-				
-				<p:commandButton actionListener="#{quotationManagementBean.saveNew}"
-					value="#{loc.Save}"
-					update="quotationDisplay,:growl,tabs:quotationListForm:datalist"
-					oncomplete="if(!args.validationFailed){PF('createQuotationDialog').hide();}" />
-				<p:commandButton value="#{loc.Cancel}"
-					onclick="PF('createQuotationDialog').hide()" immediate="true" />
-			</h:panelGroup>
+							<p:outputLabel
+								value="#{loc.CreateOamQuotationLabel_indMotiveQuotation}"
+								for="indMotiveQuotation" />
+							<p:selectOneMenu required="true" id="indMotiveQuotation"
+								styleClass="fullWith"
+								requiredMessage="#{loc.CreateOamItemRequiredMessage_indActive}">
+								<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
+									var="yesNoItem" itemValue="#{yesNoItem.key}"
+									itemLabel="#{yesNoItem.value}" />
+							</p:selectOneMenu>
+						</p:panelGrid>
+					</p:tab>
+
+					<p:tab title="#{loc.ALMABANI_GENERAL_BASIC_INFORMATION_CONT}">
+						<p:panelGrid columns="4" styleClass="fullWith">
+							<p:outputLabel value="#{loc.CreateOamQuotationLabel_invoiceCode}"
+								for="invoiceCode" />
+							<p:inputText id="invoiceCode" styleClass="fullWith"
+								value="#{quotationManagementBean.selected.invoiceCode}"
+								title="#{loc.CreateOamQuotationTitle_invoiceCode}" />
+
+							<p:outputLabel
+								value="#{loc.CreateOamQuotationLabel_maximoReferenceNumber}"
+								for="maximoReferenceNumber" />
+
+							<p:inputText id="maximoReferenceNumber" styleClass="fullWith"
+								validatorMessage="#{loc.ALMABANI_QUOTATION_INVALID_MAXIMO_NUMBER}"
+								value="#{quotationManagementBean.selected.maximoReferenceNumber}">
+								<f:convertNumber maxFractionDigits="2" />
+
+							</p:inputText>
+
+							<p:outputLabel value="#{loc.CreateOamQuotationLabel_system}"
+								for="system" />
+							<p:inputText id="system" styleClass="fullWith"
+								validatorMessage="#{loc.ALMABANI_QUOTATION_INVALID_SYSTEM_NUMBER}"
+								value="#{quotationManagementBean.selected.system}">
+								<f:convertNumber maxFractionDigits="2" />
+							</p:inputText>
+
+
+							<p:outputLabel
+								value="#{loc.CreateOamQuotationLabel_realDeliveryDate}"
+								for="realDeliveryDate" />
+							<p:calendar id="realDeliveryDate" pattern="MM/dd/yyyy"
+								value="#{quotationManagementBean.selected.realDeliveryDate}"
+								title="#{loc.CreateOamQuotationTitle_realDeliveryDate}"
+								showOn="button" />
+
+							<p:outputLabel value="#{loc.CreateOamQuotationLabel_valFreight}"
+								for="valFreight" />
+							<p:spinner id="valFreight" min="1"
+								value="#{quotationManagementBean.selected.valFreight}"
+								title="#{loc.CreateOamQuotationTitle_valFreight}" />
+							<p:outputLabel
+								value="#{loc.CreateOamQuotationLabel_monthWorrenty}"
+								for="monthWorrenty" />
+							<p:spinner min="0" max="100" id="monthWorrenty"
+								value="#{quotationManagementBean.selected.monthWorrenty}"
+								title="#{loc.CreateOamQuotationTitle_monthWorrenty}" />
+
+							<p:outputLabel
+								value="#{loc.CreateOamQuotationLabel_deliveryDays}"
+								for="deliveryDays" />
+							<p:spinner id="deliveryDays" min="0" max="365"
+								value="#{quotationManagementBean.selected.deliveryDays}"
+								title="#{loc.CreateOamQuotationTitle_deliveryDays}" />
+
+							<p:outputLabel
+								value="#{loc.CreateOamQuotationLabel_paymentApprovalPersentage}"
+								for="paymentApprovalPersentage" />
+							<p:spinner id="paymentApprovalPersentage" min="0" max="100"
+								value="#{quotationManagementBean.selected.paymentApprovalPersentage}"
+								title="#{loc.CreateOamQuotationTitle_paymentApprovalPersentage}" />
+
+
+
+							<p:outputLabel for="quotationDescription"
+								value="#{loc.CreateOamQuotationTitle_quotationDescription}" />
+
+							<p:inputTextarea id="quotationDescription" maxlength="80"
+								value="#{quotationManagementBean.selected.quotationDescription}"
+								required="true" styleClass="fullWith"
+								requiredMessage="#{loc.CreateOamQuotationRequiredMessage_quotationDescription}" />
+						</p:panelGrid>
+
+					</p:tab>
+
+
+					<p:tab title="#{loc.GENERAL_ALMABANI_QUOTATION_DOCUMENT}">
+
+						<p:panelGrid header="documents" styleClass="fullWith">
+
+							<p:panelGrid>
+
+								<p:row>
+
+									<p:column>
+
+										<p:dataTable id="dataTable" style="min-height:150px;"
+											value="#{quotationManagementBean.selected.quotationFilesHolderList}"
+											emptyMessage="#{loc.ALMABANI_GENERAL_NO_FILE_UPLOADED}"
+											var="fileHolder" draggableColumns="true" draggableRows="true"
+											resizableColumns="true" widgetVar="itemsDataList"
+											scrollHeight="150px" paginator="true" rows="3"
+											paginatorPosition="bottom" rowsPerPageTemplate="10,20,30">
+
+											<p:column
+												headerText="#{loc.ALMABANI_QUOTATION_DOCUMENT_TYPE}">
+
+
+												<p:selectOneMenu id="item"
+													value="#{fileHolder.documentType}" required="true"
+													converter="#{documentTypeConverter}" styleClass="fullWith"
+													requiredMessage="#{loc.EditDocumentType_required}">
+													<p:ajax event="change" process="@this"
+														update=":growl :tabs:QuotataionCreateForm:dataTable" />
+													<f:selectItem itemValue=""
+														itemLabel="#{loc.SelectOneMessage}" />
+													<f:selectItems
+														value="#{quotationManagementBean.documentTypeList}"
+														var="documentType" itemValue="#{documentType}"
+														itemLabel="#{documentType.documentTypeDescription}" />
+												</p:selectOneMenu>
+											</p:column>
+
+											<p:column
+												headerText="#{loc.ALMABANI_QUOTATION_DOCUMENT_DOCUMENT_NAME}">
+												<p:commandButton value="#{fileHolder.fileName}" ajax="false"
+													onclick="PrimeFaces.monitorDownload(start, stop);"
+													immediate="true" process="@this" update=":growl"
+													icon="ui-icon-arrowthick-1-s">
+													<p:fileDownload
+														value="#{applicationScopeStore.prepareStreamContent(fileHolder)}" />
+												</p:commandButton>
+											</p:column>
+											<p:column headerText="#{loc.ALMABANI_GENERAL_DELETE}"
+												style="max-width:100px">
+
+												<p:commandLink
+													actionListener="#{quotationManagementBean.deleteUploadedFile(fileHolder)}"
+													immediate="true" process="@this"
+													update=":tabs:QuotataionCreateForm:dataTable :growl">
+
+													<p:graphicImage name="/images/icons/delete.png" width="15" />
+												</p:commandLink>
+											</p:column>
+
+										</p:dataTable>
+
+									</p:column>
+
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<p:fileUpload multiple="true"
+											cancelLabel="#{loc.ALMABANI_GENERAL_CANCEL}"
+											fileUploadListener="#{quotationManagementBean.uploadQuotationDocument}"
+											update="tabs:QuotataionCreateForm:dataTable"
+											uploadLabel="#{loc.ALMABANI_GENERAL_UPLOAD}"
+											dragDropSupport="true" allowTypes="/(\.|\/)(pdf|PDF)$/"
+											sizeLimit="5000000"
+											invalidFileMessage="#{loc.ALMABANI_GENERAL_PDF_FILE_ONLY_ACCEPTED}"
+											invalidSizeMessage="#{loc.ALMABANI_GENERAL_TOO_MUCH_FILE_SIZE}"
+											description="#{loc.ALMABANI_GEENRAL_SELECt_PDF_FILES}" />
+									</p:column>
+								</p:row>
+
+							</p:panelGrid>
+							<p:commandButton process="@form "
+								actionListener="#{quotationManagementBean.saveNew}"
+								value="#{loc.ALMABANI_GENERAL_FINISH}"
+								update=":growl,@form tabs:quotationListForm:datalist  tabs:quotationActionsListForm  tabs:quotationDocumentListForm"
+								oncomplete="if(!args.validationFailed){PF('createQuotationDialog').hide();}" />
+						</p:panelGrid>
+
+					</p:tab>
+
+
+				</p:wizard>
+			</p:panel>
+
+
+
+
+
+
 
 		</h:form>
-
 	</p:dialog>
+
+
+
 
 </ui:composition>
 

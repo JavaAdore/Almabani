@@ -144,7 +144,7 @@ public class ItemManagementBean extends AbstractBeanHelper implements
 		loadItemCategoriesOfDepartment(department);
 	}
 
-	private void initializeNewitemCategoriesList() {
+	public void initializeNewitemCategoriesList() {
 		itemCategories = new ArrayList();
 	}
 

@@ -31,7 +31,9 @@ import com.almabani.business.service.ManufacturerService;
 import com.almabani.business.service.MaterialTypeService;
 import com.almabani.business.service.MenuService;
 import com.almabani.business.service.ModuleService;
+import com.almabani.business.service.OamDocumentTypeService;
 import com.almabani.business.service.OamQuotationActionTypeService;
+import com.almabani.business.service.OamQuotationDocumentService;
 import com.almabani.business.service.OamZoneDeviceService;
 import com.almabani.business.service.PrefilTypeService;
 import com.almabani.business.service.ProjectEmployeeService;
@@ -54,6 +56,7 @@ import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.dto.UserApplicationGrant;
+import com.almabani.common.dto.ZoneDeviceWithLocation;
 import com.almabani.common.dto.menu.Module;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Contractor;
@@ -67,6 +70,7 @@ import com.almabani.common.entity.schema.admincor.Project;
 import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.admincor.view.VComDepartmentSection;
 import com.almabani.common.entity.schema.adminoam.AllocationType;
+import com.almabani.common.entity.schema.adminoam.OamDocumentType;
 import com.almabani.common.entity.schema.adminoam.OamItem;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
@@ -75,6 +79,7 @@ import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
+import com.almabani.common.entity.schema.adminoam.OamQuotationDocument;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.OamSupplier;
 import com.almabani.common.entity.schema.adminoam.OamTypeMaterial;
@@ -151,70 +156,76 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	private ProjectItemService projectItemService;
 
 	@Autowired
-	ItemsQuotSupplierService itemsQuotSupplierService;
+	private ItemsQuotSupplierService itemsQuotSupplierService;
 
 	@Autowired
-	SupplierService supplierService;
+	private SupplierService supplierService;
 
 	@Autowired
-	ItemService itemService;
+	private ItemService itemService;
 
 	@Autowired
-	ProjectEmployeeService projectEmployeeService;
+	private ProjectEmployeeService projectEmployeeService;
 
 	@Autowired
-	ManufacturerService manufacturerService;
+	private ManufacturerService manufacturerService;
 
 	@Autowired
-	ItemCategoryService itemCategoryService;
+	private ItemCategoryService itemCategoryService;
 
 	@Autowired
-	MaterialTypeService materialTypeService;
+	private MaterialTypeService materialTypeService;
 
 	@Autowired
-	ProjectService projectService;
+	private ProjectService projectService;
 
 	@Autowired
-	ContractorService contractorService;
+	private ContractorService contractorService;
 
 	@Autowired
-	ModuleService moduleService;
+	private ModuleService moduleService;
 
 	@Autowired
-	SubModuleService subModuleService;
+	private SubModuleService subModuleService;
 
 	@Autowired
-	ApplicationService applicationService;
+	private ApplicationService applicationService;
 
 	@Autowired
-	SystemService systemService;
+	private SystemService systemService;
 
 	@Autowired
-	PrefilTypeService prefilTypeService;
+	private PrefilTypeService prefilTypeService;
 
 	@Autowired
-	AllocationTypeService allocationTypeService;
+	private AllocationTypeService allocationTypeService;
 
 	@Autowired
-	ProjectJobTitleService projectJobTitleService;
+	private ProjectJobTitleService projectJobTitleService;
 
 	@Autowired
-	OamQuotationActionTypeService oamQuotationActionTypeService;
+	private OamQuotationActionTypeService oamQuotationActionTypeService;
 
 	@Autowired
-	StockItemService stockItemService;
+	private StockItemService stockItemService;
 
 	@Autowired
-	WokDailyOccurenceService wokDailyOccurenceService;
+	private WokDailyOccurenceService wokDailyOccurenceService;
 
 	@Autowired
-	WokOccurencyTypeService wokOccurencyTypeService;
+	private WokOccurencyTypeService wokOccurencyTypeService;
 
 	@Autowired
-	WokUserGroupService wokUserGroupService;
+	private WokUserGroupService wokUserGroupService;
 
 	@Autowired
-	OamZoneDeviceService zoneDeviceService;
+	private OamZoneDeviceService zoneDeviceService;
+
+	@Autowired
+	private OamDocumentTypeService oamDocumentTypeService;
+	
+	@Autowired
+	private OamQuotationDocumentService oamQuotationDocumentService;
 
 	@PostConstruct
 	public void cacheApplications() {
@@ -453,7 +464,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public OamItemQuotation addOrUpdateQuotationItem(
-			OamItemQuotation oamItemQuotation, CommonDriverMap commonDriverMap) {
+			OamItemQuotation oamItemQuotation, CommonDriverMap commonDriverMap) throws AlmabaniException {
 		if (Utils.hasID(oamItemQuotation)) {
 			return quotationItemService.updateQuotationItem(oamItemQuotation,
 					commonDriverMap);
@@ -981,7 +992,8 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	}
 
 	@Override
-	public ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee) throws AlmabaniException {
+	public ProjectEmployee saveOrUpdate(ProjectEmployee projectEmployee)
+			throws AlmabaniException {
 		return projectEmployeeService.saveOrUpdate(projectEmployee);
 	}
 
@@ -1457,7 +1469,8 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 
 	@Override
 	public Integer getNumberOfDepartmentSectionsView(Map<String, Object> filters) {
-		return departmentSectionService.getNumberOfDepartmentSectionsView(filters);
+		return departmentSectionService
+				.getNumberOfDepartmentSectionsView(filters);
 	}
 
 	@Override
@@ -1468,7 +1481,7 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	@Override
 	public Date getMinAllowedEmployeeDate() {
 		Calendar c = Calendar.getInstance();
-		c.add(Calendar.YEAR, BusinessConstants.MIN_ACCEPTED_EMPLOYEE_OLD *-1);
+		c.add(Calendar.YEAR, BusinessConstants.MIN_ACCEPTED_EMPLOYEE_OLD * -1);
 		return c.getTime();
 	}
 
@@ -1480,6 +1493,31 @@ public class AlmabaniFacadeImp extends BusinessCache implements AlmabaniFacade {
 	@Override
 	public List<ProjectJobTitle> getProjectJobTitles(Project selectedProject) {
 		return projectJobTitleService.getProjectJobTitles(selectedProject);
-	} 
+	}
+
+	@Override
+	public List<OamDocumentType> getDocuemtTypeList(
+			Company currentLoggedUserCompany) {
+		return oamDocumentTypeService
+				.getDocuemtTypeList(currentLoggedUserCompany);
+	}
+
+	@Override
+	public OamDocumentType getDocumentType(Long id) {
+		return oamDocumentTypeService.getDocumentType( id);
+	}
+
+	@Override
+	public List<OamQuotationDocument> getQuotationDocuments(
+			OamQuotation quotation) {
+		return oamQuotationDocumentService.getQuotationDocuments(quotation);
+				 
+	}
+	
+	public ZoneDeviceWithLocation getZoneLocation(OamZoneDevice oamZoneDevice)
+	{
+		
+		return zoneDeviceService.getZoneLocation( oamZoneDevice);
+	}
 
 }

@@ -8,8 +8,8 @@
 
 <ui:composition>
 
-	<p:dialog id="viewQuotataionDlg" widgetVar="viewQuotationDialog" modal="true"
-		resizable="false" appendToBody="true"
+	<p:dialog id="viewQuotataionDlg" widgetVar="viewQuotationDialog"
+		modal="true" resizable="false" appendToBody="true"
 		header="#{loc.ViewOamQuotationTitle}">
 
 		<h:form id="quotationquotationViewForm">
@@ -21,7 +21,8 @@
 					<h:outputText value="#{quotationManagementBean.selected.id}"
 						title="#{loc.ViewOamQuotationTitle_id}" />
 					<h:outputText value="#{loc.ViewOamQuotationLabel_department}" />
-					<h:outputText value="#{quotationManagementBean.selected.department.departmentName}"
+					<h:outputText
+						value="#{quotationManagementBean.selected.department.departmentName}"
 						title="#{loc.ViewOamQuotationTitle_id}" />
 
 					<h:outputText value="#{loc.ViewOamQuotationLabel_indTypeQuotation}" />
@@ -41,6 +42,63 @@
 					<h:outputText
 						value="#{quotationManagementBean.selected.insertLoginCode}"
 						title="#{loc.ViewOamQuotationTitle_insertLoginCode}" />
+
+					<h:outputText
+						value="#{loc.ViewOamQuotationLabel_indMotiveQuotation}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.indMotiveQuotation}"
+						title="#{loc.ViewOamQuotationTitle_indMotiveQuotation}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_invoiceCode}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.invoiceCode}"
+						title="#{loc.ViewOamQuotationTitle_invoiceCode}" />
+
+					<h:outputText
+						value="#{loc.ViewOamQuotationLabel_maximoReferenceNumber}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.maximoReferenceNumber}"
+						title="#{loc.ViewOamQuotationTitle_maximoReferenceNumber}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_system}" />
+					<h:outputText value="#{quotationManagementBean.selected.system}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_monthWorrenty}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.monthWorrenty}"
+						title="#{loc.ViewOamQuotationTitle_monthWorrenty}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_deliveryDays}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.deliveryDays}"
+						title="#{loc.ViewOamQuotationTitle_deliveryDays}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_realDeliveryDate}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.realDeliveryDate}"
+						title="#{loc.ViewOamQuotationTitle_realDeliveryDate}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+					</h:outputText>
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_valFreight}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.valFreight}"
+						title="#{loc.ViewOamQuotationTitle_valFreight}" />
+
+					<h:outputText
+						value="#{loc.ViewOamQuotationLabel_paymentApprovalPersentage}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.paymentApprovalPersentage}"
+						title="#{loc.ViewOamQuotationTitle_paymentApprovalPersentage}" />
+
+					<h:outputText value="#{loc.ViewOamQuotationLabel_project}" />
+					<h:outputText
+						value="#{quotationManagementBean.selected.project.projectCode}"
+						title="#{loc.ViewOamQuotationTitle_paymentApprovalPersentage}" />
+
+					
+
+
 					<h:outputText value="#{loc.ViewOamQuotationLabel_insertRowDate}" />
 					<h:outputText
 						value="#{quotationManagementBean.selected.insertRowDate}"
@@ -65,6 +123,9 @@
 						title="#{loc.ViewOamQuotationTitle_creationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
+
+
+
 
 				</p:panelGrid>
 				<p:commandButton value="#{loc.Close}" immediate="true"

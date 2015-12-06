@@ -8,12 +8,15 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.dto.ZoneDeviceWithLocation;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamZoneDevice;
 import com.almabani.common.entity.schema.adminsec.SecUser;
@@ -50,6 +53,8 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 	private List<WokUserGroup> techniciansList;
 
 	private List<OamZoneDevice> cameras;
+	
+	private ZoneDeviceWithLocation zoneLocation;
 
 	@PostConstruct
 	public void init() {
@@ -178,9 +183,35 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 				WebUtils.prepareParamSet(MessagesKeyStore.ALMABANI_GENERAL_DAILY_OCCURENCE));
 
 	}
+	
+	
+	public void loadSelectedCamData()
+	{
+		
+		loadSelectedCamData(selectedWokDailyOcurrence.getZoneDevice());
+	}
+	
+	public void loadSelectedCamData(OamZoneDevice oamZoneDevice)
+	{
+		if(Utils.isNotNull(oamZoneDevice))
+		{
+			zoneLocation = almabaniFacade.getZoneLocation(oamZoneDevice);
 
+		}else
+		{
+			zoneLocation = null;
+		}
+		
+	}
+	public void findZoneLocation(AjaxBehaviorEvent e)
+	{
+		OamZoneDevice	oamZoneDevice =  (OamZoneDevice)((SelectOneMenu )e.getSource()).getValue();
+		
+		loadSelectedCamData(oamZoneDevice);
+	}
 	public void prepareCreateDailyOccurence() {
 		selectedWokDailyOcurrence = new WokDailyOcurrence();
+		zoneLocation = null; 
 	}
 
 	public LazyDataModel<WokDailyOcurrencesView> getWokDailyOccurencyLazyModel() {
@@ -269,6 +300,14 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 
 	public void setCameras(List<OamZoneDevice> cameras) {
 		this.cameras = cameras;
+	}
+
+	public ZoneDeviceWithLocation getZoneLocation() {
+		return zoneLocation;
+	}
+
+	public void setZoneLocation(ZoneDeviceWithLocation zoneLocation) {
+		this.zoneLocation = zoneLocation;
 	}
 
 }

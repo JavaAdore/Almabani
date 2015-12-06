@@ -20,10 +20,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import com.almabani.common.annotataion.Bundle;
+import com.almabani.common.dto.FileHolder;
 import com.almabani.common.entity.AbstractEntity;
 import com.almabani.common.entity.schema.admincor.Department;
+import com.almabani.common.entity.schema.admincor.Project;
+import com.almabani.common.entity.schema.adminsec.SecSystem;
 import com.almabani.common.entity.schema.adminwkf.WokDemand;
 
 @Entity
@@ -90,12 +95,52 @@ public class OamQuotation extends AbstractEntity implements
 	@OrderBy("NUM_TYPE_QUOT_ACTION")
 	private List<OamQuotationAction> quotataionActions = new ArrayList<OamQuotationAction>();   
 	
-	 
+	
+	@OneToMany(mappedBy ="quotation",fetch=FetchType.LAZY)
+	@OrderBy("NUM_IQUOTATION_DOCUMENT")
+	private List<OamQuotationDocument> quotationDocuments = new ArrayList();
+	
+	
+	@Column(name="NUM_REFERENCE_SYSTEM")
+    private Long system;
+   
+	
+	 @Column(name = "QUT_MONTHS_WARRANTY")
+    private Integer monthWorrenty;
+   
+	 @Column(name = "QUT_DAYS_DELIVERY")
+    private Integer deliveryDays;
+   
+	@Column(name = "DAT_REAL_DELIVERY")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date realDeliveryDate;
+   
+	// @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "VAL_FREIGHT")
+    private Integer valFreight;
+    
+    @Column(name = "PER_PAYMENT_APPROVAL"  )
+    private Integer paymentApprovalPersentage;
+    
+    @ManyToOne
+    @JoinColumn(name="NUM_PROJECT" , referencedColumnName="NUM_PROJECT")
+    private Project project;
+   
+    @JoinColumn(name = "NUM_SUPPLIER", referencedColumnName = "NUM_SUPPLIER")
+    @ManyToOne
+    private OamSupplier supplier;
+	    
+	    
+	
+	
 	@Transient
 	private List<OamQuotationActionType> availableActionTypes;
 	
 	@Transient
 	private OamQuotationActionType selectedActionType;
+	
+	@Transient
+	private List<FileHolder> quotationFilesHolderList = new ArrayList();
 	
 	
 	public OamQuotation() {
@@ -269,6 +314,67 @@ public class OamQuotation extends AbstractEntity implements
 	}
 	public void setSelectedActionType(OamQuotationActionType selectedActionType) {
 		this.selectedActionType = selectedActionType;
+	}
+	public List<FileHolder> getQuotationFilesHolderList() {
+		return quotationFilesHolderList;
+	}
+	public void setQuotationFilesHolderList(
+			List<FileHolder> quotationFilesHolderList) {
+		this.quotationFilesHolderList = quotationFilesHolderList;
+	}
+	public List<OamQuotationDocument> getQuotationDocuments() {
+		return quotationDocuments;
+	}
+	public void setQuotationDocuments(List<OamQuotationDocument> quotationDocuments) {
+		this.quotationDocuments = quotationDocuments;
+	}
+	public Long getSystem() {
+		return system;
+	}
+	public void setSystem(Long system) {
+		this.system = system;
+	}
+	public Integer getMonthWorrenty() {
+		return monthWorrenty;
+	}
+	public void setMonthWorrenty(Integer monthWorrenty) {
+		this.monthWorrenty = monthWorrenty;
+	}
+	public Integer getDeliveryDays() {
+		return deliveryDays;
+	}
+	public void setDeliveryDays(Integer deliveryDays) {
+		this.deliveryDays = deliveryDays;
+	}
+	public Date getRealDeliveryDate() {
+		return realDeliveryDate;
+	}
+	public void setRealDeliveryDate(Date realDeliveryDate) {
+		this.realDeliveryDate = realDeliveryDate;
+	}
+	public Integer getValFreight() {
+		return valFreight;
+	}
+	public void setValFreight(Integer valFreight) {
+		this.valFreight = valFreight;
+	}
+	public Integer getPaymentApprovalPersentage() {
+		return paymentApprovalPersentage;
+	}
+	public void setPaymentApprovalPersentage(Integer paymentApprovalPersentage) {
+		this.paymentApprovalPersentage = paymentApprovalPersentage;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	public OamSupplier getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(OamSupplier supplier) {
+		this.supplier = supplier;
 	}
 	
 }

@@ -183,7 +183,7 @@
 						oncomplete="PF('createWokDailyOccurency').show()" />
 					<p:commandButton id="editButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
-						icon="ui-icon-pencil" value="#{loc.Edit}"
+						icon="ui-icon-pencil" value="#{loc.Edit}" actionListener="#{dailyOccuranceManagementBean.loadSelectedCamData()}"
 						update=":dailyOccurenceTabView:editDailyOccurenceForm"
 						oncomplete="PF('dailyOccurenceEditDialog').show()"
 						disabled="#{ dailyOccuranceManagementBean.selectedWokDailyOcurrence.id==null}" />

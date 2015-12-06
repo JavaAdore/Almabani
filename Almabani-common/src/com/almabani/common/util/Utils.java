@@ -1,7 +1,9 @@
 package com.almabani.common.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -22,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.sql.rowset.serial.SerialException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -344,9 +347,9 @@ public class Utils {
 		return result;
 	}
 
-	public static String getAbsoluteStringValue(String applicationDescription) {
-		if (isNotEmptyString(applicationDescription)) {
-			return applicationDescription.trim();
+	public static String getAbsoluteStringValue(String str) {
+		if (isNotEmptyString(str)) {
+			return str.trim();
 		}
 		return "";
 
@@ -437,4 +440,55 @@ public class Utils {
 		return new byte[] {};
 
 	}
+	
+	public static Blob inputStreamToBlob(InputStream is)
+	{
+		byte[] bytes;
+		try {
+			bytes = inputStreamToByteArray(is);
+		   return new javax.sql.rowset.serial.SerialBlob(bytes);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SerialException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
+	public static byte[] inputStreamToByteArray(InputStream is) throws IOException
+	{
+		
+				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+				int nRead;
+				byte[] data = new byte[16384];
+
+				while ((nRead = is.read(data, 0, data.length)) != -1) {
+				  buffer.write(data, 0, nRead);
+				}
+
+				buffer.flush();
+
+				return buffer.toByteArray();
+	}
+	
+	
+	public static String getFirstCharactersOf(String str ,  int index)
+	{
+		if(Utils.isNotEmptyString(str) && str.length()>index)
+		{
+			return str.substring(0,index);
+			
+		}
+		return getAbsoluteStringValue(str);
+		
+	}
+	
 }

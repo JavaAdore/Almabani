@@ -284,4 +284,6 @@ public class QuotationItemManagementBean extends AbstractBeanHelper implements
 	public void setEstablishments(List<Establishment> establishments) {
 		this.establishments = establishments;
 	}
+
+	
 }

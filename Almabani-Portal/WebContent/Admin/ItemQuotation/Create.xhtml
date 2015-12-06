@@ -38,11 +38,13 @@
 					<p:outputLabel for="establishments"
 						value="#{loc.CreateOamStockItemLabel_establishment} " />
 					<p:selectOneMenu id="establishments"
-						converter="#{establishmentConverter}" 
-						value="#{quotationItemManagementBean.selected.establishment}" styleClass="fullWith" >
+						converter="#{establishmentConverter}"
+						value="#{quotationItemManagementBean.selected.establishment}"
+						styleClass="fullWith">
 						<f:selectItem itemLabel="#{loc.SelectOneMessage}" itemValue=""
 							noSelectionOption="true" />
-						<f:selectItems value="#{quotationItemManagementBean.establishments}"
+						<f:selectItems
+							value="#{quotationItemManagementBean.establishments}"
 							var="establishment"
 							itemLabel="#{establishment.establishmentName}" />
 					</p:selectOneMenu>
@@ -50,8 +52,9 @@
 
 					<p:outputLabel value="#{loc.EditOamItemQuotationTitle_projectItem}"
 						rendered="#{quotationItemManagementBean.selected.quotation!=null}" />
-					<p:autoComplete  styleClass="fullWith"  minQueryLength="2"
-						widgetVar="projectItem" id="projectItem" dropdown="true" dropdownMode="current"
+					<p:autoComplete styleClass="fullWith" minQueryLength="2"
+						widgetVar="projectItem" id="projectItem" dropdown="true"
+						dropdownMode="current"
 						rendered="#{quotationItemManagementBean.selected.quotation !=null}"
 						value="#{quotationItemManagementBean.selected.projectItem}"
 						required="true" converter="#{projectItemConverter}"
@@ -88,6 +91,23 @@
 						value="#{quotationItemManagementBean.selected.qutItem}"
 						required="true"
 						requiredMessage="#{loc.CreateOamItemQuotationRequiredMessage_qutItem}" />
+
+
+					<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_item_cost}" />
+
+					<p:spinner id="itemCost" styleClass="fullWith" min="1" max="999999999999999"
+						value="#{quotationItemManagementBean.selected.itemCost}"
+						 />
+
+					<p:outputLabel value="#{loc.CreateOamItemQuotationTitle_item_billing_cost}" />
+
+					<p:spinner id="billingCost" styleClass="fullWith" min="1" max="999999999999999"
+						value="#{quotationItemManagementBean.selected.billingCost}"
+						 />
+						
+						
+						
+
 
 					<p:outputLabel
 						value="#{loc.CreateOamItemQuotationTitle_observationDescription}" />

@@ -6,18 +6,25 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-
+	
 	<h:form id="quotationListForm">
 
 		<p:panel header="#{loc.ListOamQuotationTitle}"
-			style="margin-left:auto; margin-right:auto ; ">
+			style="margin-left:auto; margin-right:auto;">
 			<p:dataTable id="datalist" value="#{quotationManagementBean.items}"
 				resizableColumns="true" widgetVar="datalist" var="item"
 				selectionMode="single" lazy="true" draggableColumns="true"
-				draggableRows="true" selection="#{quotationManagementBean.selected}"
-				rowKey="#{item.id}" paginator="true" rows="10" editable="true"
+				draggableRows="true"
+				selection="#{ quotationManagementBean.selected}"
+				rowKey="#{item.id}" paginator="true" rows="10"
 				rowsPerPageTemplate="10,20,30">
 
+				<p:ajax event="rowSelect"
+					listener="#{quotationManagementBean.onRowSelect}"
+					update=" viewButton editButton tabs:listForm " />
+			    
+				<p:ajax event="rowUnselect" update="viewButton editButton" />
+  
 
 				<f:facet name="header">
 					<p:commandButton id="toggler" type="button"
@@ -26,10 +33,6 @@
 					<p:columnToggler datasource="datalist" trigger="toggler" />
 				</f:facet>
 
-				<p:ajax event="rowSelect"
-					listener="#{quotationManagementBean.onRowSelect}"
-					update=" viewButton editButton tabs:listForm" />
-				<p:ajax event="rowUnselect" update="viewButton editButton" />
 
 				<p:column headerText="#{loc.ListOamQuotationCompany_number}"
 					sortBy="#{item.department.company.id}"
@@ -68,7 +71,8 @@
 
 					<f:facet name="filter">
 
-						<p:selectOneMenu onchange="PF('datalist').filter()" styleClass="fullWith">
+						<p:selectOneMenu onchange="PF('datalist').filter()"
+							styleClass="fullWith">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems
@@ -109,14 +113,13 @@
 						actionListener="#{quotationManagementBean.prepareCreate}"
 						oncomplete="PF('createQuotationDialog').show()" />
 					<p:commandButton id="viewButton" icon="ui-icon-search"
-						value="#{loc.View}"
-						update="tabs:quotationquotationViewForm:quotationDisplay"
+						value="#{loc.View}" update="tabs:quotationquotationViewForm"
 						oncomplete="PF('viewQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 					<p:commandButton id="editButton"
 						rendered="#{applicationScopeStore.hasFullAccess()}"
 						icon="ui-icon-pencil" value="#{loc.Edit}"
-						update="tabs:editQuotataionForm:quotationDisplay"
+						update="tabs:editQuotataionForm" actionListener="#{quotationManagementBean.loadInitialListsOfSelectedQuotation}"
 						oncomplete="PF('editQuotationDialog').show()"
 						disabled="#{empty quotationManagementBean.selected}" />
 				</f:facet>

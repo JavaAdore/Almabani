@@ -1,26 +1,33 @@
 package com.almabani.business.serviceimp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.almabani.business.service.OamDocumentTypeService;
 import com.almabani.business.service.QoutationService;
 import com.almabani.common.constant.DataAccessConstants;
 import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
+import com.almabani.common.dto.FileHolder;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotation;
 import com.almabani.common.entity.schema.adminoam.OamQuotationAction;
 import com.almabani.common.entity.schema.adminoam.OamQuotationActionType;
+import com.almabani.common.entity.schema.adminoam.OamQuotationDocument;
 import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.exception.AlmabaniException;
 import com.almabani.common.util.Utils;
+import com.almabani.dataaccess.dao.adminoam.OamDocumentTypeDAO;
 import com.almabani.dataaccess.dao.adminoam.OamQuotationActionDAO;
 import com.almabani.dataaccess.dao.adminoam.OamQuotationActionTypeDAO;
+import com.almabani.dataaccess.dao.adminoam.OamQuotationDocumentDAO;
 import com.almabani.dataaccess.dao.adminoam.QoutationDAO;
 import com.almabani.dataaccess.dao.adminoam.QuotationItemDAO;
 import com.almabani.dataaccess.dao.adminoam.StockItemDAO;
@@ -43,6 +50,9 @@ public class QoutationServiceImpl implements QoutationService {
 	@Autowired
 	StockItemDAO stockItemDAO;
 
+	@Autowired
+	OamQuotationDocumentDAO oamQuotationDocumentDAO;
+
 	@Override
 	public Integer getCountOfQoutations(Map<String, Object> filters) {
 		return qoutationDAO.getCountOfQoutations(filters);
@@ -63,8 +73,7 @@ public class QoutationServiceImpl implements QoutationService {
 		oamQuotation.setLastModificationDate(date);
 		oamQuotation.setModificationLoginCode(commonDriverMap
 				.getCurrentUserCode());
-	
-		
+
 		if (Utils.isNull(oamQuotation)
 				&& Utils.isNotEmptyList(oamQuotation.getQuotataionActions())) {
 			oamQuotation.setSelectedActionType(oamQuotation
@@ -75,20 +84,82 @@ public class QoutationServiceImpl implements QoutationService {
 
 		handleStockItems(oamQuotation, commonDriverMap);
 
+		List<OamQuotationDocument> quotationDocuments = handleUpdateQuotationDocument(oamQuotation);
+
 		if (Utils.isNotNull(oamQuotation.getSelectedActionType())
 				&& Utils.isNotEmptyList(oamQuotation.getQuotataionActions())) {
 			addNewActionType(oamQuotation, commonDriverMap);
 		}
-
-		return qoutationDAO.addOrUpdateQuotation(oamQuotation);
+		List<OamQuotationAction> actions = oamQuotation.getQuotataionActions();
+		oamQuotation.getQuotationDocuments().clear();    
+		OamQuotation qoutation = qoutationDAO
+				.addOrUpdateQuotation(oamQuotation);
+		qoutation.setQuotationDocuments(quotationDocuments);
+		qoutation.setQuotataionActions(actions);
+		return qoutation;
 
 	}
 
-	private void validateQuotationItems(OamQuotation oamQuotation) throws AlmabaniException{
-	Integer numberOfItemQuotaiton=  qoutationItemDAO.getNumberOfItemQuotation(oamQuotation);
-		if(numberOfItemQuotaiton == null || numberOfItemQuotaiton ==0)
-		{
-			throw new AlmabaniException(MessagesKeyStore.ALMABANI_QUOTATION_HAS_NO_ITEMS_TO_CHANGE_ITS_STATUS);
+	private List<OamQuotationDocument> handleUpdateQuotationDocument(
+			OamQuotation oamQuotation) {
+
+		List<OamQuotationDocument> oamQoutationDocuments = new ArrayList();
+
+		for (FileHolder fileHolder : oamQuotation.getQuotationFilesHolderList()) {
+			
+			OamQuotationDocument oamDocumentType = fileHolderToQuotationDocument(
+					oamQuotation, fileHolder);
+			oamQoutationDocuments.add(oamDocumentType);
+		}
+
+		for (OamQuotationDocument oamQuotationDocument : oamQoutationDocuments) {
+
+			OamQuotationDocument freshlyPersistedQuotationDocument = oamQuotationDocumentDAO
+					.addOrUpdateQuotationDocument(oamQuotationDocument);
+
+			oamQuotation.getQuotationDocuments().add(
+					freshlyPersistedQuotationDocument);
+		}
+		
+		if (Utils.isEmptyList(oamQoutationDocuments)) {
+			deleteQuotationRelatedDocuments(oamQuotation);
+		} else {
+			deleteUnnededQuotationDocuments(oamQuotation, oamQoutationDocuments);
+
+		}
+
+	
+		return oamQuotation.getQuotationDocuments();
+
+	}
+
+	private void deleteUnnededQuotationDocuments(OamQuotation oamQuotation,
+			List<OamQuotationDocument> oamQoutationDocuments) {
+		deleteQuotationRelatedDocumentsExcept(oamQuotation,
+				oamQoutationDocuments);
+
+	}
+
+	private void deleteQuotationRelatedDocumentsExcept(
+			OamQuotation oamQuotation,
+			List<OamQuotationDocument> oamQoutationDocuments) {
+		oamQuotationDocumentDAO.deleteQuotationRelatedDocumentsExcept(
+				oamQuotation, oamQoutationDocuments);
+
+	}
+
+	private void deleteQuotationRelatedDocuments(OamQuotation oamQuotation) {
+
+		oamQuotationDocumentDAO.deleteQuotationRelatedDocuments(oamQuotation);
+	}
+
+	private void validateQuotationItems(OamQuotation oamQuotation)
+			throws AlmabaniException {
+		Integer numberOfItemQuotaiton = qoutationItemDAO
+				.getNumberOfItemQuotation(oamQuotation);
+		if (numberOfItemQuotaiton == null || numberOfItemQuotaiton == 0) {
+			throw new AlmabaniException(
+					MessagesKeyStore.ALMABANI_QUOTATION_HAS_NO_ITEMS_TO_CHANGE_ITS_STATUS);
 		}
 	}
 
@@ -103,7 +174,7 @@ public class QoutationServiceImpl implements QoutationService {
 		if (lastSelectedOamActionTypeInDB.equals(currentlySelectedActionType) == false) {
 
 			validateQuotationItems(oamQuotation);
-			
+
 			OamQuotationActionType approveQuotationActionType = oamQuotationActionType
 					.getApproveActionType(commonDriverMap.getAttachedCompany());
 
@@ -196,7 +267,11 @@ public class QoutationServiceImpl implements QoutationService {
 		oamQuotation.setModificationLoginCode(commonDriverMap
 				.getCurrentUserCode());
 
+		List<FileHolder> fileHolderList = oamQuotation
+				.getQuotationFilesHolderList();
+
 		oamQuotation = qoutationDAO.addOrUpdateQuotation(oamQuotation);
+
 		OamQuotationAction oamQuotationAction = new OamQuotationAction();
 		oamQuotationAction.setInsertActionDate(date);
 		oamQuotationAction.setLastModificationDate(date);
@@ -213,11 +288,43 @@ public class QoutationServiceImpl implements QoutationService {
 					.get(0));
 		}
 
+		addQuotationUploadedDocuments(oamQuotation, fileHolderList);
+
 		oamQuotationAction = oamQuotationActionDAO
 				.addOrUpdateQuotationAction(oamQuotationAction);
 		oamQuotation.getQuotataionActions().add(oamQuotationAction);
 
 		return oamQuotation;
+	}
+
+	private void addQuotationUploadedDocuments(OamQuotation oamQuotation,
+			List<FileHolder> fileHolderList) {
+		oamQuotation.getQuotationDocuments().clear();
+		for (FileHolder fileHolder : fileHolderList) {
+			OamQuotationDocument quotationDocument = fileHolderToQuotationDocument(
+					oamQuotation, fileHolder);
+
+			OamQuotationDocument oamQuotationDocument = oamQuotationDocumentDAO
+					.addOrUpdateQuotationDocument(quotationDocument);
+			oamQuotation.getQuotationDocuments().add(oamQuotationDocument);
+		}
+	}
+
+	private OamQuotationDocument fileHolderToQuotationDocument(
+			OamQuotation oamQuotation, FileHolder fileHolder) {
+		OamQuotationDocument quotationDocument = new OamQuotationDocument();
+		quotationDocument.setDocumentName(Utils.getFirstCharactersOf(fileHolder.getFileName(), 30));
+		
+		quotationDocument.setId(fileHolder.getId() > 0 ? fileHolder.getId()
+				: null);
+		quotationDocument.setCodLoginInsert(oamQuotation
+				.getModificationLoginCode());
+		quotationDocument.setInsertionDate(new Date());
+		quotationDocument.setDocumentType(fileHolder.getDocumentType());
+		quotationDocument.setQuotation(oamQuotation);
+		quotationDocument.setImgQuotation(Utils.inputStreamToBlob(fileHolder
+				.getInputStream()));
+		return quotationDocument;
 	}
 
 	@Override

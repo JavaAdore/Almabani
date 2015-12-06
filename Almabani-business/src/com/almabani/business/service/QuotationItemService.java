@@ -9,6 +9,7 @@ import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamItemQuotation;
 import com.almabani.common.entity.schema.adminoam.OamProjectItem;
+import com.almabani.common.exception.AlmabaniException;
 
 @Service
 public interface QuotationItemService {
@@ -19,10 +20,10 @@ public interface QuotationItemService {
 			String sortField, boolean accending, Map<String, Object> filters);
 
 	OamItemQuotation updateQuotationItem(OamItemQuotation oamItemQuotation,
-			CommonDriverMap commonDriverMap);
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	OamItemQuotation addQuotationItem(OamItemQuotation oamItemQuotation,
-			CommonDriverMap commonDriverMap);
+			CommonDriverMap commonDriverMap) throws AlmabaniException;
 
 	OamItemQuotation getItemQuotation(Long itemQuotationId);
 

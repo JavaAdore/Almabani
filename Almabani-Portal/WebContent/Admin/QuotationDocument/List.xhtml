@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<h:form id="quotationDocumentListForm">
+
+		<p:panel header="#{loc.ListOamQuotationTitle}"
+			style="margin-left:auto; margin-right:auto ; ">
+			<p:dataTable id="datalist"
+				value="#{quotationManagementBean.selected.quotationDocuments}"
+				resizableColumns="true" widgetVar="quotationDocumentListDatalist"
+				var="item" draggableColumns="true" draggableRows="true"
+				rowKey="#{item.id}" paginator="true" rows="10" editable="true"
+				rowsPerPageTemplate="10,20,30">
+
+				<f:facet name="header">
+					<p:commandButton id="toggler" type="button"
+						value="#{loc.ALMABANI_GENERAL_COLUMNS}" style="float:right"
+						icon="ui-icon-calculator" />
+					<p:columnToggler datasource="datalist" trigger="toggler" />
+				</f:facet>
+
+
+				<p:column headerText="#{loc.ListOamQuotationDocument_Document_Name}"
+					sortBy="#{item.documentName}" filterBy="#{item.documentName}">
+						<p:commandButton value="#{item.documentName}" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop);"
+							process="@this" update=":growl" icon="ui-icon-arrowthick-1-s">
+							<p:fileDownload
+								value="#{applicationScopeStore.prepareStreamContent(item.imgQuotation.binaryStream , item.documentName)}" />
+						</p:commandButton>
+
+				</p:column>
+
+
+
+				<p:column headerText="#{loc.ListOamQuotationDocument_Document_type}"
+					sortBy="#{item.documentType.documentTypeDescription}"
+					filterBy="#{item.documentType.documentTypeDescription}">
+					<h:outputText value="#{item.documentType.documentTypeDescription}" />
+				</p:column>
+
+				<p:column headerText="#{loc.ListOamDocument_insertionDate}"
+					sortBy="#{item.insertionDate}" filterBy="#{item.insertionDate}">
+					<h:outputText value="#{item.insertionDate}" />
+				</p:column>
+
+				<p:column headerText="#{loc.ListOamDocument_inserted_by}"
+					sortBy="#{item.codLoginInsert}" filterBy="#{item.codLoginInsert}">
+					<h:outputText value="#{item.codLoginInsert}" />
+				</p:column>
+
+
+			</p:dataTable>
+
+		</p:panel>
+
+	</h:form>
+
+</ui:composition>
