@@ -152,7 +152,7 @@
 					<p:outputLabel
 						value="#{loc.ALMABANI_QUOTATION_ITEM_SUPPLIER_SUPPLIER_SELECTION_DATE}" />
 					<p:outputLabel
-						value="#{oamItemsQuotSupplierManagementBean.alreadySelectedQuotaionItem.selectionDate}">
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(oamItemsQuotSupplierManagementBean.alreadySelectedQuotaionItem.selectionDate)}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</p:outputLabel>
 

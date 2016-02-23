@@ -69,4 +69,13 @@ function getNoStyleValue( component , val)
 	{
 		return  $(component).html( "");
 	}
+	
+	
+	
+}
+
+function handleDialogSubmit(xhr, status, args) 
+{
+	
+	alert('xxxxx');
 }

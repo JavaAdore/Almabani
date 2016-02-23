@@ -59,7 +59,7 @@
 
 					<p:column headerText="#{loc.ALMABANI_GENERAL_USER_LOGIN_DATE}">
 
-						<h:outputText value="#{item.value.loginDate}">
+						<h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.value.loginDate)}">
 							<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"
 								timeZone="GMT+2" />
 						</h:outputText>

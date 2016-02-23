@@ -38,8 +38,7 @@ public class QuotationItemsServiceImpl implements QuotationItemService {
 	@Override
 	public OamItemQuotation updateQuotationItem(
 			OamItemQuotation oamItemQuotation, CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
-		oamItemQuotation.setLastModificationDate(date);
+		oamItemQuotation.setLastModificationDate(Utils.getGrenetchTime());
 		oamItemQuotation.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
 		checkItemCostValidation(oamItemQuotation);
@@ -62,7 +61,7 @@ public class QuotationItemsServiceImpl implements QuotationItemService {
 	@Override
 	public OamItemQuotation addQuotationItem(OamItemQuotation oamItemQuotation,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamItemQuotation.setLastModificationDate(date);
 		oamItemQuotation.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());

@@ -12,6 +12,7 @@ import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Department;
 import com.almabani.common.entity.schema.adminoam.OamItemCategory;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.ItemCategoryDAO;
 
 @Service
@@ -31,7 +32,7 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 	@Override
 	public OamItemCategory addItemCategory(OamItemCategory itemCategory,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		itemCategory.setLastModificationDate(date);
 		itemCategory.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
@@ -47,7 +48,7 @@ public class ItemCategoryServiceImpl implements ItemCategoryService {
 	public OamItemCategory updateItemCategory(OamItemCategory itemCategory,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
 
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		itemCategory.setLastModificationDate(date);
 		itemCategory.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());

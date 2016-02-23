@@ -51,7 +51,7 @@
                         <h:outputText value="#{applicationManagementBean.selected.modificationMakerName}" title="#{loc.ViewSecApplicationTitle_modificationMakerName}"/>
                         
                         <h:outputText value="#{loc.ViewSecApplicationLabel_lastModificationDate}"/>
-                        <h:outputText value="#{applicationManagementBean.selected.lastModificationDate}" title="#{loc.ViewSecApplicationTitle_lastModificationDate}">
+                        <h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(applicationManagementBean.selected.lastModificationDate)}" title="#{loc.ViewSecApplicationTitle_lastModificationDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         <h:outputText value="#{loc.ViewSecApplicationLabel_linkCodeDescription}"/>

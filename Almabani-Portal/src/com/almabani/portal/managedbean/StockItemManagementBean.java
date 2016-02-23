@@ -147,6 +147,7 @@ public class StockItemManagementBean extends AbstractBeanHelper implements
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
 
+			adjustDateToGreenWich(filters);
 			if (Utils.isNotNull(selected)) {
 
 				attachSelectedProjectItem(filters);

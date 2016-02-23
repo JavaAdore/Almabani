@@ -25,7 +25,7 @@
                         <h:outputText value="#{departmentManagementBean.selected.responsibleUserCode}" title="#{loc.ViewDepartmentTitle_responsibleUserCode}"/>
 
                         <h:outputText value="#{loc.ViewDepartmentLabel_lastModificationDate}"/>
-                        <h:outputText value="#{departmentManagementBean.selected.lastModificationDate}" title="#{loc.ViewDepartmentTitle_lastModificationDate}">
+                        <h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(departmentManagementBean.selected.lastModificationDate}" title="#{loc.ViewDepartmentTitle_lastModificationDate)}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 

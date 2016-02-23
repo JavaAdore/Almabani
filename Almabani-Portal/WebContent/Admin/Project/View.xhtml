@@ -27,17 +27,17 @@
                         <h:outputText value="#{projectBean.selectedProject.contractor.contractorDescription}" title="Contractor"/>
                         
                         <h:outputText value="Validate Begining Date"/>
-                        <h:outputText value="#{projectBean.selectedProject.validityBeginDate}" title="Validate Begining Date">
+                        <h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(projectBean.selectedProject.validityBeginDate)}" title="Validate Begining Date">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         
                         <h:outputText value="Validate End Date"/>
-                        <h:outputText value="#{projectBean.selectedProject.validityEndDate}" title="Validate End Date">
+                        <h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(projectBean.selectedProject.validityEndDate)}" title="Validate End Date">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         
                         <h:outputText value="Last Modification Date"/>
-                        <h:outputText value="#{projectBean.selectedProject.lastModificationDate}" title="Last Modification Date">
+                        <h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(projectBean.selectedProject.lastModificationDate)}" title="Last Modification Date">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         

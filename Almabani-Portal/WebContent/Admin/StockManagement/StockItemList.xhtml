@@ -55,7 +55,7 @@
   
 						</p:calendar>
 					</f:facet>
-					<h:outputText value="#{item.withdrawDate}">
+					<h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.withdrawDate)}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2	" />
 					</h:outputText>
 				</p:column>

@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.almabani.business.service.WokDailyOccurenceService;
+import com.almabani.common.constant.MessagesKeyStore;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.adminwkf.WokDailyOcurrence;
 import com.almabani.common.entity.schema.adminwkf.view.WokDailyOcurrencesView;
 import com.almabani.common.entity.schema.adminwkf.view.WokWorkingGroupsListView;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminwkf.WokDailyOccurenceDAO;
 
 @Service
@@ -45,27 +47,41 @@ public class WokDailyOccurenceServiceImpl implements WokDailyOccurenceService {
 	public WokDailyOcurrence updateWokDailyOccurency(
 			WokDailyOcurrence wokDailyOcurrence,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		wokDailyOcurrence.setLastModificationDate(date);
 		wokDailyOcurrence.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
-		
+		validateResponseAndClosingDate(wokDailyOcurrence);
+	
 		return wokDailyOccurenceDAO.WokDailyOccurency(wokDailyOcurrence);
 		
 		
+	}
+
+	private void validateResponseAndClosingDate(
+			WokDailyOcurrence wokDailyOcurrence) throws AlmabaniException {
+
+		if(Utils.isNotNull(wokDailyOcurrence.getClosingDateTime()) && Utils.isNotNull(wokDailyOcurrence.getResponseDateTime()) )
+		{
+			if(wokDailyOcurrence.getClosingDateTime().before(wokDailyOcurrence.getResponseDateTime()))
+			{
+				throw new AlmabaniException(MessagesKeyStore.ALMABANI_DAILY_OCCURENCE_CLOSING_DATE_SHOULD_BE_AFTER_RESPONSE_DATE);
+			}
+		}
 	}
 
 	@Override
 	public WokDailyOcurrence addWokDailyOccurency(
 			WokDailyOcurrence wokDailyOcurrence,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		wokDailyOcurrence.setLastModificationDate(date);
 		wokDailyOcurrence.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode()); 
 		wokDailyOcurrence.setOccurrenceDateTime(date);
 
-		
+		validateResponseAndClosingDate(wokDailyOcurrence);
+
 		return wokDailyOccurenceDAO.WokDailyOccurency(wokDailyOcurrence);
 	}
 

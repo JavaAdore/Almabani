@@ -54,7 +54,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public SecApplication addApplication(SecApplication secApplication,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		secApplication.setLastModificationDate(date);
 		secApplication.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
@@ -65,7 +65,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public SecApplication updateApplication(SecApplication secApplication,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		secApplication.setLastModificationDate(date);
 		secApplication.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
@@ -118,7 +118,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 				commonDriverMap.getAttachedCompany() , commonDriverMap.getTargetModule());
   
 		List<SecApplicationGrants> grants = new ArrayList<SecApplicationGrants>();
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		String modifiedByUserName = commonDriverMap.getCurrentUserCode();
 
 		for (UserApplicationGrant userApplicationGrant : allApplications) {
@@ -152,7 +152,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 			CommonDriverMap commonDriverMap) {
 		Company company = commonDriverMap.getAttachedCompany();
 		List<SecApplicationsCompany> revokeGrantList = new ArrayList<SecApplicationsCompany>();
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		String modifiedByUserName = commonDriverMap.getCurrentUserCode();
 		for (SecApplicationsCompany secApplicationCompany : grantableApplications) {
 			if (Utils.hasID(secApplicationCompany)

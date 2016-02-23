@@ -69,7 +69,7 @@ public class QoutationServiceImpl implements QoutationService {
 	@Override
 	public OamQuotation updateQuotation(OamQuotation oamQuotation,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamQuotation.setLastModificationDate(date);
 		oamQuotation.setModificationLoginCode(commonDriverMap
 				.getCurrentUserCode());
@@ -196,7 +196,7 @@ public class QoutationServiceImpl implements QoutationService {
 		List<OamItemQuotation> itemQuotations = qoutationItemDAO
 				.getQuotationItem(oamQuotation);
 		if (Utils.isNotEmptyList(itemQuotations)) {
-			Date date = new Date();
+			Date date =  Utils.getGrenetchTime();
 			String loginUserCode = commonDriverMap.getCurrentUserCode();
 
 			for (OamItemQuotation itemQuotation : itemQuotations) {
@@ -233,10 +233,10 @@ public class QoutationServiceImpl implements QoutationService {
 
 	private void addNewActionType(OamQuotation oamQuotation,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		if (oamQuotation.getSelectedActionType().equals(
 				oamQuotation.getQuotataionActions().get(
-						oamQuotation.getQuotataionActions().size() - 1)) == false) {
+						oamQuotation.getQuotataionActions().size() - 1).getOamTypesQuotActions()) == false) {
 			if (Utils.isNotEmptyList(oamQuotation.getQuotataionActions())) {
 				OamQuotationAction oamQuotationAction = new OamQuotationAction();
 				oamQuotationAction.setInsertActionDate(date);
@@ -259,7 +259,7 @@ public class QoutationServiceImpl implements QoutationService {
 	@Override
 	public OamQuotation addQuotation(OamQuotation oamQuotation,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamQuotation.setCreationDate(date);
 		oamQuotation.setInsertRowDate(date);
 		oamQuotation.setLastModificationDate(date);
@@ -319,7 +319,7 @@ public class QoutationServiceImpl implements QoutationService {
 				: null);
 		quotationDocument.setCodLoginInsert(oamQuotation
 				.getModificationLoginCode());
-		quotationDocument.setInsertionDate(new Date());
+		quotationDocument.setInsertionDate(Utils.getGrenetchTime());
 		quotationDocument.setDocumentType(fileHolder.getDocumentType());
 		quotationDocument.setQuotation(oamQuotation);
 		quotationDocument.setImgQuotation(Utils.inputStreamToBlob(fileHolder

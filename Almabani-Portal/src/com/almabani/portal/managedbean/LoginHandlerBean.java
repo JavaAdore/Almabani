@@ -29,6 +29,8 @@ public class LoginHandlerBean implements Serializable {
 	@ManagedProperty(value = "#{authenticationManager}")
 	private AuthenticationManager authenticationManager;
 
+	
+
 	private static final long serialVersionUID = 1L;
 	private String userName;
 	private String password;
@@ -99,6 +101,7 @@ public class LoginHandlerBean implements Serializable {
 			SecUser secUser = ((CustomUserDetails) result.getPrincipal())
 					.getUser();
 			WebUtils.setCurrentlyLoggenUser(secUser);
+			setTimeDefferent(secUser);
 			userSessionBean.constructUserMenu((CustomUserDetails) result
 					.getPrincipal());
 			WebUtils.setCookie("log", "log", 1000000000);
@@ -108,11 +111,34 @@ public class LoginHandlerBean implements Serializable {
 					.getAlllowedApps());
 			WebUtils.setCookie("allowedApps", allowedAppsGsonMap, 1000000000);
 			WebUtils.redirectTo(PortalConstants.HOME_PAGE);
-		} 
+		}
 
 		catch (Exception ex) {
-			WebUtils.displayAlmabanyExceptionErrorMessage(new AlmabaniException(ex.getMessage()));
-		}  
+			WebUtils.displayAlmabanyExceptionErrorMessage(new AlmabaniException(
+					ex.getMessage()));
+		}
+	}
+
+	private void setTimeDefferent(SecUser secUser) {
+
+		if (secUser != null
+				&& secUser.getEmployee() != null
+				&& secUser.getEmployee().getEstablishment() != null
+				&& secUser.getEmployee().getEstablishment().getCompany() != null
+				&& secUser.getEmployee().getEstablishment().getCompany()
+						.getState() != null
+				&& secUser.getEmployee().getEstablishment().getCompany()
+						.getState().getStateId() != null
+				&& secUser.getEmployee().getEstablishment().getCompany()
+						.getState().getStateId().getCountry() != null) {
+			
+			Integer deffInHours = secUser.getEmployee().getEstablishment().getCompany().getState().getStateId().getCountry().getGmtHoursDefferent();
+			if(deffInHours !=null)
+			{
+				WebUtils.injectIntoSession(PortalConstants.DEFFERENT_HOURS_BETWEEN_USER_TIME_AND_GERENWICH_TIME, deffInHours);
+			}
+
+		}
 	}
 
 	public void checkChanged(AjaxBehaviorEvent e) {
@@ -122,5 +148,7 @@ public class LoginHandlerBean implements Serializable {
 		awsDataBase = result;
 		awsdb = result;
 	}
+
+	
 
 }

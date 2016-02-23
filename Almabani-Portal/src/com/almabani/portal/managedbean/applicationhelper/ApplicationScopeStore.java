@@ -33,6 +33,7 @@ import com.almabani.common.entity.schema.admincor.State;
 import com.almabani.common.entity.schema.adminsec.SecUser;
 import com.almabani.common.enums.DocumentType;
 import com.almabani.common.util.Utils;
+import com.almabani.portal.constant.PortalConstants;
 import com.almabani.portal.webutils.WebUtils;
 
 @ManagedBean(eager = true)
@@ -712,5 +713,23 @@ public class ApplicationScopeStore implements Serializable {
 		return new DefaultStreamedContent(fileHodler.getInputStream(), "pdf",
 				fileHodler.getFileName());
 
+	}
+	
+	
+	public Company getCurrentLoggedUserCompany()
+	{
+		return WebUtils.getCurrentLoggedUserCompany();
+	}
+	
+	
+	public Date getAnalogousUsersCountryDate(Date date)
+	{
+		if(Utils.isNull(date)) return null;
+		Integer deff = (Integer) WebUtils.extractFromSession(PortalConstants.DEFFERENT_HOURS_BETWEEN_USER_TIME_AND_GERENWICH_TIME);
+		deff= (deff !=null)?deff:0;
+		return Utils.addHours(date , deff);
+		
+		
+		
 	}
 }

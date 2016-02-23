@@ -36,7 +36,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public OamItem updateItem(OamItem item, CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		item.setLastModificationDate(date);
 		item.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return itemDAO.addOrUpdate(item);
@@ -45,7 +45,7 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public OamItem addItem(OamItem item, CommonDriverMap commonDriverMap) {
 
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		item.setLastModificationDate(date);
 		item.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return itemDAO.addOrUpdate(item);

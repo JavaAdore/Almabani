@@ -12,6 +12,7 @@ import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecModule;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.dataacceess.dao.adminsec.ModuleDAO;
 
 @Service
@@ -40,7 +41,7 @@ public class ModuleServiceImpl implements ModuleService {
 	@Override
 	public SecModule addModule(SecModule secModule,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		secModule.setLastModificationDate(date);
 		secModule
 				.setModificationMakerName(commonDriverMap.getCurrentUserCode());
@@ -57,7 +58,7 @@ public class ModuleServiceImpl implements ModuleService {
 	@Override
 	public SecModule updateModule(SecModule secModule,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		secModule.setLastModificationDate(date);
 		secModule
 				.setModificationMakerName(commonDriverMap.getCurrentUserCode());

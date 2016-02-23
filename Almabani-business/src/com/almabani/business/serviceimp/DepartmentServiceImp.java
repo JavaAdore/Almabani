@@ -11,6 +11,7 @@ import com.almabani.business.service.DepartmentService;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.admincor.Department;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.admincor.DepartmentDAO;
 
 @Service
@@ -60,7 +61,7 @@ public class DepartmentServiceImp implements DepartmentService {
 	@Override
 	public Department addDepartment(Department department,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		department.setLastModificationDate(date);
 		department.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
@@ -70,7 +71,7 @@ public class DepartmentServiceImp implements DepartmentService {
 	@Override
 	public Department updateDepartment(Department department,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		department.setLastModificationDate(date);
 		department.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());

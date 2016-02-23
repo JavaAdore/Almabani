@@ -60,7 +60,7 @@
 					<h:outputText
 						value="#{loc.ViewSecModuleLabel_lastModificationDate}" />
 					<h:outputText
-						value="#{moduleManagementBean.selected.lastModificationDate}"
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(moduleManagementBean.selected.lastModificationDate)}"
 						title="#{loc.ViewSecModuleTitle_lastModificationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>

@@ -40,7 +40,7 @@ public class ItemsQuotSupplierServiceImpl implements ItemsQuotSupplierService {
 	public OamItemsQuotSupplier updateOamItemsQuotSupplier(
 			OamItemsQuotSupplier oamItemsQuotSupplier,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamItemsQuotSupplier.setLastModificationDate(date);
 		oamItemsQuotSupplier.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
@@ -60,7 +60,7 @@ public class ItemsQuotSupplierServiceImpl implements ItemsQuotSupplierService {
 	public OamItemsQuotSupplier addOamItemsQuotSupplier(
 			OamItemsQuotSupplier oamItemsQuotSupplier,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamItemsQuotSupplier.setLastModificationDate(date);
 		oamItemsQuotSupplier.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());

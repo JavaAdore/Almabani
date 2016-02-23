@@ -36,7 +36,7 @@ public class ProjectItemServiceImp implements ProjectItemService {
 	@Override
 	public OamProjectItem updateProjectItem(OamProjectItem oamProjectItem,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamProjectItem.setLastModificationDate(date);
 		oamProjectItem.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());
@@ -56,7 +56,7 @@ public class ProjectItemServiceImp implements ProjectItemService {
 	@Override
 	public OamProjectItem addProjectItem(OamProjectItem oamProjectItem,
 			CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		oamProjectItem.setLastModificationDate(date);
 		oamProjectItem.setModificationMakerName(commonDriverMap
 				.getCurrentUserCode());

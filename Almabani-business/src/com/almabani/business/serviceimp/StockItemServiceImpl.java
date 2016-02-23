@@ -16,6 +16,7 @@ import com.almabani.common.entity.schema.adminoam.OamStockItem;
 import com.almabani.common.entity.schema.adminoam.view.OamStockItemDetailsView;
 import com.almabani.common.entity.schema.adminoam.view.OamStockItemView;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.StockItemDAO;
 
 @Service
@@ -39,7 +40,7 @@ public class StockItemServiceImpl implements StockItemService {
 	@Override
 	public OamStockItem addStockItem(OamStockItem StockItem,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		StockItem.setLastModificationDate(date);
 		StockItem
 				.setModificationMakerName(commonDriverMap.getCurrentUserCode());
@@ -55,7 +56,7 @@ public class StockItemServiceImpl implements StockItemService {
 	@Override
 	public OamStockItem updateStockItem(OamStockItem StockItem,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		StockItem.setLastModificationDate(date);
 		StockItem
 				.setModificationMakerName(commonDriverMap.getCurrentUserCode());

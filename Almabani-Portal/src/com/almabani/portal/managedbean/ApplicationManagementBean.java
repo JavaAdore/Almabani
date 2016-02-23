@@ -130,6 +130,7 @@ public class ApplicationManagementBean extends AbstractBeanHelper implements
 		public List<SecApplication> load(int first, int pageSize,
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
+			
 			rowCount = almabaniFacade.getNumberOfApplications(filters);
 
 			result = (List<SecApplication>) almabaniFacade.loadApplications(

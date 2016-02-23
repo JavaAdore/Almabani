@@ -21,7 +21,7 @@
 						title="#{loc.ViewSecUserTitle_userLoginCode}" />
 					<h:outputText value="#{loc.ViewSecUserLabel_registrationDate}" />
 					<h:outputText
-						value="#{userManagementBean.selected.registrationDate}"
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(userManagementBean.selected.registrationDate)}"
 						title="#{loc.ViewSecUserTitle_registrationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
@@ -31,7 +31,7 @@
 						title="#{loc.ViewSecUserTitle_indActive}" />
 					<h:outputText value="#{loc.ViewSecUserLabel_beginInactivityDate}" />
 					<h:outputText
-						value="#{userManagementBean.selected.beginInactivityDate}"
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(userManagementBean.selected.beginInactivityDate)}"
 						title="#{loc.ViewSecUserTitle_beginInactivityDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
@@ -45,7 +45,7 @@
 						title="#{loc.ViewSecUserTitle_modificationMakerName}" />
 					<h:outputText value="#{loc.ViewSecUserLabel_lastModificationDate}" />
 					<h:outputText
-						value="#{userManagementBean.selected.lastModificationDate}"
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(userManagementBean.selected.lastModificationDate)}"
 						title="#{loc.ViewSecUserTitle_lastModificationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>

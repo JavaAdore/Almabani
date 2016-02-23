@@ -22,12 +22,9 @@
 					<h:outputText value="#{quotationItemManagementBean.selected.id}"
 						title="#{loc.ViewOamItemQuotationTitle_id}" />
 					<h:outputText value="#{loc.ViewOamItemQuotationLabel_quotation}" />
-					<p:panelGrid>
-						<h:outputText
-							value="#{quotationItemManagementBean.selected.quotation.quotationDescription}  " />
-						<customComponents:BundledObjectViewer
-							bundledObjectToDisplay="#{quotationItemManagementBean.selected.quotation}" />
-					</p:panelGrid>
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.quotation.quotationDescription}  " />
+
 					<h:outputText value="#{loc.ViewOamItemQuotationLabel_project}" />
 					<h:outputText
 						value="#{quotationItemManagementBean.selected.projectItem.project.projectCode}" />
@@ -42,20 +39,21 @@
 					<h:outputText
 						value="#{quotationItemManagementBean.selected.qutItem}"
 						title="#{loc.ViewOamItemQuotationTitle_qutItem}" />
-						
-						<h:outputText value="#{loc.CreateOamItemQuotationTitle_item_billing_cost}" />
+
 					<h:outputText
-						value="#{quotationItemManagementBean.selected.billingCost}"
+						value="#{loc.CreateOamItemQuotationTitle_item_cost}" />
+					<h:outputText
+						value="#{quotationItemManagementBean.selected.itemCost}"
 						title="#{loc.CreateOamItemQuotationTitle_item_cost}" />
-						
-						
-						<h:outputText value="#{loc.ViewOamItemQuotationLabel_qutItem}" />
+
+
+					<h:outputText value="#{loc.CreateOamItemQuotationTitle_item_billing_cost}" />
 					<h:outputText
 						value="#{quotationItemManagementBean.selected.billingCost}"
 						title="#{loc.ViewOamItemQuotationTitle_qutItem}" />
-						
-						
-						
+
+
+
 					<h:outputText
 						value="#{loc.ViewOamItemQuotationLabel_observationDescription}" />
 					<h:outputText
@@ -69,12 +67,13 @@
 					<h:outputText
 						value="#{loc.ViewOamItemQuotationLabel_lastModificationDate}" />
 					<h:outputText
-						value="#{quotationItemManagementBean.selected.lastModificationDate}"
+						value="#{ applicationScopeStore.getAnalogousUsersCountryDate(quotationItemManagementBean.selected.lastModificationDate)}"
 						title="#{loc.ViewOamItemQuotationTitle_lastModificationDate}">
-						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT+2" />
 					</h:outputText>
 				</p:panelGrid>
-				<p:commandButton value="#{loc.Close}" immediate="true" onclick="PF('viewDialog').hide()" />
+				<p:commandButton value="#{loc.Close}" immediate="true"
+					onclick="PF('viewDialog').hide()" />
 			</h:panelGroup>
 
 		</h:form>

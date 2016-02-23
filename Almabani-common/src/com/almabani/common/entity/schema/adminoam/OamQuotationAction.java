@@ -51,8 +51,8 @@ public class OamQuotationAction extends AbstractEntity implements Serializable {
 	@Column(name = "COD_LOGIN_MODIFY", nullable = false, length = 10)
 	private String modificationLoginCode;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DAT_LAST_MODIFY", nullable = false, length = 7)
+	@Temporal(TemporalType.TIMESTAMP)  
+	@Column(name = "DAT_LAST_MODIFY", nullable = false)
 	private Date lastModificationDate;
 	
 	@Column(name = "DES_USER_OBSERVATION", length = 300)

@@ -59,7 +59,7 @@
 					<h:outputText
 						value="#{loc.ViewSecSubModuleLabel_lastModificationDate}" />
 					<h:outputText
-						value="#{subModuleManagementBean.selected.lastModificationDate}"
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(subModuleManagementBean.selected.lastModificationDate)}"
 						title="#{loc.ViewSecSubModuleTitle_lastModificationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>

@@ -112,8 +112,8 @@
 						value="#{loc.EditWokDailyOcurrenceTitle_userGroupSafety}" />
 					<p:selectOneMenu id="userGroupSafety"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupSafety}"
-						converter="#{wokUserGroupConverter}" required="true"
-						requiredMessage="#{loc.CreateWokDailyOcurrenceRequiredMessage_userGroupSafety}"
+						converter="#{wokUserGroupConverter}" 
+						
 						converterMessage="#{wokUserGroupConverter}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
@@ -145,7 +145,7 @@
 					<p:outputLabel
 						value="#{loc.EditWokDailyOcurrenceTitle_responseDateTime}" />
 					<p:calendar navigator="true" id="responseDateTime"
-						pattern="MM/dd/yyyy HH:mm:ss"
+						pattern="MM/dd/yyyy HH:mm:ss" 
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.responseDateTime}"
 						showOn="button" />
 
@@ -212,7 +212,7 @@
 				<p:commandButton
 					actionListener="#{dailyOccuranceManagementBean.saveWokDailyOccurence()}"
 					value="#{loc.Save}" update=":growl @form"
-					oncomplete="if(!args.validationFailed){PF('createWokDailyOccurency').hide();}" />
+					oncomplete="if(!args.validationFailed){if(status=='success'){PF('createWokDailyOccurency').hide();}}" />
 				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('createWokDailyOccurency').hide()" />
 			</h:panelGroup>

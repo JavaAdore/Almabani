@@ -1,6 +1,7 @@
 package com.almabani.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -67,7 +68,15 @@ public class CompanyGrantsManagementBean extends AbstractBeanHelper implements
 	
 	private void initializeCompanyList() {
 
-		companies = almabaniFacade.getAllCompanies();
+		
+		if (WebUtils.getCurrentLoggedUser().isAdminUser()) {
+			companies = almabaniFacade.getAllCompanies();
+		} else {
+			Company activeCompany = WebUtils.getCurrentLoggedUser().getEmployee()
+					.getEstablishment().getCompany();
+			companies = new ArrayList(); 
+			companies.add(activeCompany);
+		}
 	}
 
 	

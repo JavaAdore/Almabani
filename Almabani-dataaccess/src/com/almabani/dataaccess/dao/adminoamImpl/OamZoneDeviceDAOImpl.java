@@ -26,7 +26,7 @@ public class OamZoneDeviceDAOImpl extends AbstractDAO implements
 		Query query = super
 				.getCurrentSession()
 				.createQuery(
-						"select x from OamZoneDevice x where x.projectDevice.deviceType in :deviceTypes");
+						"select x from OamZoneDevice x where x.projectDevice.deviceType in :deviceTypes order by x.projectDevice.deviceCode");
 		List<OamTypeDevice> deviceTypes = new ArrayList();
 		deviceTypes.add(OamTypeDevice.CCTV_CABINETS);
 		deviceTypes.add(OamTypeDevice.FIXED_CAMERAS);

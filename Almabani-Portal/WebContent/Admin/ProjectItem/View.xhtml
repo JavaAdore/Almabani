@@ -41,7 +41,7 @@
 					<h:outputText
 						value="#{loc.ViewOamProjectItemLabel_lastModificationDate}" />
 					<h:outputText
-						value="#{projectItemManagementBean.selected.lastModificationDate}"
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(projectItemManagementBean.selected.lastModificationDate)}"
 						title="#{loc.ViewOamProjectItemTitle_lastModificationDate}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>

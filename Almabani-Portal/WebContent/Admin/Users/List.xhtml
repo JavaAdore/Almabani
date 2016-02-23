@@ -43,7 +43,7 @@
 					filterBy="#{item.employee.establishment.company}">
 
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()"
+						<p:selectOneMenu onchange="PF('datalist').filter()" styleClass="fullWith"
 							converter="#{companyConverter}">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
@@ -88,7 +88,7 @@
 					sortBy="#{item.indActive}" filterBy="#{item.indActive}">
 
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
+						<p:selectOneMenu onchange="PF('datalist').filter()"   styleClass="fullWith"> 
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
@@ -115,7 +115,7 @@
 				<p:column headerText="#{loc.ListSecUserTitle_indAdminSystem}"
 					sortBy="#{item.indAdminSystem}" filterBy="#{item.indAdminSystem}">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('datalist').filter()">
+						<p:selectOneMenu onchange="PF('datalist').filter()" styleClass="fullWith">
 							<f:selectItem itemLabel="" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{applicationScopeStore.getYesNoList()}"
@@ -137,7 +137,7 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				<p:column sortBy="#{item.password}">
+				<p:column sortBy="#{item.password}" rendered="#{applicationScopeStore.hasFullAccess()}"  >
 					<f:facet name="header">
 						<h:outputText value="#{loc.ListSecUserTitle_password}" />
 					</f:facet>

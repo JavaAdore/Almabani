@@ -36,7 +36,7 @@
 
 						</p:calendar>
 					</f:facet>
-					<h:outputText value="#{item.responseTime}">
+					<h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.responseTime)}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:column>
@@ -124,7 +124,7 @@
 
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_lastModificationName}" />
-						<h:outputLabel value="#{item.lastModificationName}">
+						<h:outputLabel value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.lastModificationName)}">
 							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 						</h:outputLabel>
 
@@ -142,13 +142,13 @@
 
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_occurrenceDate}" />
-						<h:outputLabel value="#{item.occurrenceDate}">
+						<h:outputLabel value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.occurrenceDate)}">
 							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 						</h:outputLabel>
 
 						<h:outputLabel
 							value="#{loc.ListVWokDailyOcurrencesTitle_closingTime}" />
-						<h:outputLabel value="#{item.closingTime}">
+						<h:outputLabel value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.closingTime)}">
 							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 						</h:outputLabel>
 

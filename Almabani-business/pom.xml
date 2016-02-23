@@ -19,21 +19,39 @@
 	</build>
 
 	<properties>
-		<spring.security.version>4.0.0.RELEASE</spring.security.version>
+		<spring.version>4.0.0.RELEASE</spring.version> 
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>Almabani-dataaccess</groupId>
-			<artifactId>Almabani-dataaccess</artifactId>
+			<artifactId>Almabani-dataaccess</artifactId> 
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>4.0.0.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework</groupId> -->
+<!-- 			<artifactId>spring-aop</artifactId> -->
+<!-- 			<version>4.1.4.RELEASE</version> -->
+<!-- 		</dependency>  -->
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.aspectj</groupId> -->
+<!-- 			<artifactId>aspectjrt</artifactId> -->
+<!-- 			<version>1.6.11</version> -->
+<!-- 		</dependency> -->
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.aspectj</groupId> -->
+<!-- 			<artifactId>aspectjweaver</artifactId> -->
+<!-- 			<version>1.6.11</version> -->
+<!-- 		</dependency> -->
 
 	</dependencies>
 

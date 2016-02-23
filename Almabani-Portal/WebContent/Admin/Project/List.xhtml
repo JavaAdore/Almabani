@@ -54,7 +54,7 @@
 					<f:facet name="header">
 						<h:outputText value="Validity Begin Date" />
 					</f:facet>
-					<h:outputText value="#{project.validityBeginDate}">
+					<h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(project.validityBeginDate)}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -63,7 +63,7 @@
 					<f:facet name="header">
 						<h:outputText value="Validity End Date" />
 					</f:facet>
-					<h:outputText value="#{project.validityEndDate}">
+					<h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(project.validityEndDate)}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -73,7 +73,7 @@
 					<f:facet name="header">
 						<h:outputText value="Last Modification Date" />
 					</f:facet>
-					<h:outputText value="#{project.lastModificationDate}">
+					<h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(project.lastModificationDate)}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>

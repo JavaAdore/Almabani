@@ -27,7 +27,7 @@
                         <h:outputText value="#{projectJobTitleBean.extractFromBundle(projectJobTitleBean.selectedProjectJobTitle.active.key)}" title="Active"/>
                         
                         <h:outputText value="Last Modifyied Date"/>
-                        <h:outputText value="#{projectJobTitleBean.selectedProjectJobTitle.lastModificationDate}" title="Last Modifyied Date">
+                        <h:outputText value="#{applicationScopeStore.getAnalogousUsersCountryDate(projectJobTitleBean.selectedProjectJobTitle.lastModificationDate)}" title="Last Modifyied Date">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         

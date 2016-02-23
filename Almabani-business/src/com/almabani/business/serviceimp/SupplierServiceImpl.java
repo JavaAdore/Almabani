@@ -42,7 +42,7 @@ public class SupplierServiceImpl implements SupplierService {
 	@Override
 	public OamSupplier addSupplier(OamSupplier supplier,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		supplier.setLastModificationDate(date);
 		supplier.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return supplierDAO.addOrUpdateSupplier(supplier);
@@ -51,7 +51,7 @@ public class SupplierServiceImpl implements SupplierService {
 	@Override
 	public OamSupplier updateSupplier(OamSupplier supplier,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		supplier.setLastModificationDate(date);
 		supplier.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return supplierDAO.addOrUpdateSupplier(supplier);

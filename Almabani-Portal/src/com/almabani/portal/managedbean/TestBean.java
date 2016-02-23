@@ -1,5 +1,4 @@
 package com.almabani.portal.managedbean;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -8,10 +7,9 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.SortOrder;
 
+import com.almabani.common.util.Configuration;
 import com.almabani.portal.managedbean.applicationhelper.AbstractBeanHelper;
 
-@ManagedBean
-@ViewScoped
 public class TestBean extends AbstractBeanHelper implements Serializable {
 
 	/**
@@ -22,8 +20,15 @@ public class TestBean extends AbstractBeanHelper implements Serializable {
 
 	public void test() {
 
-		Object o = almabaniFacade.loadDepartmentSectionsView(1, 10, null,
-				false, new HashMap());
-		System.out.println(o); 
+
+		System.out.println("xx"); 
+		
+		myString();
+	}
+	
+	
+	public String myString()
+	{
+		return "welcome";
 	}
 }

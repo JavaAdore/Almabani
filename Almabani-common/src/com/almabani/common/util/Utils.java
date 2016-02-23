@@ -27,15 +27,12 @@ import java.util.concurrent.TimeUnit;
 import javax.sql.rowset.serial.SerialException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import com.almabani.common.entity.AbstractEntity;
-import com.almabani.common.entity.schema.admincor.DepartmentSection;
 
 public class Utils {
 
@@ -372,13 +369,7 @@ public class Utils {
 		return WRAPPER_TYPES.contains(clazz);
 	}
 
-	public static void main(String[] arsgs) throws NoSuchFieldException,
-			SecurityException {
 
-		System.out.println(DepartmentSection.class
-				.getDeclaredField("sectionCode"));
-
-	}
 
 	public static Date getTodayInHourZero() {
 		Calendar calendar = Calendar.getInstance();
@@ -490,5 +481,56 @@ public class Utils {
 		return getAbsoluteStringValue(str);
 		
 	}
+	
+	
+	public static Date getGrenetchTime()
+	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.HOUR_OF_DAY, Configuration.getServerGMTTimeZone() *-1);
+		return calendar.getTime();
+	}
+	
+	public static String getFieldGetterString (Field f)
+	{
+		String fieldName = f.getName();
+		if(fieldName.length()>1)
+		{
+			fieldName = fieldName.substring(0,1).toUpperCase() +fieldName.substring(1);
+			return "get"+fieldName;
+		}else
+		{
+			
+			fieldName = fieldName.toUpperCase();
+			return "get"+ fieldName;
+		}
+		
+	}
+	
+	
+	public static String getFieldSetterString (Field f)
+	{
+		String fieldName = f.getName();
+		if(fieldName.length()>1)
+		{
+			fieldName = fieldName.substring(0,1).toUpperCase() +fieldName.substring(1);
+			return "set"+fieldName;
+		}else
+		{
+			
+			fieldName = fieldName.toUpperCase();
+			return "set"+ fieldName;
+		}
+		
+	}
+
+	public static Date addHours(Date date, Integer deff) {
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.HOUR_OF_DAY, deff);
+		return c.getTime();
+		
+	}
+	
 	
 }

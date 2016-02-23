@@ -130,8 +130,9 @@ public class DailyOccuranceManagementBean extends AbstractBeanHelper implements
 		public List<WokDailyOcurrencesView> load(int first, int pageSize,
 				String sortField, SortOrder sortOrder,
 				Map<String, Object> filters) {
+			adjustDateToGreenWich(filters);
 			rowCount = almabaniFacade.getCountOfWokDailyOcurrencesView(filters);
-
+			
 			if (Utils.isNotNull(selectedWokGroup)) {
 
 				attachSelectedWokGroupFiltration(filters);

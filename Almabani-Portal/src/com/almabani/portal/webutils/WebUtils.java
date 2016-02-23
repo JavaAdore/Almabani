@@ -594,6 +594,11 @@ public class WebUtils {
 	}
 	
 	
+	public Date toGrenetchTime(Date date)
+	{
+		
+		return new Date();    
+	}	
 	
 
 }

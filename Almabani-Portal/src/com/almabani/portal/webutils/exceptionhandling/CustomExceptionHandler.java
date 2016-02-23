@@ -55,7 +55,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 					} else {
 						WebUtils.displayAlmabanyExceptionErrorMessage((AlmabaniException) t
 								.getCause());
-					}
+					}  
 
 				} else if (ex instanceof AlmabaniException) {
 					if (Utils.isEmptySet(((AlmabaniException) ex)
@@ -70,11 +70,11 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
 			} finally {
 				// remove it from queue
-				i.remove();
-			}
+				//i.remove();
+			}    
 		}
 		// parent hanle
-		getWrapped().handle();
+		//getWrapped().handle();
 	}
 
 }

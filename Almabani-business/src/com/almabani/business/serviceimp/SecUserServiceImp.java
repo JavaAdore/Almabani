@@ -11,6 +11,7 @@ import com.almabani.business.service.SecUserService;
 import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminsec.SecUser;
+import com.almabani.common.util.Utils;
 import com.almabani.dataacceess.dao.adminsec.SecUserDAO;
 
 @Service
@@ -38,7 +39,7 @@ public class SecUserServiceImp implements SecUserService {
 
 	@Override
 	public SecUser updateUser(SecUser user, CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		user.setLastModificationDate(date);
 		user.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return secUserDAO.saveOrUpdate(user);
@@ -46,7 +47,7 @@ public class SecUserServiceImp implements SecUserService {
 
 	@Override
 	public SecUser addUser(SecUser user, CommonDriverMap commonDriverMap) {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		user.setLastModificationDate(date);
 		user.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		user.setRegistrationDate(date);

@@ -21,7 +21,8 @@
 
 					<p:outputLabel value="#{loc.EditWokDailyOcurrenceTitle_userGroup}" />
 					<p:selectOneMenu id="userGroup"
-						converter="#{wokUserGroupConverter}" required="true" requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroup}"
+						converter="#{wokUserGroupConverter}" required="true"
+						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroup}"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroup}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
@@ -88,7 +89,7 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_occurrenceDescription}" />
 					<p:editor id="occurrenceDescription"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.occurrenceDescription}"
-						 height="100" maxlength="600"
+						height="100" maxlength="600"
 						requiredMessage="#{loc.CreateWokDailyOcurrenceRequiredMessage_occurrenceDescription}" />
 				</p:panelGrid>
 
@@ -100,9 +101,7 @@
 						value="#{loc.EditWokDailyOcurrenceTitle_userGroupCall}" />
 					<p:selectOneMenu id="userGroupCall"
 						converter="#{wokUserGroupConverter}"
-						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupCall}"
-						required="true"
-						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupCall}">
+						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupCall}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
 							value="#{dailyOccuranceManagementBean.commuincatorsList}"
@@ -115,9 +114,7 @@
 						value="#{loc.EditWokDailyOcurrenceTitle_userGroupSafety}" />
 					<p:selectOneMenu id="userGroupSafety"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.userGroupSafety}"
-						required="true" converter="#{wokUserGroupConverter}"
-						converterMessage="#{wokUserGroupConverter}"
-						requiredMessage="#{loc.EditWokDailyOcurrenceRequiredMessage_userGroupSafety}">
+						converter="#{wokUserGroupConverter}">
 						<f:selectItem itemValue="" itemLabel="#{loc.SelectOneMessage}" />
 						<f:selectItems
 							value="#{dailyOccuranceManagementBean.safetyAgentsList}"
@@ -147,15 +144,19 @@
 
 					<p:outputLabel
 						value="#{loc.EditWokDailyOcurrenceTitle_responseDateTime}" />
-					<p:calendar  navigator="true" id="responseDateTime" pattern="MM/dd/yyyy HH:mm:ss" required="true"  requiredMessage="#{loc.CreateVWokDailyOcurrencesHelpText_responseTime}"
+					<p:calendar navigator="true" id="responseDateTime"
+						pattern="MM/dd/yyyy HH:mm:ss" required="true"
+						requiredMessage="#{loc.CreateVWokDailyOcurrencesHelpText_responseTime}"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.responseDateTime}"
-						 showOn="button" />
+						showOn="button" />
 
 					<p:outputLabel
 						value="#{loc.EditWokDailyOcurrenceTitle_closingDateTime}" />
-					<p:calendar  navigator="true" id="closingDateTime" pattern="MM/dd/yyyy HH:mm:ss" required="true" requiredMessage="#{loc.CreateVWokDailyOcurrencesHelpText_closingTime}"
+					<p:calendar navigator="true" id="closingDateTime"
+						pattern="MM/dd/yyyy HH:mm:ss" required="true"
+						requiredMessage="#{loc.CreateVWokDailyOcurrencesHelpText_closingTime}"
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.closingDateTime}"
-						 showOn="button" />
+						showOn="button" />
 				</p:panelGrid>
 
 				<p:panelGrid columns="6" styleClass="fullWith"
@@ -173,7 +174,8 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_indContactPolice}" />
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactPolice}">
-						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
+						<f:selectItems
+							value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -181,7 +183,8 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_indContactAmbulance}" />
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactAmbulance}">
-						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
+						<f:selectItems
+							value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -190,7 +193,8 @@
 						value="#{loc.CreateWokDailyOcurrenceTitle_indContactInsurance}" />
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactInsurance}">
-						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
+						<f:selectItems
+							value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -202,7 +206,8 @@
 
 					<p:selectOneMenu
 						value="#{dailyOccuranceManagementBean.selectedWokDailyOcurrence.indContactTransit}">
-						<f:selectItems value="#{applicationScopeStore.getReversedYesNoList()}"
+						<f:selectItems
+							value="#{applicationScopeStore.getReversedYesNoList()}"
 							var="unit" itemValue="#{unit.key}" itemLabel="#{unit.value}" />
 					</p:selectOneMenu>
 
@@ -211,7 +216,7 @@
 				<p:commandButton
 					actionListener="#{dailyOccuranceManagementBean.saveWokDailyOccurence()}"
 					value="#{loc.Save}" update=":growl @form"
-					oncomplete="if(!args.validationFailed) {PF('dailyOccurenceEditDialog').hide();}" />
+					oncomplete="if(!args.validationFailed) {if(status=='success'){;PF('dailyOccurenceEditDialog').hide();}}" />
 				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('dailyOccurenceEditDialog').hide()" />
 			</h:panelGroup>

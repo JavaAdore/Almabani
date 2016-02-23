@@ -77,16 +77,29 @@
 					<h:outputText
 						value="#{item.oamTypesQuotActions.modificationMakerName}" />
 				</p:column>
+				
+					
+				<p:column sortBy="#{item.insertActionDate}"
+					filterBy="#{item.insertActionDate}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{loc.ListOamQuotationActionTypeTitle_insertion_date}" />
+					</f:facet>
+					<h:outputText
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.lastModificationDate)}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+				
 
-
-				<p:column sortBy="#{item.oamTypesQuotActions.lastModificationDate}"
-					filterBy="#{item.oamTypesQuotActions.lastModificationDate}">
+				<p:column sortBy="#{item.lastModificationDate}"
+					filterBy="#{item.lastModificationDate}">
 					<f:facet name="header">
 						<h:outputText
 							value="#{loc.ListOamQuotationActionTypeTitle_lastModificationDate}" />
 					</f:facet>
 					<h:outputText
-						value="#{item.oamTypesQuotActions.lastModificationDate}">
+						value="#{applicationScopeStore.getAnalogousUsersCountryDate(item.lastModificationDate)}">
 						<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:column>

@@ -121,7 +121,7 @@
 				<p:commandButton
 					actionListener="#{quotationItemManagementBean.saveNew}"
 					value="#{loc.Save}" update="display,:growl,tabs:listForm:datalist"
-					oncomplete="if(!args.validationFailed){PF('createDialog').hide();}" />
+					oncomplete="if(!args.validationFailed){if(status=='success')PF('createDialog').hide();}" />
 				<p:commandButton value="#{loc.Cancel}" immediate="true"
 					onclick="PF('createDialog').hide()" />
 			</h:panelGroup>

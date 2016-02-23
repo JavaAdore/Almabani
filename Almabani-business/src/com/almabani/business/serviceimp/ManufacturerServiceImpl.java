@@ -12,6 +12,7 @@ import com.almabani.common.dto.CommonDriverMap;
 import com.almabani.common.entity.schema.admincor.Company;
 import com.almabani.common.entity.schema.adminoam.OamManufacturer;
 import com.almabani.common.exception.AlmabaniException;
+import com.almabani.common.util.Utils;
 import com.almabani.dataaccess.dao.adminoam.ManufacturerDAO;
 
 @Service
@@ -55,7 +56,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	@Override
 	public OamManufacturer addManufacturer(OamManufacturer manufacturer,
 			CommonDriverMap commonDriverMap) throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		manufacturer.setLastModificationDate(date);
 		manufacturer.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return manufacturerDAO.addOamManufacturer(manufacturer);
@@ -66,7 +67,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	@Override
 	public OamManufacturer updateManufacturer(OamManufacturer manufacturer ,CommonDriverMap commonDriverMap)
 			throws AlmabaniException {
-		Date date = new Date();
+		Date date =  Utils.getGrenetchTime();
 		manufacturer.setLastModificationDate(date);
 		manufacturer.setModificationMakerName(commonDriverMap.getCurrentUserCode());
 		return manufacturerDAO.addOamManufacturer(manufacturer);
