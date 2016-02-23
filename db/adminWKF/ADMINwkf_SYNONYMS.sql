@@ -1,0 +1,61 @@
+
+--select 'DROP public synonym '||table_name||';' from user_tables;
+DROP public synonym WOK_TYPES_SYMPTOMS;
+DROP public synonym WOK_TYPES_DEMAND;
+DROP public synonym WOK_TYPES_PROFILES;
+DROP public synonym WOK_TYPES_ACTIONS;
+DROP public synonym WOK_TYPES_IMPACT;
+DROP public synonym WOK_CONFIGURATIONS_TYPES;
+DROP public synonym WOK_CONFIGURATIONS_ITEM;
+DROP public synonym WOK_WORKING_GROUPS;
+DROP public synonym WOK_USERS_GROUP;
+DROP public synonym WOK_DEMANDS_PRIORITY;
+DROP public synonym WOK_TYPES_OCCURRENCE;
+DROP public synonym WOK_NEXT_ACTIONS;
+DROP public synonym WOK_PROFILES_ACTIONS;
+DROP public synonym WOK_DEMANDS;
+DROP public synonym WOK_OCCURRENCES_DEMAND;
+DROP public synonym WOK_DEMANDS_ACTIVITIES;
+DROP public synonym WOK_DAILY_OCURRENCES;
+DROP public synonym WOK_DOCUMENTS_DEMAND;
+DROP public synonym WOK_GENERAL_PARAMETERS;
+
+--select 'create public synonym '||table_name||' for '|| table_name||';' from user_tables;
+create public synonym WOK_TYPES_SYMPTOMS for WOK_TYPES_SYMPTOMS;
+create public synonym WOK_TYPES_DEMAND for WOK_TYPES_DEMAND;
+create public synonym WOK_TYPES_PROFILES for WOK_TYPES_PROFILES;
+create public synonym WOK_TYPES_ACTIONS for WOK_TYPES_ACTIONS;
+create public synonym WOK_TYPES_IMPACT for WOK_TYPES_IMPACT;
+create public synonym WOK_CONFIGURATIONS_TYPES for WOK_CONFIGURATIONS_TYPES;
+create public synonym WOK_CONFIGURATIONS_ITEM for WOK_CONFIGURATIONS_ITEM;
+create public synonym WOK_WORKING_GROUPS for WOK_WORKING_GROUPS;
+create public synonym WOK_USERS_GROUP for WOK_USERS_GROUP;
+create public synonym WOK_DEMANDS_PRIORITY for WOK_DEMANDS_PRIORITY;
+create public synonym WOK_TYPES_OCCURRENCE for WOK_TYPES_OCCURRENCE;
+create public synonym WOK_NEXT_ACTIONS for WOK_NEXT_ACTIONS;
+create public synonym WOK_PROFILES_ACTIONS for WOK_PROFILES_ACTIONS;
+create public synonym WOK_DEMANDS for WOK_DEMANDS;
+create public synonym WOK_OCCURRENCES_DEMAND for WOK_OCCURRENCES_DEMAND;
+create public synonym WOK_DEMANDS_ACTIVITIES for WOK_DEMANDS_ACTIVITIES;
+create public synonym WOK_DAILY_OCURRENCES for WOK_DAILY_OCURRENCES;
+create public synonym WOK_DOCUMENTS_DEMAND for WOK_DOCUMENTS_DEMAND;
+create public synonym WOK_GENERAL_PARAMETERS for WOK_GENERAL_PARAMETERS;
+
+--select 'DROP public synonym '||sequence_name||';' from user_sequences;
+DROP public synonym WOK_SEQ_NUM_ACTIVITY;
+DROP public synonym WOK_SEQ_NUM_DAILY_OCCURRENCE;
+DROP public synonym WOK_SEQ_NUM_DEMAND;
+DROP public synonym WOK_SEQ_NUM_OCCURRENCE;
+DROP public synonym WOK_SEQ_NUM_PROFILE_ACTION;
+DROP public synonym WOK_SEQ_NUM_TYPE_ACTION;
+DROP public synonym WOK_SEQ_NUM_TYPE_PROFILE;
+
+--select 'CREATE public synonym  '||sequence_name||' for '||sequence_name||';' from user_sequences;
+
+CREATE public synonym  WOK_SEQ_NUM_ACTIVITY for WOK_SEQ_NUM_ACTIVITY;
+CREATE public synonym  WOK_SEQ_NUM_DAILY_OCCURRENCE for WOK_SEQ_NUM_DAILY_OCCURRENCE;
+CREATE public synonym  WOK_SEQ_NUM_DEMAND for WOK_SEQ_NUM_DEMAND;
+CREATE public synonym  WOK_SEQ_NUM_OCCURRENCE for WOK_SEQ_NUM_OCCURRENCE;
+CREATE public synonym  WOK_SEQ_NUM_PROFILE_ACTION for WOK_SEQ_NUM_PROFILE_ACTION;
+CREATE public synonym  WOK_SEQ_NUM_TYPE_ACTION for WOK_SEQ_NUM_TYPE_ACTION;
+CREATE public synonym  WOK_SEQ_NUM_TYPE_PROFILE for WOK_SEQ_NUM_TYPE_PROFILE;

@@ -1,0 +1,71 @@
+
+--select 'DROP public synonym '||table_name||';' from user_tables;
+DROP public synonym RET_ACCOUNTS_ENTRIES;
+DROP public synonym RET_TYPES_EXPENSES;
+DROP public synonym RET_SUB_TYPES_EXPENSES;
+DROP public synonym RET_ENTRIES_EXPENSES;
+DROP public synonym RET_TYPES_COMPANIES_ACTIVITY;
+DROP public synonym RET_TYPES_PAYMENT;
+DROP public synonym RET_TYPES_PLANS;
+DROP public synonym RET_PAYMENTS_PLANS;
+DROP public synonym RET_CLIENTS_COMPANIES;
+DROP public synonym RET_CLIENTS_COMP_TRACKING;
+DROP public synonym RET_TYPES_DISCOUNT;
+DROP public synonym RET_COMPANIES_CONTRACTS;
+DROP public synonym RET_TYPES_CONTRACTS_SITUATION;
+DROP public synonym RET_INSTALLMENTS_CONTRACT;
+DROP public synonym RET_SITUATIONS_CONTRACT;
+DROP public synonym RET_CLIENTS;
+
+
+--select 'create public synonym '||table_name||' for '|| table_name||';' from user_tables;
+create public synonym RET_ACCOUNTS_ENTRIES for RET_ACCOUNTS_ENTRIES;
+create public synonym RET_TYPES_EXPENSES for RET_TYPES_EXPENSES;
+create public synonym RET_SUB_TYPES_EXPENSES for RET_SUB_TYPES_EXPENSES;
+create public synonym RET_ENTRIES_EXPENSES for RET_ENTRIES_EXPENSES;
+create public synonym RET_TYPES_COMPANIES_ACTIVITY for RET_TYPES_COMPANIES_ACTIVITY;
+create public synonym RET_TYPES_PAYMENT for RET_TYPES_PAYMENT;
+create public synonym RET_TYPES_PLANS for RET_TYPES_PLANS;
+create public synonym RET_PAYMENTS_PLANS for RET_PAYMENTS_PLANS;
+create public synonym RET_CLIENTS_COMPANIES for RET_CLIENTS_COMPANIES;
+create public synonym RET_CLIENTS_COMP_TRACKING for RET_CLIENTS_COMP_TRACKING;
+create public synonym RET_TYPES_DISCOUNT for RET_TYPES_DISCOUNT;
+create public synonym RET_COMPANIES_CONTRACTS for RET_COMPANIES_CONTRACTS;
+create public synonym RET_TYPES_CONTRACTS_SITUATION for RET_TYPES_CONTRACTS_SITUATION;
+create public synonym RET_INSTALLMENTS_CONTRACT for RET_INSTALLMENTS_CONTRACT;
+create public synonym RET_SITUATIONS_CONTRACT for RET_SITUATIONS_CONTRACT;
+create public synonym RET_CLIENTS for RET_CLIENTS;
+
+
+--select 'DROP public synonym '||sequence_name||';' from user_sequences;
+DROP public synonym RET_SEQ_NUM_CLIENT;
+DROP public synonym RET_SEQ_NUM_CLIENT_COMPANY;
+DROP public synonym RET_SEQ_NUM_CLI_COMP_TRACKING;
+DROP public synonym RET_SEQ_NUM_COMPANY_CONTRACT;
+DROP public synonym RET_SEQ_NUM_ENTRY_EXPENSE;
+DROP public synonym RET_SEQ_NUM_PAYMENT_PLAN;
+DROP public synonym RET_SEQ_NUM_SITUATION_CONTRACT;
+DROP public synonym RET_SEQ_NUM_SUB_TYPE_EXPENSE;
+DROP public synonym RET_SEQ_NUM_TYPE_COMP_ACTIVITY;
+DROP public synonym RET_SEQ_NUM_TYPE_CONTR_SIT;
+DROP public synonym RET_SEQ_NUM_TYPE_DISCOUNT;
+DROP public synonym RET_SEQ_NUM_TYPE_EXPENSE;
+DROP public synonym RET_SEQ_NUM_TYPE_PAYMENT;
+DROP public synonym RET_SEQ_NUM_TYPE_PLAN;
+
+--select 'CREATE public synonym  '||sequence_name||' for '||sequence_name||';' from user_sequences;
+
+CREATE public synonym  RET_SEQ_NUM_CLIENT for RET_SEQ_NUM_CLIENT;
+CREATE public synonym  RET_SEQ_NUM_CLIENT_COMPANY for RET_SEQ_NUM_CLIENT_COMPANY;
+CREATE public synonym  RET_SEQ_NUM_CLI_COMP_TRACKING for RET_SEQ_NUM_CLI_COMP_TRACKING;
+CREATE public synonym  RET_SEQ_NUM_COMPANY_CONTRACT for RET_SEQ_NUM_COMPANY_CONTRACT;
+CREATE public synonym  RET_SEQ_NUM_ENTRY_EXPENSE for RET_SEQ_NUM_ENTRY_EXPENSE;
+CREATE public synonym  RET_SEQ_NUM_PAYMENT_PLAN for RET_SEQ_NUM_PAYMENT_PLAN;
+CREATE public synonym  RET_SEQ_NUM_SITUATION_CONTRACT for RET_SEQ_NUM_SITUATION_CONTRACT;
+CREATE public synonym  RET_SEQ_NUM_SUB_TYPE_EXPENSE for RET_SEQ_NUM_SUB_TYPE_EXPENSE;
+CREATE public synonym  RET_SEQ_NUM_TYPE_COMP_ACTIVITY for RET_SEQ_NUM_TYPE_COMP_ACTIVITY;
+CREATE public synonym  RET_SEQ_NUM_TYPE_CONTR_SIT for RET_SEQ_NUM_TYPE_CONTR_SIT;
+CREATE public synonym  RET_SEQ_NUM_TYPE_DISCOUNT for RET_SEQ_NUM_TYPE_DISCOUNT;
+CREATE public synonym  RET_SEQ_NUM_TYPE_EXPENSE for RET_SEQ_NUM_TYPE_EXPENSE;
+CREATE public synonym  RET_SEQ_NUM_TYPE_PAYMENT for RET_SEQ_NUM_TYPE_PAYMENT;
+CREATE public synonym  RET_SEQ_NUM_TYPE_PLAN for RET_SEQ_NUM_TYPE_PLAN;
